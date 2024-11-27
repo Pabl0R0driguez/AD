@@ -50,7 +50,7 @@ print("Tabla motocicletas creada")
 
 try:
     # Iniciar una transacción utilizando db.atomic()
-    with db.atomic():
+    with db.transaction():
         #Insertar registros en la tabla con los campos actuales
         Motocicletas.create(marca="Opel", modelo="56-Ñ", cilindrada=1500, precio=2300)        
         Motocicletas.create(marca="Bosch", modelo="FE-3", cilindrada=500, precio=4500)     
@@ -60,10 +60,15 @@ try:
 
         print("Registros insertados con una transacción")
 
+
+
+
  # Si hay un fallo en cualquier inserción, el bloque except capturará el error y la transacción se deshará automáticamente
 except IntegrityError as e:
     print(f"Error al insertar herramientas: {e}")
 print("\n")
+
+print("Modificado")
 # Recuperar todas las motocicletas de la base de datos
 motos = Motocicletas.select()
 for motocicletas in motos:

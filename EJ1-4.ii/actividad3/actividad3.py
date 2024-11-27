@@ -26,21 +26,22 @@ root["moto3"] = Motocicleta("Yamaha", "Z900", 9000, 948)
 
 transaction.commit()
 
+#Recuperar objeto por su clave
+motocicleta = root.get("moto3")
+if motocicleta:
+      print("Antes de modificar ")
+      print(f"Marca: {motocicleta.marca} , Modelo:{motocicleta.cilindrada}")
 
-# Recuperamso la segunda motocicleta
-motocicletas = root.get("moto2")
-if motocicletas:
-    print("Antes de modificar ")
-    print(f"Marca: {motocicletas.marca} , Modelo:{motocicletas.modelo}")
+      # Modificamos las cilindradas
+      motocicleta.cilindrada = 999999999
+      #Confirmamos los cambios, sino da fallo 
+      transaction.commit()
 
-    # Modificar el modelo
-    motocicletas.modelo = "TTY-90"
-    transaction.commit()  # Confirmamos cambios
-    print("Después de la modificación: ")
-    print(f"Marca: {motocicletas.marca} , Modelo:{motocicletas.modelo}")
+      print("Después de modificar ")
+      print(f"Marca: {motocicleta.marca} , Modelo:{motocicleta.cilindrada}")
 
 else:
-    print("La motocicleta no se encontro en la base de datos")
+      print("Fallo en la transacción")
 
 
 # Cerrar la conexión

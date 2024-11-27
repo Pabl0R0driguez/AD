@@ -57,21 +57,22 @@ def listar_motocicletas():
 
 
 # Función para filtrar motocicletas de un cliente específico usando root.items()
-def filtrar_motocicletas_por_cliente(clientes):
-    print("\n")
-    print(f"Mostrando motocicletas usadas por '{clientes}':")
+def filtrar_por_precio():
+      precio_buscar = 7000
+      for clave, buscar in root.items():
+            if hasattr(buscar, 'precio') and buscar.precio == precio_buscar:   
+                  print("\n Motocicleta filtrada por precio: ")
+                  print(f"Marca: {buscar.marca}, Modelo: {buscar.modelo}, Precio: {buscar.precio}, Cilindrada: {buscar.cilindrada}")
 
-    for motocicletas in root['motocicletas'].values():
-        if motocicletas.id_cliente == clientes: # Verificamos que el cliente coincide
-            print(f"Marca: {motocicletas.marca}, Modelo: {motocicletas.modelo}, Precio: {motocicletas.precio}, Cilindrada: {motocicletas.cilindrada}, ID Cliente: {motocicletas.id_cliente}")
+
+
 
 
 # Llamar a la función para listar todas las motocicletas
 listar_motocicletas()
 
 # Filtrar motocicletas por un cliente específico, en este caso Cliente 1
-filtrar_motocicletas_por_cliente("Messi")
-
+filtrar_por_precio()
 # Cerrar la conexión a la base de datos ZODB
 connection.close()
 db.close()

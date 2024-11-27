@@ -1,0 +1,110 @@
+import peewee
+import ZODB, ZODB.FileStorage, transaction
+from persistent import Persistent
+
+# 1. Definir la clase Producto para la base de datos relacional (Peewee)
+db = peewee.MySQLDatabase('2DAM', user='usuario', password='usuario', host='localhost', port=3306)
+
+class Producto(Persistent):
+    nombre = peewee.CharField()
+    categoria = peewee.CharField()
+    precio = peewee.DecimalField()
+
+    class Meta:
+        database = db
+
+
+# 2. Conectar a MySQL y agregar productos usando Peewee
+def insertar_en_mysql():
+    try:
+        with db.connection_context():
+            # Crear la tabla 'producto' si no existe
+            Producto.create_table(True)
+            
+            # Insertar productos
+            productos = [
+                ('Martillo', 'Herramientas', 12.99),
+                ('Taladro', 'Herramientas', 49.99),
+                ('Sierra', 'Herramientas', 29.99)
+            ]
+
+            for producto in productos:
+                Producto.create(nombre=producto[0], categoria=producto[1], precio=producto[2])
+
+            print("Productos insertados en MySQL")
+    except peewee.MySQLDatabase.Error as e:
+        print(f"Error al insertar productos en MySQL: {e}")
+
+
+# 3. Consultar productos desde MySQL usando Peewee y almacenarlos en un diccionario
+def consultar_y_almacenar():
+    productos_dict = {}
+
+    with db.connection_context():
+        # Consultar todos los productos
+        productos = Producto.select()
+
+        # Almacenar los productos en un diccionario
+        for producto in productos:
+            productos_dict[producto.id] = ProductoZODB(producto.id, producto.nombre, producto.categoria, producto.precio)
+
+    return productos_dict
+
+
+# 4. Almacenar los productos en ZODB
+class ProductoZODB(Persistent):
+    def __init__(self, id, nombre, categoria, precio):
+        self.id = id
+        self.nombre = nombre
+        self.categoria = categoria
+        self.precio = precio
+
+def almacenar_en_zodb(productos_dict):
+    storage = ZODB.FileStorage.FileStorage('productos.fs')  # Nombre del archivo de la base de datos ZODB
+    db_zodb = ZODB.DB(storage)
+    connection = db_zodb.open()
+    root = connection.root()
+
+    if 'productos' not in root:
+        root['productos'] = {}
+
+    # Almacenar los productos en ZODB
+    for id_producto, producto in productos_dict.items():
+        root['productos'][id_producto] = producto
+
+    transaction.commit()  # Confirmar los cambios en ZODB
+    print("Productos almacenados en ZODB")
+
+    connection.close()
+    db_zodb.close()
+
+
+# 5. Función para mostrar los productos almacenados en ZODB
+def mostrar_productos_zodb():
+    storage = ZODB.FileStorage.FileStorage('productos.fs')  # Nombre del archivo de la base de datos ZODB
+    db_zodb = ZODB.DB(storage)
+    connection = db_zodb.open()
+    root = connection.root()
+
+    if 'productos' in root:
+        productos = root['productos']
+        print("Productos almacenados en ZODB:")
+        for id_producto, producto in productos.items():
+            print(f"ID: {producto.id}, Nombre: {producto.nombre}, Categoría: {producto.categoria}, Precio: {producto.precio}")
+    else:
+        print("No hay productos almacenados en ZODB.")
+
+    connection.close()
+    db_zodb.close()
+
+
+# 6. Función principal para ejecutar todo el proceso
+def main():
+    insertar_en_mysql()  # Insertar productos en MySQL
+    productos_dict = consultar_y_almacenar()  # Consultar y almacenar en un diccionario
+    almacenar_en_zodb(productos_dict)  # Almacenar los productos en ZODB
+    mostrar_productos_zodb()  # Mostrar los productos almacenados en ZODB
+
+
+# Ejecutar el proceso directamente
+main()

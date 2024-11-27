@@ -1,6 +1,7 @@
 import ZODB, ZODB.FileStorage
 import transaction
 from persistent import Persistent
+from peewee import fn
 
 # Establecer conexión a la base de datos
 storage = ZODB.FileStorage.FileStorage("2dam.fs")
@@ -56,21 +57,13 @@ def listar_motocicletas():
 
 
 
-# Función para filtrar motocicletas de un cliente específico usando root.items()
-def filtrar_motocicletas_por_cliente(clientes):
-    print("\n")
-    print(f"Mostrando motocicletas usadas por '{clientes}':")
 
-    for motocicletas in root['motocicletas'].values():
-        if motocicletas.id_cliente == clientes: # Verificamos que el cliente coincide
-            print(f"Marca: {motocicletas.marca}, Modelo: {motocicletas.modelo}, Precio: {motocicletas.precio}, Cilindrada: {motocicletas.cilindrada}, ID Cliente: {motocicletas.id_cliente}")
 
 
 # Llamar a la función para listar todas las motocicletas
 listar_motocicletas()
 
 # Filtrar motocicletas por un cliente específico, en este caso Cliente 1
-filtrar_motocicletas_por_cliente("Messi")
 
 # Cerrar la conexión a la base de datos ZODB
 connection.close()
