@@ -140,7 +140,7 @@ if __name__ == "__main__":
                 "marca": "Yamaha",
                 "cilindrada": "689cc",
                 "precio": 8500,
-                "año": 2022,
+                "año": 2022,    
             }
         )
         db_manager.confirmar_transaccion()
