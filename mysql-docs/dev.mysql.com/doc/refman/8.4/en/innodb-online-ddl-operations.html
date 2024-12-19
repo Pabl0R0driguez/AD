@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:47:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 17.12.1 Online DDL Operations</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="innodb-online-ddl.html" title="17.12 InnoDB and Online DDL" />
+<link rel="next" href="innodb-online-ddl-performance8dba.html?ff=nopfpls" title="17.12.2 Online DDL Performance and Concurrency" />
+<link rel="up" href="innodb-online-ddl.html" title="17.12 InnoDB and Online DDL" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7wzvq-f-de387b37e-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":53,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18893dbb","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5804,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730131563","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==SW0pO8SqbLOW7iurlPbx8AOf1WMIipe1pAinxdJ/PKFa519LkkMf+6PwT4Ftd2HfH8R6iK6bEPrwCn5toiWkElPb3FMXR/oL+dsFAF0017kl1pApTanQgklbftJQWN23vuUbqx3Tfou34LyLkP7u6YdYvZKN8LBTTt1H+7kJQdONFpchEvi2mVEWquHH5q5sa4kTD7lPNkLWH2k2dDcStxp1awfyn+v63OWuxfc7qIjV5Ly+u690Tm33J9vl3jicD5z0qGEkhjIyFB65RUIs7QPXuZbU8aTJHFXCfRrm/z1KNcrYjjE7TaoBqeWXrBCDHOh+jtM0vYi7ckTVv+Lfp+RJOulrM+Ui5B3qOAGcwrhVzbTIopgFLZ3YPZtH/+I11IyshhG8jt7aALi3O7ItBgDWiHR5M24lahDJZ6oqP4M=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Finnodb-online-ddl-operations.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="innodb-online-ddl.html"
+        aria-label="Previous" title="Previous: InnoDB and Online DDL"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="innodb-online-ddl.html" title="Up: InnoDB and Online DDL"><span class="icon-chevron-up"></span></a>
+    <a href="innodb-online-ddl-performance.html" aria-label="Next"
+        title="Next: Online DDL Performance and Concurrency"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-introduction.html">Introduction to InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benefits.html">Benefits of Using InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-best-practices.html">Best Practices for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-check-availability.html">Verifying that InnoDB is the Default Storage Engine</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benchmarking.html">Testing and Benchmarking with InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-acid.html">InnoDB and the ACID Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multi-versioning.html">InnoDB Multi-Versioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-architecture.html">InnoDB Architecture</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-in-memory-structures.html">InnoDB In-Memory Structures</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool.html">Buffer Pool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-change-buffer.html">Change Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-adaptive-hash.html">Adaptive Hash Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log-buffer.html">Log Buffer</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-on-disk-structures.html">InnoDB On-Disk Structures</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tables.html">Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-innodb-tables.html">Creating InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-create-table-external.html">Creating Tables Externally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-table-import.html">Importing InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-migration.html">Moving or Copying InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="converting-tables-to-innodb.html">Converting Tables from MyISAM to InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-auto-increment-handling.html">AUTO_INCREMENT Handling in InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-index-types.html">Clustered and Secondary Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-physical-structure.html">The Physical Structure of an InnoDB Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sorted-index-builds.html">Sorted Index Builds</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-fulltext-index.html">InnoDB Full-Text Indexes</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace.html">Tablespaces</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-system-tablespace.html">The System Tablespace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-per-table-tablespaces.html">File-Per-Table Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="general-tablespaces.html">General Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-tablespaces.html">Undo Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-temporary-tablespace.html">Temporary Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-moving-data-files-offline.html">Moving Tablespace Files While the Server is Offline</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disabling-tablespace-path-validation.html">Disabling Tablespace Path Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-optimize-tablespace-page-allocation.html">Optimizing Tablespace Space Allocation on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace-autoextend-size.html">Tablespace AUTOEXTEND_SIZE Configuration</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-doublewrite-buffer.html">Doublewrite Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log.html">Redo Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-logs.html">Undo Logs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-transaction-model.html">InnoDB Locking and Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking.html">InnoDB Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-model.html">InnoDB Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-isolation-levels.html">Transaction Isolation Levels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-autocommit-commit-rollback.html">autocommit, Commit, and Rollback</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-consistent-read.html">Consistent Nonlocking Reads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-reads.html">Locking Reads</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locks-set.html">Locks Set by Different SQL Statements in InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-next-key-locking.html">Phantom Rows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks.html">Deadlocks in InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-example.html">An InnoDB Deadlock Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-detection.html">Deadlock Detection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks-handling.html">How to Minimize and Handle Deadlocks</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-scheduling.html">Transaction Scheduling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-configuration.html">InnoDB Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-init-startup-configuration.html">InnoDB Startup Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-read-only-instance.html">Configuring InnoDB for Read-Only Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-buffer-pool.html">InnoDB Buffer Pool Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-resize.html">Configuring InnoDB Buffer Pool Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multiple-buffer-pools.html">Configuring Multiple Buffer Pool Instances</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-midpoint_insertion.html">Making the Buffer Pool Scan Resistant</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-read_ahead.html">Configuring InnoDB Buffer Pool Prefetching (Read-Ahead)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-flushing.html">Configuring Buffer Pool Flushing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-preload-buffer-pool.html">Saving and Restoring the Buffer Pool State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-in-core-file.html">Excluding or Including Buffer Pool Pages from Core Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-thread_concurrency.html">Configuring Thread Concurrency for InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-multiple_io_threads.html">Configuring the Number of Background InnoDB I/O Threads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-linux-native-aio.html">Using Asynchronous I/O on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-configuring-io-capacity.html">Configuring InnoDB I/O Capacity</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-spin_lock_polling.html">Configuring Spin Lock Polling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-purge-configuration.html">Purge Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-optimizer-statistics.html">Configuring Optimizer Statistics for InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-persistent-stats.html">Configuring Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-statistics-estimation.html">Configuring Non-Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-analyze-table-complexity.html">Estimating ANALYZE TABLE Complexity for InnoDB Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-page-merge-threshold.html">Configuring the Merge Threshold for Index Pages</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-dedicated-server.html">Enabling Automatic InnoDB Configuration for a Dedicated MySQL Server</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-compression.html">InnoDB Table and Page Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-table-compression.html">InnoDB Table Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-background.html">Overview of Table Compression</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-usage.html">Creating Compressed Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning.html">Tuning Compression for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning-monitoring.html">Monitoring InnoDB Table Compression at Runtime</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-internals.html">How Compression Works for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-compression-oltp.html">Compression for OLTP Workloads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-syntax-warnings.html">SQL Compression Syntax Warnings and Errors</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-page-compression.html">InnoDB Page Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-row-format.html">InnoDB Row Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-management.html">InnoDB Disk I/O and File Space Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-io.html">InnoDB Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-space.html">File Space Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-checkpoints.html">InnoDB Checkpoints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-defragmenting.html">Defragmenting a Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-truncate-table-reclaim-space.html">Reclaiming Disk Space with TRUNCATE TABLE</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl.html">InnoDB and Online DDL</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="innodb-online-ddl-operations.html">Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-performance.html">Online DDL Performance and Concurrency</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-space-requirements.html">Online DDL Space Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-memory-management.html">Online DDL Memory Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-parallel-thread-configuration.html">Configuring Parallel Threads for Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-single-multi.html">Simplifying DDL Statements with Online DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-failure-conditions.html">Online DDL Failure Conditions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-limitations.html">Online DDL Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-data-encryption.html">InnoDB Data-at-Rest Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-parameters.html">InnoDB Startup Options and System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema.html">InnoDB INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-compression-tables.html">InnoDB INFORMATION_SCHEMA Tables about Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmp.html">INNODB_CMP and INNODB_CMP_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmpmem.html">INNODB_CMPMEM and INNODB_CMPMEM_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples-compression-sect.html">Using the Compression Information Schema Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-transactions.html">InnoDB INFORMATION_SCHEMA Transaction and Locking Information</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples.html">Using InnoDB Transaction and Locking Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-understanding-innodb-locking.html">InnoDB Lock and Lock-Wait Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-internal-data.html">Persistence and Consistency of InnoDB Transaction and Locking
+Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-system-tables.html">InnoDB INFORMATION_SCHEMA Schema Object Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-fulltext_index-tables.html">InnoDB INFORMATION_SCHEMA FULLTEXT Index Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-buffer-pool-tables.html">InnoDB INFORMATION_SCHEMA Buffer Pool Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-metrics-table.html">InnoDB INFORMATION_SCHEMA Metrics Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-temp-table-info.html">InnoDB INFORMATION_SCHEMA Temporary Table Info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-files-table.html">Retrieving InnoDB Tablespace Metadata from INFORMATION_SCHEMA.FILES</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-schema.html">InnoDB Integration with MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-alter-table-performance-schema.html">Monitoring ALTER TABLE Progress for InnoDB Tables Using Performance
+      Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-innodb-mutex-waits-performance-schema.html">Monitoring InnoDB Mutex Waits Using Performance Schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-monitors.html">InnoDB Monitors</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-monitor-types.html">InnoDB Monitor Types</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-enabling-monitors.html">Enabling InnoDB Monitors</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-standard-monitor.html">InnoDB Standard Monitor and Lock Monitor Output</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-backup-recovery.html">InnoDB Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-backup.html">InnoDB Backup</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-recovery.html">InnoDB Recovery</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-and-mysql-replication.html">InnoDB and MySQL Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting.html">InnoDB Troubleshooting</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-creating-innodb.html">Troubleshooting InnoDB I/O Problems</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-recovery.html">Troubleshooting Recovery Failures</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="forcing-innodb-recovery.html">Forcing InnoDB Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-datadict.html">Troubleshooting InnoDB Data Dictionary Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-error-handling.html">InnoDB Error Handling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-limits.html">InnoDB Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-restrictions-limitations.html">InnoDB Restrictions and Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/innodb-online-ddl-operations.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/innodb-online-ddl-operations.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/innodb-online-ddl-operations.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/innodb-online-ddl-operations.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="innodb-storage-engine.html">The InnoDB Storage Engine</a> &nbsp;/&nbsp;
+                                                            <a href="innodb-online-ddl.html">InnoDB and Online DDL</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Online DDL Operations
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="innodb-online-ddl-operations"></a>17.12.1 Online DDL Operations</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105621350224"></a><p>
+      Online support details, syntax examples, and usage notes for DDL
+      operations are provided under the following topics in this
+      section.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-index-operations" title="Index Operations">Index Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-primary-key-operations" title="Primary Key Operations">Primary Key Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-column-operations" title="Column Operations">Column Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-generated-column-operations" title="Generated Column Operations">Generated Column Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-foreign-key-operations" title="Foreign Key Operations">Foreign Key Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-table-operations" title="Table Operations">Table Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-tablespace-operations" title="Tablespace Operations">Tablespace Operations</a></p></li><li class="listitem"><p><a class="xref" href="innodb-online-ddl-operations.html#online-ddl-partitioning" title="Partitioning Operations">Partitioning Operations</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h4 class="title"><a name="online-ddl-index-operations"></a>Index Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for index operations. An asterisk indicates additional
+        information, an exception, or a dependency. For details, see
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-index-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-index-operations-table"></a><p class="title"><b>Table 17.15 Online DDL Support for Index Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for index operations indicating whether the operation is performed in place, rebuilds the table, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Creating or adding a secondary index</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Dropping an index</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Renaming an index</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Adding a <code class="literal">FULLTEXT</code> index</th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>No*</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Adding a <code class="literal">SPATIAL</code> index</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Changing the index type</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-index-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Creating or adding a secondary index
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">CREATE INDEX <em class="replaceable">name</em> ON <em class="replaceable">table</em> (<em class="replaceable">col_list</em>);</code></pre><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ADD INDEX <em class="replaceable">name</em> (<em class="replaceable">col_list</em>);</code></pre><p>
+            The table remains available for read and write operations
+            while the index is being created. The
+            <a class="link" href="create-index.html" title="15.1.15 CREATE INDEX Statement"><code class="literal">CREATE INDEX</code></a> statement only
+            finishes after all transactions that are accessing the table
+            are completed, so that the initial state of the index
+            reflects the most recent contents of the table.
+          </p><p>
+            Online DDL support for adding secondary indexes means that
+            you can generally speed the overall process of creating and
+            loading a table and associated indexes by creating the table
+            without secondary indexes, then adding secondary indexes
+            after the data is loaded.
+          </p><p>
+            A newly created secondary index contains only the committed
+            data in the table at the time the
+            <a class="link" href="create-index.html" title="15.1.15 CREATE INDEX Statement"><code class="literal">CREATE INDEX</code></a> or
+            <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> statement
+            finishes executing. It does not contain any uncommitted
+            values, old versions of values, or values marked for
+            deletion but not yet removed from the old index.
+          </p><p>
+            Some factors affect the performance, space usage, and
+            semantics of this operation. For details, see
+            <a class="xref" href="innodb-online-ddl-limitations.html" title="17.12.8 Online DDL Limitations">Section 17.12.8, “Online DDL Limitations”</a>.
+          </p></li><li class="listitem"><p>
+            Dropping an index
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">DROP INDEX <em class="replaceable">name</em> ON <em class="replaceable">table</em>;</code></pre><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> DROP INDEX <em class="replaceable">name</em>;</code></pre><p>
+            The table remains available for read and write operations
+            while the index is being dropped. The
+            <a class="link" href="drop-index.html" title="15.1.27 DROP INDEX Statement"><code class="literal">DROP INDEX</code></a> statement only
+            finishes after all transactions that are accessing the table
+            are completed, so that the initial state of the index
+            reflects the most recent contents of the table.
+          </p></li><li class="listitem"><p>
+            Renaming an index
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> RENAME INDEX <em class="replaceable">old_index_name</em> TO <em class="replaceable">new_index_name</em>, ALGORITHM=INPLACE, LOCK=NONE;</code></pre></li><li class="listitem"><p>
+            Adding a <code class="literal">FULLTEXT</code> index
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">CREATE FULLTEXT INDEX <em class="replaceable">name</em> ON table(<em class="replaceable">column</em>);</code></pre><p>
+            Adding the first <code class="literal">FULLTEXT</code> index rebuilds
+            the table if there is no user-defined
+            <code class="literal">FTS_DOC_ID</code> column. Additional
+            <code class="literal">FULLTEXT</code> indexes may be added without
+            rebuilding the table.
+          </p></li><li class="listitem"><p>
+            Adding a <code class="literal">SPATIAL</code> index
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE geom (g GEOMETRY NOT NULL);
+ALTER TABLE geom ADD SPATIAL INDEX(g), ALGORITHM=INPLACE, LOCK=SHARED;</code></pre></li><li class="listitem"><p>
+            Changing the index type (<code class="literal">USING {BTREE |
+            HASH}</code>)
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> DROP INDEX i1, ADD INDEX i1(<em class="replaceable">key_part,...</em>) USING BTREE, ALGORITHM=INSTANT;</code></pre></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-primary-key-operations"></a>Primary Key Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for primary key operations. An asterisk indicates additional
+        information, an exception, or a dependency. See
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-primary-key-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-primary-key-operations-table"></a><p class="title"><b>Table 17.16 Online DDL Support for Primary Key Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for primary key operations indicating whether the operation is performed in place, rebuilds the table, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Adding a primary key</th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Dropping a primary key</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Dropping a primary key and adding another</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-primary-key-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Adding a primary key
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ADD PRIMARY KEY (<em class="replaceable">column</em>), ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Rebuilds the table in place. Data is reorganized
+            substantially, making it an expensive operation.
+            <code class="literal">ALGORITHM=INPLACE</code> is not permitted under
+            certain conditions if columns have to be converted to
+            <code class="literal">NOT NULL</code>.
+          </p><p>
+            Restructuring the
+            <a class="link" href="glossary.html#glos_clustered_index" title="clustered index">clustered index</a>
+            always requires copying of table data. Thus, it is best to
+            define the <a class="link" href="glossary.html#glos_primary_key" title="primary key">primary
+            key</a> when you create a table, rather than issuing
+            <code class="literal">ALTER TABLE ... ADD PRIMARY KEY</code> later.
+          </p><p>
+            When you create a <code class="literal">UNIQUE</code> or
+            <code class="literal">PRIMARY KEY</code> index, MySQL must do some
+            extra work. For <code class="literal">UNIQUE</code> indexes, MySQL
+            checks that the table contains no duplicate values for the
+            key. For a <code class="literal">PRIMARY KEY</code> index, MySQL also
+            checks that none of the <code class="literal">PRIMARY KEY</code>
+            columns contains a <code class="literal">NULL</code>.
+          </p><p>
+            
+
+            When you add a primary key using the
+            <code class="literal">ALGORITHM=COPY</code> clause, MySQL converts
+            <code class="literal">NULL</code> values in the associated columns to
+            default values: 0 for numbers, an empty string for
+            character-based columns and BLOBs, and 0000-00-00 00:00:00
+            for <code class="literal">DATETIME</code>. This is a non-standard
+            behavior that Oracle recommends you not rely on. Adding a
+            primary key using <code class="literal">ALGORITHM=INPLACE</code> is
+            only permitted when the
+            <a class="link" href="server-system-variables.html#sysvar_sql_mode"><code class="literal">SQL_MODE</code></a> setting includes
+            the <code class="literal">strict_trans_tables</code> or
+            <code class="literal">strict_all_tables</code> flags; when the
+            <code class="literal">SQL_MODE</code> setting is strict,
+            <code class="literal">ALGORITHM=INPLACE</code> is permitted, but the
+            statement can still fail if the requested primary key
+            columns contain <code class="literal">NULL</code> values. The
+            <code class="literal">ALGORITHM=INPLACE</code> behavior is more
+            standard-compliant.
+          </p><p>
+            If you create a table without a primary key,
+            <code class="literal">InnoDB</code> chooses one for you, which can be
+            the first <code class="literal">UNIQUE</code> key defined on
+            <code class="literal">NOT NULL</code> columns, or a system-generated
+            key. To avoid uncertainty and the potential space
+            requirement for an extra hidden column, specify the
+            <code class="literal">PRIMARY KEY</code> clause as part of the
+            <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE TABLE</code></a> statement.
+          </p><p>
+            MySQL creates a new clustered index by copying the existing
+            data from the original table to a temporary table that has
+            the desired index structure. Once the data is completely
+            copied to the temporary table, the original table is renamed
+            with a different temporary table name. The temporary table
+            comprising the new clustered index is renamed with the name
+            of the original table, and the original table is dropped
+            from the database.
+          </p><p>
+            The online performance enhancements that apply to operations
+            on secondary indexes do not apply to the primary key index.
+            The rows of an InnoDB table are stored in a
+            <a class="link" href="glossary.html#glos_clustered_index" title="clustered index">clustered index</a>
+            organized based on the
+            <a class="link" href="glossary.html#glos_primary_key" title="primary key">primary key</a>, forming
+            what some database systems call an <span class="quote">“<span class="quote">index-organized
+            table</span>”</span>. Because the table structure is closely tied
+            to the primary key, redefining the primary key still
+            requires copying the data.
+          </p><p>
+            When an operation on the primary key uses
+            <code class="literal">ALGORITHM=INPLACE</code>, even though the data
+            is still copied, it is more efficient than using
+            <code class="literal">ALGORITHM=COPY</code> because:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                No undo logging or associated redo logging is required
+                for <code class="literal">ALGORITHM=INPLACE</code>. These
+                operations add overhead to DDL statements that use
+                <code class="literal">ALGORITHM=COPY</code>.
+              </p></li><li class="listitem"><p>
+                The secondary index entries are pre-sorted, and so can
+                be loaded in order.
+              </p></li><li class="listitem"><p>
+                The change buffer is not used, because there are no
+                random-access inserts into the secondary indexes.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+            Dropping a primary key
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> DROP PRIMARY KEY, ALGORITHM=COPY;</code></pre><p>
+            Only <code class="literal">ALGORITHM=COPY</code> supports dropping a
+            primary key without adding a new one in the same
+            <code class="literal">ALTER TABLE</code> statement.
+          </p></li><li class="listitem"><p>
+            Dropping a primary key and adding another
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> DROP PRIMARY KEY, ADD PRIMARY KEY (<em class="replaceable">column</em>), ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Data is reorganized substantially, making it an expensive
+            operation.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-column-operations"></a>Column Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for column operations. An asterisk indicates additional
+        information, an exception, or a dependency. For details, see
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-column-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-column-operations-table"></a><p class="title"><b>Table 17.17 Online DDL Support for Column Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for column operations indicating whether the operation is performed in place, rebuilds the table, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Adding a column</th>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>No*</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Dropping a column</th>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Renaming a column</th>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Reordering columns</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Setting a column default value</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Changing the column data type</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Extending <code class="literal">VARCHAR</code> column size</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Dropping the column default value</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Changing the auto-increment value</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No*</td>
+          </tr><tr>
+            <th scope="row">Making a column <code class="literal">NULL</code></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Making a column <code class="literal">NOT NULL</code></th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Modifying the definition of an <code class="literal">ENUM</code> or
+              <code class="literal">SET</code> column</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-column-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Adding a column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ADD COLUMN <em class="replaceable">column_name</em> <em class="replaceable">column_definition</em>, ALGORITHM=INSTANT;</code></pre><p>
+            <code class="literal">INSTANT</code> is the default algorithm in MySQL
+            8.4.
+          </p><p>
+            The following limitations apply when the
+            <code class="literal">INSTANT</code> algorithm adds a column:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                A statement cannot combine the addition of a column with
+                other <code class="literal">ALTER TABLE</code> actions that do not
+                support the <code class="literal">INSTANT</code> algorithm.
+              </p></li><li class="listitem"><p>
+                The <code class="literal">INSTANT</code> algorithm can add a
+                column at any position in the table.
+              </p></li><li class="listitem"><p>
+                Columns cannot be added to tables that use
+                <code class="literal">ROW_FORMAT=COMPRESSED</code>, tables with a
+                <code class="literal">FULLTEXT</code> index, tables that reside in
+                the data dictionary tablespace, or temporary tables.
+                Temporary tables only support
+                <code class="literal">ALGORITHM=COPY</code>.
+              </p></li><li class="listitem"><p>
+                MySQL checks the row size when the
+                <code class="literal">INSTANT</code> algorithm adds a column, and
+                throws the following error if the addition exceeds the
+                limit.
+              </p><p>
+                <span class="errortext">ERROR 4092 (HY000): Column can't be added
+                with ALGORITHM=INSTANT as after this max possible row
+                size crosses max permissible row size. Try
+                ALGORITHM=INPLACE/COPY.</span>
+              </p></li><li class="listitem"><p>
+                The maximum number of columns in the internal
+                representation of the table cannot exceed 1022 after
+                column addition with the <code class="literal">INSTANT</code>
+                algorithm. The error message is:
+              </p><p>
+                <span class="errortext">ERROR 4158 (HY000): Column can't be added to
+                <em class="replaceable"><code>tbl_name</code></em> with
+                ALGORITHM=INSTANT anymore. Please try
+                ALGORITHM=INPLACE/COPY</span>
+              </p></li><li class="listitem"><p>
+                The <code class="literal">INSTANT</code> algorithm can not add or
+                drop columns to system schema tables, such as the
+                internal <code class="literal">mysql</code> table.
+              </p></li><li class="listitem"><p>
+                A column with a functional index cannot be dropped using
+                the <code class="literal">INSTANT</code> algorithm.
+</p></li></ul>
+</div>
+<p>
+            Multiple columns may be added in the same
+            <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> statement. For
+            example:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 ADD COLUMN c2 INT, ADD COLUMN c3 INT, ALGORITHM=INSTANT;</code></pre><p>
+            A new row version is created after each
+            <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE ...
+            ALGORITHM=INSTANT</code></a> operation that adds one or more
+            columns, drops one or more columns, or adds and drops one or
+            more columns in the same operation. The
+            <code class="literal">INFORMATION_SCHEMA.INNODB_TABLES.TOTAL_ROW_VERSIONS</code>
+            column tracks the number of row versions for a table. The
+            value is incremented each time a column is instantly added
+            or dropped. The initial value is 0.
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt;  SELECT NAME, TOTAL_ROW_VERSIONS FROM INFORMATION_SCHEMA.INNODB_TABLES 
+        WHERE NAME LIKE 'test/t1';
++---------+--------------------+
+| NAME    | TOTAL_ROW_VERSIONS |
++---------+--------------------+
+| test/t1 |                  0 |
++---------+--------------------+</code></pre><p>
+            When a table with instantly added or dropped columns is
+            rebuilt by table-rebuilding <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE
+            </code></a> or <a class="link" href="optimize-table.html" title="15.7.3.4 OPTIMIZE TABLE Statement"><code class="literal">OPTIMIZE TABLE</code></a>
+            operation, the <code class="literal">TOTAL_ROW_VERSIONS</code> value
+            is reset to 0. The maximum number of row versions permitted
+            is 64 (255 as of MySQL 9.1.0), as each row version requires
+            additional space for table metadata. When the row version
+            limit is reached, <code class="literal">ADD COLUMN</code> and
+            <code class="literal">DROP COLUMN</code> operations using
+            <code class="literal">ALGORITHM=INSTANT</code> are rejected with an
+            error message that recommends rebuilding the table using the
+            <code class="literal">COPY</code> or <code class="literal">INPLACE</code>
+            algorithm.
+          </p><p>
+            <span class="errortext">ERROR 4080 (HY000): Maximum row versions reached
+            for table test/t1. No more columns can be added or dropped
+            instantly. Please use COPY/INPLACE.</span>
+          </p><p>
+            The following
+            <a class="link" href="information-schema.html" title="Chapter 28 INFORMATION_SCHEMA Tables"><code class="literal">INFORMATION_SCHEMA</code></a> columns
+            provide additional metadata for instantly added columns.
+            Refer to the descriptions of those columns for more
+            information. See
+            <a class="xref" href="information-schema-innodb-columns-table.html" title="28.4.9 The INFORMATION_SCHEMA INNODB_COLUMNS Table">Section 28.4.9, “The INFORMATION_SCHEMA INNODB_COLUMNS Table”</a>,
+            and
+            <a class="xref" href="information-schema-innodb-tables-table.html" title="28.4.23 The INFORMATION_SCHEMA INNODB_TABLES Table">Section 28.4.23, “The INFORMATION_SCHEMA INNODB_TABLES Table”</a>.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                <code class="literal">INNODB_COLUMNS.DEFAULT_VALUE</code>
+              </p></li><li class="listitem"><p>
+                <code class="literal">INNODB_COLUMNS.HAS_DEFAULT</code>
+              </p></li><li class="listitem"><p>
+                <code class="literal">INNODB_TABLES.INSTANT_COLS</code>
+</p></li></ul>
+</div>
+<p>
+            Concurrent DML is not permitted when adding an
+            <a class="link" href="glossary.html#glos_auto_increment" title="auto-increment">auto-increment</a>
+            column. Data is reorganized substantially, making it an
+            expensive operation. At a minimum,
+            <code class="literal">ALGORITHM=INPLACE, LOCK=SHARED</code> is
+            required.
+          </p><p>
+            The table is rebuilt if <code class="literal">ALGORITHM=INPLACE</code>
+            is used to add a column.
+          </p></li><li class="listitem"><p>
+            Dropping a column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> DROP COLUMN <em class="replaceable">column_name</em>, ALGORITHM=INSTANT;</code></pre><p>
+            <code class="literal">INSTANT</code> is the default algorithm in MySQL
+            8.4.
+          </p><p>
+            The following limitations apply when the
+            <code class="literal">INSTANT</code> algorithm is used to drop a
+            column:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                Dropping a column cannot be combined in the same
+                statement with other <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+                TABLE</code></a> actions that do not support
+                <code class="literal">ALGORITHM=INSTANT</code>.
+              </p></li><li class="listitem"><p>
+                Columns cannot be dropped from tables that use
+                <code class="literal">ROW_FORMAT=COMPRESSED</code>, tables with a
+                <code class="literal">FULLTEXT</code> index, tables that reside in
+                the data dictionary tablespace, or temporary tables.
+                Temporary tables only support
+                <code class="literal">ALGORITHM=COPY</code>.
+</p></li></ul>
+</div>
+<p>
+            Multiple columns may be dropped in the same
+            <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> statement; for
+            example:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 DROP COLUMN c4, DROP COLUMN c5, ALGORITHM=INSTANT;</code></pre><p>
+            Each time a column is added or dropped using
+            <code class="literal">ALGORITHM=INSTANT</code>, a new row version is
+            created. The
+            <code class="literal">INFORMATION_SCHEMA.INNODB_TABLES.TOTAL_ROW_VERSIONS</code>
+            column tracks the number of row versions for a table. The
+            value is incremented each time a column is instantly added
+            or dropped. The initial value is 0.
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt;  SELECT NAME, TOTAL_ROW_VERSIONS FROM INFORMATION_SCHEMA.INNODB_TABLES 
+        WHERE NAME LIKE 'test/t1';
++---------+--------------------+
+| NAME    | TOTAL_ROW_VERSIONS |
++---------+--------------------+
+| test/t1 |                  0 |
++---------+--------------------+</code></pre><p>
+            When a table with instantly added or dropped columns is
+            rebuilt by table-rebuilding <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE
+            </code></a> or <a class="link" href="optimize-table.html" title="15.7.3.4 OPTIMIZE TABLE Statement"><code class="literal">OPTIMIZE TABLE</code></a>
+            operation, the <code class="literal">TOTAL_ROW_VERSIONS</code> value
+            is reset to 0. The maximum number of row versions permitted
+            is 64 (255 as of MySQL 9.1.0), as each row version requires
+            additional space for table metadata. When the row version
+            limit is reached, <code class="literal">ADD COLUMN</code> and
+            <code class="literal">DROP COLUMN</code> operations using
+            <code class="literal">ALGORITHM=INSTANT</code> are rejected with an
+            error message that recommends rebuilding the table using the
+            <code class="literal">COPY</code> or <code class="literal">INPLACE</code>
+            algorithm.
+          </p><p>
+            <span class="errortext">ERROR 4080 (HY000): Maximum row versions reached
+            for table test/t1. No more columns can be added or dropped
+            instantly. Please use COPY/INPLACE.</span>
+          </p><p>
+            If an algorithm other than
+            <code class="literal">ALGORITHM=INSTANT</code> is used, data is
+            reorganized substantially, making it an expensive operation.
+          </p></li><li class="listitem"><p>
+            Renaming a column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl</em> CHANGE <em class="replaceable">old_col_name</em> <em class="replaceable">new_col_name</em> <em class="replaceable">data_type</em>, ALGORITHM=INSTANT;</code></pre><p>
+            To permit concurrent DML, keep the same data type and only
+            change the column name.
+          </p><p>
+            When you keep the same data type and <code class="literal">[NOT]
+            NULL</code> attribute, only changing the column name, the
+            operation can always be performed online.
+          </p><p>
+            Renaming a column referenced from another table is only
+            permitted with <code class="literal">ALGORITHM=INPLACE</code>. If you
+            use <code class="literal">ALGORITHM=INSTANT</code>,
+            <code class="literal">ALGORITHM=COPY</code>, or some other condition
+            that causes the operation to use those algorithms, the
+            <code class="literal">ALTER TABLE</code> statement fails.
+          </p><p>
+            <code class="literal">ALGORITHM=INSTANT</code> supports renaming a
+            virtual column; <code class="literal">ALGORITHM=INPLACE</code> does
+            not.
+          </p><p>
+            <code class="literal">ALGORITHM=INSTANT</code> and
+            <code class="literal">ALGORITHM=INPLACE</code> do not support renaming
+            a column when adding or dropping a virtual column in the
+            same statement. In this case, only
+            <code class="literal">ALGORITHM=COPY</code> is supported.
+          </p></li><li class="listitem"><p>
+            Reordering columns
+          </p><p>
+            To reorder columns, use <code class="literal">FIRST</code> or
+            <code class="literal">AFTER</code> in <code class="literal">CHANGE</code> or
+            <code class="literal">MODIFY</code> operations.
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> MODIFY COLUMN <em class="replaceable">col_name</em> <em class="replaceable">column_definition</em> FIRST, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Data is reorganized substantially, making it an expensive
+            operation.
+          </p></li><li class="listitem"><p>
+            Changing the column data type
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> CHANGE c1 c1 BIGINT, ALGORITHM=COPY;</code></pre><p>
+            Changing the column data type is only supported with
+            <code class="literal">ALGORITHM=COPY</code>.
+          </p></li><li class="listitem"><p>
+            Extending <code class="literal">VARCHAR</code> column size
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> CHANGE COLUMN c1 c1 VARCHAR(255), ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            The number of length bytes required by a
+            <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> column must remain
+            the same. For <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> columns
+            of 0 to 255 bytes in size, one length byte is required to
+            encode the value. For <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a>
+            columns of 256 bytes in size or more, two length bytes are
+            required. As a result, in-place <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+            TABLE</code></a> only supports increasing
+            <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> column size from 0 to
+            255 bytes, or from 256 bytes to a greater size. In-place
+            <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> does not support
+            increasing the size of a
+            <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> column from less than
+            256 bytes to a size equal to or greater than 256 bytes. In
+            this case, the number of required length bytes changes from
+            1 to 2, which is only supported by a table copy
+            (<code class="literal">ALGORITHM=COPY</code>). For example, attempting
+            to change <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> column size
+            for a single byte character set from VARCHAR(255) to
+            VARCHAR(256) using in-place <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+            TABLE</code></a> returns this error:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ALGORITHM=INPLACE, CHANGE COLUMN c1 c1 VARCHAR(256);
+ERROR 0A000: ALGORITHM=INPLACE is not supported. Reason: Cannot change
+column type INPLACE. Try ALGORITHM=COPY.</code></pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+              The byte length of a <code class="literal">VARCHAR</code> column is
+              dependant on the byte length of the character set.
+</p>
+</div>
+<p>
+            Decreasing <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> size using
+            in-place <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> is not
+            supported. Decreasing <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a>
+            size requires a table copy
+            (<code class="literal">ALGORITHM=COPY</code>).
+          </p></li><li class="listitem"><p>
+            Setting a column default value
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ALTER COLUMN <em class="replaceable">col</em> SET DEFAULT <em class="replaceable">literal</em>, ALGORITHM=INSTANT;</code></pre><p>
+            Only modifies table metadata. Default column values are
+            stored in the <a class="link" href="glossary.html#glos_data_dictionary" title="data dictionary">data
+            dictionary</a>.
+          </p></li><li class="listitem"><p>
+            Dropping a column default value
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl</em> ALTER COLUMN <em class="replaceable">col</em> DROP DEFAULT, ALGORITHM=INSTANT;</code></pre></li><li class="listitem"><p>
+            Changing the auto-increment value
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">table</em> AUTO_INCREMENT=<em class="replaceable">next_value</em>, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Modifies a value stored in memory, not the data file.
+          </p><p>
+            In a distributed system using replication or sharding, you
+            sometimes reset the auto-increment counter for a table to a
+            specific value. The next row inserted into the table uses
+            the specified value for its auto-increment column. You might
+            also use this technique in a data warehousing environment
+            where you periodically empty all the tables and reload them,
+            and restart the auto-increment sequence from 1.
+          </p></li><li class="listitem"><p>
+            Making a column <code class="literal">NULL</code>
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE tbl_name MODIFY COLUMN <em class="replaceable">column_name</em> <em class="replaceable">data_type</em> NULL, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Rebuilds the table in place. Data is reorganized
+            substantially, making it an expensive operation.
+          </p></li><li class="listitem"><p>
+            Making a column <code class="literal">NOT NULL</code>
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> MODIFY COLUMN <em class="replaceable">column_name</em> <em class="replaceable">data_type</em> NOT NULL, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Rebuilds the table in place.
+            <code class="literal">STRICT_ALL_TABLES</code> or
+            <code class="literal">STRICT_TRANS_TABLES</code>
+            <a class="link" href="server-system-variables.html#sysvar_sql_mode"><code class="literal">SQL_MODE</code></a> is required for
+            the operation to succeed. The operation fails if the column
+            contains NULL values. The server prohibits changes to
+            foreign key columns that have the potential to cause loss of
+            referential integrity. See <a class="xref" href="alter-table.html" title="15.1.9 ALTER TABLE Statement">Section 15.1.9, “ALTER TABLE Statement”</a>.
+            Data is reorganized substantially, making it an expensive
+            operation.
+          </p></li><li class="listitem"><p>
+            Modifying the definition of an <code class="literal">ENUM</code> or
+            <code class="literal">SET</code> column
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE t1 (c1 ENUM('a', 'b', 'c'));
+ALTER TABLE t1 MODIFY COLUMN c1 ENUM('a', 'b', 'c', 'd'), ALGORITHM=INSTANT;</code></pre><p>
+            Modifying the definition of an
+            <a class="link" href="enum.html" title="13.3.5 The ENUM Type"><code class="literal">ENUM</code></a> or
+            <a class="link" href="set.html" title="13.3.6 The SET Type"><code class="literal">SET</code></a> column by adding new
+            enumeration or set members to the <span class="emphasis"><em>end</em></span>
+            of the list of valid member values may be performed
+            instantly or in place, as long as the storage size of the
+            data type does not change. For example, adding a member to a
+            <a class="link" href="set.html" title="13.3.6 The SET Type"><code class="literal">SET</code></a> column that has 8 members
+            changes the required storage per value from 1 byte to 2
+            bytes; this requires a table copy. Adding members in the
+            middle of the list causes renumbering of existing members,
+            which requires a table copy.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-generated-column-operations"></a>Generated Column Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for generated column operations. For details, see
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-generated-column-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-generated-column-operations-table"></a><p class="title"><b>Table 17.18 Online DDL Support for Generated Column Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for generated column operations indicating whether the operation is performed in place, rebuilds the table, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Adding a <code class="literal">STORED</code> column</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Modifying <code class="literal">STORED</code> column order</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Dropping a <code class="literal">STORED</code> column</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Adding a <code class="literal">VIRTUAL</code> column</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Modifying <code class="literal">VIRTUAL</code> column order</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Dropping a <code class="literal">VIRTUAL</code> column</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-generated-column-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Adding a <code class="literal">STORED</code> column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 ADD COLUMN (c2 INT GENERATED ALWAYS AS (c1 + 1) STORED), ALGORITHM=COPY;</code></pre><p>
+            <code class="literal">ADD COLUMN</code> is not an in-place operation
+            for stored columns (done without using a temporary table)
+            because the expression must be evaluated by the server.
+          </p></li><li class="listitem"><p>
+            Modifying <code class="literal">STORED</code> column order
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 MODIFY COLUMN c2 INT GENERATED ALWAYS AS (c1 + 1) STORED FIRST, ALGORITHM=COPY;</code></pre><p>
+            Rebuilds the table in place.
+          </p></li><li class="listitem"><p>
+            Dropping a <code class="literal">STORED</code> column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 DROP COLUMN c2, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Rebuilds the table in place.
+          </p></li><li class="listitem"><p>
+            Adding a <code class="literal">VIRTUAL</code> column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 ADD COLUMN (c2 INT GENERATED ALWAYS AS (c1 + 1) VIRTUAL), ALGORITHM=INSTANT;</code></pre><p>
+            Adding a virtual column can be performed instantly or in
+            place for non-partitioned tables.
+          </p><p>
+            Adding a <code class="literal">VIRTUAL</code> is not an in-place
+            operation for partitioned tables.
+          </p></li><li class="listitem"><p>
+            Modifying <code class="literal">VIRTUAL</code> column order
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 MODIFY COLUMN c2 INT GENERATED ALWAYS AS (c1 + 1) VIRTUAL FIRST, ALGORITHM=COPY;</code></pre></li><li class="listitem"><p>
+            Dropping a <code class="literal">VIRTUAL</code> column
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE t1 DROP COLUMN c2, ALGORITHM=INSTANT;</code></pre><p>
+            Dropping a <code class="literal">VIRTUAL</code> column can be
+            performed instantly or in place for non-partitioned tables.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-foreign-key-operations"></a>Foreign Key Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for foreign key operations. An asterisk indicates additional
+        information, an exception, or a dependency. For details, see
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-foreign-key-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-foreign-key-operations-table"></a><p class="title"><b>Table 17.19 Online DDL Support for Foreign Key Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for foreign key operations indicating whether the operation is performed in place, rebuilds the table, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Adding a foreign key constraint</th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Dropping a foreign key constraint</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-foreign-key-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Adding a foreign key constraint
+          </p><p>
+            The <code class="literal">INPLACE</code> algorithm is supported when
+            <a class="link" href="server-system-variables.html#sysvar_foreign_key_checks"><code class="literal">foreign_key_checks</code></a> is
+            disabled. Otherwise, only the <code class="literal">COPY</code>
+            algorithm is supported.
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl1</em> ADD CONSTRAINT <em class="replaceable">fk_name</em> FOREIGN KEY <em class="replaceable">index</em> (<em class="replaceable">col1</em>)
+  REFERENCES <em class="replaceable">tbl2</em>(<em class="replaceable">col2</em>) <em class="replaceable">referential_actions</em>;</code></pre></li><li class="listitem"><p>
+            Dropping a foreign key constraint
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl</em> DROP FOREIGN KEY <em class="replaceable">fk_name</em>;</code></pre><p>
+            Dropping a foreign key can be performed online with the
+            <a class="link" href="server-system-variables.html#sysvar_foreign_key_checks"><code class="literal">foreign_key_checks</code></a> option
+            enabled or disabled.
+          </p><p>
+            If you do not know the names of the foreign key constraints
+            on a particular table, issue the following statement and
+            find the constraint name in the
+            <code class="literal">CONSTRAINT</code> clause for each foreign key:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SHOW CREATE TABLE <em class="replaceable">table</em>\G</code></pre><p>
+            Or, query the Information Schema
+            <a class="link" href="information-schema-table-constraints-table.html" title="28.3.41 The INFORMATION_SCHEMA TABLE_CONSTRAINTS Table"><code class="literal">TABLE_CONSTRAINTS</code></a> table and use
+            the <code class="literal">CONSTRAINT_NAME</code> and
+            <code class="literal">CONSTRAINT_TYPE</code> columns to identify the
+            foreign key names.
+          </p><p>
+            You can also drop a foreign key and its associated index in
+            a single statement:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">table</em> DROP FOREIGN KEY <em class="replaceable">constraint</em>, DROP INDEX <em class="replaceable">index</em>;</code></pre></li></ul>
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+          If <a class="link" href="glossary.html#glos_foreign_key" title="foreign key">foreign keys</a> are
+          already present in the table being altered (that is, it is a
+          <a class="link" href="glossary.html#glos_child_table" title="child table">child table</a> containing
+          a <code class="literal">FOREIGN KEY ... REFERENCE</code> clause),
+          additional restrictions apply to online DDL operations, even
+          those not directly involving the foreign key columns:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              An <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> on the child
+              table could wait for another transaction to commit, if a
+              change to the parent table causes associated changes in
+              the child table through an <code class="literal">ON UPDATE</code> or
+              <code class="literal">ON DELETE</code> clause using the
+              <code class="literal">CASCADE</code> or <code class="literal">SET NULL</code>
+              parameters.
+            </p></li><li class="listitem"><p>
+              In the same way, if a table is the
+              <a class="link" href="glossary.html#glos_parent_table" title="parent table">parent table</a> in a
+              foreign key relationship, even though it does not contain
+              any <code class="literal">FOREIGN KEY</code> clauses, it could wait
+              for the <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> to
+              complete if an <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>,
+              <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a>, or
+              <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a> statement causes an
+              <code class="literal">ON UPDATE</code> or <code class="literal">ON
+              DELETE</code> action in the child table.
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-table-operations"></a>Table Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for table operations. An asterisk indicates additional
+        information, an exception, or a dependency. For details, see
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-table-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-table-operations-table"></a><p class="title"><b>Table 17.20 Online DDL Support for Table Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for table operations indicating whether the operation is performed in place, rebuilds the table, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Changing the <code class="literal">ROW_FORMAT</code></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Changing the <code class="literal">KEY_BLOCK_SIZE</code></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Setting persistent table statistics</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Specifying a character set</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Converting a character set</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>No</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Optimizing a table</th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Rebuilding with the <code class="literal">FORCE</code> option</th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Performing a null rebuild</th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Renaming a table</th>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-table-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Changing the <code class="literal">ROW_FORMAT</code>
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ROW_FORMAT = <em class="replaceable">row_format</em>, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Data is reorganized substantially, making it an expensive
+            operation.
+          </p><p>
+            For additional information about the
+            <code class="literal">ROW_FORMAT</code> option, see
+            <a class="xref" href="create-table.html#create-table-options" title="Table Options">Table Options</a>.
+          </p></li><li class="listitem"><p>
+            Changing the <code class="literal">KEY_BLOCK_SIZE</code>
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> KEY_BLOCK_SIZE = <em class="replaceable">value</em>, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Data is reorganized substantially, making it an expensive
+            operation.
+          </p><p>
+            For additional information about the
+            <code class="literal">KEY_BLOCK_SIZE</code> option, see
+            <a class="xref" href="create-table.html#create-table-options" title="Table Options">Table Options</a>.
+          </p></li><li class="listitem"><p>
+            Setting persistent table statistics options
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> STATS_PERSISTENT=0, STATS_SAMPLE_PAGES=20, STATS_AUTO_RECALC=1, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Only modifies table metadata.
+          </p><p>
+            Persistent statistics include
+            <code class="literal">STATS_PERSISTENT</code>,
+            <code class="literal">STATS_AUTO_RECALC</code>, and
+            <code class="literal">STATS_SAMPLE_PAGES</code>. For more information,
+            see <a class="xref" href="innodb-persistent-stats.html" title="17.8.10.1 Configuring Persistent Optimizer Statistics Parameters">Section 17.8.10.1, “Configuring Persistent Optimizer Statistics Parameters”</a>.
+          </p></li><li class="listitem"><p>
+            Specifying a character set
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> CHARACTER SET = <em class="replaceable">charset_name</em>, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Rebuilds the table if the new character encoding is
+            different.
+          </p></li><li class="listitem"><p>
+            Converting a character set
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> CONVERT TO CHARACTER SET <em class="replaceable">charset_name</em>, ALGORITHM=COPY;</code></pre><p>
+            Rebuilds the table if the new character encoding is
+            different.
+          </p></li><li class="listitem"><p>
+            Optimizing a table
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">OPTIMIZE TABLE <em class="replaceable">tbl_name</em>;</code></pre><p>
+            In-place operation is not supported for tables with
+            <code class="literal">FULLTEXT</code> indexes. The operation uses the
+            <code class="literal">INPLACE</code> algorithm, but
+            <code class="literal">ALGORITHM</code> and <code class="literal">LOCK</code>
+            syntax is not permitted.
+          </p></li><li class="listitem"><p>
+            Rebuilding a table with the <code class="literal">FORCE</code> option
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> FORCE, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Uses <code class="literal">ALGORITHM=INPLACE</code> as of MySQL
+            5.6.17<code class="literal"></code>. <code class="literal">ALGORITHM=INPLACE</code> is
+            not supported for tables with <code class="literal">FULLTEXT</code>
+            indexes.
+          </p></li><li class="listitem"><p>
+            Performing a "null" rebuild
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ENGINE=InnoDB, ALGORITHM=INPLACE, LOCK=NONE;</code></pre><p>
+            Uses <code class="literal">ALGORITHM=INPLACE</code> as of MySQL
+            5.6.17. <code class="literal">ALGORITHM=INPLACE</code> is not
+            supported for tables with <code class="literal">FULLTEXT</code>
+            indexes.
+          </p></li><li class="listitem"><p>
+            Renaming a table
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">old_tbl_name</em> RENAME TO <em class="replaceable">new_tbl_name</em>, ALGORITHM=INSTANT;</code></pre><p>
+            Renaming a table can be performed instantly or in place.
+            MySQL renames files that correspond to the table
+            <em class="replaceable"><code>tbl_name</code></em> without making a copy.
+            (You can also use the <a class="link" href="rename-table.html" title="15.1.36 RENAME TABLE Statement"><code class="literal">RENAME
+            TABLE</code></a> statement to rename tables. See
+            <a class="xref" href="rename-table.html" title="15.1.36 RENAME TABLE Statement">Section 15.1.36, “RENAME TABLE Statement”</a>.) Privileges granted
+            specifically for the renamed table are not migrated to the
+            new name. They must be changed manually.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-tablespace-operations"></a>Tablespace Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following table provides an overview of online DDL support
+        for tablespace operations. For details, see
+        <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-tablespace-syntax-notes" title="Syntax and Usage Notes">Syntax and Usage Notes</a>.
+</p>
+<div class="table">
+<a name="online-ddl-tablespace-operations-table"></a><p class="title"><b>Table 17.21 Online DDL Support for Tablespace Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for tablespace operations indicating whether the operation is performed in place, rebuilds tables within the tablespace, permits concurrent DML, or only modifies metadata."><col style="width: 16%" align="left"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><col style="width: 16%" align="center"><thead><tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Rebuilds Table</th>
+            <th scope="col">Permits Concurrent DML</th>
+            <th scope="col">Only Modifies Metadata</th>
+          </tr></thead><tbody><tr>
+            <th scope="row">Renaming a general tablespace</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr><tr>
+            <th scope="row">Enabling or disabling general tablespace encryption</th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr><tr>
+            <th scope="row">Enabling or disabling file-per-table tablespace encryption</th>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<h5><a name="online-ddl-tablespace-syntax-notes"></a>Syntax and Usage Notes</h5>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Renaming a general tablespace
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLESPACE <em class="replaceable">tablespace_name</em> RENAME TO <em class="replaceable">new_tablespace_name</em>;</code></pre><p>
+            <a class="link" href="alter-tablespace.html" title="15.1.10 ALTER TABLESPACE Statement"><code class="literal">ALTER
+            TABLESPACE ... RENAME TO</code></a> uses the
+            <code class="literal">INPLACE</code> algorithm but does not support
+            the <code class="literal">ALGORITHM</code> clause.
+          </p></li><li class="listitem"><p>
+            Enabling or disabling general tablespace encryption
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLESPACE <em class="replaceable">tablespace_name</em> ENCRYPTION='Y';</code></pre><p>
+            <a class="link" href="alter-tablespace.html" title="15.1.10 ALTER TABLESPACE Statement"><code class="literal">ALTER
+            TABLESPACE ... ENCRYPTION</code></a> uses the
+            <code class="literal">INPLACE</code> algorithm but does not support
+            the <code class="literal">ALGORITHM</code> clause.
+          </p><p>
+            For related information, see
+            <a class="xref" href="innodb-data-encryption.html" title="17.13 InnoDB Data-at-Rest Encryption">Section 17.13, “InnoDB Data-at-Rest Encryption”</a>.
+          </p></li><li class="listitem"><p>
+            Enabling or disabling file-per-table tablespace encryption
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER TABLE <em class="replaceable">tbl_name</em> ENCRYPTION='Y', ALGORITHM=COPY;</code></pre><p>
+            For related information, see
+            <a class="xref" href="innodb-data-encryption.html" title="17.13 InnoDB Data-at-Rest Encryption">Section 17.13, “InnoDB Data-at-Rest Encryption”</a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="online-ddl-partitioning"></a>Partitioning Operations</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        With the exception of some <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+        TABLE</code></a> partitioning clauses, online DDL operations for
+        partitioned <code class="literal">InnoDB</code> tables follow the same
+        rules that apply to regular <code class="literal">InnoDB</code> tables.
+      </p><p>
+        Some <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> partitioning
+        clauses do not go through the same internal online DDL API as
+        regular non-partitioned <code class="literal">InnoDB</code> tables. As a
+        result, online support for <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+        TABLE</code></a> partitioning clauses varies.
+      </p><p>
+        The following table shows the online status for each
+        <code class="literal">ALTER TABLE</code> partitioning statement.
+        Regardless of the online DDL API that is used, MySQL attempts to
+        minimize data copying and locking where possible.
+      </p><p>
+        <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> partitioning options
+        that use <code class="literal">ALGORITHM=COPY</code> or that only permit
+        <span class="quote">“<span class="quote"><code class="literal">ALGORITHM=DEFAULT,
+        LOCK=DEFAULT</code></span>”</span>, repartition the table using the
+        <code class="literal">COPY</code> algorithm. In other words, a new
+        partitioned table is created with the new partitioning scheme.
+        The newly created table includes any changes applied by the
+        <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> statement, and table
+        data is copied into the new table structure.
+</p>
+<div class="table">
+<a name="innodb-online-ddl-partitioning-clauses"></a><p class="title"><b>Table 17.22 Online DDL Support for Partitioning Operations</b></p>
+<div class="table-contents">
+<table summary="Online DDL support for partitioning operations indicating whether the operation is performed in place and permits concurrent DML."><col style="width: 24%" align="left"><col style="width: 8%" align="center"><col style="width: 8%" align="center"><col style="width: 12%" align="center"><col style="width: 32%" align="left"><thead><tr>
+            <th scope="col">Partitioning Clause</th>
+            <th scope="col">Instant</th>
+            <th scope="col">In Place</th>
+            <th scope="col">Permits DML</th>
+            <th scope="col">Notes</th>
+          </tr></thead><tbody><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">PARTITION BY</code></a></th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Permits <code class="literal">ALGORITHM=COPY</code>,
+              <code class="literal">LOCK={DEFAULT|SHARED|EXCLUSIVE}</code></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ADD PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes*</td>
+            <td><code class="literal">ALGORITHM=INPLACE,
+              LOCK={DEFAULT|NONE|SHARED|EXCLUSISVE}</code> is
+              supported for <code class="literal">RANGE</code> and
+              <code class="literal">LIST</code> partitions,
+              <code class="literal">ALGORITHM=INPLACE,
+              LOCK={DEFAULT|SHARED|EXCLUSISVE}</code> for
+              <code class="literal">HASH</code> and <code class="literal">KEY</code>
+              partitions, and <code class="literal">ALGORITHM=COPY,
+              LOCK={SHARED|EXCLUSIVE}</code> for all partition types.
+              Does not copy existing data for tables partitioned by
+              <code class="literal">RANGE</code> or <code class="literal">LIST</code>.
+              Concurrent queries are permitted with
+              <code class="literal">ALGORITHM=COPY</code> for tables partitioned
+              by <code class="literal">HASH</code> or <code class="literal">LIST</code>, as
+              MySQL copies the data while holding a shared lock.</td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">DROP PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>Yes*</td>
+            <td><p>
+                <code class="literal">ALGORITHM=INPLACE,
+                LOCK={DEFAULT|NONE|SHARED|EXCLUSIVE}</code> is
+                supported. Does not copy data for tables partitioned by
+                <code class="literal">RANGE</code> or <code class="literal">LIST</code>.
+              </p><p>
+                <code class="literal">DROP PARTITION</code> with
+                <code class="literal">ALGORITHM=INPLACE</code> deletes data stored
+                in the partition and drops the partition. However,
+                <code class="literal">DROP PARTITION</code> with
+                <code class="literal">ALGORITHM=COPY</code> or
+                <a class="link" href="server-system-variables.html#sysvar_old_alter_table"><code class="literal">old_alter_table=ON</code></a>
+                rebuilds the partitioned table and attempts to move data
+                from the dropped partition to another partition with a
+                compatible <code class="literal">PARTITION ... VALUES</code>
+                definition. Data that cannot be moved to another
+                partition is deleted.
+              </p></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">DISCARD PARTITION</code></a></th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Only permits <code class="literal">ALGORITHM=DEFAULT</code>,
+              <code class="literal">LOCK=DEFAULT</code></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">IMPORT PARTITION</code></a></th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Only permits <code class="literal">ALGORITHM=DEFAULT</code>,
+              <code class="literal">LOCK=DEFAULT</code></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">TRUNCATE
+              PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Does not copy existing data. It merely deletes rows; it does not alter
+              the definition of the table itself, or of any of its
+              partitions.</td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">COALESCE
+              PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>No</td>
+            <td><code class="literal">ALGORITHM=INPLACE, LOCK={DEFAULT|SHARED|EXCLUSIVE}</code> is
+              supported.</td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">REORGANIZE
+              PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>No</td>
+            <td><code class="literal">ALGORITHM=INPLACE, LOCK={DEFAULT|SHARED|EXCLUSIVE}</code> is
+              supported.</td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">EXCHANGE
+              PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ANALYZE PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">CHECK PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">OPTIMIZE
+              PARTITION</code></a></th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td><code class="literal">ALGORITHM</code> and <code class="literal">LOCK</code> clauses are
+              ignored. Rebuilds the entire table. See
+              <a class="xref" href="partitioning-maintenance.html" title="26.3.4 Maintenance of Partitions">Section 26.3.4, “Maintenance of Partitions”</a>.</td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">REBUILD PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes*</td>
+            <td>No</td>
+            <td><code class="literal">ALGORITHM=INPLACE, LOCK={DEFAULT|SHARED|EXCLUSIVE}</code> is
+              supported.</td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">REPAIR PARTITION</code></a></th>
+            <td>No</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td></td>
+          </tr><tr>
+            <th scope="row"><a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">REMOVE
+              PARTITIONING</code></a></th>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Permits <code class="literal">ALGORITHM=COPY</code>,
+              <code class="literal">LOCK={DEFAULT|SHARED|EXCLUSIVE}</code></td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break"><p>
+        Non-partitioning online <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+        TABLE</code></a> operations on partitioned tables follow the same
+        rules that apply to regular tables. However,
+        <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> performs online
+        operations on each table partition, which causes increased
+        demand on system resources due to operations being performed on
+        multiple partitions.
+      </p><p>
+        For additional information about <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER
+        TABLE</code></a> partitioning clauses, see
+        <a class="xref" href="alter-table.html#alter-table-partition-options" title="Partitioning Options">Partitioning Options</a>, and
+        <a class="xref" href="alter-table-partition-operations.html" title="15.1.9.1 ALTER TABLE Partition Operations">Section 15.1.9.1, “ALTER TABLE Partition Operations”</a>. For
+        information about partitioning in general, see
+        <a class="xref" href="partitioning.html" title="Chapter 26 Partitioning">Chapter 26, <i>Partitioning</i></a>.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="innodb-online-ddl.html"
+        aria-label="Previous" title="Previous: InnoDB and Online DDL"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="innodb-online-ddl.html" title="Up: InnoDB and Online DDL"> UP</a> &nbsp;
+    <a href="innodb-online-ddl-performance.html" aria-label="Next"
+        title="Next: Online DDL Performance and Concurrency">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:48:00 GMT -->
+</html>

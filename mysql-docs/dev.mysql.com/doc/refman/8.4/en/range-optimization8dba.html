@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/range-optimization.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 10.2.1.2 Range Optimization</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="where-optimization.html" title="10.2.1.1 WHERE Clause Optimization" />
+<link rel="next" href="index-merge-optimization8dba.html?ff=nopfpls" title="10.2.1.3 Index Merge Optimization" />
+<link rel="up" href="select-optimization.html" title="10.2.1 Optimizing SELECT Statements" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7ynba-f-fbe0cff42-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":211,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"191b7165","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5949,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134850","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==LkXPeQl9kHJNAenyGp1FjS8xdJkJvOX7NF20MscgXRpzDPY6a98aTlpR1JxspyTEudtnffOL53WN105voCeFIc8GZEpKMYWA5hpebN6J4X/j+HJV8sWVRBP2yIQ+cxtfJaiC2oceKVzYJrggYJhbmijJmXy/wBf10fi8pTc/NhZQlCnUl/86NIVFdXQYAchs+c+mF4TCJdxyPH/Al5nXWctzDbuVIeZWQInUxfqMP3uYyZ2GdhVIZVJkeygYF7o4Oc+HkOdhiER4eAH+kmBLRX9zINDzVVZCWA1vAudtVOOhAxsO8TY3RGBz7HkCqbIC51gIcDTZYXf5f+L5igf1LA4F5H1vhCVWqMQIcJUcYgV58HSxIyuDdVojLBCC/yJTzLBP6HUlce/VofQmEN6vbrry8+ld04cxF8oKspMLnNQ=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Frange-optimization.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="where-optimization.html"
+        aria-label="Previous" title="Previous: WHERE Clause Optimization"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="select-optimization.html" title="Up: Optimizing SELECT Statements"><span class="icon-chevron-up"></span></a>
+    <a href="index-merge-optimization.html" aria-label="Next"
+        title="Next: Index Merge Optimization"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-overview.html">Optimization Overview</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="statement-optimization.html">Optimizing SQL Statements</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="select-optimization.html">Optimizing SELECT Statements</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="where-optimization.html">WHERE Clause Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="range-optimization.html">Range Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-merge-optimization.html">Index Merge Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="hash-joins.html">Hash Join Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="engine-condition-pushdown-optimization.html">Engine Condition Pushdown Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-condition-pushdown-optimization.html">Index Condition Pushdown Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nested-loop-joins.html">Nested-Loop Join Algorithms</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nested-join-optimization.html">Nested Join Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="outer-join-optimization.html">Outer Join Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="outer-join-simplification.html">Outer Join Simplification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mrr-optimization.html">Multi-Range Read Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="bnl-bka-optimization.html">Block Nested-Loop and Batched Key Access Joins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="condition-filtering.html">Condition Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="constant-folding-optimization.html">Constant-Folding Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="is-null-optimization.html">IS NULL Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="order-by-optimization.html">ORDER BY Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-by-optimization.html">GROUP BY Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="distinct-optimization.html">DISTINCT Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="limit-optimization.html">LIMIT Query Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="function-optimization.html">Function Call Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="window-function-optimization.html">Window Function Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="row-constructor-optimization.html">Row Constructor Expression Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-scan-avoidance.html">Avoiding Full Table Scans</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="subquery-optimization.html">Optimizing Subqueries, Derived Tables, View References, and Common Table
+        Expressions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="semijoins-antijoins.html">Optimizing IN and EXISTS Subquery Predicates with Semijoin and Antijoin
+          Transformations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="subquery-materialization.html">Optimizing Subqueries with Materialization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="subquery-optimization-with-exists.html">Optimizing Subqueries with the EXISTS Strategy</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="derived-table-optimization.html">Optimizing Derived Tables, View References, and Common Table Expressions
+with Merging or Materialization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="derived-condition-pushdown-optimization.html">Derived Condition Pushdown Optimization</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="information-schema-optimization.html">Optimizing INFORMATION_SCHEMA Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-optimization.html">Optimizing Performance Schema Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-change-optimization.html">Optimizing Data Change Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="insert-optimization.html">Optimizing INSERT Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="update-optimization.html">Optimizing UPDATE Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="delete-optimization.html">Optimizing DELETE Statements</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="permission-optimization.html">Optimizing Database Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="miscellaneous-optimization-tips.html">Other Optimization Tips</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization-indexes.html">Optimization and Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-indexes.html">How MySQL Uses Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="primary-key-optimization.html">Primary Key Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="spatial-index-optimization.html">SPATIAL Index Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="foreign-key-optimization.html">Foreign Key Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="column-indexes.html">Column Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-column-indexes.html">Multiple-Column Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="verifying-index-usage.html">Verifying Index Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-statistics.html">InnoDB and MyISAM Index Statistics Collection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-btree-hash.html">Comparison of B-Tree and Hash Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-extensions.html">Use of Index Extensions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="generated-column-index-optimizations.html">Optimizer Use of Generated Column Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="invisible-indexes.html">Invisible Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="descending-indexes.html">Descending Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="timestamp-lookups.html">Indexed Lookups from TIMESTAMP Columns</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-database-structure.html">Optimizing Database Structure</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-size.html">Optimizing Data Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimize-data-types.html">Optimizing MySQL Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-numeric.html">Optimizing for Numeric Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-character.html">Optimizing for Character and String Types</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-blob.html">Optimizing for BLOB Types</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimize-multi-tables.html">Optimizing for Many Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-cache.html">How MySQL Opens and Closes Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-many-tables.html">Disadvantages of Creating Many Tables in the Same Database</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="internal-temporary-tables.html">Internal Temporary Table Use in MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="database-count-limit.html">Limits on Number of Databases and Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-size-limit.html">Limits on Table Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="column-count-limit.html">Limits on Table Column Count and Row Size</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb.html">Optimizing for InnoDB Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-storage-layout.html">Optimizing Storage Layout for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-transaction-management.html">Optimizing InnoDB Transaction Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-ro-txn.html">Optimizing InnoDB Read-Only Transactions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-logging.html">Optimizing InnoDB Redo Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-bulk-data-loading.html">Bulk Data Loading for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-queries.html">Optimizing InnoDB Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-ddl-operations.html">Optimizing InnoDB DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-diskio.html">Optimizing InnoDB Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-configuration-variables.html">Optimizing InnoDB Configuration Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-many-tables.html">Optimizing InnoDB for Systems with Many Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-myisam.html">Optimizing for MyISAM Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-queries-myisam.html">Optimizing MyISAM Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-myisam-bulk-data-loading.html">Bulk Data Loading for MyISAM Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="repair-table-optimization.html">Optimizing REPAIR TABLE Statements</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-memory-tables.html">Optimizing for MEMORY Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="execution-plan-information.html">Understanding the Query Execution Plan</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-explain.html">Optimizing Queries with EXPLAIN</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain-output.html">EXPLAIN Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain-extended.html">Extended EXPLAIN Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain-for-connection.html">Obtaining Execution Plan Information for a Named Connection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="estimating-performance.html">Estimating Query Performance</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="controlling-optimizer.html">Controlling the Query Optimizer</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="controlling-query-plan-evaluation.html">Controlling Query Plan Evaluation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="switchable-optimizations.html">Switchable Optimizations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-hints.html">Optimizer Hints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-hints.html">Index Hints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cost-model.html">The Optimizer Cost Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-statistics.html">Optimizer Statistics</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="buffering-caching.html">Buffering and Caching</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-optimization.html">InnoDB Buffer Pool Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="myisam-key-cache.html">The MyISAM Key Cache</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="shared-key-cache.html">Shared Key Cache Access</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-key-caches.html">Multiple Key Caches</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="midpoint-insertion.html">Midpoint Insertion Strategy</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-preloading.html">Index Preloading</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="key-cache-block-size.html">Key Cache Block Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="key-cache-restructuring.html">Restructuring a Key Cache</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="statement-caching.html">Caching of Prepared Statements and Stored Programs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="locking-issues.html">Optimizing Locking Operations</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="internal-locking.html">Internal Locking Methods</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-locking.html">Table Locking Issues</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="concurrent-inserts.html">Concurrent Inserts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="metadata-locking.html">Metadata Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="external-locking.html">External Locking</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-server.html">Optimizing the MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="disk-issues.html">Optimizing Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="symbolic-links.html">Using Symbolic Links</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="symbolic-links-to-databases.html">Using Symbolic Links for Databases on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="symbolic-links-to-tables.html">Using Symbolic Links for MyISAM Tables on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-symbolic-links.html">Using Symbolic Links for Databases on Windows</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-memory.html">Optimizing Memory Use</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="memory-use.html">How MySQL Uses Memory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-mysql-memory-use.html">Monitoring MySQL Memory Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="large-page-support.html">Enabling Large Page Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimize-benchmarking.html">Measuring Performance (Benchmarking)</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="select-benchmarking.html">Measuring the Speed of Expressions and Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="custom-benchmarks.html">Using Your Own Benchmarks</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitoring-performance-schema.html">Measuring Performance with performance_schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="thread-information.html">Examining Server Thread (Process) Information</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="processlist-access.html">Accessing the Process List</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-commands.html">Thread Command Values</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="general-thread-states.html">General Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-thread-states.html">Replication Source Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-io-thread-states.html">Replication I/O (Receiver) Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-sql-thread-states.html">Replication SQL Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-connection-thread-states.html">Replication Connection Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-thread-states.html">NDB Cluster Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="event-scheduler-thread-states.html">Event Scheduler Thread States</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizer-tracing.html">Tracing the Optimizer</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-tracing-typical-usage.html">Typical Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-variables-controlling-tracing.html">System Variables Controlling Tracing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="traceable-statements.html">Traceable Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="tuning-trace-purging.html">Tuning Trace Purging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="tracing-memory-usage.html">Tracing Memory Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privilege-checking.html">Privilege Checking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="interaction-with-debug-option.html">Interaction with the --debug Option</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-trace-system-variable.html">The optimizer_trace System Variable</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="end-markers-in-json-system-variable.html">The end_markers_in_json System Variable</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-features-to-trace.html">Selecting Optimizer Features to Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="trace-general-structure.html">Trace General Structure</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="tracing-example.html">Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="displaying-traces.html">Displaying Traces in Other Applications</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preventing-use-of-optimizer-trace.html">Preventing the Use of Optimizer Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-trace-testing.html">Testing Optimizer Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-trace-implementation.html">Optimizer Trace Implementation</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/range-optimization.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/range-optimization.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/range-optimization.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/range-optimization.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/range-optimization.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="optimization.html">Optimization</a> &nbsp;/&nbsp;
+                                                            <a href="statement-optimization.html">Optimizing SQL Statements</a> &nbsp;/&nbsp;
+                                                            <a href="select-optimization.html">Optimizing SELECT Statements</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Range Optimization
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="range-optimization"></a>10.2.1.2 Range Optimization</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <a class="link" href="explain-output.html#jointype_range"><code class="literal">range</code></a> access method
+          uses a single index to retrieve a subset of table rows that
+          are contained within one or several index value intervals. It
+          can be used for a single-part or multiple-part index. The
+          following sections describe conditions under which the
+          optimizer uses range access.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="range-optimization.html#range-access-single-part" title="Range Access Method for Single-Part Indexes">Range Access Method for Single-Part Indexes</a></p></li><li class="listitem"><p><a class="xref" href="range-optimization.html#range-access-multi-part" title="Range Access Method for Multiple-Part Indexes">Range Access Method for Multiple-Part Indexes</a></p></li><li class="listitem"><p><a class="xref" href="range-optimization.html#equality-range-optimization" title="Equality Range Optimization of Many-Valued Comparisons">Equality Range Optimization of Many-Valued Comparisons</a></p></li><li class="listitem"><p><a class="xref" href="range-optimization.html#range-access-skip-scan" title="Skip Scan Range Access Method">Skip Scan Range Access Method</a></p></li><li class="listitem"><p><a class="xref" href="range-optimization.html#row-constructor-range-optimization" title="Range Optimization of Row Constructor Expressions">Range Optimization of Row Constructor Expressions</a></p></li><li class="listitem"><p><a class="xref" href="range-optimization.html#range-optimization-memory-use" title="Limiting Memory Use for Range Optimization">Limiting Memory Use for Range Optimization</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="range-access-single-part"></a>Range Access Method for Single-Part Indexes</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+            For a single-part index, index value intervals can be
+            conveniently represented by corresponding conditions in the
+            <code class="literal">WHERE</code> clause, denoted as
+            <span class="firstterm">range conditions</span>
+            rather than <span class="quote">“<span class="quote">intervals.</span>”</span>
+          </p><p>
+            The definition of a range condition for a single-part index
+            is as follows:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                For both <code class="literal">BTREE</code> and
+                <code class="literal">HASH</code> indexes, comparison of a key
+                part with a constant value is a range condition when
+                using the
+                <a class="link" href="comparison-operators.html#operator_equal"><code class="literal">=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_equal-to"><code class="literal">&lt;=&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a>, <a class="link" href="comparison-operators.html#operator_is-null"><code class="literal">IS
+                NULL</code></a>, or <a class="link" href="comparison-operators.html#operator_is-not-null"><code class="literal">IS NOT
+                NULL</code></a> operators.
+              </p></li><li class="listitem"><p>
+                Additionally, for <code class="literal">BTREE</code> indexes,
+                comparison of a key part with a constant value is a
+                range condition when using the
+                <a class="link" href="comparison-operators.html#operator_greater-than"><code class="literal">&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_less-than"><code class="literal">&lt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_greater-than-or-equal"><code class="literal">&gt;=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_less-than-or-equal"><code class="literal">&lt;=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_between"><code class="literal">BETWEEN</code></a>,
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">!=</code></a>,
+                or
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">&lt;&gt;</code></a>
+                operators, or <a class="link" href="string-comparison-functions.html#operator_like"><code class="literal">LIKE</code></a>
+                comparisons if the argument to
+                <a class="link" href="string-comparison-functions.html#operator_like"><code class="literal">LIKE</code></a> is a constant string
+                that does not start with a wildcard character.
+              </p></li><li class="listitem"><p>
+                For all index types, multiple range conditions combined
+                with <a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a> or
+                <a class="link" href="logical-operators.html#operator_and"><code class="literal">AND</code></a> form a range condition.
+</p></li></ul>
+</div>
+<p>
+            <span class="quote">“<span class="quote">Constant value</span>”</span> in the preceding descriptions
+            means one of the following:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                A constant from the query string
+              </p></li><li class="listitem"><p>
+                A column of a <a class="link" href="explain-output.html#jointype_const"><code class="literal">const</code></a>
+                or <a class="link" href="explain-output.html#jointype_system"><code class="literal">system</code></a> table from
+                the same join
+              </p></li><li class="listitem"><p>
+                The result of an uncorrelated subquery
+              </p></li><li class="listitem"><p>
+                Any expression composed entirely from subexpressions of
+                the preceding types
+</p></li></ul>
+</div>
+<p>
+            Here are some examples of queries with range conditions in
+            the <code class="literal">WHERE</code> clause:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM t1
+  WHERE <em class="replaceable">key_col</em> &gt; 1
+  AND <em class="replaceable">key_col</em> &lt; 10;
+
+SELECT * FROM t1
+  WHERE <em class="replaceable">key_col</em> = 1
+  OR <em class="replaceable">key_col</em> IN (15,18,20);
+
+SELECT * FROM t1
+  WHERE <em class="replaceable">key_col</em> LIKE 'ab%'
+  OR <em class="replaceable">key_col</em> BETWEEN 'bar' AND 'foo';</code></pre><p>
+            Some nonconstant values may be converted to constants during
+            the optimizer constant propagation phase.
+          </p><p>
+            MySQL tries to extract range conditions from the
+            <code class="literal">WHERE</code> clause for each of the possible
+            indexes. During the extraction process, conditions that
+            cannot be used for constructing the range condition are
+            dropped, conditions that produce overlapping ranges are
+            combined, and conditions that produce empty ranges are
+            removed.
+          </p><p>
+            Consider the following statement, where
+            <code class="literal">key1</code> is an indexed column and
+            <code class="literal">nonkey</code> is not indexed:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM t1 WHERE
+  (key1 &lt; 'abc' AND (key1 LIKE 'abcde%' OR key1 LIKE '%b')) OR
+  (key1 &lt; 'bar' AND nonkey = 4) OR
+  (key1 &lt; 'uux' AND key1 &gt; 'z');</code></pre><p>
+            The extraction process for key <code class="literal">key1</code> is as
+            follows:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+                Start with original <code class="literal">WHERE</code> clause:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">(key1 &lt; 'abc' AND (key1 LIKE 'abcde%' OR key1 LIKE '%b')) OR
+(key1 &lt; 'bar' AND nonkey = 4) OR
+(key1 &lt; 'uux' AND key1 &gt; 'z')</code></pre></li><li class="listitem"><p>
+                Remove <code class="literal">nonkey = 4</code> and <code class="literal">key1
+                LIKE '%b'</code> because they cannot be used for a
+                range scan. The correct way to remove them is to replace
+                them with <code class="literal">TRUE</code>, so that we do not
+                miss any matching rows when doing the range scan.
+                Replacing them with <code class="literal">TRUE</code> yields:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">(key1 &lt; 'abc' AND (key1 LIKE 'abcde%' OR TRUE)) OR
+(key1 &lt; 'bar' AND TRUE) OR
+(key1 &lt; 'uux' AND key1 &gt; 'z')</code></pre></li><li class="listitem"><p>
+                Collapse conditions that are always true or false:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                    <code class="literal">(key1 LIKE 'abcde%' OR TRUE)</code> is
+                    always true
+                  </p></li><li class="listitem"><p>
+                    <code class="literal">(key1 &lt; 'uux' AND key1 &gt;
+                    'z')</code> is always false
+</p></li></ul>
+</div>
+<p>
+                Replacing these conditions with constants yields:
+              </p><pre class="programlisting copytoclipboard language-clike one-line"><code class="language-clike">(key1 &lt; 'abc' AND TRUE) OR (key1 &lt; 'bar' AND TRUE) OR (FALSE)</code></pre><p>
+                Removing unnecessary <code class="literal">TRUE</code> and
+                <code class="literal">FALSE</code> constants yields:
+              </p><pre class="programlisting copytoclipboard language-clike one-line"><code class="language-clike">(key1 &lt; 'abc') OR (key1 &lt; 'bar')</code></pre></li><li class="listitem"><p>
+                Combining overlapping intervals into one yields the
+                final condition to be used for the range scan:
+              </p><pre class="programlisting copytoclipboard language-clike one-line"><code class="language-clike">(key1 &lt; 'bar')</code></pre></li></ol>
+</div>
+<p>
+            In general (and as demonstrated by the preceding example),
+            the condition used for a range scan is less restrictive than
+            the <code class="literal">WHERE</code> clause. MySQL performs an
+            additional check to filter out rows that satisfy the range
+            condition but not the full <code class="literal">WHERE</code> clause.
+          </p><p>
+            The range condition extraction algorithm can handle nested
+            <a class="link" href="logical-operators.html#operator_and"><code class="literal">AND</code></a>/<a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a>
+            constructs of arbitrary depth, and its output does not
+            depend on the order in which conditions appear in
+            <code class="literal">WHERE</code> clause.
+          </p><p>
+            MySQL does not support merging multiple ranges for the
+            <a class="link" href="explain-output.html#jointype_range"><code class="literal">range</code></a> access method for
+            spatial indexes. To work around this limitation, you can use
+            a <a class="link" href="union.html" title="15.2.18 UNION Clause"><code class="literal">UNION</code></a> with identical
+            <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements, except
+            that you put each spatial predicate in a different
+            <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="range-access-multi-part"></a>Range Access Method for Multiple-Part Indexes</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+            Range conditions on a multiple-part index are an extension
+            of range conditions for a single-part index. A range
+            condition on a multiple-part index restricts index rows to
+            lie within one or several key tuple intervals. Key tuple
+            intervals are defined over a set of key tuples, using
+            ordering from the index.
+          </p><p>
+            For example, consider a multiple-part index defined as
+            <code class="literal">key1(<em class="replaceable"><code>key_part1</code></em>,
+            <em class="replaceable"><code>key_part2</code></em>,
+            <em class="replaceable"><code>key_part3</code></em>)</code>, and the
+            following set of key tuples listed in key order:
+          </p><pre class="programlisting copytoclipboard language-clike"><code class="language-clike"><em class="replaceable">key_part1</em>  <em class="replaceable">key_part2</em>  <em class="replaceable">key_part3</em>
+  NULL       1          'abc'
+  NULL       1          'xyz'
+  NULL       2          'foo'
+   1         1          'abc'
+   1         1          'xyz'
+   1         2          'abc'
+   2         1          'aaa'</code></pre><p>
+            The condition <code class="literal"><em class="replaceable"><code>key_part1</code></em>
+            = 1</code> defines this interval:
+          </p><pre class="programlisting copytoclipboard language-clike one-line"><code class="language-clike">(1,-inf,-inf) &lt;= (<em class="replaceable">key_part1</em>,<em class="replaceable">key_part2</em>,<em class="replaceable">key_part3</em>) &lt; (1,+inf,+inf)</code></pre><p>
+            The interval covers the 4th, 5th, and 6th tuples in the
+            preceding data set and can be used by the range access
+            method.
+          </p><p>
+            By contrast, the condition
+            <code class="literal"><em class="replaceable"><code>key_part3</code></em> =
+            'abc'</code> does not define a single interval and cannot
+            be used by the range access method.
+          </p><p>
+            The following descriptions indicate how range conditions
+            work for multiple-part indexes in greater detail.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                For <code class="literal">HASH</code> indexes, each interval
+                containing identical values can be used. This means that
+                the interval can be produced only for conditions in the
+                following form:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">    <em class="replaceable">key_part1</em> <em class="replaceable">cmp</em> <em class="replaceable">const1</em>
+AND <em class="replaceable">key_part2</em> <em class="replaceable">cmp</em> <em class="replaceable">const2</em>
+AND ...
+AND <em class="replaceable">key_partN</em> <em class="replaceable">cmp</em> <em class="replaceable">constN</em>;</code></pre><p>
+                Here, <em class="replaceable"><code>const1</code></em>,
+                <em class="replaceable"><code>const2</code></em>, … are
+                constants, <em class="replaceable"><code>cmp</code></em> is one of the
+                <a class="link" href="comparison-operators.html#operator_equal"><code class="literal">=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_equal-to"><code class="literal">&lt;=&gt;</code></a>,
+                or <a class="link" href="comparison-operators.html#operator_is-null"><code class="literal">IS NULL</code></a> comparison
+                operators, and the conditions cover all index parts.
+                (That is, there are <em class="replaceable"><code>N</code></em>
+                conditions, one for each part of an
+                <em class="replaceable"><code>N</code></em>-part index.) For example,
+                the following is a range condition for a three-part
+                <code class="literal">HASH</code> index:
+              </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">key_part1</em> = 1 AND <em class="replaceable">key_part2</em> IS NULL AND <em class="replaceable">key_part3</em> = 'foo'</code></pre><p>
+                For the definition of what is considered to be a
+                constant, see
+                <a class="xref" href="range-optimization.html#range-access-single-part" title="Range Access Method for Single-Part Indexes">Range Access Method for Single-Part Indexes</a>.
+              </p></li><li class="listitem"><p>
+                For a <code class="literal">BTREE</code> index, an interval might
+                be usable for conditions combined with
+                <a class="link" href="logical-operators.html#operator_and"><code class="literal">AND</code></a>, where each condition
+                compares a key part with a constant value using
+                <a class="link" href="comparison-operators.html#operator_equal"><code class="literal">=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_equal-to"><code class="literal">&lt;=&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_is-null"><code class="literal">IS NULL</code></a>,
+                <a class="link" href="comparison-operators.html#operator_greater-than"><code class="literal">&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_less-than"><code class="literal">&lt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_greater-than-or-equal"><code class="literal">&gt;=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_less-than-or-equal"><code class="literal">&lt;=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">!=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">&lt;&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_between"><code class="literal">BETWEEN</code></a>, or
+                <a class="link" href="string-comparison-functions.html#operator_like"><code class="literal">LIKE
+                '<em class="replaceable"><code>pattern</code></em>'</code></a> (where
+                <code class="literal">'<em class="replaceable"><code>pattern</code></em>'</code>
+                does not start with a wildcard). An interval can be used
+                as long as it is possible to determine a single key
+                tuple containing all rows that match the condition (or
+                two intervals if
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">&lt;&gt;</code></a>
+                or <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">!=</code></a>
+                is used).
+              </p><p>
+                The optimizer attempts to use additional key parts to
+                determine the interval as long as the comparison
+                operator is
+                <a class="link" href="comparison-operators.html#operator_equal"><code class="literal">=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_equal-to"><code class="literal">&lt;=&gt;</code></a>,
+                or <a class="link" href="comparison-operators.html#operator_is-null"><code class="literal">IS NULL</code></a>. If the operator
+                is
+                <a class="link" href="comparison-operators.html#operator_greater-than"><code class="literal">&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_less-than"><code class="literal">&lt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_greater-than-or-equal"><code class="literal">&gt;=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_less-than-or-equal"><code class="literal">&lt;=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">!=</code></a>,
+                <a class="link" href="comparison-operators.html#operator_not-equal"><code class="literal">&lt;&gt;</code></a>,
+                <a class="link" href="comparison-operators.html#operator_between"><code class="literal">BETWEEN</code></a>, or
+                <a class="link" href="string-comparison-functions.html#operator_like"><code class="literal">LIKE</code></a>, the
+                optimizer uses it but considers no more key parts. For
+                the following expression, the optimizer uses
+                <a class="link" href="comparison-operators.html#operator_equal"><code class="literal">=</code></a> from
+                the first comparison. It also uses
+                <a class="link" href="comparison-operators.html#operator_greater-than-or-equal"><code class="literal">&gt;=</code></a>
+                from the second comparison but considers no further key
+                parts and does not use the third comparison for interval
+                construction:
+              </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">key_part1</em> = 'foo' AND <em class="replaceable">key_part2</em> &gt;= 10 AND <em class="replaceable">key_part3</em> &gt; 10</code></pre><p>
+                The single interval is:
+              </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">('foo',10,-inf) &lt; (<em class="replaceable">key_part1</em>,<em class="replaceable">key_part2</em>,<em class="replaceable">key_part3</em>) &lt; ('foo',+inf,+inf)</code></pre><p>
+                It is possible that the created interval contains more
+                rows than the initial condition. For example, the
+                preceding interval includes the value <code class="literal">('foo',
+                11, 0)</code>, which does not satisfy the original
+                condition.
+              </p></li><li class="listitem"><p>
+                If conditions that cover sets of rows contained within
+                intervals are combined with
+                <a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a>, they form a condition
+                that covers a set of rows contained within the union of
+                their intervals. If the conditions are combined with
+                <a class="link" href="logical-operators.html#operator_and"><code class="literal">AND</code></a>, they form a condition
+                that covers a set of rows contained within the
+                intersection of their intervals. For example, for this
+                condition on a two-part index:
+              </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">(<em class="replaceable">key_part1</em> = 1 AND <em class="replaceable">key_part2</em> &lt; 2) OR (<em class="replaceable">key_part1</em> &gt; 5)</code></pre><p>
+                The intervals are:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">(1,-inf) &lt; (<em class="replaceable">key_part1</em>,<em class="replaceable">key_part2</em>) &lt; (1,2)
+(5,-inf) &lt; (<em class="replaceable">key_part1</em>,<em class="replaceable">key_part2</em>)</code></pre><p>
+                In this example, the interval on the first line uses one
+                key part for the left bound and two key parts for the
+                right bound. The interval on the second line uses only
+                one key part. The <code class="literal">key_len</code> column in
+                the <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a> output
+                indicates the maximum length of the key prefix used.
+              </p><p>
+                In some cases, <code class="literal">key_len</code> may indicate
+                that a key part was used, but that might be not what you
+                would expect. Suppose that
+                <em class="replaceable"><code>key_part1</code></em> and
+                <em class="replaceable"><code>key_part2</code></em> can be
+                <code class="literal">NULL</code>. Then the
+                <code class="literal">key_len</code> column displays two key part
+                lengths for the following condition:
+              </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">key_part1</em> &gt;= 1 AND <em class="replaceable">key_part2</em> &lt; 2</code></pre><p>
+                But, in fact, the condition is converted to this:
+              </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">key_part1</em> &gt;= 1 AND <em class="replaceable">key_part2</em> IS NOT NULL</code></pre></li></ul>
+</div>
+<p>
+            For a description of how optimizations are performed to
+            combine or eliminate intervals for range conditions on a
+            single-part index, see
+            <a class="xref" href="range-optimization.html#range-access-single-part" title="Range Access Method for Single-Part Indexes">Range Access Method for Single-Part Indexes</a>. Analogous steps
+            are performed for range conditions on multiple-part indexes.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="equality-range-optimization"></a>Equality Range Optimization of Many-Valued Comparisons</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+            Consider these expressions, where
+            <em class="replaceable"><code>col_name</code></em> is an indexed column:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql"><em class="replaceable">col_name</em> IN(<em class="replaceable">val1</em>, ..., <em class="replaceable">valN</em>)
+<em class="replaceable">col_name</em> = <em class="replaceable">val1</em> OR ... OR <em class="replaceable">col_name</em> = <em class="replaceable">valN</em></code></pre><p>
+            Each expression is true if
+            <em class="replaceable"><code>col_name</code></em> is equal to any of
+            several values. These comparisons are equality range
+            comparisons (where the <span class="quote">“<span class="quote">range</span>”</span> is a single
+            value). The optimizer estimates the cost of reading
+            qualifying rows for equality range comparisons as follows:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                If there is a unique index on
+                <em class="replaceable"><code>col_name</code></em>, the row estimate
+                for each range is 1 because at most one row can have the
+                given value.
+              </p></li><li class="listitem"><p>
+                Otherwise, any index on
+                <em class="replaceable"><code>col_name</code></em> is nonunique and the
+                optimizer can estimate the row count for each range
+                using dives into the index or index statistics.
+</p></li></ul>
+</div>
+<a class="indexterm" name="idm45105690763552"></a><p>
+            With index dives, the optimizer makes a dive at each end of
+            a range and uses the number of rows in the range as the
+            estimate. For example, the expression
+            <code class="literal"><em class="replaceable"><code>col_name</code></em> IN (10, 20,
+            30)</code> has three equality ranges and the optimizer
+            makes two dives per range to generate a row estimate. Each
+            pair of dives yields an estimate of the number of rows that
+            have the given value.
+          </p><p>
+            Index dives provide accurate row estimates, but as the
+            number of comparison values in the expression increases, the
+            optimizer takes longer to generate a row estimate. Use of
+            index statistics is less accurate than index dives but
+            permits faster row estimation for large value lists.
+          </p><p>
+            The
+            <a class="link" href="server-system-variables.html#sysvar_eq_range_index_dive_limit"><code class="literal">eq_range_index_dive_limit</code></a>
+            system variable enables you to configure the number of
+            values at which the optimizer switches from one row
+            estimation strategy to the other. To permit use of index
+            dives for comparisons of up to <em class="replaceable"><code>N</code></em>
+            equality ranges, set
+            <a class="link" href="server-system-variables.html#sysvar_eq_range_index_dive_limit"><code class="literal">eq_range_index_dive_limit</code></a>
+            to <em class="replaceable"><code>N</code></em> + 1. To disable use of
+            statistics and always use index dives regardless of
+            <em class="replaceable"><code>N</code></em>, set
+            <a class="link" href="server-system-variables.html#sysvar_eq_range_index_dive_limit"><code class="literal">eq_range_index_dive_limit</code></a>
+            to 0.
+          </p><p>
+            To update table index statistics for best estimates, use
+            <a class="link" href="analyze-table.html" title="15.7.3.1 ANALYZE TABLE Statement"><code class="literal">ANALYZE TABLE</code></a>.
+          </p><p>
+            Prior to MySQL 8.4, there is no way of skipping
+            the use of index dives to estimate index usefulness, except
+            by using the
+            <a class="link" href="server-system-variables.html#sysvar_eq_range_index_dive_limit"><code class="literal">eq_range_index_dive_limit</code></a>
+            system variable. In MySQL 8.4, index dive
+            skipping is possible for queries that satisfy all these
+            conditions:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                The query is for a single table, not a join on multiple
+                tables.
+              </p></li><li class="listitem"><p>
+                A single-index <code class="literal">FORCE INDEX</code> index hint
+                is present. The idea is that if index use is forced,
+                there is nothing to be gained from the additional
+                overhead of performing dives into the index.
+              </p></li><li class="listitem"><p>
+                The index is nonunique and not a
+                <code class="literal">FULLTEXT</code> index.
+              </p></li><li class="listitem"><p>
+                No subquery is present.
+              </p></li><li class="listitem"><p>
+                No <code class="literal">DISTINCT</code>, <code class="literal">GROUP
+                BY</code>, or <code class="literal">ORDER BY</code> clause is
+                present.
+</p></li></ul>
+</div>
+<p>
+            For <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN FOR
+            CONNECTION</code></a>, the output changes as follows if index
+            dives are skipped:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                For traditional output, the <code class="literal">rows</code> and
+                <code class="literal">filtered</code> values are
+                <code class="literal">NULL</code>.
+              </p></li><li class="listitem"><p>
+                For JSON output,
+                <code class="literal">rows_examined_per_scan</code> and
+                <code class="literal">rows_produced_per_join</code> do not appear,
+                <code class="literal">skip_index_dive_due_to_force</code> is
+                <code class="literal">true</code>, and cost calculations are not
+                accurate.
+</p></li></ul>
+</div>
+<p>
+            Without <code class="literal">FOR CONNECTION</code>,
+            <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a> output does not
+            change when index dives are skipped.
+          </p><p>
+            After execution of a query for which index dives are
+            skipped, the corresponding row in the Information Schema
+            <a class="link" href="information-schema-optimizer-trace-table.html" title="28.3.19 The INFORMATION_SCHEMA OPTIMIZER_TRACE Table"><code class="literal">OPTIMIZER_TRACE</code></a> table contains
+            an <code class="literal">index_dives_for_range_access</code> value of
+            <code class="literal">skipped_due_to_force_index</code>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="range-access-skip-scan"></a>Skip Scan Range Access Method</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+            Consider the following scenario:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE t1 (f1 INT NOT NULL, f2 INT NOT NULL, PRIMARY KEY(f1, f2));
+INSERT INTO t1 VALUES
+  (1,1), (1,2), (1,3), (1,4), (1,5),
+  (2,1), (2,2), (2,3), (2,4), (2,5);
+INSERT INTO t1 SELECT f1, f2 + 5 FROM t1;
+INSERT INTO t1 SELECT f1, f2 + 10 FROM t1;
+INSERT INTO t1 SELECT f1, f2 + 20 FROM t1;
+INSERT INTO t1 SELECT f1, f2 + 40 FROM t1;
+ANALYZE TABLE t1;
+
+EXPLAIN SELECT f1, f2 FROM t1 WHERE f2 &gt; 40;</code></pre><p>
+            To execute this query, MySQL can choose an index scan to
+            fetch all rows (the index includes all columns to be
+            selected), then apply the <code class="literal">f2 &gt; 40</code>
+            condition from the <code class="literal">WHERE</code> clause to
+            produce the final result set.
+          </p><p>
+            A range scan is more efficient than a full index scan, but
+            cannot be used in this case because there is no condition on
+            <code class="literal">f1</code>, the first index column. The optimizer
+            can perform multiple range scans, one for each value of
+            <code class="literal">f1</code>, using a method called Skip Scan that
+            is similar to Loose Index Scan (see
+            <a class="xref" href="group-by-optimization.html" title="10.2.1.17 GROUP BY Optimization">Section 10.2.1.17, “GROUP BY Optimization”</a>):
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+                Skip between distinct values of the first index part,
+                <code class="literal">f1</code> (the index prefix).
+              </p></li><li class="listitem"><p>
+                Perform a subrange scan on each distinct prefix value
+                for the <code class="literal">f2 &gt; 40</code> condition on the
+                remaining index part.
+</p></li></ol>
+</div>
+<p>
+            For the data set shown earlier, the algorithm operates like
+            this:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+                Get the first distinct value of the first key part
+                (<code class="literal">f1 = 1</code>).
+              </p></li><li class="listitem"><p>
+                Construct the range based on the first and second key
+                parts (<code class="literal">f1 = 1 AND f2 &gt; 40</code>).
+              </p></li><li class="listitem"><p>
+                Perform a range scan.
+              </p></li><li class="listitem"><p>
+                Get the next distinct value of the first key part
+                (<code class="literal">f1 = 2</code>).
+              </p></li><li class="listitem"><p>
+                Construct the range based on the first and second key
+                parts (<code class="literal">f1 = 2 AND f2 &gt; 40</code>).
+              </p></li><li class="listitem"><p>
+                Perform a range scan.
+</p></li></ol>
+</div>
+<p>
+            Using this strategy decreases the number of accessed rows
+            because MySQL skips the rows that do not qualify for each
+            constructed range. This Skip Scan access method is
+            applicable under the following conditions:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                Table T has at least one compound index with key parts
+                of the form ([A_1, ..., A_<em class="replaceable"><code>k</code></em>,]
+                B_1, ..., B_<em class="replaceable"><code>m</code></em>, C [, D_1, ...,
+                D_<em class="replaceable"><code>n</code></em>]). Key parts A and D may
+                be empty, but B and C must be nonempty.
+              </p></li><li class="listitem"><p>
+                The query references only one table.
+              </p></li><li class="listitem"><p>
+                The query does not use <code class="literal">GROUP BY</code> or
+                <code class="literal">DISTINCT</code>.
+              </p></li><li class="listitem"><p>
+                The query references only columns in the index.
+              </p></li><li class="listitem"><p>
+                The predicates on A_1, ...,
+                A_<em class="replaceable"><code>k</code></em> must be equality
+                predicates and they must be constants. This includes the
+                <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a> operator.
+              </p></li><li class="listitem"><p>
+                The query must be a conjunctive query; that is, an
+                <code class="literal">AND</code> of <code class="literal">OR</code>
+                conditions:
+                <code class="literal">(<em class="replaceable"><code>cond1</code></em>(<em class="replaceable"><code>key_part1</code></em>)
+                OR
+                <em class="replaceable"><code>cond2</code></em>(<em class="replaceable"><code>key_part1</code></em>))
+                AND
+                (<em class="replaceable"><code>cond1</code></em>(<em class="replaceable"><code>key_part2</code></em>)
+                OR ...) AND ...</code>
+              </p></li><li class="listitem"><p>
+                There must be a range condition on C.
+              </p></li><li class="listitem"><p>
+                Conditions on D columns are permitted. Conditions on D
+                must be in conjunction with the range condition on C.
+</p></li></ul>
+</div>
+<p>
+            Use of Skip Scan is indicated in <code class="literal">EXPLAIN</code>
+            output as follows:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                <code class="literal">Using index for skip scan</code> in the
+                <code class="literal">Extra</code> column indicates that the loose
+                index Skip Scan access method is used.
+              </p></li><li class="listitem"><p>
+                If the index can be used for Skip Scan, the index should
+                be visible in the <code class="literal">possible_keys</code>
+                column.
+</p></li></ul>
+</div>
+<p>
+            Use of Skip Scan is indicated in optimizer trace output by a
+            <code class="literal">"skip scan"</code> element of this form:
+          </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"skip_scan_range": {
+  "type": "skip_scan",
+  "index": <em class="replaceable">index_used_for_skip_scan</em>,
+  "key_parts_used_for_access": [<em class="replaceable">key_parts_used_for_access</em>],
+  "range": [<em class="replaceable">range</em>]
+}</code></pre><p>
+            You may also see a
+            <code class="literal">"best_skip_scan_summary"</code> element. If Skip
+            Scan is chosen as the best range access variant, a
+            <code class="literal">"chosen_range_access_summary"</code> is written.
+            If Skip Scan is chosen as the overall best access method, a
+            <code class="literal">"best_access_path"</code> element is present.
+          </p><p>
+            Use of Skip Scan is subject to the value of the
+            <a class="link" href="switchable-optimizations.html#optflag_skip-scan"><code class="literal">skip_scan</code></a> flag of the
+            <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> system
+            variable. See <a class="xref" href="switchable-optimizations.html" title="10.9.2 Switchable Optimizations">Section 10.9.2, “Switchable Optimizations”</a>. By
+            default, this flag is <code class="literal">on</code>. To disable it,
+            set <a class="link" href="switchable-optimizations.html#optflag_skip-scan"><code class="literal">skip_scan</code></a> to
+            <code class="literal">off</code>.
+          </p><p>
+            In addition to using the
+            <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> system
+            variable to control optimizer use of Skip Scan session-wide,
+            MySQL supports optimizer hints to influence the optimizer on
+            a per-statement basis. See
+            <a class="xref" href="optimizer-hints.html" title="10.9.3 Optimizer Hints">Section 10.9.3, “Optimizer Hints”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="row-constructor-range-optimization"></a>Range Optimization of Row Constructor Expressions</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+            The optimizer is able to apply the range scan access method
+            to queries of this form:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT ... FROM t1 WHERE ( col_1, col_2 ) IN (( 'a', 'b' ), ( 'c', 'd' ));</code></pre><p>
+            Previously, for range scans to be used, it was necessary to
+            write the query as:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT ... FROM t1 WHERE ( col_1 = 'a' AND col_2 = 'b' )
+OR ( col_1 = 'c' AND col_2 = 'd' );</code></pre><p>
+            For the optimizer to use a range scan, queries must satisfy
+            these conditions:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                Only <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a> predicates are
+                used, not <a class="link" href="comparison-operators.html#operator_not-in"><code class="literal">NOT IN()</code></a>.
+              </p></li><li class="listitem"><p>
+                On the left side of the
+                <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a> predicate, the row
+                constructor contains only column references.
+              </p></li><li class="listitem"><p>
+                On the right side of the
+                <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a> predicate, row
+                constructors contain only runtime constants, which are
+                either literals or local column references that are
+                bound to constants during execution.
+              </p></li><li class="listitem"><p>
+                On the right side of the
+                <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a> predicate, there is
+                more than one row constructor.
+</p></li></ul>
+</div>
+<p>
+            For more information about the optimizer and row
+            constructors, see
+            <a class="xref" href="row-constructor-optimization.html" title="10.2.1.22 Row Constructor Expression Optimization">Section 10.2.1.22, “Row Constructor Expression Optimization”</a>
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="range-optimization-memory-use"></a>Limiting Memory Use for Range Optimization</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+            To control the memory available to the range optimizer, use
+            the
+            <a class="link" href="server-system-variables.html#sysvar_range_optimizer_max_mem_size"><code class="literal">range_optimizer_max_mem_size</code></a>
+            system variable:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                A value of 0 means <span class="quote">“<span class="quote">no limit.</span>”</span>
+              </p></li><li class="listitem"><p>
+                With a value greater than 0, the optimizer tracks the
+                memory consumed when considering the range access
+                method. If the specified limit is about to be exceeded,
+                the range access method is abandoned and other methods,
+                including a full table scan, are considered instead.
+                This could be less optimal. If this happens, the
+                following warning occurs (where
+                <em class="replaceable"><code>N</code></em> is the current
+                <a class="link" href="server-system-variables.html#sysvar_range_optimizer_max_mem_size"><code class="literal">range_optimizer_max_mem_size</code></a>
+                value):
+              </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">Warning    3170    Memory capacity of <em class="replaceable">N</em> bytes for
+                   'range_optimizer_max_mem_size' exceeded. Range
+                   optimization was not done for this query.</code></pre></li><li class="listitem"><p>
+                For <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a> and
+                <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a> statements, if the
+                optimizer falls back to a full table scan and the
+                <a class="link" href="server-system-variables.html#sysvar_sql_safe_updates"><code class="literal">sql_safe_updates</code></a> system
+                variable is enabled, an error occurs rather than a
+                warning because, in effect, no key is used to determine
+                which rows to modify. For more information, see
+                <a class="xref" href="mysql-tips.html#safe-updates" title="Using Safe-Updates Mode (--safe-updates)">Using Safe-Updates Mode (--safe-updates)</a>.
+</p></li></ul>
+</div>
+<p>
+            For individual queries that exceed the available range
+            optimization memory and for which the optimizer falls back
+            to less optimal plans, increasing the
+            <a class="link" href="server-system-variables.html#sysvar_range_optimizer_max_mem_size"><code class="literal">range_optimizer_max_mem_size</code></a>
+            value may improve performance.
+          </p><p>
+            To estimate the amount of memory needed to process a range
+            expression, use these guidelines:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                For a simple query such as the following, where there is
+                one candidate key for the range access method, each
+                predicate combined with <a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a>
+                uses approximately 230 bytes:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT COUNT(*) FROM t
+WHERE a=1 OR a=2 OR a=3 OR .. . a=<em class="replaceable">N</em>;</code></pre></li><li class="listitem"><p>
+                Similarly for a query such as the following, each
+                predicate combined with <a class="link" href="logical-operators.html#operator_and"><code class="literal">AND</code></a>
+                uses approximately 125 bytes:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT COUNT(*) FROM t
+WHERE a=1 AND b=1 AND c=1 ... <em class="replaceable">N</em>;</code></pre></li><li class="listitem"><p>
+                For a query with <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a>
+                predicates:
+              </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT COUNT(*) FROM t
+WHERE a IN (1,2, ..., <em class="replaceable">M</em>) AND b IN (1,2, ..., <em class="replaceable">N</em>);</code></pre><p>
+                Each literal value in an
+                <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a> list counts as a
+                predicate combined with <a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a>.
+                If there are two <a class="link" href="comparison-operators.html#operator_in"><code class="literal">IN()</code></a>
+                lists, the number of predicates combined with
+                <a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a> is the product of the
+                number of literal values in each list. Thus, the number
+                of predicates combined with
+                <a class="link" href="logical-operators.html#operator_or"><code class="literal">OR</code></a> in the preceding case is
+                <em class="replaceable"><code>M</code></em> ×
+                <em class="replaceable"><code>N</code></em>.
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="where-optimization.html"
+        aria-label="Previous" title="Previous: WHERE Clause Optimization"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="select-optimization.html" title="Up: Optimizing SELECT Statements"> UP</a> &nbsp;
+    <a href="index-merge-optimization.html" aria-label="Next"
+        title="Next: Index Merge Optimization">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/range-optimization.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:58 GMT -->
+</html>

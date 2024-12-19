@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/keyring-key-migration.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:00:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 8.4.4.11 Migrating Keys Between Keyring Keystores</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="keyring-key-types.html" title="8.4.4.10 Supported Keyring Key Types and Lengths" />
+<link rel="next" href="keyring-functions-general-purpose8dba.html?ff=nopfpls" title="8.4.4.12 General-Purpose Keyring Key-Management Functions" />
+<link rel="up" href="keyring.html" title="8.4.4 The MySQL Keyring" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xfwa-f-27985f56c-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":123,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18ae4309","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5893,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730132332","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==k7YiFaVrSbKkij371o9FGb7+cZYZiRVWooxAqDA0p/EcnM3MgXlAARAcfPGCxYF1Z6zkMN38eBiuCltxUVCimIK6UbOWMe8gHtIobstkTndlTd8tE47wWYpEqc/3BwLkyL2V9e2rYqNp6gVJea8ZrX9vwnJtMGAc4fxgj+da4Co/qnhpRe2PPXOFJzaPLHs+Y2ZUbOynTMgdq1Wx5s3edgbqWsXdB0ICmOuzvw5Ou7tuusR/xVOUtU3PmIZKs9ZbuwuJ4l6pwNdWFG8SiBF4edtluUYpfrFmpmVpQAuIC1m3JPJJauivucNlEfqLEG+s5Nt4PDgrXXORARzYavRS1v7l2zVxMmA14TSKeOE5IlZvSXDUeNXD5J5hr/XttUvC29ThObv03NO2A7rqWvOxmvgGom95jvFbOmoCeRXsExQ=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fkeyring-key-migration.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="keyring-key-types.html"
+        aria-label="Previous" title="Previous: Supported Keyring Key Types and Lengths"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="keyring.html" title="Up: The MySQL Keyring"><span class="icon-chevron-up"></span></a>
+    <a href="keyring-functions-general-purpose.html" aria-label="Next"
+        title="Next: General-Purpose Keyring Key-Management Functions"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="general-security-issues.html">General Security Issues</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-guidelines.html">Security Guidelines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="password-security.html">Keeping Passwords Secure</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-user.html">End-User Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-admin.html">Administrator Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-logging.html">Passwords and Logging</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-against-attack.html">Making MySQL Secure Against Attackers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-options.html">Security-Related mysqld Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="changing-mysql-user.html">How to Run MySQL as a Normal User</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-data-local-security.html">Security Considerations for LOAD DATA LOCAL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="secure-client-programming.html">Client Programming Security Guidelines</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="access-control.html">Access Control and Account Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-names.html">Account User Names and Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privileges-provided.html">Privileges Provided by MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="grant-tables.html">Grant Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-names.html">Specifying Account Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="role-names.html">Specifying Role Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-access.html">Access Control, Stage 1: Connection Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="request-access.html">Access Control, Stage 2: Request Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-accounts.html">Adding Accounts, Assigning Privileges, and Dropping Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reserved-accounts.html">Reserved Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="roles.html">Using Roles</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-categories.html">Account Categories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partial-revokes.html">Privilege Restriction Using Partial Revokes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privilege-changes.html">When Privilege Changes Take Effect</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="assigning-passwords.html">Assigning Account Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-management.html">Password Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="expired-password-handling.html">Server Handling of Expired Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication.html">Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multifactor-authentication.html">Multifactor Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="proxy-users.html">Proxy Users</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-locking.html">Account Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-resources.html">Setting Account Resource Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="problems-connecting.html">Troubleshooting Problems Connecting to MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-activity-auditing.html">SQL-Based Account Activity Auditing</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="encrypted-connections.html">Using Encrypted Connections</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-encrypted-connections.html">Configuring MySQL to Use Encrypted Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="encrypted-connection-protocols-ciphers.html">Encrypted Connection TLS Protocols and Ciphers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files.html">Creating SSL and RSA Certificates and Keys</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files-using-mysql.html">Creating SSL and RSA Certificates and Keys using MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-files-using-openssl.html">Creating SSL Certificates and Keys Using openssl</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-rsa-files-using-openssl.html">Creating RSA Keys Using openssl</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-and-ssh.html">Connecting to MySQL Remotely from Windows with SSH</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reusing-ssl-sessions.html">Reusing SSL Sessions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security-plugins.html">Security Components and Plugins</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="authentication-plugins.html">Authentication Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="native-pluggable-authentication.html">Native Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="caching-sha2-pluggable-authentication.html">Caching SHA-2 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sha256-pluggable-authentication.html">SHA-256 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cleartext-pluggable-authentication.html">Client-Side Cleartext Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pam-pluggable-authentication.html">PAM Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-pluggable-authentication.html">Windows Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ldap-pluggable-authentication.html">LDAP Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="kerberos-pluggable-authentication.html">Kerberos Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="no-login-pluggable-authentication.html">No-Login Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="socket-pluggable-authentication.html">Socket Peer-Credential Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="webauthn-pluggable-authentication.html">WebAuthn Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="test-pluggable-authentication.html">Test Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication-system-variables.html">Pluggable Authentication System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-control.html">The Connection-Control Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-installation.html">Connection-Control Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-variables.html">Connection-Control System and Status Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="validate-password.html">The Password Validation Component</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-installation.html">Password Validation Component Installation and Uninstallation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-options-variables.html">Password Validation Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-transitioning.html">Transitioning to the Password Validation Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="keyring.html">The MySQL Keyring</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-plugin-comparison.html">Keyring Components Versus Keyring Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-installation.html">Keyring Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-plugin-installation.html">Keyring Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-file-component.html">Using the component_keyring_file File-Based Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-encrypted-file-component.html">Using the component_keyring_encrypted_file Encrypted File-Based Keyring
+Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-okv-plugin.html">Using the keyring_okv KMIP Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-aws-plugin.html">Using the keyring_aws Amazon Web Services Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-hashicorp-plugin.html">Using the HashiCorp Vault Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-oci-component.html">Using the Oracle Cloud Infrastructure Vault Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-types.html">Supported Keyring Key Types and Lengths</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="keyring-key-migration.html">Migrating Keys Between Keyring Keystores</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-general-purpose.html">General-Purpose Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-plugin-specific.html">Plugin-Specific Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-metadata.html">Keyring Metadata</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-options.html">Keyring Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-system-variables.html">Keyring System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="audit-log.html">MySQL Enterprise Audit</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-elements.html">Elements of MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-installation.html">Installing or Uninstalling MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-security.html">MySQL Enterprise Audit Security Considerations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-formats.html">Audit Log File Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-logging-configuration.html">Configuring Audit Logging Characteristics</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-reading.html">Reading Audit Log Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filtering.html">Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filter-definitions.html">Writing Audit Log Filter Definitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-disabling.html">Disabling Audit Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-legacy-filtering.html">Legacy Mode Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-reference.html">Audit Log Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-restrictions.html">Audit Log Restrictions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-api-message-emit.html">The Audit Message Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="firewall.html">MySQL Enterprise Firewall</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-elements.html">Elements of MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-installation.html">Installing or Uninstalling MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-usage.html">Using MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-reference.html">MySQL Enterprise Firewall Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking.html">MySQL Enterprise Data Masking and De-Identification</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-vs-plugin.html">Data-Masking Components Versus the Data-Masking Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-components.html">MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-installation.html">MySQL Enterprise Data Masking and De-Identification Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-usage.html">Using MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-function-reference.html">MySQL Enterprise Data Masking and De-Identification Component Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-functions.html">MySQL Enterprise Data Masking and De-Identification Component Function Descriptions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-variables.html">MySQL Enterprise Data Masking and De-Identification Component Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin.html">MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-installation.html">MySQL Enterprise Data Masking and De-Identification Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-usage.html">Using the MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-function-reference.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-functions.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption.html">MySQL Enterprise Encryption</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-installation.html">MySQL Enterprise Encryption Installation and Upgrading</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-configuring.html">Configuring MySQL Enterprise Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-usage.html">MySQL Enterprise Encryption Usage and Examples</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-function-reference.html">MySQL Enterprise Encryption Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-functions.html">MySQL Enterprise Encryption Component Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux.html">SELinux</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-checking.html">Check if SELinux is Enabled</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-mode.html">Changing the SELinux Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-policies.html">MySQL Server SELinux Policies</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-file-context.html">SELinux File Context</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux-context-tcp-port.html">SELinux TCP Port Context</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysqld-tcp-port.html">Setting the TCP Port Context for mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysql-feature-ports.html">Setting the TCP Port Context for MySQL Features</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-troubleshooting.html">Troubleshooting SELinux</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="fips-mode.html">FIPS Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/keyring-key-migration.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/keyring-key-migration.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/keyring-key-migration.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/keyring-key-migration.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/keyring-key-migration.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="security.html">Security</a> &nbsp;/&nbsp;
+                                                            <a href="security-plugins.html">Security Components and Plugins</a> &nbsp;/&nbsp;
+                                                            <a href="keyring.html">The MySQL Keyring</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Migrating Keys Between Keyring Keystores
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="keyring-key-migration"></a>8.4.4.11 Migrating Keys Between Keyring Keystores</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105700633296"></a><a class="indexterm" name="idm45105700632256"></a><p>
+        A keyring migration copies keys from one keystore to another,
+        enabling a DBA to switch a MySQL installation to a different
+        keystore. A successful migration operation has this result:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            The destination keystore contains the keys it had prior to
+            the migration, plus the keys from the source keystore.
+          </p></li><li class="listitem"><p>
+            The source keystore remains the same before and after the
+            migration (because keys are copied, not moved).
+</p></li></ul>
+</div>
+<p>
+        If a key to be copied already exists in the destination
+        keystore, an error occurs and the destination keystore is
+        restored to its premigration state.
+      </p><p>
+        The keyring manages keystores using keyring components and
+        keyring plugins. This pertains to migration strategy because the
+        way in which the source and destination keystores are managed
+        determines the procedure for performing a given type of key
+        migration:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Migration from one keyring plugin to another: The MySQL
+            server has an operational mode that provides this
+            capability.
+          </p></li><li class="listitem"><p>
+            Migration from a keyring plugin to a keyring component: The
+            MySQL server has an operational mode that provides this
+            capability.
+          </p></li><li class="listitem"><p>
+            Migration from one keyring component to another: The
+            <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> utility provides
+            this capability.
+          </p></li><li class="listitem"><p>
+            Migration from a keyring component to a keyring plugin: The
+            MySQL server has an operational mode that provides this
+            capability.
+</p></li></ul>
+</div>
+<p>
+        The following sections discuss the characteristics of offline
+        and online migrations and describe how to perform migrations.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="keyring-key-migration.html#keyring-key-migration-offline-online" title="Offline and Online Key Migrations">Offline and Online Key Migrations</a></p></li><li class="listitem"><p><a class="xref" href="keyring-key-migration.html#keyring-key-migration-using-migration-server" title="Key Migration Using a Migration Server">Key Migration Using a Migration Server</a></p></li><li class="listitem"><p><a class="xref" href="keyring-key-migration.html#keyring-key-migration-using-mysql-migrate-keyring" title="Key Migration Using the mysql_migrate_keyring Utility">Key Migration Using the mysql_migrate_keyring Utility</a></p></li><li class="listitem"><p><a class="xref" href="keyring-key-migration.html#keyring-key-migration-multiple-running-servers" title="Key Migration Involving Multiple Running Servers">Key Migration Involving Multiple Running Servers</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="keyring-key-migration-offline-online"></a>Offline and Online Key Migrations</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          A key migration is either offline or online:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Offline migration: For use when you are sure that no
+              running server on the local host is using the source or
+              destination keystore. In this case, the migration
+              operation can copy keys from the source keystore to the
+              destination without the possibility of a running server
+              modifying keystore content during the operation.
+            </p></li><li class="listitem"><p>
+              Online migration: For use when a running server on the
+              local host is using the source keystore. In this case,
+              care must be taken to prevent that server from updating
+              keystores during the migration. This involves connecting
+              to the running server and instructing it to pause keyring
+              operations so that keys can be copied safely from the
+              source keystore to the destination. When key copying is
+              complete, the running server is permitted to resume
+              keyring operations.
+</p></li></ul>
+</div>
+<p>
+          When you plan a key migration, use these points to decide
+          whether it should be offline or online:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Do not perform offline migration involving a keystore that
+              is in use by a running server.
+            </p></li><li class="listitem"><p>
+              Pausing keyring operations during an online migration is
+              accomplished by connecting to the running server and
+              setting its global
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> system
+              variable to <code class="literal">OFF</code> before key copying and
+              <code class="literal">ON</code> after key copying. This has several
+              implications:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a>
+                  was introduced in MySQL 5.7.21, so online migration is
+                  possible only if the running server is from MySQL
+                  5.7.21 or higher. If the running server is older, you
+                  must stop it, perform an offline migration, and
+                  restart it. All migration instructions elsewhere that
+                  refer to
+                  <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a>
+                  are subject to this condition.
+                </p></li><li class="listitem"><p>
+                  The account used to connect to the running server must
+                  have the privileges required to modify
+                  <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a>.
+                  These privileges are
+                  <a class="link" href="privileges-provided.html#priv_encryption-key-admin"><code class="literal">ENCRYPTION_KEY_ADMIN</code></a> in
+                  addition to either
+                  <a class="link" href="privileges-provided.html#priv_system-variables-admin"><code class="literal">SYSTEM_VARIABLES_ADMIN</code></a>
+                  or the deprecated <a class="link" href="privileges-provided.html#priv_super"><code class="literal">SUPER</code></a>
+                  privilege.
+                </p></li><li class="listitem"><p>
+                  If an online migration operation exits abnormally (for
+                  example, if it is forcibly terminated), it is possible
+                  for
+                  <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> to
+                  remain disabled on the running server, leaving it
+                  unable to perform keyring operations. In this case, it
+                  may be necessary to connect to the running server and
+                  enable
+                  <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a>
+                  manually using this statement:
+                </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET GLOBAL keyring_operations = ON;</code></pre></li></ul>
+</div>
+</li><li class="listitem"><p>
+              Online key migration provides for pausing keyring
+              operations on a single running server. To perform a
+              migration if multiple running servers are using the
+              keystores involved, use the procedure described at
+              <a class="xref" href="keyring-key-migration.html#keyring-key-migration-multiple-running-servers" title="Key Migration Involving Multiple Running Servers">Key Migration Involving Multiple Running Servers</a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="keyring-key-migration-using-migration-server"></a>Key Migration Using a Migration Server</h5>
+
+</div>
+
+</div>
+
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+            Online key migration using a migration server is only
+            supported if the running server allows socket connections or
+            TCP/IP connections using TLS; it is not supported when, for
+            example, the server is running on a Windows platform and
+            only allows shared memory connections.
+</p>
+</div>
+<p>
+          A MySQL server becomes a migration server if invoked in a
+          special operational mode that supports key migration. A
+          migration server does not accept client connections. Instead,
+          it runs only long enough to migrate keys, then exits. A
+          migration server reports errors to the console (the standard
+          error output).
+        </p><p>
+          A migration server supports these migration types:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Migration from one keyring plugin to another.
+            </p></li><li class="listitem"><p>
+              Migration from a keyring plugin to a keyring component.
+            </p></li><li class="listitem"><p>
+              Migration from a keyring component to a keyring plugin.
+</p></li></ul>
+</div>
+<p>
+          A migration server does not support migration from one keyring
+          component to another. For that type of migration, see
+          <a class="xref" href="keyring-key-migration.html#keyring-key-migration-using-mysql-migrate-keyring" title="Key Migration Using the mysql_migrate_keyring Utility">Key Migration Using the mysql_migrate_keyring Utility</a>.
+        </p><p>
+          To perform a key migration operation using a migration server,
+          determine the key migration options required to specify which
+          keyring plugins or components are involved, and whether the
+          migration is offline or online:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              To indicate the source keyring plugin and the destination
+              keyring plugin or component, specify these options:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-source"><code class="option">--keyring-migration-source</code></a>:
+                  The source keyring component or plugin that manages
+                  the keys to be migrated.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-destination"><code class="option">--keyring-migration-destination</code></a>:
+                  The destination keyring plugin or component to which
+                  the migrated keys are to be copied.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-to-component"><code class="option">--keyring-migration-to-component</code></a>:
+                  This option is required if the destination is a
+                  keyring component.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-from-component"><code class="option">--keyring-migration-from-component</code></a>:
+                  This option is required if the source is a keyring
+                  component.
+</p></li></ul>
+</div>
+<p>
+              The
+              <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-source"><code class="option">--keyring-migration-source</code></a>
+              and
+              <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-destination"><code class="option">--keyring-migration-destination</code></a>
+              options signify to the server that it should run in key
+              migration mode. For key migration operations, both options
+              are mandatory. Each plugin or component is specified using
+              the name of its library file, including any
+              platform-specific extension such as
+              <code class="filename">.so</code> or <code class="filename">.dll</code>. The
+              source and destination must differ, and the migration
+              server must support them both.
+            </p></li><li class="listitem"><p>
+              For an offline migration, no additional key migration
+              options are needed.
+            </p></li><li class="listitem"><p>
+              For an online migration, some running server currently is
+              using the source or destination keystore. To invoke the
+              migration server, specify additional key migration options
+              that indicate how to connect to the running server. This
+              is necessary so that the migration server can connect to
+              the running server and tell it to pause keyring use during
+              the migration operation.
+            </p><p>
+              Use of any of the following options signifies an online
+              migration:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-host"><code class="option">--keyring-migration-host</code></a>:
+                  The host where the running server is located. This is
+                  always the local host because the migration server can
+                  migrate keys only between keystores managed by local
+                  plugins and components.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-user"><code class="option">--keyring-migration-user</code></a>,
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-password"><code class="option">--keyring-migration-password</code></a>:
+                  The account credentials to use to connect to the
+                  running server.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-port"><code class="option">--keyring-migration-port</code></a>:
+                  For TCP/IP connections, the port number to connect to
+                  on the running server.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-socket"><code class="option">--keyring-migration-socket</code></a>:
+                  For Unix socket file or Windows named pipe
+                  connections, the socket file or named pipe to connect
+                  to on the running server.
+</p></li></ul>
+</div>
+</li></ul>
+</div>
+<p>
+          For additional details about the key migration options, see
+          <a class="xref" href="keyring-options.html" title="8.4.4.15 Keyring Command Options">Section 8.4.4.15, “Keyring Command Options”</a>.
+        </p><p>
+          Start the migration server with key migration options
+          indicating the source and destination keystores and whether
+          the migration is offline or online, possibly with other
+          options. Keep the following considerations in mind:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Other server options might be required; other non-keyring
+              options may be required as well. One way to specify these
+              options is by using
+              <a class="link" href="option-file-options.html#option_general_defaults-file"><code class="option">--defaults-file</code></a> to name an
+              option file that contains the required options.
+            </p></li><li class="listitem"><p>
+              The migration server expects path name option values to be
+              full paths. Relative path names may not be resolved as you
+              expect.
+            </p></li><li class="listitem"><p>
+              The user who invokes a server in key-migration mode must
+              not be the <code class="literal">root</code> operating system user,
+              unless the <a class="link" href="server-options.html#option_mysqld_user"><code class="option">--user</code></a> option is
+              specified with a non-<code class="literal">root</code> user name to
+              run the server as that user.
+            </p></li><li class="listitem"><p>
+              The user a server in key-migration mode runs as must have
+              permission to read and write any local keyring files, such
+              as the data file for a file-based plugin.
+            </p><p>
+              If you invoke the migration server from a system account
+              different from that normally used to run MySQL, it might
+              create keyring directories or files that are inaccessible
+              to the server during normal operation. Suppose that
+              <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> normally runs as the
+              <code class="literal">mysql</code> operating system user, but you
+              invoke the migration server while logged in as
+              <code class="literal">isabel</code>. Any new directories or files
+              created by the migration server are owned by
+              <code class="literal">isabel</code>. Subsequent startup fails when a
+              server run as the <code class="literal">mysql</code> operating
+              system user attempts to access file system objects owned
+              by <code class="literal">isabel</code>.
+            </p><p>
+              To avoid this issue, start the migration server as the
+              <code class="literal">root</code> operating system user and provide
+              a
+              <a class="link" href="server-options.html#option_mysqld_user"><code class="option">--user=<em class="replaceable"><code>user_name</code></em></code></a>
+              option, where <em class="replaceable"><code>user_name</code></em> is the
+              system account normally used to run MySQL. Alternatively,
+              after the migration, examine the keyring-related file
+              system objects and change their ownership and permissions
+              if necessary using <span class="command"><strong>chown</strong></span>,
+              <span class="command"><strong>chmod</strong></span>, or similar commands, so that the
+              objects are accessible to the running server.
+</p></li></ul>
+</div>
+<p>
+          Example command line for offline migration between two keyring
+          plugins (enter the command on a single line):
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysqld --defaults-file=/usr/local/mysql/etc/my.cnf
+  --keyring-migration-source=keyring_okv.so
+  --keyring-migration-destination=keyring_aws.so</code></pre><p>
+          Example command line for online migration between two keyring
+          plugins:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysqld --defaults-file=/usr/local/mysql/etc/my.cnf
+  --keyring-migration-source=keyring_okv.so
+  --keyring-migration-destination=keyring_aws.so
+  --keyring-migration-host=127.0.0.1
+  --keyring-migration-user=root
+  --keyring-migration-password=<em class="replaceable">root_password</em></code></pre><p>
+          To perform a migration when the destination is a keyring
+          component rather than a keyring plugin, specify the
+          <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-to-component"><code class="option">--keyring-migration-to-component</code></a>
+          option, and name the component as the value of the
+          <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-destination"><code class="option">--keyring-migration-destination</code></a>
+          option.
+        </p><p>
+          Example command line for offline migration from a keyring
+          plugin to a keyring component:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysqld --defaults-file=/usr/local/mysql/etc/my.cnf
+  --keyring-migration-to-component
+  --keyring-migration-source=keyring_okv.so
+  --keyring-migration-destination=component_keyring_encrypted_file.so</code></pre><p>
+          Notice that in this case, no
+          <code class="literal">keyring_encrypted_file_password</code> value is
+          specified. The password for the component data file is listed
+          in the component configuration file.
+        </p><p>
+          Example command line for online migration from a keyring
+          plugin to a keyring component:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysqld --defaults-file=/usr/local/mysql/etc/my.cnf
+  --keyring-migration-to-component
+  --keyring-migration-source=keyring_okv.so
+  --keyring-migration-destination=component_keyring_encrypted_file.so
+  --keyring-migration-host=127.0.0.1
+  --keyring-migration-user=root
+  --keyring-migration-password=<em class="replaceable">root_password</em></code></pre><p>
+          To perform a migration when the source is a keyring component
+          rather than a keyring plugin, specify the
+          <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-from-component"><code class="option">--keyring-migration-from-component</code></a>
+          option, and name the component as the value of the
+          <a class="link" href="keyring-options.html#option_mysqld_keyring-migration-source"><code class="option">--keyring-migration-source</code></a>
+          option.
+        </p><p>
+          Example command line for offline migration from a keyring
+          component to a keyring plugin:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysqld --defaults-file=/usr/local/mysql/etc/my.cnf
+  --keyring-migration-from-component
+  --keyring-migration-source=component_keyring_file.so
+  --keyring-migration-destination=keyring_okv.so
+  --keyring-okv-conf-dir=/usr/local/mysql/mysql-keyring-okv</code></pre><p>
+          Example command line for online migration from a keyring
+          comonent to a keyring plugin:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysqld --defaults-file=/usr/local/mysql/etc/my.cnf
+  --keyring-migration-from-component
+  --keyring-migration-source=component_keyring_file.so
+  --keyring-migration-destination=keyring_okv.so
+  --keyring-okv-conf-dir=/usr/local/mysql/mysql-keyring-okv
+  --keyring-migration-host=127.0.0.1
+  --keyring-migration-user=root
+  --keyring-migration-password=<em class="replaceable">root_password</em></code></pre><p>
+          The key migration server performs a migration operation as
+          follows:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              (Online migration only) Connect to the running server
+              using the connection options.
+            </p></li><li class="listitem"><p>
+              (Online migration only) Disable
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> on the
+              running server.
+            </p></li><li class="listitem"><p>
+              Load the keyring plugin or component libraries for the
+              source and destination keystores.
+            </p></li><li class="listitem"><p>
+              Copy keys from the source keystore to the destination.
+            </p></li><li class="listitem"><p>
+              Unload the keyring plugin or component libraries for the
+              source and destination keystores.
+            </p></li><li class="listitem"><p>
+              (Online migration only) Enable
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> on the
+              running server.
+            </p></li><li class="listitem"><p>
+              (Online migration only) Disconnect from the running
+              server.
+</p></li></ol>
+</div>
+<p>
+          If an error occurs during key migration, the destination
+          keystore is restored to its premigration state.
+        </p><p>
+          After a successful online key migration operation, the running
+          server might need to be restarted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              If the running server was using the source keystore before
+              the migration and should continue to use it after the
+              migration, it need not be restarted after the migration.
+            </p></li><li class="listitem"><p>
+              If the running server was using the destination keystore
+              before the migration and should continue to use it after
+              the migration, it should be restarted after the migration
+              to load all keys migrated into the destination keystore.
+            </p></li><li class="listitem"><p>
+              If the running server was using the source keystore before
+              the migration but should use the destination keystore
+              after the migration, it must be reconfigured to use the
+              destination keystore and restarted. In this case, be aware
+              that although the running server is paused from modifying
+              the source keystore during the migration itself, it is not
+              paused during the interval between the migration and the
+              subsequent restart. Care should be taken that the server
+              does not modify the source keystore during this interval
+              because any such changes will not be reflected in the
+              destination keystore.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="keyring-key-migration-using-mysql-migrate-keyring"></a>Key Migration Using the mysql_migrate_keyring Utility</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> utility migrates
+          keys from one keyring component to another. It does not
+          support migrations involving keyring plugins. For that type of
+          migration, use a MySQL server operating in key migration mode;
+          see
+          <a class="xref" href="keyring-key-migration.html#keyring-key-migration-using-migration-server" title="Key Migration Using a Migration Server">Key Migration Using a Migration Server</a>.
+        </p><p>
+          To perform a key migration operation using
+          <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a>, determine the key
+          migration options required to specify which keyring components
+          are involved, and whether the migration is offline or online:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              To indicate the source and destination keyring components
+              and their location, specify these options:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_source-keyring"><code class="option">--source-keyring</code></a>:
+                  The source keyring component that manages the keys to
+                  be migrated.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_destination-keyring"><code class="option">--destination-keyring</code></a>:
+                  The destination keyring component to which the
+                  migrated keys are to be copied.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_component-dir"><code class="option">--component-dir</code></a>:
+                  The directory containing keyring component library
+                  files. This is typically the value of the
+                  <a class="link" href="server-system-variables.html#sysvar_plugin_dir"><code class="literal">plugin_dir</code></a> system
+                  variable for the local MySQL server.
+</p></li></ul>
+</div>
+<p>
+              All three options are mandatory. Each keyring component
+              name is a component library file name specified without
+              any platform-specific extension such as
+              <code class="filename">.so</code> or <code class="filename">.dll</code>. For
+              example, to use the component for which the library file
+              is <code class="filename">component_keyring_file.so</code>, specify
+              the option as
+              <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_source-keyring"><code class="option">--source-keyring=component_keyring_file</code></a>.
+              The source and destination must differ, and
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> must support them
+              both.
+            </p></li><li class="listitem"><p>
+              For an offline migration, no additional options are
+              needed.
+            </p></li><li class="listitem"><p>
+              For an online migration, some running server currently is
+              using the source or destination keystore. In this case,
+              specify the
+              <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_online-migration"><code class="option">--online-migration</code></a>
+              option to signify an online migration. In addition,
+              specify connection options indicating how to connect to
+              the running server, so that
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> can connect to it
+              and tell it to pause keyring use during the migration
+              operation.
+            </p><p>
+              The
+              <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_online-migration"><code class="option">--online-migration</code></a>
+              option is commonly used in conjunction with connection
+              options such as these:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_host"><code class="option">--host</code></a>:
+                  The host where the running server is located. This is
+                  always the local host because
+                  <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> can migrate
+                  keys only between keystores managed by local
+                  components.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_user"><code class="option">--user</code></a>,
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_password"><code class="option">--password</code></a>:
+                  The account credentials to use to connect to the
+                  running server.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_port"><code class="option">--port</code></a>:
+                  For TCP/IP connections, the port number to connect to
+                  on the running server.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_socket"><code class="option">--socket</code></a>:
+                  For Unix socket file or Windows named pipe
+                  connections, the socket file or named pipe to connect
+                  to on the running server.
+</p></li></ul>
+</div>
+</li></ul>
+</div>
+<p>
+          For descriptions of all available options, see
+          <a class="xref" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility">Section 6.6.8, “mysql_migrate_keyring — Keyring Key Migration Utility”</a>.
+        </p><p>
+          Start <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> with options
+          indicating the source and destination keystores and whether
+          the migration is offline or online, possibly with other
+          options. Keep the following considerations in mind:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              The user who invokes
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> must not be the
+              <code class="literal">root</code> operating system user.
+            </p></li><li class="listitem"><p>
+              The user who invokes
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> must have
+              permission to read and write any local keyring files, such
+              as the data file for a file-based plugin.
+            </p><p>
+              If you invoke <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a>
+              from a system account different from that normally used to
+              run MySQL, it might create keyring directories or files
+              that are inaccessible to the server during normal
+              operation. Suppose that <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> normally
+              runs as the <code class="literal">mysql</code> operating system
+              user, but you invoke
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> while logged in
+              as <code class="literal">isabel</code>. Any new directories or files
+              created by <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> are
+              owned by <code class="literal">isabel</code>. Subsequent startup
+              fails when a server run as the <code class="literal">mysql</code>
+              operating system user attempts to access file system
+              objects owned by <code class="literal">isabel</code>.
+            </p><p>
+              To avoid this issue, invoke
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> as the
+              <code class="literal">mysql</code> operating system user.
+              Alternatively, after the migration, examine the
+              keyring-related file system objects and change their
+              ownership and permissions if necessary using
+              <span class="command"><strong>chown</strong></span>, <span class="command"><strong>chmod</strong></span>, or
+              similar commands, so that the objects are accessible to
+              the running server.
+</p></li></ul>
+</div>
+<p>
+          Suppose that you want to migrate keys from
+          <code class="literal">component_keyring_file</code> to
+          <code class="literal">component_keyring_encrypted_file</code>, and that
+          the local server stores its keyring component library files in
+          <code class="filename">/usr/local/mysql/lib/plugin</code>.
+        </p><p>
+          If no running server is using the keyring, an offline
+          migration is permitted. Invoke
+          <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> like this (enter the
+          command on a single line):
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysql_migrate_keyring
+  --component-dir=/usr/local/mysql/lib/plugin
+  --source-keyring=component_keyring_file
+  --destination-keyring=component_keyring_encrypted_file</code></pre><p>
+          If a running server is using the keyring, you must perform an
+          online migration instead. In this case, the
+          <a class="link" href="mysql-migrate-keyring.html#option_mysql_migrate_keyring_online-migration"><code class="option">--online-migration</code></a>
+          option must be given, along with any connection options
+          required to specify which server to connect to and the MySQL
+          account to use.
+        </p><p>
+          The following command performs an online migration. It
+          connects to the local server using a TCP/IP connection and the
+          <code class="literal">admin</code> account. The command prompts for a
+          password, which you should enter when prompted:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysql_migrate_keyring
+  --component-dir=/usr/local/mysql/lib/plugin
+  --source-keyring=component_keyring_file
+  --destination-keyring=component_keyring_encrypted_file
+  --online-migration --host=127.0.0.1 --user=admin --password</code></pre><p>
+          <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> performs a migration
+          operation as follows:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              (Online migration only) Connect to the running server
+              using the connection options.
+            </p></li><li class="listitem"><p>
+              (Online migration only) Disable
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> on the
+              running server.
+            </p></li><li class="listitem"><p>
+              Load the keyring component libraries for the source and
+              destination keystores.
+            </p></li><li class="listitem"><p>
+              Copy keys from the source keystore to the destination.
+            </p></li><li class="listitem"><p>
+              Unload the keyring component libraries for the source and
+              destination keystores.
+            </p></li><li class="listitem"><p>
+              (Online migration only) Enable
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> on the
+              running server.
+            </p></li><li class="listitem"><p>
+              (Online migration only) Disconnect from the running
+              server.
+</p></li></ol>
+</div>
+<p>
+          If an error occurs during key migration, the destination
+          keystore is restored to its premigration state.
+        </p><p>
+          After a successful online key migration operation, the running
+          server might need to be restarted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              If the running server was using the source keystore before
+              the migration and should continue to use it after the
+              migration, it need not be restarted after the migration.
+            </p></li><li class="listitem"><p>
+              If the running server was using the destination keystore
+              before the migration and should continue to use it after
+              the migration, it should be restarted after the migration
+              to load all keys migrated into the destination keystore.
+            </p></li><li class="listitem"><p>
+              If the running server was using the source keystore before
+              the migration but should use the destination keystore
+              after the migration, it must be reconfigured to use the
+              destination keystore and restarted. In this case, be aware
+              that although the running server is paused from modifying
+              the source keystore during the migration itself, it is not
+              paused during the interval between the migration and the
+              subsequent restart. Care should be taken that the server
+              does not modify the source keystore during this interval
+              because any such changes will not be reflected in the
+              destination keystore.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="keyring-key-migration-multiple-running-servers"></a>Key Migration Involving Multiple Running Servers</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Online key migration provides for pausing keyring operations
+          on a single running server. To perform a migration if multiple
+          running servers are using the keystores involved, use this
+          procedure:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Connect to each running server manually and set
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations=OFF</code></a>.
+              This ensures that no running server is using the source or
+              destination keystore and satisfies the required condition
+              for offline migration.
+            </p></li><li class="listitem"><p>
+              Use a migration server or
+              <a class="link" href="mysql-migrate-keyring.html" title="6.6.8 mysql_migrate_keyring — Keyring Key Migration Utility"><span class="command"><strong>mysql_migrate_keyring</strong></span></a> to perform an
+              offline key migration for each paused server.
+            </p></li><li class="listitem"><p>
+              Connect to each running server manually and set
+              <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations=ON</code></a>.
+</p></li></ol>
+</div>
+<p>
+          All running servers must support the
+          <a class="link" href="keyring-system-variables.html#sysvar_keyring_operations"><code class="literal">keyring_operations</code></a> system
+          variable. Any server that does not must be stopped before the
+          migration and restarted after.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="keyring-key-types.html"
+        aria-label="Previous" title="Previous: Supported Keyring Key Types and Lengths"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="keyring.html" title="Up: The MySQL Keyring"> UP</a> &nbsp;
+    <a href="keyring-functions-general-purpose.html" aria-label="Next"
+        title="Next: General-Purpose Keyring Key-Management Functions">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/keyring-key-migration.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:00:13 GMT -->
+</html>

@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/error-log-configuration.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:58:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 7.4.2.1 Error Log Configuration</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="error-log.html" title="7.4.2 The Error Log" />
+<link rel="next" href="error-log-destination-configuration8dba.html?ff=nopfpls" title="7.4.2.2 Default Error Log Destination Configuration" />
+<link rel="up" href="error-log.html" title="7.4.2 The Error Log" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xeha-f-80aefd042-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":193,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18aa6d13","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5793,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730132238","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==3g5RTGJ/UesIwBlJEmgaHARV4QloxqTrL8AszcShoSsxQiq9cZzuJcpn0z3J8a6tofU9RSPf+4IhtSVMxM3ZEncq8BLu23Onio28UEi+gYeD7ppm3WOZR+MB73PuUwX+il86s5hpwltBjzNhLZDmG0O1VgNDa4fXWHF9xjLsnfqFCdtJbyQvO8gACrLXXpOHSia29wSAxi3JQIqT2jiQfAdskm0VZzI50JhvQ/UVdTv+tSHl9qd0jOpf/Rcj/2wDSST+U+38PUx21qSe9hfQfVML2LwtZuR+gmt3cmgXUrr9pYHUXlZ8Dk7UdtoxmLJjJ0bNoomzgMFLIMnP6vCbW+y57MomNZJbs9qvOzQ9+mcEryjx386hrcixZheTW6cUlrn3ZlFoake66vAyC/vMP0fal4UudMiXXI238XQBQww=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Ferror-log-configuration.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="error-log.html"
+        aria-label="Previous" title="Previous: The Error Log"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="error-log.html" title="Up: The Error Log"><span class="icon-chevron-up"></span></a>
+    <a href="error-log-destination-configuration.html" aria-label="Next"
+        title="Next: Default Error Log Destination Configuration"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqld-server.html">The MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration.html">Configuring the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-defaults.html">Server Configuration Defaults</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-validation.html">Server Configuration Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-option-variable-reference.html">Server Option, System Variable, and Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variable-reference.html">Server System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variable-reference.html">Server Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-options.html">Server Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variables.html">Server System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="using-system-variables.html">Using System Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-variable-privileges.html">System Variable Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dynamic-system-variables.html">Dynamic System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="persisted-system-variables.html">Persisted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nonpersistible-system-variables.html">Nonpersistible and Persist-Restricted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="structured-system-variables.html">Structured System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variables.html">Server Status Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sql-mode.html">Server SQL Modes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-management.html">Connection Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-interfaces.html">Connection Interfaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="administrative-connection-interface.html">Administrative Connection Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="host-cache.html">DNS Lookups and the Host Cache</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ipv6-support.html">IPv6 Support</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-system-support.html">Verifying System Support for IPv6</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-server-config.html">Configuring the MySQL Server to Permit IPv6 Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-local-connections.html">Connecting Using the IPv6 Local Host Address</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-remote-connections.html">Connecting Using IPv6 Nonlocal Host Addresses</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-brokers.html">Obtaining an IPv6 Address from a Broker</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="network-namespace-support.html">Network Namespace Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="time-zone-support.html">MySQL Server Time Zone Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="resource-groups.html">Resource Groups</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-side-help-support.html">Server-Side Help Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="session-state-tracking.html">Server Tracking of Client Session State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-shutdown.html">The Server Shutdown Process</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-directory.html">The MySQL Data Directory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-schema.html">The mysql System Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-logs.html">MySQL Server Logs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-destinations.html">Selecting General Query Log and Slow Query Log Output Destinations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-log.html">The Error Log</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="error-log-configuration.html">Error Log Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-destination-configuration.html">Default Error Log Destination Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-event-fields.html">Error Event Fields</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-filtering.html">Types of Error Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-priority-based-filtering.html">Priority-Based Error Log Filtering (log_filter_internal)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rule-based-filtering.html">Rule-Based Error Log Filtering (log_filter_dragnet)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-json.html">Error Logging in JSON Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-syslog.html">Error Logging to the System Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-format.html">Error Log Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rotation.html">Error Log File Flushing and Renaming</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-log.html">The General Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="binary-log.html">The Binary Log</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-formats.html">Binary Logging Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-setting.html">Setting The Binary Log Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mixed.html">Mixed Binary Logging Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mysql-database.html">Logging Format for Changes to mysql Database Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-transaction-compression.html">Binary Log Transaction Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="slow-query-log.html">The Slow Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-file-maintenance.html">Server Log Maintenance</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="components.html">MySQL Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="component-loading.html">Installing and Uninstalling Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-component-information.html">Obtaining Component Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-components.html">Error Log Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-attribute-components.html">Query Attribute Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="scheduler-component.html">Scheduler Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-plugins.html">MySQL Server Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="plugin-loading.html">Installing and Uninstalling Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-plugin-information.html">Obtaining Server Plugin Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="thread-pool.html">MySQL Enterprise Thread Pool</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-elements.html">Thread Pool Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-installation.html">Thread Pool Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-operation.html">Thread Pool Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-tuning.html">Thread Pool Tuning</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin.html">The Rewriter Query Rewrite Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-installation.html">Installing or Uninstalling the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-usage.html">Using the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-reference.html">Rewriter Query Rewrite Plugin Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter.html">The ddl_rewriter Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-installation.html">Installing or Uninstalling ddl_rewriter</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-options.html">ddl_rewriter Plugin Options</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="version-tokens.html">Version Tokens</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-elements.html">Version Tokens Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-installation.html">Installing or Uninstalling Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-usage.html">Using Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-reference.html">Version Tokens Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="clone-plugin.html">The Clone Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-installation.html">Installing the Clone Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-local.html">Cloning Data Locally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-remote.html">Cloning Remote Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-concurrent-ddl.html">Cloning and Concurrent DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-encrypted-data.html">Cloning Encrypted Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-compressed-data.html">Cloning Compressed Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-replication.html">Cloning for Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-directories.html">Directories and Files Created During a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-failure-handling.html">Remote Cloning Operation Failure Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-monitoring.html">Monitoring Cloning Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-stop.html">Stopping a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-option-variable-reference.html">Clone System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-options-variables.html">Clone System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-limitations.html">Clone Plugin Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="daemon-keyring-proxy-plugin.html">The Keyring Proxy Bridge Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="plugin-services.html">MySQL Plugin Services</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="locking-service.html">The Locking Service</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-service.html">The Keyring Service</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-loadable-functions.html">MySQL Server Loadable Functions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="function-loading.html">Installing and Uninstalling Loadable Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-loadable-function-information.html">Obtaining Information About Loadable Functions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-servers.html">Running Multiple MySQL Instances on One Machine</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-data-directories.html">Setting Up Multiple Data Directories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-servers.html">Running Multiple MySQL Instances on Windows</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-command-line-servers.html">Starting Multiple MySQL Instances at the Windows Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-services.html">Starting Multiple MySQL Instances as Windows Services</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-unix-servers.html">Running Multiple MySQL Instances on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-server-clients.html">Using Client Programs in a Multiple-Server Environment</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-mysql.html">Debugging MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-server.html">Debugging a MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="compiling-for-debugging.html">Compiling MySQL for Debugging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-trace-files.html">Creating Trace Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-windows-dumps.html">Using WER with PDB to create a Windows crashdump</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-gdb-on-mysqld.html">Debugging mysqld under gdb</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-stack-trace.html">Using a Stack Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-log-files.html">Using Server Logs to Find Causes of Errors in mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reproducible-test-case.html">Making a Test Case If You Experience Table Corruption</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="debugging-client.html">Debugging a MySQL Client</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lock-order-tool.html">The LOCK_ORDER Tool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dbug-package.html">The DBUG Package</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/error-log-configuration.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/error-log-configuration.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/error-log-configuration.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         class="tooltip-left"
+                        data-tooltip="The page you are viewing does not exist in version 5.7.
+                        This link will take you to the Table of Contents."
+                                                href="https://dev.mysql.com/doc/refman/5.7/en/">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/error-log-configuration.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="server-administration.html">MySQL Server Administration</a> &nbsp;/&nbsp;
+                                                            <a href="server-logs.html">MySQL Server Logs</a> &nbsp;/&nbsp;
+                                                            <a href="error-log.html">The Error Log</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Error Log Configuration
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="error-log-configuration"></a>7.4.2.1 Error Log Configuration</h4>
+</div>
+</div>
+</div>
+<p>
+        In MySQL 8.4, error logging uses the MySQL
+        component architecture described at
+        <a class="xref" href="components.html" title="7.5 MySQL Components">Section 7.5, “MySQL Components”</a>. The error log subsystem consists
+        of components that perform log event filtering and writing, as
+        well as a system variable that configures which components to
+        load and enable to achieve the desired logging result.
+      </p><p>
+        This section discusses how to load and enable components for
+        error logging. For instructions specific to log filters, see
+        <a class="xref" href="error-log-filtering.html" title="7.4.2.4 Types of Error Log Filtering">Section 7.4.2.4, “Types of Error Log Filtering”</a>. For instructions specific
+        to the JSON and system log sinks, see
+        <a class="xref" href="error-log-json.html" title="7.4.2.7 Error Logging in JSON Format">Section 7.4.2.7, “Error Logging in JSON Format”</a>, and
+        <a class="xref" href="error-log-syslog.html" title="7.4.2.8 Error Logging to the System Log">Section 7.4.2.8, “Error Logging to the System Log”</a>. For additional details about
+        all available log components, see
+        <a class="xref" href="error-log-components.html" title="7.5.3 Error Log Components">Section 7.5.3, “Error Log Components”</a>.
+      </p><p>
+        Component-based error logging offers these features:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Log events that can be filtered by filter components to
+            affect the information available for writing.
+          </p></li><li class="listitem"><p>
+            Log events that are output by sink (writer) components.
+            Multiple sink components can be enabled, to write error log
+            output to multiple destinations.
+          </p></li><li class="listitem"><p>
+            Built-in filter and sink components that implement the
+            default error log format.
+          </p></li><li class="listitem"><p>
+            A loadable sink that enables logging in JSON format.
+          </p></li><li class="listitem"><p>
+            A loadable sink that enables logging to the system log.
+          </p></li><li class="listitem"><p>
+            System variables that control which log components to load
+            and enable and how each component operates.
+</p></li></ul>
+</div>
+<p>
+        Error log configuration is described under the following topics
+        in this section:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-default-configuration" title="The Default Error Log Configuration">The Default Error Log Configuration</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-configuration-methods" title="Error Log Configuration Methods">Error Log Configuration Methods</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-implicit-configuration" title="Implicit Error Log Configuration">Implicit Error Log Configuration</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-explicit-configuration" title="Explicit Error Log Configuration">Explicit Error Log Configuration</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-configuration-change-method" title="Changing the Error Log Configuration Method">Changing the Error Log Configuration Method</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-configuration-troubleshooting" title="Troubleshooting Configuration Issues">Troubleshooting Configuration Issues</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-configuration-multiple-log-sinks" title="Configuring Multiple Log Sinks">Configuring Multiple Log Sinks</a></p></li><li class="listitem"><p><a class="xref" href="error-log-configuration.html#error-log-configuration-log-sink-ps-support" title="Log Sink Performance Schema Support">Log Sink Performance Schema Support</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="error-log-default-configuration"></a>The Default Error Log Configuration</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> system
+          variable controls which loadable log components to load, and
+          which log components to enable for error logging. By default,
+          <code class="literal">log_error_services</code> has the value shown
+          here:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT @@GLOBAL.log_error_services;
++----------------------------------------+
+| @@GLOBAL.log_error_services            |
++----------------------------------------+
+| log_filter_internal; log_sink_internal |
++----------------------------------------+</code></pre><p>
+          That value indicates that log events first pass through the
+          <code class="literal">log_filter_internal</code> filter component, then
+          through the <code class="literal">log_sink_internal</code> sink
+          component, both of which are built-in components. A filter
+          modifies log events seen by components named later in the
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value. A
+          sink is a destination for log events. Typically, a sink
+          processes log events into log messages that have a particular
+          format and writes these messages to its associated output,
+          such as a file or the system log.
+        </p><p>
+          The combination of <code class="literal">log_filter_internal</code> and
+          <code class="literal">log_sink_internal</code> implements the default
+          error log filtering and output behavior. The action of these
+          components is affected by other server options and system
+          variables:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              The output destination is determined by the
+              <a class="link" href="server-options.html#option_mysqld_log-error"><code class="option">--log-error</code></a> option (and, on
+              Windows, <a class="link" href="server-system-variables.html#sysvar_pid_file"><code class="option">--pid-file</code></a> and
+              <a class="link" href="server-options.html#option_mysqld_console"><code class="option">--console</code></a>). These determine
+              whether to write error messages to the console or a file
+              and, if to a file, the error log file name. See
+              <a class="xref" href="error-log-destination-configuration.html" title="7.4.2.2 Default Error Log Destination Configuration">Section 7.4.2.2, “Default Error Log Destination Configuration”</a>.
+            </p></li><li class="listitem"><p>
+              The <a class="link" href="server-system-variables.html#sysvar_log_error_verbosity"><code class="literal">log_error_verbosity</code></a>
+              and
+              <a class="link" href="server-system-variables.html#sysvar_log_error_suppression_list"><code class="literal">log_error_suppression_list</code></a>
+              system variables affect which types of log events
+              <code class="literal">log_filter_internal</code> permits or
+              suppresses. See
+              <a class="xref" href="error-log-priority-based-filtering.html" title="7.4.2.5 Priority-Based Error Log Filtering (log_filter_internal)">Section 7.4.2.5, “Priority-Based Error Log Filtering (log_filter_internal)”</a>.
+</p></li></ul>
+</div>
+<p>
+          When configuring
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>, be aware
+          of the following characteristics:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              A list of log components may be delimited by semicolons or
+              commas, optionally followed by spaces. A given setting
+              cannot use both semicolon and comma separators. Component
+              order is significant because the server executes
+              components in the order listed.
+            </p></li><li class="listitem"><p>
+              The final component in the
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value
+              cannot be a filter. This is an error because any changes
+              it has on events would have no effect on output:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SET GLOBAL log_error_services = 'log_filter_internal';
+ERROR 1231 (42000): Variable 'log_error_services' can't be set to the value
+of 'log_filter_internal'</code></pre><p>
+              To correct the problem, include a sink at the end of the
+              value:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; SET GLOBAL log_error_services = 'log_filter_internal; log_sink_internal';</code></pre></li><li class="listitem"><p>
+              The order of components named in
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> is
+              significant, particularly with respect to the relative
+              order of filters and sinks. Consider this
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value:
+            </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none">log_filter_internal; log_sink_1; log_sink_2</code></pre><p>
+              In this case, log events pass to the built-in filter, then
+              to the first sink, then to the second sink. Both sinks
+              receive the filtered log events.
+            </p><p>
+              Compare that to this
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value:
+            </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none">log_sink_1; log_filter_internal; log_sink_2</code></pre><p>
+              In this case, log events pass to the first sink, then to
+              the built-in filter, then to the second sink. The first
+              sink receives unfiltered events. The second sink receives
+              filtered events. You might configure error logging this
+              way if you want one log that contains messages for all log
+              events, and another log that contains messages only for a
+              subset of log events.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-configuration-methods"></a>Error Log Configuration Methods</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Error log configuration involves loading and enabling error
+          log components as necessary and performing component-specific
+          configuration.
+        </p><p>
+          There are two error log configuration methods,
+          <span class="emphasis"><em>implicit</em></span> and
+          <span class="emphasis"><em>explicit</em></span>. It is recommended that one
+          configuration method is selected and used exclusively. Using
+          both methods can result in warnings at startup. For more
+          information, see
+          <a class="xref" href="error-log-configuration.html#error-log-configuration-troubleshooting" title="Troubleshooting Configuration Issues">Troubleshooting Configuration Issues</a>.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <span class="emphasis"><em>Implicit Error Log Configuration</em></span>
+            </p><p>
+              This configuration method loads and enables the log
+              components defined by the
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>
+              variable. Loadable components that are not already loaded
+              are loaded implicitly at startup before the
+              <code class="literal">InnoDB</code> storage engine is fully
+              available. This configuration method has the following
+              advantages:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  Log components are loaded early in the startup
+                  sequence, before the <code class="literal">InnoDB</code> storage
+                  engine, making logged information available sooner.
+                </p></li><li class="listitem"><p>
+                  It avoids loss of buffered log information should a
+                  failure occur during startup.
+                </p></li><li class="listitem"><p>
+                  Installing error log components using
+                  <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a> is
+                  not required, simplifying error log configuration.
+</p></li></ul>
+</div>
+<p>
+              To use this method, see
+              <a class="xref" href="error-log-configuration.html#error-log-implicit-configuration" title="Implicit Error Log Configuration">Implicit Error Log Configuration</a>.
+</p></li></ul>
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <span class="emphasis"><em>Explicit Error Log Configuration</em></span>
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+                This configuration method is supported for backward
+                compatibility. The implicit configuration method is
+                recommended.
+</p>
+</div>
+<p>
+              This configuration method requires loading error log
+              components using <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL
+              COMPONENT</code></a> and then configuring
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> to
+              enable the log components. <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL
+              COMPONENT</code></a> adds the component to the
+              <code class="literal">mysql.component</code> table (an
+              <code class="literal">InnoDB</code> table), and the components to
+              load at startup are read from this table, which is only
+              accessible after <code class="literal">InnoDB</code> is initialized.
+            </p><p>
+              Logged information is buffered during the startup sequence
+              while the <code class="literal">InnoDB</code> storage engine is
+              initialized, which is sometimes prolonged by operations
+              such as recovery and data dictionary upgrade that occur
+              during the <code class="literal">InnoDB</code> startup sequence.
+            </p><p>
+              To use this method, see
+              <a class="xref" href="error-log-configuration.html#error-log-explicit-configuration" title="Explicit Error Log Configuration">Explicit Error Log Configuration</a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-implicit-configuration"></a>Implicit Error Log Configuration</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          This procedure describes how to load and enable error logging
+          components implicitly using
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>. For a
+          discussion of error log configuration methods, see
+          <a class="xref" href="error-log-configuration.html#error-log-configuration-methods" title="Error Log Configuration Methods">Error Log Configuration Methods</a>.
+        </p><p>
+          To load and enable error logging components implicitly:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              List the error log components in the
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value.
+            </p><p>
+              To load and enable the error log components at server
+              startup, set
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> in an
+              option file. The following example configures the use of
+              the JSON log sink (<code class="literal">log_sink_json</code>) in
+              addition to the built-in log filter and sink
+              (<code class="literal">log_filter_internal</code>,
+              <code class="literal">log_sink_internal</code>).
+            </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+log_error_services='log_filter_internal; log_sink_internal; log_sink_json'</code></pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+                To use the JSON log sink
+                (<code class="literal">log_sink_syseventlog</code>) instead of the
+                default sink (<code class="literal">log_sink_internal</code>), you
+                would replace <code class="literal">log_sink_internal</code> with
+                <code class="literal">log_sink_json</code>.
+</p>
+</div>
+<p>
+              To load and enable the component immediately and for
+              subsequent restarts, set
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> using
+              <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+              PERSIST</code></a>:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET PERSIST log_error_services = 'log_filter_internal; log_sink_internal; log_sink_json';</code></pre></li><li class="listitem"><p>
+              If the error log component exposes any system variables
+              that must be set for component initialization to succeed,
+              assign those variables appropriate values. You can set
+              these variables in an option file or using
+              <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+              PERSIST</code></a>.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+                When implementing an implicit configuration, set
+                <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>
+                first to load a component and expose its system
+                variables, and then set component system variables
+                afterward. This configuration order is required
+                regardless of whether variable assignment is performed
+                on the command-line, in an option file, or using
+                <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+                PERSIST</code></a>.
+</p>
+</div>
+</li></ol>
+</div>
+<p>
+          To disable a log component, remove it from the
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value.
+          Also remove any associated component variables settings that
+          you have defined.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+            Loading a log component implicitly using
+            <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> has no
+            effect on the <code class="literal">mysql.component</code> table. It
+            does not add the component to the
+            <code class="literal">mysql.component</code> table, nor does it remove
+            a component previously installed using
+            <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a> from the
+            <code class="literal">mysql.component</code> table.
+</p>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-explicit-configuration"></a>Explicit Error Log Configuration</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          This procedure describes how to load and enable error logging
+          components explicitly by loading components using
+          <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a> and then
+          enabling using
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>. For a
+          discussion of error log configuration methods, see
+          <a class="xref" href="error-log-configuration.html#error-log-configuration-methods" title="Error Log Configuration Methods">Error Log Configuration Methods</a>.
+        </p><p>
+          To load and enable error logging components explicitly:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Load the component using <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL
+              COMPONENT</code></a> (unless it is built in or already
+              loaded). For example, to load the JSON log sink, issue the
+              following statement:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">INSTALL COMPONENT 'file://component_log_sink_json';</code></pre><p>
+              Loading a component using <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL
+              COMPONENT</code></a> registers it in the
+              <code class="literal">mysql.component</code> system table so that
+              the server loads it automatically for subsequent startups,
+              after <code class="literal">InnoDB</code> is initialized.
+            </p><p>
+              The URN to use when loading a log component with
+              <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a> is the
+              component name prefixed with
+              <code class="literal">file://component_</code>. For example, for the
+              <code class="literal">log_sink_json</code> component, the
+              corresponding URN is
+              <code class="literal">file://component_log_sink_json</code>. For
+              error log component URNs, see
+              <a class="xref" href="error-log-components.html" title="7.5.3 Error Log Components">Section 7.5.3, “Error Log Components”</a>.
+            </p></li><li class="listitem"><p>
+              If the error log component exposes any system variables
+              that must be set for component initialization to succeed,
+              assign those variables appropriate values. You can set
+              these variables in an option file or using
+              <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+              PERSIST</code></a>.
+            </p></li><li class="listitem"><p>
+              Enable the component by listing it in the
+              <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+                When loading log components explicitly using
+                <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a>, do not
+                persist or set
+                <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> in
+                an option file, which loads log components implicitly at
+                startup. Instead, enable log components at runtime using
+                a <code class="literal">SET
+                GLOBAL</code> statement.
+</p>
+</div>
+<p>
+              The following example configures the use of the JSON log
+              sink (<code class="literal">log_sink_json</code>) in addition to the
+              built-in log filter and sink
+              (<code class="literal">log_filter_internal</code>,
+              <code class="literal">log_sink_internal</code>).
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET GLOBAL log_error_services = 'log_filter_internal; log_sink_internal; log_sink_json';</code></pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+                To use the JSON log sink
+                (<code class="literal">log_sink_syseventlog</code>) instead of the
+                default sink (<code class="literal">log_sink_internal</code>), you
+                would replace <code class="literal">log_sink_internal</code> with
+                <code class="literal">log_sink_json</code>.
+</p>
+</div>
+</li></ol>
+</div>
+<p>
+          To disable a log component, remove it from the
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value.
+          Then, if the component is loadable and you also want to unload
+          it, use <a class="link" href="uninstall-component.html" title="15.7.4.5 UNINSTALL COMPONENT Statement"><code class="literal">UNINSTALL COMPONENT</code></a>.
+          Also remove any associated component variables settings that
+          you have defined.
+        </p><p>
+          Attempts to use <a class="link" href="uninstall-component.html" title="15.7.4.5 UNINSTALL COMPONENT Statement"><code class="literal">UNINSTALL
+          COMPONENT</code></a> to unload a loadable component that is
+          still named in the
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value
+          produce an error.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-configuration-change-method"></a>Changing the Error Log Configuration Method</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          If you have previously loaded error log components explicitly
+          using <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a> and
+          want to switch to an implicit configuration, as described in
+          <a class="xref" href="error-log-configuration.html#error-log-implicit-configuration" title="Implicit Error Log Configuration">Implicit Error Log Configuration</a>, the
+          following steps are recommended:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Set <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>
+              back to its default configuration.
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET GLOBAL log_error_services = 'log_filter_internal,log_sink_internal';</code></pre></li><li class="listitem"><p>
+              Use <a class="link" href="uninstall-component.html" title="15.7.4.5 UNINSTALL COMPONENT Statement"><code class="literal">UNINSTALL COMPONENT</code></a> to
+              uninstall any loadable logging components that you
+              installed previously. For example, if you installed the
+              JSON log sink previously, uninstall it as shown:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">UNINSTALL COMPONENT 'file://component_log_sink_json';</code></pre></li><li class="listitem"><p>
+              Remove any component variable settings for the uninstalled
+              component. For example, if component variables were set in
+              an option file, remove the settings from the option file.
+              If component variables were set using
+              <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+              PERSIST</code></a>, use
+              <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">RESET
+              PERSIST</code></a> to clear the settings.
+            </p></li><li class="listitem"><p>
+              Follow the steps in
+              <a class="xref" href="error-log-configuration.html#error-log-implicit-configuration" title="Implicit Error Log Configuration">Implicit Error Log Configuration</a> to
+              reimplement your configuration.
+</p></li></ol>
+</div>
+<p>
+          If you need to revert from an implicit configuration to an
+          explicit configuration, perform the following steps:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Set <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a>
+              back to its default configuration to unload implicitly
+              loaded log components.
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET GLOBAL log_error_services = 'log_filter_internal,log_sink_internal';</code></pre></li><li class="listitem"><p>
+              Remove any component variable settings associated with the
+              uninstalled components. For example, if component
+              variables were set in an option file, remove the settings
+              from the option file. If component variables were set
+              using <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+              PERSIST</code></a>, use
+              <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">RESET
+              PERSIST</code></a> to clear the settings.
+            </p></li><li class="listitem"><p>
+              Restart the server to uninstall the log components that
+              were implicitly loaded.
+            </p></li><li class="listitem"><p>
+              Follow the steps in
+              <a class="xref" href="error-log-configuration.html#error-log-explicit-configuration" title="Explicit Error Log Configuration">Explicit Error Log Configuration</a> to
+              reimplement your configuration.
+</p></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-configuration-troubleshooting"></a>Troubleshooting Configuration Issues</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Log components listed in the
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value at
+          startup are loaded implicitly early in the MySQL Server
+          startup sequence. If the log component was loaded previously
+          using <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL COMPONENT</code></a>, the
+          server attempts to load the component again later in the
+          startup sequence, which produces the warning <span class="errortext">Cannot
+          load component from specified URN:
+          'file://component_<em class="replaceable"><code>component_name</code></em>'</span>.
+        </p><p>
+          You can check for this warning in the error log or by querying
+          the Performance Schema <a class="link" href="performance-schema-error-log-table.html" title="29.12.22.2 The error_log Table"><code class="literal">error_log</code></a>
+          table using the following query:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT error_code, data
+  FROM performance_schema.error_log
+ WHERE data LIKE "%'file://component_%"
+   AND error_code="MY-013129" AND data LIKE "%MY-003529%";</code></pre><p>
+          To prevent this warning, follow the instructions in
+          <a class="xref" href="error-log-configuration.html#error-log-configuration-change-method" title="Changing the Error Log Configuration Method">Changing the Error Log Configuration Method</a> to
+          adjust your error log configuration. Either an implicit or
+          explicit error log configuration should be used, but not both.
+        </p><p>
+          A similar error occurs when attempting to explicitly load a
+          component that was implicitly loaded at startup. For example,
+          if <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> lists
+          the JSON log sink component, that component is implicitly
+          loaded at startup. Attempting to explicitly load the same
+          component later returns this error:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; INSTALL COMPONENT 'file://component_log_sink_json';
+ERROR 3529 (HY000): Cannot load component from specified URN: 'file://component_log_sink_json'.</code></pre>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-configuration-multiple-log-sinks"></a>Configuring Multiple Log Sinks</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          It is possible to configure multiple log sinks, which enables
+          sending output to multiple destinations. To enable the JSON
+          log sink in addition to (rather than instead of) the default
+          sink, set the
+          <a class="link" href="server-system-variables.html#sysvar_log_error_services"><code class="literal">log_error_services</code></a> value like
+          this:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET GLOBAL log_error_services = 'log_filter_internal; log_sink_internal; log_sink_json';</code></pre><p>
+          To revert to using only the default sink and unload the system
+          log sink, execute these statements:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET GLOBAL log_error_services = 'log_filter_internal; log_sink_internal;
+UNINSTALL COMPONENT 'file://component_log_sink_json';</code></pre>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="error-log-configuration-log-sink-ps-support"></a>Log Sink Performance Schema Support</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          If enabled log components include a sink that provides
+          Performance Schema support, events written to the error log
+          are also written to the Performance Schema
+          <a class="link" href="performance-schema-error-log-table.html" title="29.12.22.2 The error_log Table"><code class="literal">error_log</code></a> table. This enables
+          examining error log contents using SQL queries. Currently, the
+          traditional-format <code class="literal">log_sink_internal</code> and
+          JSON-format <code class="literal">log_sink_json</code> sinks support
+          this capability. See
+          <a class="xref" href="performance-schema-error-log-table.html" title="29.12.22.2 The error_log Table">Section 29.12.22.2, “The error_log Table”</a>.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="error-log.html"
+        aria-label="Previous" title="Previous: The Error Log"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="error-log.html" title="Up: The Error Log"> UP</a> &nbsp;
+    <a href="error-log-destination-configuration.html" aria-label="Next"
+        title="Next: Default Error Log Destination Configuration">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/error-log-configuration.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:58:46 GMT -->
+</html>

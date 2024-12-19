@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/pam-pluggable-authentication.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:59:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 8.4.1.5 PAM Pluggable Authentication</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="cleartext-pluggable-authentication.html" title="8.4.1.4 Client-Side Cleartext Pluggable Authentication" />
+<link rel="next" href="windows-pluggable-authentication8dba.html?ff=nopfpls" title="8.4.1.6 Windows Pluggable Authentication" />
+<link rel="up" href="authentication-plugins.html" title="8.4.1 Authentication Plugins" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xfka-f-543b761db-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":187,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18ad1d6c","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5893,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730132308","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==jkDnhptZhJ+bgLhww8bCyWb09Hlp8jDruxNf0Y9F6ut9Isj4/LTs2jlLT2gmIB89K39ZReIPtpA8gyf2NpQWIZTJP526tJmPDSbyeLYmB/cfPRpEJZCl5pO8a5fHdOVLNCAklns6pPSxq2+YA2p79v2BmWGhzGR3axtA6kfGr6iyWlZg5dQaYDbWsfH2Fp8IoxQrfs0bHzneBJb2YmWsanMPSsZJ/sZkGgmj5uKh5/dqW9ezRNVBB2n47ynpsDR0JcWArXrBXUE+JHL7JZV4e/6sqbF29d90aGPgO+LnO2FAtXDVpEKLVDsaBwCKOdEuYD6SIOmqAoBc6YpFmTsFSvaa8O50oS86DjYy0KdilsMO61nHmydpBdHKjCCd9yZQLNRfpVEAgJBBCAXVbWtYG6RJWpQ5BICB1bYNPEVoU7w=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fpam-pluggable-authentication.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="cleartext-pluggable-authentication.html"
+        aria-label="Previous" title="Previous: Client-Side Cleartext Pluggable Authentication"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="authentication-plugins.html" title="Up: Authentication Plugins"><span class="icon-chevron-up"></span></a>
+    <a href="windows-pluggable-authentication.html" aria-label="Next"
+        title="Next: Windows Pluggable Authentication"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="general-security-issues.html">General Security Issues</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-guidelines.html">Security Guidelines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="password-security.html">Keeping Passwords Secure</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-user.html">End-User Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-admin.html">Administrator Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-logging.html">Passwords and Logging</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-against-attack.html">Making MySQL Secure Against Attackers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-options.html">Security-Related mysqld Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="changing-mysql-user.html">How to Run MySQL as a Normal User</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-data-local-security.html">Security Considerations for LOAD DATA LOCAL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="secure-client-programming.html">Client Programming Security Guidelines</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="access-control.html">Access Control and Account Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-names.html">Account User Names and Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privileges-provided.html">Privileges Provided by MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="grant-tables.html">Grant Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-names.html">Specifying Account Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="role-names.html">Specifying Role Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-access.html">Access Control, Stage 1: Connection Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="request-access.html">Access Control, Stage 2: Request Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-accounts.html">Adding Accounts, Assigning Privileges, and Dropping Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reserved-accounts.html">Reserved Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="roles.html">Using Roles</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-categories.html">Account Categories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partial-revokes.html">Privilege Restriction Using Partial Revokes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privilege-changes.html">When Privilege Changes Take Effect</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="assigning-passwords.html">Assigning Account Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-management.html">Password Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="expired-password-handling.html">Server Handling of Expired Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication.html">Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multifactor-authentication.html">Multifactor Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="proxy-users.html">Proxy Users</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-locking.html">Account Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-resources.html">Setting Account Resource Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="problems-connecting.html">Troubleshooting Problems Connecting to MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-activity-auditing.html">SQL-Based Account Activity Auditing</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="encrypted-connections.html">Using Encrypted Connections</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-encrypted-connections.html">Configuring MySQL to Use Encrypted Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="encrypted-connection-protocols-ciphers.html">Encrypted Connection TLS Protocols and Ciphers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files.html">Creating SSL and RSA Certificates and Keys</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files-using-mysql.html">Creating SSL and RSA Certificates and Keys using MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-files-using-openssl.html">Creating SSL Certificates and Keys Using openssl</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-rsa-files-using-openssl.html">Creating RSA Keys Using openssl</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-and-ssh.html">Connecting to MySQL Remotely from Windows with SSH</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reusing-ssl-sessions.html">Reusing SSL Sessions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security-plugins.html">Security Components and Plugins</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="authentication-plugins.html">Authentication Plugins</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="native-pluggable-authentication.html">Native Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="caching-sha2-pluggable-authentication.html">Caching SHA-2 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sha256-pluggable-authentication.html">SHA-256 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cleartext-pluggable-authentication.html">Client-Side Cleartext Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="pam-pluggable-authentication.html">PAM Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-pluggable-authentication.html">Windows Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ldap-pluggable-authentication.html">LDAP Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="kerberos-pluggable-authentication.html">Kerberos Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="no-login-pluggable-authentication.html">No-Login Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="socket-pluggable-authentication.html">Socket Peer-Credential Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="webauthn-pluggable-authentication.html">WebAuthn Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="test-pluggable-authentication.html">Test Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication-system-variables.html">Pluggable Authentication System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-control.html">The Connection-Control Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-installation.html">Connection-Control Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-variables.html">Connection-Control System and Status Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="validate-password.html">The Password Validation Component</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-installation.html">Password Validation Component Installation and Uninstallation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-options-variables.html">Password Validation Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-transitioning.html">Transitioning to the Password Validation Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="keyring.html">The MySQL Keyring</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-plugin-comparison.html">Keyring Components Versus Keyring Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-installation.html">Keyring Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-plugin-installation.html">Keyring Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-file-component.html">Using the component_keyring_file File-Based Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-encrypted-file-component.html">Using the component_keyring_encrypted_file Encrypted File-Based Keyring
+Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-okv-plugin.html">Using the keyring_okv KMIP Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-aws-plugin.html">Using the keyring_aws Amazon Web Services Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-hashicorp-plugin.html">Using the HashiCorp Vault Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-oci-component.html">Using the Oracle Cloud Infrastructure Vault Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-types.html">Supported Keyring Key Types and Lengths</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-migration.html">Migrating Keys Between Keyring Keystores</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-general-purpose.html">General-Purpose Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-plugin-specific.html">Plugin-Specific Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-metadata.html">Keyring Metadata</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-options.html">Keyring Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-system-variables.html">Keyring System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="audit-log.html">MySQL Enterprise Audit</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-elements.html">Elements of MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-installation.html">Installing or Uninstalling MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-security.html">MySQL Enterprise Audit Security Considerations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-formats.html">Audit Log File Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-logging-configuration.html">Configuring Audit Logging Characteristics</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-reading.html">Reading Audit Log Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filtering.html">Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filter-definitions.html">Writing Audit Log Filter Definitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-disabling.html">Disabling Audit Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-legacy-filtering.html">Legacy Mode Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-reference.html">Audit Log Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-restrictions.html">Audit Log Restrictions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-api-message-emit.html">The Audit Message Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="firewall.html">MySQL Enterprise Firewall</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-elements.html">Elements of MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-installation.html">Installing or Uninstalling MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-usage.html">Using MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-reference.html">MySQL Enterprise Firewall Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking.html">MySQL Enterprise Data Masking and De-Identification</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-vs-plugin.html">Data-Masking Components Versus the Data-Masking Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-components.html">MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-installation.html">MySQL Enterprise Data Masking and De-Identification Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-usage.html">Using MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-function-reference.html">MySQL Enterprise Data Masking and De-Identification Component Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-functions.html">MySQL Enterprise Data Masking and De-Identification Component Function Descriptions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-variables.html">MySQL Enterprise Data Masking and De-Identification Component Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin.html">MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-installation.html">MySQL Enterprise Data Masking and De-Identification Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-usage.html">Using the MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-function-reference.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-functions.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption.html">MySQL Enterprise Encryption</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-installation.html">MySQL Enterprise Encryption Installation and Upgrading</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-configuring.html">Configuring MySQL Enterprise Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-usage.html">MySQL Enterprise Encryption Usage and Examples</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-function-reference.html">MySQL Enterprise Encryption Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-functions.html">MySQL Enterprise Encryption Component Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux.html">SELinux</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-checking.html">Check if SELinux is Enabled</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-mode.html">Changing the SELinux Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-policies.html">MySQL Server SELinux Policies</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-file-context.html">SELinux File Context</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux-context-tcp-port.html">SELinux TCP Port Context</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysqld-tcp-port.html">Setting the TCP Port Context for mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysql-feature-ports.html">Setting the TCP Port Context for MySQL Features</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-troubleshooting.html">Troubleshooting SELinux</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="fips-mode.html">FIPS Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/pam-pluggable-authentication.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/pam-pluggable-authentication.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/pam-pluggable-authentication.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/pam-pluggable-authentication.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/pam-pluggable-authentication.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="security.html">Security</a> &nbsp;/&nbsp;
+                                                            <a href="security-plugins.html">Security Components and Plugins</a> &nbsp;/&nbsp;
+                                                            <a href="authentication-plugins.html">Authentication Plugins</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        PAM Pluggable Authentication
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="pam-pluggable-authentication"></a>8.4.1.5 PAM Pluggable Authentication</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105706639296"></a><a class="indexterm" name="idm45105706638192"></a><a class="indexterm" name="idm45105706636704"></a><a class="indexterm" name="idm45105706635232"></a><a class="indexterm" name="idm45105706633760"></a><a class="indexterm" name="idm45105706632672"></a>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          PAM pluggable authentication is an extension included in
+          MySQL Enterprise Edition, a commercial product. To learn more about commercial
+          products, see <a class="ulink" href="https://www.mysql.com/products/"  target="_blank">https://www.mysql.com/products/</a>.
+</p>
+</div>
+<p>
+        MySQL Enterprise Edition supports an authentication method that enables MySQL
+        Server to use PAM (Pluggable Authentication Modules) to
+        authenticate MySQL users. PAM enables a system to use a standard
+        interface to access various kinds of authentication methods,
+        such as traditional Unix passwords or an LDAP directory.
+      </p><p>
+        PAM pluggable authentication provides these capabilities:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            External authentication: PAM authentication enables MySQL
+            Server to accept connections from users defined outside the
+            MySQL grant tables and that authenticate using methods
+            supported by PAM.
+          </p></li><li class="listitem"><p>
+            Proxy user support: PAM authentication can return to MySQL a
+            user name different from the external user name passed by
+            the client program, based on the PAM groups the external
+            user is a member of and the authentication string provided.
+            This means that the plugin can return the MySQL user that
+            defines the privileges the external PAM-authenticated user
+            should have. For example, an operating system user named
+            <code class="literal">joe</code> can connect and have the privileges
+            of a MySQL user named <code class="literal">developer</code>.
+</p></li></ul>
+</div>
+<p>
+        PAM pluggable authentication has been tested on Linux and macOS;
+        note that Windows does not support PAM.
+      </p><p>
+        The following table shows the plugin and library file names. The
+        file name suffix might differ on your system. The file must be
+        located in the directory named by the
+        <a class="link" href="server-system-variables.html#sysvar_plugin_dir"><code class="literal">plugin_dir</code></a> system variable. For
+        installation information, see
+        <a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-installation" title="Installing PAM Pluggable Authentication">Installing PAM Pluggable Authentication</a>.
+</p>
+<div class="table">
+<a name="idm45105706620832"></a><p class="title"><b>Table 8.18 Plugin and Library Names for PAM Authentication</b></p>
+<div class="table-contents">
+<table summary="Names for the plugins and library file used for PAM password authentication."><col style="width: 30%"><col style="width: 70%"><thead><tr>
+            <th>Plugin or File</th>
+            <th>Plugin or File Name</th>
+          </tr></thead><tbody><tr>
+            <td>Server-side plugin</td>
+            <td><code class="literal">authentication_pam</code></td>
+          </tr><tr>
+            <td>Client-side plugin</td>
+            <td><code class="literal">mysql_clear_password</code></td>
+          </tr><tr>
+            <td>Library file</td>
+            <td><code class="filename">authentication_pam.so</code></td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break"><p>
+        The client-side <code class="literal">mysql_clear_password</code>
+        cleartext plugin that communicates with the server-side PAM
+        plugin is built into the <code class="literal">libmysqlclient</code>
+        client library and is included in all distributions, including
+        community distributions. Inclusion of the client-side cleartext
+        plugin in all MySQL distributions enables clients from any
+        distribution to connect to a server that has the server-side PAM
+        plugin loaded.
+      </p><p>
+        The following sections provide installation and usage
+        information specific to PAM pluggable authentication:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-process" title="How PAM Authentication of MySQL Users Works">How PAM Authentication of MySQL Users Works</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-installation" title="Installing PAM Pluggable Authentication">Installing PAM Pluggable Authentication</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-uninstallation" title="Uninstalling PAM Pluggable Authentication">Uninstalling PAM Pluggable Authentication</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-usage" title="Using PAM Pluggable Authentication">Using PAM Pluggable Authentication</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-authentication-unix-without-proxy" title="PAM Unix Password Authentication without Proxy Users">PAM Unix Password Authentication without Proxy Users</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-authentication-ldap-without-proxy" title="PAM LDAP Authentication without Proxy Users">PAM LDAP Authentication without Proxy Users</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-authentication-unix-with-proxy" title="PAM Unix Password Authentication with Proxy Users and Group Mapping">PAM Unix Password Authentication with Proxy Users and Group Mapping</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-authentication-unix-password-store" title="PAM Authentication Access to Unix Password Store">PAM Authentication Access to Unix Password Store</a></p></li><li class="listitem"><p><a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-debugging" title="PAM Authentication Debugging">PAM Authentication Debugging</a></p></li></ul>
+</div>
+<p>
+        For general information about pluggable authentication in MySQL,
+        see <a class="xref" href="pluggable-authentication.html" title="8.2.17 Pluggable Authentication">Section 8.2.17, “Pluggable Authentication”</a>. For information
+        about the <code class="literal">mysql_clear_password</code> plugin, see
+        <a class="xref" href="cleartext-pluggable-authentication.html" title="8.4.1.4 Client-Side Cleartext Pluggable Authentication">Section 8.4.1.4, “Client-Side Cleartext Pluggable Authentication”</a>. For proxy
+        user information, see <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>.
+</p>
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="pam-pluggable-authentication-process"></a>How PAM Authentication of MySQL Users Works</h5>
+</div>
+</div>
+</div>
+<p>
+          This section provides an overview of how MySQL and PAM work
+          together to authenticate MySQL users. For examples showing how
+          to set up MySQL accounts to use specific PAM services, see
+          <a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-usage" title="Using PAM Pluggable Authentication">Using PAM Pluggable Authentication</a>.
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              The client program and the server communicate, with the
+              client sending to the server the client user name (the
+              operating system user name by default) and password:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                  The client user name is the external user name.
+                </p></li><li class="listitem"><p>
+                  For accounts that use the PAM server-side
+                  authentication plugin, the corresponding client-side
+                  plugin is <code class="literal">mysql_clear_password</code>.
+                  This client-side plugin performs no password hashing,
+                  with the result that the client sends the password to
+                  the server as cleartext.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+              The server finds a matching MySQL account based on the
+              external user name and the host from which the client
+              connects. The PAM plugin uses the information passed to it
+              by MySQL Server (such as user name, host name, password,
+              and authentication string). When you define a MySQL
+              account that authenticates using PAM, the authentication
+              string contains:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                  A PAM service name, which is a name that the system
+                  administrator can use to refer to an authentication
+                  method for a particular application. There can be
+                  multiple applications associated with a single
+                  database server instance, so the choice of service
+                  name is left to the SQL application developer.
+                </p></li><li class="listitem"><p>
+                  Optionally, if proxying is to be used, a mapping from
+                  PAM groups to MySQL user names.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+              The plugin uses the PAM service named in the
+              authentication string to check the user credentials and
+              returns <code class="literal">'Authentication succeeded, Username is
+              <em class="replaceable"><code>user_name</code></em>'</code> or
+              <code class="literal">'Authentication failed'</code>. The password
+              must be appropriate for the password store used by the PAM
+              service. Examples:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                  For traditional Unix passwords, the service looks up
+                  passwords stored in the
+                  <code class="filename">/etc/shadow</code> file.
+                </p></li><li class="listitem"><p>
+                  For LDAP, the service looks up passwords stored in an
+                  LDAP directory.
+</p></li></ul>
+</div>
+<p>
+              If the credentials check fails, the server refuses the
+              connection.
+            </p></li><li class="listitem"><p>
+              Otherwise, the authentication string indicates whether
+              proxying occurs. If the string contains no PAM group
+              mapping, proxying does not occur. In this case, the MySQL
+              user name is the same as the external user name.
+            </p></li><li class="listitem"><p>
+              Otherwise, proxying is indicated based on the PAM group
+              mapping, with the MySQL user name determined based on the
+              first matching group in the mapping list. The meaning of
+              <span class="quote">“<span class="quote">PAM group</span>”</span> depends on the PAM service.
+              Examples:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                  For traditional Unix passwords, groups are Unix groups
+                  defined in the <code class="filename">/etc/group</code> file,
+                  possibly supplemented with additional PAM information
+                  in a file such as
+                  <code class="filename">/etc/security/group.conf</code>.
+                </p></li><li class="listitem"><p>
+                  For LDAP, groups are LDAP groups defined in an LDAP
+                  directory.
+</p></li></ul>
+</div>
+<p>
+              If the proxy user (the external user) has the
+              <a class="link" href="privileges-provided.html#priv_proxy"><code class="literal">PROXY</code></a> privilege for the
+              proxied MySQL user name, proxying occurs, with the proxy
+              user assuming the privileges of the proxied user.
+</p></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-pluggable-authentication-installation"></a>Installing PAM Pluggable Authentication</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          This section describes how to install the server-side PAM
+          authentication plugin. For general information about
+          installing plugins, see <a class="xref" href="plugin-loading.html" title="7.6.1 Installing and Uninstalling Plugins">Section 7.6.1, “Installing and Uninstalling Plugins”</a>.
+        </p><p>
+          To be usable by the server, the plugin library file must be
+          located in the MySQL plugin directory (the directory named by
+          the <a class="link" href="server-system-variables.html#sysvar_plugin_dir"><code class="literal">plugin_dir</code></a> system
+          variable). If necessary, configure the plugin directory
+          location by setting the value of
+          <a class="link" href="server-system-variables.html#sysvar_plugin_dir"><code class="literal">plugin_dir</code></a> at server startup.
+        </p><p>
+          The plugin library file base name is
+          <code class="literal">authentication_pam</code>, and is typically
+          compiled with the <code class="filename">.so</code> suffix.
+        </p><p>
+          To load the plugin at server startup, use the
+          <a class="link" href="server-options.html#option_mysqld_plugin-load-add"><code class="option">--plugin-load-add</code></a> option to
+          name the library file that contains it. With this
+          plugin-loading method, the option must be given each time the
+          server starts. For example, put these lines in the server
+          <code class="filename">my.cnf</code> file:
+        </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+plugin-load-add=authentication_pam.so</code></pre><p>
+          After modifying <code class="filename">my.cnf</code>, restart the
+          server to cause the new settings to take effect.
+        </p><p>
+          Alternatively, to load the plugin at runtime, use this
+          statement, adjusting the <code class="filename">.so</code> suffix as
+          necessary:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">INSTALL PLUGIN authentication_pam SONAME 'authentication_pam.so';</code></pre><p>
+          <a class="link" href="install-plugin.html" title="15.7.4.4 INSTALL PLUGIN Statement"><code class="literal">INSTALL PLUGIN</code></a> loads the plugin
+          immediately, and also registers it in the
+          <code class="literal">mysql.plugins</code> system table to cause the
+          server to load it for each subsequent normal startup without
+          the need for <a class="link" href="server-options.html#option_mysqld_plugin-load-add"><code class="option">--plugin-load-add</code></a>.
+        </p><p>
+          To verify plugin installation, examine the Information Schema
+          <a class="link" href="information-schema-plugins-table.html" title="28.3.22 The INFORMATION_SCHEMA PLUGINS Table"><code class="literal">PLUGINS</code></a> table or use the
+          <a class="link" href="show-plugins.html" title="15.7.7.27 SHOW PLUGINS Statement"><code class="literal">SHOW PLUGINS</code></a> statement (see
+          <a class="xref" href="obtaining-plugin-information.html" title="7.6.2 Obtaining Server Plugin Information">Section 7.6.2, “Obtaining Server Plugin Information”</a>). For example:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT PLUGIN_NAME, PLUGIN_STATUS
+       FROM INFORMATION_SCHEMA.PLUGINS
+       WHERE PLUGIN_NAME LIKE '%pam%';
++--------------------+---------------+
+| PLUGIN_NAME        | PLUGIN_STATUS |
++--------------------+---------------+
+| authentication_pam | ACTIVE        |
++--------------------+---------------+</code></pre><p>
+          If the plugin fails to initialize, check the server error log
+          for diagnostic messages.
+        </p><p>
+          To associate MySQL accounts with the PAM plugin, see
+          <a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-usage" title="Using PAM Pluggable Authentication">Using PAM Pluggable Authentication</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-pluggable-authentication-uninstallation"></a>Uninstalling PAM Pluggable Authentication</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The method used to uninstall the PAM authentication plugin
+          depends on how you installed it:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              If you installed the plugin at server startup using a
+              <a class="link" href="server-options.html#option_mysqld_plugin-load-add"><code class="option">--plugin-load-add</code></a> option,
+              restart the server without the option.
+            </p></li><li class="listitem"><p>
+              If you installed the plugin at runtime using an
+              <a class="link" href="install-plugin.html" title="15.7.4.4 INSTALL PLUGIN Statement"><code class="literal">INSTALL PLUGIN</code></a> statement,
+              it remains installed across server restarts. To uninstall
+              it, use <a class="link" href="uninstall-plugin.html" title="15.7.4.6 UNINSTALL PLUGIN Statement"><code class="literal">UNINSTALL PLUGIN</code></a>:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">UNINSTALL PLUGIN authentication_pam;</code></pre></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-pluggable-authentication-usage"></a>Using PAM Pluggable Authentication</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          This section describes in general terms how to use the PAM
+          authentication plugin to connect from MySQL client programs to
+          the server. The following sections provide instructions for
+          using PAM authentication in specific ways. It is assumed that
+          the server is running with the server-side PAM plugin enabled,
+          as described in
+          <a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-installation" title="Installing PAM Pluggable Authentication">Installing PAM Pluggable Authentication</a>.
+        </p><p>
+          To refer to the PAM authentication plugin in the
+          <code class="literal">IDENTIFIED WITH</code> clause of a
+          <a class="link" href="create-user.html" title="15.7.1.3 CREATE USER Statement"><code class="literal">CREATE USER</code></a> statement, use the
+          name <code class="literal">authentication_pam</code>. For example:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER <em class="replaceable">user</em>
+  IDENTIFIED WITH authentication_pam
+  AS '<em class="replaceable">auth_string</em>';</code></pre><p>
+          The authentication string specifies the following types of
+          information:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              The PAM service name (see
+              <a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-process" title="How PAM Authentication of MySQL Users Works">How PAM Authentication of MySQL Users Works</a>).
+              Examples in the following discussion use a service name of
+              <code class="literal">mysql-unix</code> for authentication using
+              traditional Unix passwords, and
+              <code class="literal">mysql-ldap</code> for authentication using
+              LDAP.
+            </p></li><li class="listitem"><p>
+              For proxy support, PAM provides a way for a PAM module to
+              return to the server a MySQL user name other than the
+              external user name passed by the client program when it
+              connects to the server. Use the authentication string to
+              control the mapping from external user names to MySQL user
+              names. If you want to take advantage of proxy user
+              capabilities, the authentication string must include this
+              kind of mapping.
+</p></li></ul>
+</div>
+<p>
+          For example, if an account uses the
+          <code class="literal">mysql-unix</code> PAM service name and should map
+          operating system users in the <code class="literal">root</code> and
+          <code class="literal">users</code> PAM groups to the
+          <code class="literal">developer</code> and <code class="literal">data_entry</code>
+          MySQL users, respectively, use a statement like this:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER <em class="replaceable">user</em>
+  IDENTIFIED WITH authentication_pam
+  AS 'mysql-unix, root=developer, users=data_entry';</code></pre><p>
+          Authentication string syntax for the PAM authentication plugin
+          follows these rules:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              The string consists of a PAM service name, optionally
+              followed by a PAM group mapping list consisting of one or
+              more keyword/value pairs each specifying a PAM group name
+              and a MySQL user name:
+            </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none"><em class="replaceable">pam_service_name</em>[,<em class="replaceable">pam_group_name</em>=<em class="replaceable">mysql_user_name</em>]...</code></pre><p>
+              The plugin parses the authentication string for each
+              connection attempt that uses the account. To minimize
+              overhead, keep the string as short as possible.
+            </p></li><li class="listitem"><p>
+              Each
+              <code class="literal"><em class="replaceable"><code>pam_group_name</code></em>=<em class="replaceable"><code>mysql_user_name</code></em></code>
+              pair must be preceded by a comma.
+            </p></li><li class="listitem"><p>
+              Leading and trailing spaces not inside double quotation
+              marks are ignored.
+            </p></li><li class="listitem"><p>
+              Unquoted <em class="replaceable"><code>pam_service_name</code></em>,
+              <em class="replaceable"><code>pam_group_name</code></em>, and
+              <em class="replaceable"><code>mysql_user_name</code></em> values can
+              contain anything except equal sign, comma, or space.
+            </p></li><li class="listitem"><p>
+              If a <em class="replaceable"><code>pam_service_name</code></em>,
+              <em class="replaceable"><code>pam_group_name</code></em>, or
+              <em class="replaceable"><code>mysql_user_name</code></em> value is quoted
+              with double quotation marks, everything between the
+              quotation marks is part of the value. This is necessary,
+              for example, if the value contains space characters. All
+              characters are legal except double quotation mark and
+              backslash (<code class="literal">\</code>). To include either
+              character, escape it with a backslash.
+</p></li></ul>
+</div>
+<p>
+          If the plugin successfully authenticates the external user
+          name (the name passed by the client), it looks for a PAM group
+          mapping list in the authentication string and, if present,
+          uses it to return a different MySQL user name to the MySQL
+          server based on which PAM groups the external user is a member
+          of:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              If the authentication string contains no PAM group mapping
+              list, the plugin returns the external name.
+            </p></li><li class="listitem"><p>
+              If the authentication string does contain a PAM group
+              mapping list, the plugin examines each
+              <code class="literal"><em class="replaceable"><code>pam_group_name</code></em>=<em class="replaceable"><code>mysql_user_name</code></em></code>
+              pair in the list from left to right and tries to find a
+              match for the <em class="replaceable"><code>pam_group_name</code></em>
+              value in a non-MySQL directory of the groups assigned to
+              the authenticated user and returns
+              <em class="replaceable"><code>mysql_user_name</code></em> for the first
+              match it finds. If the plugin finds no match for any PAM
+              group, it returns the external name. If the plugin is not
+              capable of looking up a group in a directory, it ignores
+              the PAM group mapping list and returns the external name.
+</p></li></ul>
+</div>
+<p>
+          The following sections describe how to set up several
+          authentication scenarios that use the PAM authentication
+          plugin:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              No proxy users. This uses PAM only to check login names
+              and passwords. Every external user permitted to connect to
+              MySQL Server should have a matching MySQL account that is
+              defined to use PAM authentication. (For a MySQL account of
+              <code class="literal">'<em class="replaceable"><code>user_name</code></em>'@'<em class="replaceable"><code>host_name</code></em>'</code>
+              to match the external user,
+              <em class="replaceable"><code>user_name</code></em> must be the external
+              user name and <em class="replaceable"><code>host_name</code></em> must
+              match the host from which the client connects.)
+              Authentication can be performed by various PAM-supported
+              methods. Later discussion shows how to authenticate client
+              credentials using traditional Unix passwords, and
+              passwords in LDAP.
+            </p><p>
+              PAM authentication, when not done through proxy users or
+              PAM groups, requires the MySQL user name to be same as the
+              operating system user name. MySQL user names are limited
+              to 32 characters (see <a class="xref" href="grant-tables.html" title="8.2.3 Grant Tables">Section 8.2.3, “Grant Tables”</a>),
+              which limits PAM nonproxy authentication to Unix accounts
+              with names of at most 32 characters.
+            </p></li><li class="listitem"><p>
+              Proxy users only, with PAM group mapping. For this
+              scenario, create one or more MySQL accounts that define
+              different sets of privileges. (Ideally, nobody should
+              connect using those accounts directly.) Then define a
+              default user authenticating through PAM that uses some
+              mapping scheme (usually based on the external PAM groups
+              the users are members of) to map all the external user
+              names to the few MySQL accounts holding the privilege
+              sets. Any client who connects and specifies an external
+              user name as the client user name is mapped to one of the
+              MySQL accounts and uses its privileges. The discussion
+              shows how to set this up using traditional Unix passwords,
+              but other PAM methods such as LDAP could be used instead.
+</p></li></ul>
+</div>
+<p>
+          Variations on these scenarios are possible:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              You can permit some users to log in directly (without
+              proxying) but require others to connect through proxy
+              accounts.
+            </p></li><li class="listitem"><p>
+              You can use one PAM authentication method for some users,
+              and another method for other users, by using differing PAM
+              service names among your PAM-authenticated accounts. For
+              example, you can use the <code class="literal">mysql-unix</code> PAM
+              service for some users, and <code class="literal">mysql-ldap</code>
+              for others.
+</p></li></ul>
+</div>
+<p>
+          The examples make the following assumptions. You might need to
+          make some adjustments if your system is set up differently.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              The login name and password are <code class="literal">antonio</code>
+              and <em class="replaceable"><code>antonio_password</code></em>,
+              respectively. Change these to correspond to the user you
+              want to authenticate.
+            </p></li><li class="listitem"><p>
+              The PAM configuration directory is
+              <code class="filename">/etc/pam.d</code>.
+            </p></li><li class="listitem"><p>
+              The PAM service name corresponds to the authentication
+              method (<code class="literal">mysql-unix</code> or
+              <code class="literal">mysql-ldap</code> in this discussion). To use
+              a given PAM service, you must set up a PAM file with the
+              same name in the PAM configuration directory (creating the
+              file if it does not exist). In addition, you must name the
+              PAM service in the authentication string of the
+              <a class="link" href="create-user.html" title="15.7.1.3 CREATE USER Statement"><code class="literal">CREATE USER</code></a> statement for
+              any account that authenticates using that PAM service.
+</p></li></ul>
+</div>
+<p>
+          The PAM authentication plugin checks at initialization time
+          whether the <code class="literal">AUTHENTICATION_PAM_LOG</code>
+          environment value is set in the server's startup environment.
+          If so, the plugin enables logging of diagnostic messages to
+          the standard output. Depending on how your server is started,
+          the message might appear on the console or in the error log.
+          These messages can be helpful for debugging PAM-related issues
+          that occur when the plugin performs authentication. For more
+          information, see
+          <a class="xref" href="pam-pluggable-authentication.html#pam-pluggable-authentication-debugging" title="PAM Authentication Debugging">PAM Authentication Debugging</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-authentication-unix-without-proxy"></a>PAM Unix Password Authentication without Proxy Users</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          This authentication scenario uses PAM to check external users
+          defined in terms of operating system user names and Unix
+          passwords, without proxying. Every such external user
+          permitted to connect to MySQL Server should have a matching
+          MySQL account that is defined to use PAM authentication
+          through traditional Unix password store.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+            Traditional Unix passwords are checked using the
+            <code class="filename">/etc/shadow</code> file. For information
+            regarding possible issues related to this file, see
+            <a class="xref" href="pam-pluggable-authentication.html#pam-authentication-unix-password-store" title="PAM Authentication Access to Unix Password Store">PAM Authentication Access to Unix Password Store</a>.
+</p>
+</div>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Verify that Unix authentication permits logins to the
+              operating system with the user name
+              <code class="literal">antonio</code> and password
+              <em class="replaceable"><code>antonio_password</code></em>.
+            </p></li><li class="listitem"><p>
+              Set up PAM to authenticate MySQL connections using
+              traditional Unix passwords by creating a
+              <code class="literal">mysql-unix</code> PAM service file named
+              <code class="filename">/etc/pam.d/mysql-unix</code>. The file
+              contents are system dependent, so check existing
+              login-related files in the <code class="filename">/etc/pam.d</code>
+              directory to see what they look like. On Linux, the
+              <code class="filename">mysql-unix</code> file might look like this:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">#%PAM-1.0
+auth            include         password-auth
+account         include         password-auth</code></pre><p>
+              For macOS, use <code class="literal">login</code> rather than
+              <code class="literal">password-auth</code>.
+            </p><p>
+              The PAM file format might differ on some systems. For
+              example, on Ubuntu and other Debian-based systems, use
+              these file contents instead:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">@include common-auth
+@include common-account
+@include common-session-noninteractive</code></pre></li><li class="listitem"><p>
+              Create a MySQL account with the same user name as the
+              operating system user name and define it to authenticate
+              using the PAM plugin and the <code class="literal">mysql-unix</code>
+              PAM service:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER 'antonio'@'localhost'
+  IDENTIFIED WITH authentication_pam
+  AS 'mysql-unix';
+GRANT ALL PRIVILEGES
+  ON mydb.*
+  TO 'antonio'@'localhost';</code></pre><p>
+              Here, the authentication string contains only the PAM
+              service name, <code class="literal">mysql-unix</code>, which
+              authenticates Unix passwords.
+            </p></li><li class="listitem"><p>
+              Use the <a class="link" href="mysql.html" title="6.5.1 mysql — The MySQL Command-Line Client"><span class="command"><strong>mysql</strong></span></a> command-line client to
+              connect to the MySQL server as <code class="literal">antonio</code>.
+              For example:
+            </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">$&gt; mysql --user=antonio --password --enable-cleartext-plugin
+Enter password: <em class="replaceable">antonio_password</em></code></pre><p>
+              The server should permit the connection and the following
+              query returns output as shown:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT USER(), CURRENT_USER(), @@proxy_user;
++-------------------+-------------------+--------------+
+| USER()            | CURRENT_USER()    | @@proxy_user |
++-------------------+-------------------+--------------+
+| antonio@localhost | antonio@localhost | NULL         |
++-------------------+-------------------+--------------+</code></pre><p>
+              This demonstrates that the <code class="literal">antonio</code>
+              operating system user is authenticated to have the
+              privileges granted to the <code class="literal">antonio</code> MySQL
+              user, and that no proxying has occurred.
+</p></li></ol>
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+            The client-side <code class="literal">mysql_clear_password</code>
+            authentication plugin leaves the password untouched, so
+            client programs send it to the MySQL server as cleartext.
+            This enables the password to be passed as is to PAM. A
+            cleartext password is necessary to use the server-side PAM
+            library, but may be a security problem in some
+            configurations. These measures minimize the risk:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                To make inadvertent use of the
+                <code class="literal">mysql_clear_password</code> plugin less
+                likely, MySQL clients must explicitly enable it (for
+                example, with the
+                <code class="option">--enable-cleartext-plugin</code> option). See
+                <a class="xref" href="cleartext-pluggable-authentication.html" title="8.4.1.4 Client-Side Cleartext Pluggable Authentication">Section 8.4.1.4, “Client-Side Cleartext Pluggable Authentication”</a>.
+              </p></li><li class="listitem"><p>
+                To avoid password exposure with the
+                <code class="literal">mysql_clear_password</code> plugin enabled,
+                MySQL clients should connect to the MySQL server using
+                an encrypted connection. See
+                <a class="xref" href="using-encrypted-connections.html" title="8.3.1 Configuring MySQL to Use Encrypted Connections">Section 8.3.1, “Configuring MySQL to Use Encrypted Connections”</a>.
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-authentication-ldap-without-proxy"></a>PAM LDAP Authentication without Proxy Users</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          This authentication scenario uses PAM to check external users
+          defined in terms of operating system user names and LDAP
+          passwords, without proxying. Every such external user
+          permitted to connect to MySQL Server should have a matching
+          MySQL account that is defined to use PAM authentication
+          through LDAP.
+        </p><p>
+          To use PAM LDAP pluggable authentication for MySQL, these
+          prerequisites must be satisfied:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              An LDAP server must be available for the PAM LDAP service
+              to communicate with.
+            </p></li><li class="listitem"><p>
+              Each LDAP user to be authenticated by MySQL must be
+              present in the directory managed by the LDAP server.
+</p></li></ul>
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+            Another way to use LDAP for MySQL user authentication is to
+            use the LDAP-specific authentication plugins. See
+            <a class="xref" href="ldap-pluggable-authentication.html" title="8.4.1.7 LDAP Pluggable Authentication">Section 8.4.1.7, “LDAP Pluggable Authentication”</a>.
+</p>
+</div>
+<p>
+          Configure MySQL for PAM LDAP authentication as follows:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Verify that Unix authentication permits logins to the
+              operating system with the user name
+              <code class="literal">antonio</code> and password
+              <em class="replaceable"><code>antonio_password</code></em>.
+            </p></li><li class="listitem"><p>
+              Set up PAM to authenticate MySQL connections using LDAP by
+              creating a <code class="literal">mysql-ldap</code> PAM service file
+              named <code class="filename">/etc/pam.d/mysql-ldap</code>. The file
+              contents are system dependent, so check existing
+              login-related files in the <code class="filename">/etc/pam.d</code>
+              directory to see what they look like. On Linux, the
+              <code class="filename">mysql-ldap</code> file might look like this:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">#%PAM-1.0
+auth        required    pam_ldap.so
+account     required    pam_ldap.so</code></pre><p>
+              If PAM object files have a suffix different from
+              <code class="filename">.so</code> on your system, substitute the
+              correct suffix.
+            </p><p>
+              The PAM file format might differ on some systems.
+            </p></li><li class="listitem"><p>
+              Create a MySQL account with the same user name as the
+              operating system user name and define it to authenticate
+              using the PAM plugin and the <code class="literal">mysql-ldap</code>
+              PAM service:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER 'antonio'@'localhost'
+  IDENTIFIED WITH authentication_pam
+  AS 'mysql-ldap';
+GRANT ALL PRIVILEGES
+  ON mydb.*
+  TO 'antonio'@'localhost';</code></pre><p>
+              Here, the authentication string contains only the PAM
+              service name, <code class="literal">mysql-ldap</code>, which
+              authenticates using LDAP.
+            </p></li><li class="listitem"><p>
+              Connecting to the server is the same as described in
+              <a class="xref" href="pam-pluggable-authentication.html#pam-authentication-unix-without-proxy" title="PAM Unix Password Authentication without Proxy Users">PAM Unix Password Authentication without Proxy Users</a>.
+</p></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-authentication-unix-with-proxy"></a>PAM Unix Password Authentication with Proxy Users and Group Mapping</h5>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105706409024"></a><p>
+          The authentication scheme described here uses proxying and PAM
+          group mapping to map connecting MySQL users who authenticate
+          using PAM onto other MySQL accounts that define different sets
+          of privileges. Users do not connect directly through the
+          accounts that define the privileges. Instead, they connect
+          through a default proxy account authenticated using PAM, such
+          that all the external users are mapped to the MySQL accounts
+          that hold the privileges. Any user who connects using the
+          proxy account is mapped to one of those MySQL accounts, the
+          privileges for which determine the database operations
+          permitted to the external user.
+        </p><p>
+          The procedure shown here uses Unix password authentication. To
+          use LDAP instead, see the early steps of
+          <a class="xref" href="pam-pluggable-authentication.html#pam-authentication-ldap-without-proxy" title="PAM LDAP Authentication without Proxy Users">PAM LDAP Authentication without Proxy Users</a>.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+            Traditional Unix passwords are checked using the
+            <code class="filename">/etc/shadow</code> file. For information
+            regarding possible issues related to this file, see
+            <a class="xref" href="pam-pluggable-authentication.html#pam-authentication-unix-password-store" title="PAM Authentication Access to Unix Password Store">PAM Authentication Access to Unix Password Store</a>.
+</p>
+</div>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Verify that Unix authentication permits logins to the
+              operating system with the user name
+              <code class="literal">antonio</code> and password
+              <em class="replaceable"><code>antonio_password</code></em>.
+            </p></li><li class="listitem"><p>
+              Verify that <code class="literal">antonio</code> is a member of the
+              <code class="literal">root</code> or <code class="literal">users</code> PAM
+              group.
+            </p></li><li class="listitem"><p>
+              Set up PAM to authenticate the
+              <code class="literal">mysql-unix</code> PAM service through
+              operating system users by creating a file named
+              <code class="filename">/etc/pam.d/mysql-unix</code>. The file
+              contents are system dependent, so check existing
+              login-related files in the <code class="filename">/etc/pam.d</code>
+              directory to see what they look like. On Linux, the
+              <code class="filename">mysql-unix</code> file might look like this:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">#%PAM-1.0
+auth            include         password-auth
+account         include         password-auth</code></pre><p>
+              For macOS, use <code class="literal">login</code> rather than
+              <code class="literal">password-auth</code>.
+            </p><p>
+              The PAM file format might differ on some systems. For
+              example, on Ubuntu and other Debian-based systems, use
+              these file contents instead:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">@include common-auth
+@include common-account
+@include common-session-noninteractive</code></pre></li><li class="listitem"><p>
+              Create a default proxy user (<code class="literal">''@''</code>)
+              that maps external PAM users to the proxied accounts:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER ''@''
+  IDENTIFIED WITH authentication_pam
+  AS 'mysql-unix, root=developer, users=data_entry';</code></pre><p>
+              Here, the authentication string contains the PAM service
+              name, <code class="literal">mysql-unix</code>, which authenticates
+              Unix passwords. The authentication string also maps
+              external users in the <code class="literal">root</code> and
+              <code class="literal">users</code> PAM groups to the
+              <code class="literal">developer</code> and
+              <code class="literal">data_entry</code> MySQL user names,
+              respectively.
+            </p><p>
+              The PAM group mapping list following the PAM service name
+              is required when you set up proxy users. Otherwise, the
+              plugin cannot tell how to perform mapping from external
+              user names to the proper proxied MySQL user names.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+                If your MySQL installation has anonymous users, they
+                might conflict with the default proxy user. For more
+                information about this issue, and ways of dealing with
+                it, see <a class="xref" href="proxy-users.html#proxy-users-conflicts" title="Default Proxy User and Anonymous User Conflicts">Default Proxy User and Anonymous User Conflicts</a>.
+</p>
+</div>
+</li><li class="listitem"><p>
+              Create the proxied accounts and grant to each one the
+              privileges it should have:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER 'developer'@'localhost'
+  IDENTIFIED WITH mysql_no_login;
+CREATE USER 'data_entry'@'localhost'
+  IDENTIFIED WITH mysql_no_login;
+
+GRANT ALL PRIVILEGES
+  ON mydevdb.*
+  TO 'developer'@'localhost';
+GRANT ALL PRIVILEGES
+  ON mydb.*
+  TO 'data_entry'@'localhost';</code></pre><p>
+              The proxied accounts use the
+              <code class="literal">mysql_no_login</code> authentication plugin to
+              prevent clients from using the accounts to log in directly
+              to the MySQL server. Instead, users who authenticate using
+              PAM are expected to use the <code class="literal">developer</code>
+              or <code class="literal">data_entry</code> account by proxy based on
+              their PAM group. (This assumes that the plugin is
+              installed. For instructions, see
+              <a class="xref" href="no-login-pluggable-authentication.html" title="8.4.1.9 No-Login Pluggable Authentication">Section 8.4.1.9, “No-Login Pluggable Authentication”</a>.) For
+              alternative methods of protecting proxied accounts against
+              direct use, see
+              <a class="xref" href="proxy-users.html#preventing-proxied-account-direct-login" title="Preventing Direct Login to Proxied Accounts">Preventing Direct Login to Proxied Accounts</a>.
+            </p></li><li class="listitem"><p>
+              Grant to the proxy account the
+              <a class="link" href="privileges-provided.html#priv_proxy"><code class="literal">PROXY</code></a> privilege for each
+              proxied account:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">GRANT PROXY
+  ON 'developer'@'localhost'
+  TO ''@'';
+GRANT PROXY
+  ON 'data_entry'@'localhost'
+  TO ''@'';</code></pre></li><li class="listitem"><p>
+              Use the <a class="link" href="mysql.html" title="6.5.1 mysql — The MySQL Command-Line Client"><span class="command"><strong>mysql</strong></span></a> command-line client to
+              connect to the MySQL server as <code class="literal">antonio</code>.
+            </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">$&gt; mysql --user=antonio --password --enable-cleartext-plugin
+Enter password: <em class="replaceable">antonio_password</em></code></pre><p>
+              The server authenticates the connection using the default
+              <code class="literal">''@''</code> proxy account. The resulting
+              privileges for <code class="literal">antonio</code> depend on which
+              PAM groups <code class="literal">antonio</code> is a member of. If
+              <code class="option">antonio</code> is a member of the
+              <code class="literal">root</code> PAM group, the PAM plugin maps
+              <code class="literal">root</code> to the
+              <code class="literal">developer</code> MySQL user name and returns
+              that name to the server. The server verifies that
+              <code class="literal">''@''</code> has the
+              <a class="link" href="privileges-provided.html#priv_proxy"><code class="literal">PROXY</code></a> privilege for
+              <code class="literal">developer</code> and permits the connection.
+              The following query returns output as shown:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT USER(), CURRENT_USER(), @@proxy_user;
++-------------------+---------------------+--------------+
+| USER()            | CURRENT_USER()      | @@proxy_user |
++-------------------+---------------------+--------------+
+| antonio@localhost | developer@localhost | ''@''        |
++-------------------+---------------------+--------------+</code></pre><p>
+              This demonstrates that the <code class="literal">antonio</code>
+              operating system user is authenticated to have the
+              privileges granted to the <code class="literal">developer</code>
+              MySQL user, and that proxying occurs through the default
+              proxy account.
+            </p><p>
+              If <code class="literal">antonio</code> is not a member of the
+              <code class="literal">root</code> PAM group but is a member of the
+              <code class="literal">users</code> PAM group, a similar process
+              occurs, but the plugin maps <code class="literal">user</code> PAM
+              group membership to the <code class="literal">data_entry</code>
+              MySQL user name and returns that name to the server:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT USER(), CURRENT_USER(), @@proxy_user;
++-------------------+----------------------+--------------+
+| USER()            | CURRENT_USER()       | @@proxy_user |
++-------------------+----------------------+--------------+
+| antonio@localhost | data_entry@localhost | ''@''        |
++-------------------+----------------------+--------------+</code></pre><p>
+              This demonstrates that the <code class="literal">antonio</code>
+              operating system user is authenticated to have the
+              privileges of the <code class="literal">data_entry</code> MySQL
+              user, and that proxying occurs through the default proxy
+              account.
+</p></li></ol>
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+            The client-side <code class="literal">mysql_clear_password</code>
+            authentication plugin leaves the password untouched, so
+            client programs send it to the MySQL server as cleartext.
+            This enables the password to be passed as is to PAM. A
+            cleartext password is necessary to use the server-side PAM
+            library, but may be a security problem in some
+            configurations. These measures minimize the risk:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                To make inadvertent use of the
+                <code class="literal">mysql_clear_password</code> plugin less
+                likely, MySQL clients must explicitly enable it (for
+                example, with the
+                <code class="option">--enable-cleartext-plugin</code> option). See
+                <a class="xref" href="cleartext-pluggable-authentication.html" title="8.4.1.4 Client-Side Cleartext Pluggable Authentication">Section 8.4.1.4, “Client-Side Cleartext Pluggable Authentication”</a>.
+              </p></li><li class="listitem"><p>
+                To avoid password exposure with the
+                <code class="literal">mysql_clear_password</code> plugin enabled,
+                MySQL clients should connect to the MySQL server using
+                an encrypted connection. See
+                <a class="xref" href="using-encrypted-connections.html" title="8.3.1 Configuring MySQL to Use Encrypted Connections">Section 8.3.1, “Configuring MySQL to Use Encrypted Connections”</a>.
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-authentication-unix-password-store"></a>PAM Authentication Access to Unix Password Store</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          On some systems, Unix authentication uses a password store
+          such as <code class="filename">/etc/shadow</code>, a file that
+          typically has restricted access permissions. This can cause
+          MySQL PAM-based authentication to fail. Unfortunately, the PAM
+          implementation does not permit distinguishing <span class="quote">“<span class="quote">password
+          could not be checked</span>”</span> (due, for example, to inability
+          to read <code class="filename">/etc/shadow</code>) from <span class="quote">“<span class="quote">password
+          does not match.</span>”</span> If you are using Unix password store
+          for PAM authentication, you may be able to enable access to it
+          from MySQL using one of the following methods:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Assuming that the MySQL server is run from the
+              <code class="literal">mysql</code> operating system account, put
+              that account in the <code class="literal">shadow</code> group that
+              has <code class="filename">/etc/shadow</code> access:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+                  Create a <code class="literal">shadow</code> group in
+                  <code class="filename">/etc/group</code>.
+                </p></li><li class="listitem"><p>
+                  Add the <code class="literal">mysql</code> operating system user
+                  to the <code class="literal">shadow</code> group in
+                  <code class="filename">/etc/group</code>.
+                </p></li><li class="listitem"><p>
+                  Assign <code class="filename">/etc/group</code> to the
+                  <code class="literal">shadow</code> group and enable the group
+                  read permission:
+                </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">chgrp shadow /etc/shadow
+chmod g+r /etc/shadow</code></pre></li><li class="listitem"><p>
+                  Restart the MySQL server.
+</p></li></ol>
+</div>
+</li><li class="listitem"><p>
+              If you are using the <code class="literal">pam_unix</code> module
+              and the <span class="command"><strong>unix_chkpwd</strong></span> utility, enable
+              password store access as follows:
+            </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">chmod u-s /usr/sbin/unix_chkpwd
+setcap cap_dac_read_search+ep /usr/sbin/unix_chkpwd</code></pre><p>
+              Adjust the path to <span class="command"><strong>unix_chkpwd</strong></span> as
+              necessary for your platform.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="pam-pluggable-authentication-debugging"></a>PAM Authentication Debugging</h5>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105706312320"></a><a class="indexterm" name="idm45105706311216"></a><p>
+          The PAM authentication plugin checks at initialization time
+          whether the <code class="literal">AUTHENTICATION_PAM_LOG</code>
+          environment value is set. If so, the plugin enables logging of
+          diagnostic messages to the standard output. These messages may
+          be helpful for debugging PAM-related issues that occur when
+          the plugin performs authentication.
+        </p><p>
+          Setting <code class="literal">AUTHENTICATION_PAM_LOG=1</code> (or some
+          other arbitrary value) does <span class="emphasis"><em>not</em></span> include
+          any passwords. If you wish to include passwords in these
+          messages, set
+          <code class="literal">AUTHENTICATION_PAM_LOG=PAM_LOG_WITH_SECRET_INFO</code>.
+        </p><p>
+          Some messages include reference to PAM plugin source files and
+          line numbers, which enables plugin actions to be tied more
+          closely to the location in the code where they occur.
+        </p><p>
+          Another technique for debugging connection failures and
+          determining what is happening during connection attempts is to
+          configure PAM authentication to permit all connections, then
+          check the system log files. This technique should be used only
+          on a <span class="emphasis"><em>temporary</em></span> basis, and not on a
+          production server.
+        </p><p>
+          Configure a PAM service file named
+          <code class="filename">/etc/pam.d/mysql-any-password</code> with these
+          contents (the format may differ on some systems):
+        </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">#%PAM-1.0
+auth        required    pam_permit.so
+account     required    pam_permit.so</code></pre><p>
+          Create an account that uses the PAM plugin and names the
+          <code class="literal">mysql-any-password</code> PAM service:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER 'testuser'@'localhost'
+  IDENTIFIED WITH authentication_pam
+  AS 'mysql-any-password';</code></pre><p>
+          The <code class="literal">mysql-any-password</code> service file causes
+          any authentication attempt to return true, even for incorrect
+          passwords. If an authentication attempt fails, that tells you
+          the configuration problem is on the MySQL side. Otherwise, the
+          problem is on the operating system/PAM side. To see what might
+          be happening, check system log files such as
+          <code class="filename">/var/log/secure</code>,
+          <code class="filename">/var/log/audit.log</code>,
+          <code class="filename">/var/log/syslog</code>, or
+          <code class="filename">/var/log/messages</code>.
+        </p><p>
+          After determining what the problem is, remove the
+          <code class="filename">mysql-any-password</code> PAM service file to
+          disable any-password access.
+</p>
+</div>
+
+</div>
+
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="cleartext-pluggable-authentication.html"
+        aria-label="Previous" title="Previous: Client-Side Cleartext Pluggable Authentication"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="authentication-plugins.html" title="Up: Authentication Plugins"> UP</a> &nbsp;
+    <a href="windows-pluggable-authentication.html" aria-label="Next"
+        title="Next: Windows Pluggable Authentication">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/pam-pluggable-authentication.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:59:49 GMT -->
+</html>

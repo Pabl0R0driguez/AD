@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/binary-log.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 7.4.4 The Binary Log</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="query-log.html" title="7.4.3 The General Query Log" />
+<link rel="next" href="binary-log-formats8dba.html?ff=nopfpls" title="7.4.4.1 Binary Logging Formats" />
+<link rel="up" href="server-logs.html" title="7.4 MySQL Server Logs" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xxya-f-7b6da5dec-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":182,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18dd1c12","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5949,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730133488","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==9LFzVPhMlGQa26MxVulsBzFFPUK4tLew7r+KgfM0juqRwg3CyR9X/tD1Mf0qVimFRYQEqTVxQHLvl9GHjD2urZupggtFvDhke1U7eOUSSHnnIbH+/pihE0bBOkJbmo//csD4S+oYQy+PZwB3ZE8CO40K2bQKkEiUE2tpXEy/NqH7K4HaFaiVt11qluMSxLbbMfKfkQtsTZLotofoN/zvmdKdCvMQ2IsUILZAAUk2G8B/QhWgjoYoKLl81koTeAKSJReIsOVkU/YDOvz8EMlozff+uWNOEuDn2nnxolUFPC/7ukSe9HtNc+cMOmR/JRb6NQrvvuasb2kekUzgH4yg0M2Q8cCGoNVVue3JXZ436Sn+7B4aQ6MgiA8zNBFHEHckYTUrd69FaZY84yupNZpNOfIMkyTizZOfhHQH17V024I=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fbinary-log.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="query-log.html"
+        aria-label="Previous" title="Previous: The General Query Log"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="server-logs.html" title="Up: MySQL Server Logs"><span class="icon-chevron-up"></span></a>
+    <a href="binary-log-formats.html" aria-label="Next"
+        title="Next: Binary Logging Formats"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqld-server.html">The MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration.html">Configuring the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-defaults.html">Server Configuration Defaults</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-validation.html">Server Configuration Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-option-variable-reference.html">Server Option, System Variable, and Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variable-reference.html">Server System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variable-reference.html">Server Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-options.html">Server Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variables.html">Server System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="using-system-variables.html">Using System Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-variable-privileges.html">System Variable Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dynamic-system-variables.html">Dynamic System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="persisted-system-variables.html">Persisted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nonpersistible-system-variables.html">Nonpersistible and Persist-Restricted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="structured-system-variables.html">Structured System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variables.html">Server Status Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sql-mode.html">Server SQL Modes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-management.html">Connection Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-interfaces.html">Connection Interfaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="administrative-connection-interface.html">Administrative Connection Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="host-cache.html">DNS Lookups and the Host Cache</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ipv6-support.html">IPv6 Support</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-system-support.html">Verifying System Support for IPv6</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-server-config.html">Configuring the MySQL Server to Permit IPv6 Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-local-connections.html">Connecting Using the IPv6 Local Host Address</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-remote-connections.html">Connecting Using IPv6 Nonlocal Host Addresses</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-brokers.html">Obtaining an IPv6 Address from a Broker</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="network-namespace-support.html">Network Namespace Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="time-zone-support.html">MySQL Server Time Zone Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="resource-groups.html">Resource Groups</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-side-help-support.html">Server-Side Help Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="session-state-tracking.html">Server Tracking of Client Session State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-shutdown.html">The Server Shutdown Process</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-directory.html">The MySQL Data Directory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-schema.html">The mysql System Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-logs.html">MySQL Server Logs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-destinations.html">Selecting General Query Log and Slow Query Log Output Destinations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-log.html">The Error Log</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-configuration.html">Error Log Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-destination-configuration.html">Default Error Log Destination Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-event-fields.html">Error Event Fields</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-filtering.html">Types of Error Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-priority-based-filtering.html">Priority-Based Error Log Filtering (log_filter_internal)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rule-based-filtering.html">Rule-Based Error Log Filtering (log_filter_dragnet)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-json.html">Error Logging in JSON Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-syslog.html">Error Logging to the System Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-format.html">Error Log Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rotation.html">Error Log File Flushing and Renaming</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-log.html">The General Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link current"><a href="binary-log.html">The Binary Log</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-formats.html">Binary Logging Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-setting.html">Setting The Binary Log Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mixed.html">Mixed Binary Logging Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mysql-database.html">Logging Format for Changes to mysql Database Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-transaction-compression.html">Binary Log Transaction Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="slow-query-log.html">The Slow Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-file-maintenance.html">Server Log Maintenance</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="components.html">MySQL Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="component-loading.html">Installing and Uninstalling Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-component-information.html">Obtaining Component Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-components.html">Error Log Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-attribute-components.html">Query Attribute Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="scheduler-component.html">Scheduler Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-plugins.html">MySQL Server Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="plugin-loading.html">Installing and Uninstalling Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-plugin-information.html">Obtaining Server Plugin Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="thread-pool.html">MySQL Enterprise Thread Pool</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-elements.html">Thread Pool Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-installation.html">Thread Pool Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-operation.html">Thread Pool Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-tuning.html">Thread Pool Tuning</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin.html">The Rewriter Query Rewrite Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-installation.html">Installing or Uninstalling the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-usage.html">Using the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-reference.html">Rewriter Query Rewrite Plugin Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter.html">The ddl_rewriter Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-installation.html">Installing or Uninstalling ddl_rewriter</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-options.html">ddl_rewriter Plugin Options</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="version-tokens.html">Version Tokens</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-elements.html">Version Tokens Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-installation.html">Installing or Uninstalling Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-usage.html">Using Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-reference.html">Version Tokens Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="clone-plugin.html">The Clone Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-installation.html">Installing the Clone Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-local.html">Cloning Data Locally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-remote.html">Cloning Remote Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-concurrent-ddl.html">Cloning and Concurrent DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-encrypted-data.html">Cloning Encrypted Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-compressed-data.html">Cloning Compressed Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-replication.html">Cloning for Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-directories.html">Directories and Files Created During a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-failure-handling.html">Remote Cloning Operation Failure Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-monitoring.html">Monitoring Cloning Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-stop.html">Stopping a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-option-variable-reference.html">Clone System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-options-variables.html">Clone System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-limitations.html">Clone Plugin Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="daemon-keyring-proxy-plugin.html">The Keyring Proxy Bridge Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="plugin-services.html">MySQL Plugin Services</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="locking-service.html">The Locking Service</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-service.html">The Keyring Service</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-loadable-functions.html">MySQL Server Loadable Functions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="function-loading.html">Installing and Uninstalling Loadable Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-loadable-function-information.html">Obtaining Information About Loadable Functions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-servers.html">Running Multiple MySQL Instances on One Machine</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-data-directories.html">Setting Up Multiple Data Directories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-servers.html">Running Multiple MySQL Instances on Windows</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-command-line-servers.html">Starting Multiple MySQL Instances at the Windows Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-services.html">Starting Multiple MySQL Instances as Windows Services</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-unix-servers.html">Running Multiple MySQL Instances on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-server-clients.html">Using Client Programs in a Multiple-Server Environment</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-mysql.html">Debugging MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-server.html">Debugging a MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="compiling-for-debugging.html">Compiling MySQL for Debugging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-trace-files.html">Creating Trace Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-windows-dumps.html">Using WER with PDB to create a Windows crashdump</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-gdb-on-mysqld.html">Debugging mysqld under gdb</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-stack-trace.html">Using a Stack Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-log-files.html">Using Server Logs to Find Causes of Errors in mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reproducible-test-case.html">Making a Test Case If You Experience Table Corruption</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="debugging-client.html">Debugging a MySQL Client</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lock-order-tool.html">The LOCK_ORDER Tool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dbug-package.html">The DBUG Package</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/binary-log.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/binary-log.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/binary-log.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/binary-log.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/binary-log.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="server-administration.html">MySQL Server Administration</a> &nbsp;/&nbsp;
+                                                            <a href="server-logs.html">MySQL Server Logs</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        The Binary Log
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="binary-log"></a>7.4.4 The Binary Log</h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="toc">
+<dl class="toc"><dt><span class="section"><a href="binary-log-formats.html">7.4.4.1 Binary Logging Formats</a></span></dt><dt><span class="section"><a href="binary-log-setting.html">7.4.4.2 Setting The Binary Log Format</a></span></dt><dt><span class="section"><a href="binary-log-mixed.html">7.4.4.3 Mixed Binary Logging Format</a></span></dt><dt><span class="section"><a href="binary-log-mysql-database.html">7.4.4.4 Logging Format for Changes to mysql Database Tables</a></span></dt><dt><span class="section"><a href="binary-log-transaction-compression.html">7.4.4.5 Binary Log Transaction Compression</a></span></dt></dl>
+</div>
+<a class="indexterm" name="idm45105719041616"></a><a class="indexterm" name="idm45105719040544"></a><p>
+      The binary log contains <span class="quote">“<span class="quote">events</span>”</span> that describe
+      database changes such as table creation operations or changes to
+      table data. It also contains events for statements that
+      potentially could have made changes (for example, a
+      <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a> which matched no rows),
+      unless row-based logging is used. The binary log also contains
+      information about how long each statement took that updated data.
+      The binary log has two important purposes:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          For replication, the binary log on a replication source server
+          provides a record of the data changes to be sent to replicas.
+          The source sends the information contained in its binary log
+          to its replicas, which reproduce those transactions to make
+          the same data changes that were made on the source. See
+          <a class="xref" href="replication-implementation.html" title="19.2 Replication Implementation">Section 19.2, “Replication Implementation”</a>.
+        </p></li><li class="listitem"><p>
+          Certain data recovery operations require use of the binary
+          log. After a backup has been restored, the events in the
+          binary log that were recorded after the backup was made are
+          re-executed. These events bring databases up to date from the
+          point of the backup. See
+          <a class="xref" href="point-in-time-recovery.html" title="9.5 Point-in-Time (Incremental) Recovery">Section 9.5, “Point-in-Time (Incremental) Recovery”</a>.
+</p></li></ul>
+</div>
+<p>
+      The binary log is not used for statements such as
+      <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> or
+      <a class="link" href="show.html" title="15.7.7 SHOW Statements"><code class="literal">SHOW</code></a> that do not modify data. To
+      log all statements (for example, to identify a problem query), use
+      the general query log. See <a class="xref" href="query-log.html" title="7.4.3 The General Query Log">Section 7.4.3, “The General Query Log”</a>.
+    </p><p>
+      Running a server with binary logging enabled makes performance
+      slightly slower. However, the benefits of the binary log in
+      enabling you to set up replication and for restore operations
+      generally outweigh this minor performance decrement.
+    </p><p>
+      The binary log is resilient to unexpected halts. Only complete
+      events or transactions are logged or read back.
+    </p><p>
+      Passwords in statements written to the binary log are rewritten by
+      the server not to occur literally in plain text. See also
+      <a class="xref" href="password-logging.html" title="8.1.2.3 Passwords and Logging">Section 8.1.2.3, “Passwords and Logging”</a>.
+    </p><p>
+      MySQL binary log files and relay log files can be encrypted,
+      helping to protect these files and the potentially sensitive data
+      contained in them from being misused by outside attackers, and
+      also from unauthorized viewing by users of the operating system
+      where they are stored. You enable encryption on a MySQL server by
+      setting the <a class="link" href="replication-options-binary-log.html#sysvar_binlog_encryption"><code class="literal">binlog_encryption</code></a>
+      system variable to <code class="literal">ON</code>. For more information,
+      see <a class="xref" href="replication-binlog-encryption.html" title="19.3.2 Encrypting Binary Log Files and Relay Log Files">Section 19.3.2, “Encrypting Binary Log Files and Relay Log Files”</a>.
+    </p><p>
+      The following discussion describes some of the server options and
+      variables that affect the operation of binary logging. For a
+      complete list, see
+      <a class="xref" href="replication-options-binary-log.html" title="19.1.6.4 Binary Logging Options and Variables">Section 19.1.6.4, “Binary Logging Options and Variables”</a>.
+    </p><p>
+      Binary logging is enabled by default (the
+      <a class="link" href="replication-options-binary-log.html#sysvar_log_bin"><code class="literal">log_bin</code></a> system variable is set to
+      ON). The exception is if you use <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> to
+      initialize the data directory manually by invoking it with the
+      <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> or
+      <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a> option, when
+      binary logging is disabled by default, but can be enabled by
+      specifying the <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--log-bin</code></a> option.
+    </p><p>
+      To disable binary logging, you can specify the
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--skip-log-bin</code></a>
+      or
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--disable-log-bin</code></a>
+      option at startup. If either of these options is specified and
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--log-bin</code></a> is also specified, the
+      option specified later takes precedence.
+    </p><p>
+      The <a class="link" href="replication-options-binary-log.html#sysvar_log_replica_updates"><code class="option">--log-replica-updates</code></a> and
+      <a class="link" href="replication-options-replica.html#sysvar_replica_preserve_commit_order"><code class="option">--replica-preserve-commit-order</code></a>
+      options require binary logging. If you disable binary logging,
+      either omit these options, or specify
+      <code class="option">--log-replica-updates=OFF</code> and
+      <code class="option">--skip-replica-preserve-commit-order</code>. MySQL
+      disables these options by default when
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--skip-log-bin</code></a>
+      or
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--disable-log-bin</code></a>
+      is specified. If you specify
+      <code class="option">--log-replica-updates</code> or
+      <a class="link" href="replication-options-replica.html#sysvar_replica_preserve_commit_order"><code class="option">--replica-preserve-commit-order</code></a>
+      together with
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--skip-log-bin</code></a>
+      or
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--disable-log-bin</code></a>,
+      a warning or error message is issued.
+    </p><p>
+      The
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--log-bin[=<em class="replaceable"><code>base_name</code></em>]</code></a>
+      option is used to specify the base name for binary log files. If
+      you do not supply the <code class="option">--log-bin</code> option, MySQL
+      uses <code class="filename">binlog</code> as the default base name for the
+      binary log files. For compatibility with earlier releases, if you
+      supply the <code class="option">--log-bin</code> option with no string or
+      with an empty string, the base name defaults to
+      <code class="filename"><em class="replaceable"><code>host_name</code></em>-bin</code>,
+      using the name of the host machine. It is recommended that you
+      specify a base name, so that if the host name changes, you can
+      easily continue to use the same binary log file names (see
+      <a class="xref" href="known-issues.html" title="B.3.7 Known Issues in MySQL">Section B.3.7, “Known Issues in MySQL”</a>). If you supply an extension in the
+      log name (for example,
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--log-bin=<em class="replaceable"><code>base_name.extension</code></em></code></a>),
+      the extension is silently removed and ignored.
+    </p><p>
+      <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> appends a numeric extension to the
+      binary log base name to generate binary log file names. The number
+      increases each time the server creates a new log file, thus
+      creating an ordered series of files. The server creates a new file
+      in the series each time any of the following events occurs:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          The server is started or restarted
+        </p></li><li class="listitem"><p>
+          The server flushes the logs.
+        </p></li><li class="listitem"><p>
+          The size of the current log file reaches
+          <a class="link" href="replication-options-binary-log.html#sysvar_max_binlog_size"><code class="literal">max_binlog_size</code></a>.
+</p></li></ul>
+</div>
+<p>
+      A binary log file may become larger than
+      <a class="link" href="replication-options-binary-log.html#sysvar_max_binlog_size"><code class="literal">max_binlog_size</code></a> if you are using
+      large transactions because a transaction is written to the file in
+      one piece, never split between files.
+    </p><p>
+      To keep track of which binary log files have been used,
+      <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> also creates a binary log index file
+      that contains the names of the binary log files. By default, this
+      has the same base name as the binary log file, with the extension
+      <code class="literal">'.index'</code>. You can change the name of the binary
+      log index file with the
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin-index"><code class="option">--log-bin-index[=<em class="replaceable"><code>file_name</code></em>]</code></a>
+      option. You should not manually edit this file while
+      <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> is running; doing so would confuse
+      <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a>.
+    </p><p>
+      The term <span class="quote">“<span class="quote">binary log file</span>”</span> generally denotes an
+      individual numbered file containing database events. The term
+      <span class="quote">“<span class="quote">binary log</span>”</span> collectively denotes the set of numbered
+      binary log files plus the index file.
+    </p><p>
+      The default location for binary log files and the binary log index
+      file is the data directory. You can use the
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--log-bin</code></a> option to specify an
+      alternative location, by adding a leading absolute path name to
+      the base name to specify a different directory. When the server
+      reads an entry from the binary log index file, which tracks the
+      binary log files that have been used, it checks whether the entry
+      contains a relative path. If it does, the relative part of the
+      path is replaced with the absolute path set using the
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_log-bin"><code class="option">--log-bin</code></a> option. An absolute path
+      recorded in the binary log index file remains unchanged; in such a
+      case, the index file must be edited manually to enable a new path
+      or paths to be used. The binary log file base name and any
+      specified path are available as the
+      <a class="link" href="replication-options-binary-log.html#sysvar_log_bin_basename"><code class="literal">log_bin_basename</code></a> system variable.
+    </p><p>
+      The server can be started with the default server ID when binary
+      logging is enabled, but an informational message is issued if you
+      do not specify a server ID explicitly using the
+      <a class="link" href="replication-options.html#sysvar_server_id"><code class="literal">server_id</code></a> system variable. For
+      servers that are used in a replication topology, you must specify
+      a unique nonzero server ID for each server.
+    </p><p>
+      A client that has privileges sufficient to set restricted session
+      system variables (see
+      <a class="xref" href="system-variable-privileges.html" title="7.1.9.1 System Variable Privileges">Section 7.1.9.1, “System Variable Privileges”</a>) can disable binary
+      logging of its own statements by using a
+      <a class="link" href="set-sql-log-bin.html" title="15.4.1.3 SET sql_log_bin Statement"><code class="literal">SET
+      sql_log_bin=OFF</code></a> statement.
+    </p><p>
+      By default, the server logs the length of the event as well as the
+      event itself and uses this to verify that the event was written
+      correctly. You can also cause the server to write checksums for
+      the events by setting the
+      <a class="link" href="replication-options-binary-log.html#sysvar_binlog_checksum"><code class="literal">binlog_checksum</code></a> system variable.
+      When reading back from the binary log, the source uses the event
+      length by default, but can be made to use checksums if available
+      by enabling
+      <a class="link" href="replication-options-binary-log.html#sysvar_source_verify_checksum"><code class="literal">source_verify_checksum</code></a>. The
+      replication I/O (receiver) thread on the replica also verifies
+      events received from the source. You can cause the replication SQL
+      (applier) thread to use checksums if available when reading from
+      the relay log by enabling
+      <a class="link" href="replication-options-replica.html#sysvar_replica_sql_verify_checksum"><code class="literal">replica_sql_verify_checksum</code></a>.
+    </p><p>
+      The format of the events recorded in the binary log is dependent
+      on the binary logging format. Three format types are supported:
+      row-based logging, statement-based logging and mixed-base logging.
+      The binary logging format used depends on the MySQL version. For
+      descriptions of the logging formats, see
+      <a class="xref" href="binary-log-formats.html" title="7.4.4.1 Binary Logging Formats">Section 7.4.4.1, “Binary Logging Formats”</a>.
+
+      
+
+    </p><p>
+      The server evaluates the
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_binlog-do-db"><code class="option">--binlog-do-db</code></a> and
+      <a class="link" href="replication-options-binary-log.html#option_mysqld_binlog-ignore-db"><code class="option">--binlog-ignore-db</code></a> options in the
+      same way as it does the
+      <a class="link" href="replication-options-replica.html#option_mysqld_replicate-do-db"><code class="option">--replicate-do-db</code></a> and
+      <a class="link" href="replication-options-replica.html#option_mysqld_replicate-ignore-db"><code class="option">--replicate-ignore-db</code></a> options. For
+      information about how this is done, see
+      <a class="xref" href="replication-rules-db-options.html" title="19.2.5.1 Evaluation of Database-Level Replication and Binary Logging Options">Section 19.2.5.1, “Evaluation of Database-Level Replication and Binary Logging Options”</a>.
+    </p><p>
+      A replica is started with
+      <a class="link" href="replication-options-binary-log.html#sysvar_log_replica_updates"><code class="literal">log_replica_updates</code></a> enabled by
+      default, meaning that the replica writes to its own binary log any
+      data modifications that are received from the source. The binary
+      log must be enabled for this setting to work (see
+      <a class="xref" href="replication-options-replica.html" title="19.1.6.3 Replica Server Options and Variables">Section 19.1.6.3, “Replica Server Options and Variables”</a>). This setting
+      enables the replica to act as a source to other replicas.
+    </p><p>
+      You can delete all binary log files with the
+      <a class="link" href="reset-binary-logs-and-gtids.html" title="15.4.1.2 RESET BINARY LOGS AND GTIDS Statement"><code class="literal">RESET BINARY LOGS AND GTIDS</code></a>
+      statement, or a subset of them with <a class="link" href="purge-binary-logs.html" title="15.4.1.1 PURGE BINARY LOGS Statement"><code class="literal">PURGE
+      BINARY LOGS</code></a>. See <a class="xref" href="reset.html" title="15.7.8.6 RESET Statement">Section 15.7.8.6, “RESET Statement”</a>, and
+      <a class="xref" href="purge-binary-logs.html" title="15.4.1.1 PURGE BINARY LOGS Statement">Section 15.4.1.1, “PURGE BINARY LOGS Statement”</a>.
+    </p><p>
+      If you are using MySQL Replication, you should not delete old
+      binary log files on the source until you are sure that no replica
+      still needs to use them. For example, if your replicas never run
+      more than three days behind, once a day you can execute
+      <a class="link" href="mysqladmin.html" title="6.5.2 mysqladmin — A MySQL Server Administration Program"><span class="command"><strong>mysqladmin flush-logs binary</strong></span></a> on the source and
+      then remove any logs that are more than three days old. You can
+      remove the files manually, but it is preferable to use
+      <a class="link" href="purge-binary-logs.html" title="15.4.1.1 PURGE BINARY LOGS Statement"><code class="literal">PURGE BINARY LOGS</code></a>, which also
+      safely updates the binary log index file for you (and which can
+      take a date argument). See <a class="xref" href="purge-binary-logs.html" title="15.4.1.1 PURGE BINARY LOGS Statement">Section 15.4.1.1, “PURGE BINARY LOGS Statement”</a>.
+    </p><p>
+      You can display the contents of binary log files with the
+      <a class="link" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files"><span class="command"><strong>mysqlbinlog</strong></span></a> utility. This can be useful when
+      you want to reprocess statements in the log for a recovery
+      operation. For example, you can update a MySQL server from the
+      binary log as follows:
+    </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">$&gt; mysqlbinlog <em class="replaceable">log_file</em> | mysql -h <em class="replaceable">server_name</em></code></pre><p>
+      <a class="link" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files"><span class="command"><strong>mysqlbinlog</strong></span></a> also can be used to display the
+      contents of the relay log file on a replica, because they are
+      written using the same format as binary log files. For more
+      information on the <a class="link" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files"><span class="command"><strong>mysqlbinlog</strong></span></a> utility and how
+      to use it, see <a class="xref" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files">Section 6.6.9, “mysqlbinlog — Utility for Processing Binary Log Files”</a>. For more information
+      about the binary log and recovery operations, see
+      <a class="xref" href="point-in-time-recovery.html" title="9.5 Point-in-Time (Incremental) Recovery">Section 9.5, “Point-in-Time (Incremental) Recovery”</a>.
+    </p><p>
+      Binary logging is done immediately after a statement or
+      transaction completes but before any locks are released or any
+      commit is done. This ensures that the log is logged in commit
+      order.
+    </p><p>
+      Updates to nontransactional tables are stored in the binary log
+      immediately after execution.
+    </p><p>
+      Within an uncommitted transaction, all updates
+      (<a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a>,
+      <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a>, or
+      <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>) that change transactional
+      tables such as <code class="literal">InnoDB</code> tables are cached until a
+      <a class="link" href="commit.html" title="15.3.1 START TRANSACTION, COMMIT, and ROLLBACK Statements"><code class="literal">COMMIT</code></a> statement is received by the
+      server. At that point, <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> writes the entire
+      transaction to the binary log before the
+      <a class="link" href="commit.html" title="15.3.1 START TRANSACTION, COMMIT, and ROLLBACK Statements"><code class="literal">COMMIT</code></a> is executed.
+    </p><p>
+      Modifications to nontransactional tables cannot be rolled back. If
+      a transaction that is rolled back includes modifications to
+      nontransactional tables, the entire transaction is logged with a
+      <a class="link" href="commit.html" title="15.3.1 START TRANSACTION, COMMIT, and ROLLBACK Statements"><code class="literal">ROLLBACK</code></a>
+      statement at the end to ensure that the modifications to those
+      tables are replicated.
+    </p><p>
+      When a thread that handles the transaction starts, it allocates a
+      buffer of <a class="link" href="replication-options-binary-log.html#sysvar_binlog_cache_size"><code class="literal">binlog_cache_size</code></a> to
+      buffer statements. If a statement is bigger than this, the thread
+      opens a temporary file to store the transaction. The temporary
+      file is deleted when the thread ends. If binary log encryption is
+      active on the server, the temporary file is encrypted.
+    </p><p>
+      The <a class="link" href="server-status-variables.html#statvar_Binlog_cache_use"><code class="literal">Binlog_cache_use</code></a> status
+      variable shows the number of transactions that used this buffer
+      (and possibly a temporary file) for storing statements. The
+      <a class="link" href="server-status-variables.html#statvar_Binlog_cache_disk_use"><code class="literal">Binlog_cache_disk_use</code></a> status
+      variable shows how many of those transactions actually had to use
+      a temporary file. These two variables can be used for tuning
+      <a class="link" href="replication-options-binary-log.html#sysvar_binlog_cache_size"><code class="literal">binlog_cache_size</code></a> to a large
+      enough value that avoids the use of temporary files.
+    </p><p>
+      The <a class="link" href="replication-options-binary-log.html#sysvar_max_binlog_cache_size"><code class="literal">max_binlog_cache_size</code></a> system
+      variable (default 4GB, which is also the maximum) can be used to
+      restrict the total size used to cache a multiple-statement
+      transaction. If a transaction is larger than this many bytes, it
+      fails and rolls back. The minimum value is 4096.
+    </p><p>
+      If you are using the binary log and row based logging, concurrent
+      inserts are converted to normal inserts for <code class="literal">CREATE ...
+      SELECT</code> or
+      <a class="link" href="insert-select.html" title="15.2.7.1 INSERT ... SELECT Statement"><code class="literal">INSERT ...
+      SELECT</code></a> statements. This is done to ensure that you can
+      re-create an exact copy of your tables by applying the log during
+      a backup operation. If you are using statement-based logging, the
+      original statement is written to the log.
+    </p><p>
+      The binary log format has some known limitations that can affect
+      recovery from backups. See <a class="xref" href="replication-features.html" title="19.5.1 Replication Features and Issues">Section 19.5.1, “Replication Features and Issues”</a>.
+    </p><p>
+      Binary logging for stored programs is done as described in
+      <a class="xref" href="stored-programs-logging.html" title="27.7 Stored Program Binary Logging">Section 27.7, “Stored Program Binary Logging”</a>.
+    </p><p>
+      Note that the binary log format differs in MySQL 8.4
+      from previous versions of MySQL, due to enhancements in
+      replication. See <a class="xref" href="replication-compatibility.html" title="19.5.2 Replication Compatibility Between MySQL Versions">Section 19.5.2, “Replication Compatibility Between MySQL Versions”</a>.
+    </p><p>
+      If the server is unable to write to the binary log, flush binary
+      log files, or synchronize the binary log to disk, the binary log
+      on the replication source server can become inconsistent and
+      replicas can lose synchronization with the source. The
+      <a class="link" href="replication-options-binary-log.html#sysvar_binlog_error_action"><code class="literal">binlog_error_action</code></a> system
+      variable controls the action taken if an error of this type is
+      encountered with the binary log.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          The default setting, <code class="literal">ABORT_SERVER</code>, makes
+          the server halt binary logging and shut down. At this point,
+          you can identify and correct the cause of the error. On
+          restart, recovery proceeds as in the case of an unexpected
+          server halt (see
+          <a class="xref" href="replication-solutions-unexpected-replica-halt.html" title="19.4.2 Handling an Unexpected Halt of a Replica">Section 19.4.2, “Handling an Unexpected Halt of a Replica”</a>).
+        </p></li><li class="listitem"><p>
+          The setting <code class="literal">IGNORE_ERROR</code> provides backward
+          compatibility with older versions of MySQL. With this setting,
+          the server continues the ongoing transaction and logs the
+          error, then halts binary logging, but continues to perform
+          updates. At this point, you can identify and correct the cause
+          of the error. To resume binary logging,
+          <a class="link" href="replication-options-binary-log.html#sysvar_log_bin"><code class="literal">log_bin</code></a> must be enabled
+          again, which requires a server restart. Only use this option
+          if you require backward compatibility, and the binary log is
+          non-essential on this MySQL server instance. For example, you
+          might use the binary log only for intermittent auditing or
+          debugging of the server, and not use it for replication from
+          the server or rely on it for point-in-time restore operations.
+</p></li></ul>
+</div>
+<p>
+      By default, the binary log is synchronized to disk at each write
+      (<a class="link" href="replication-options-binary-log.html#sysvar_sync_binlog"><code class="literal">sync_binlog=1</code></a>). If
+      <a class="link" href="replication-options-binary-log.html#sysvar_sync_binlog"><code class="literal">sync_binlog</code></a> was not enabled, and
+      the operating system or machine (not only the MySQL server)
+      crashed, there is a chance that the last statements of the binary
+      log could be lost. To prevent this, enable the
+      <a class="link" href="replication-options-binary-log.html#sysvar_sync_binlog"><code class="literal">sync_binlog</code></a> system variable to
+      synchronize the binary log to disk after every
+      <em class="replaceable"><code>N</code></em> commit groups. See
+      <a class="xref" href="server-system-variables.html" title="7.1.8 Server System Variables">Section 7.1.8, “Server System Variables”</a>. The safest value for
+      <a class="link" href="replication-options-binary-log.html#sysvar_sync_binlog"><code class="literal">sync_binlog</code></a> is 1 (the default),
+      but this is also the slowest.
+    </p><p>
+      In earlier MySQL releases, there was a chance of inconsistency
+      between the table content and binary log content if a crash
+      occurred, even with <a class="link" href="replication-options-binary-log.html#sysvar_sync_binlog"><code class="literal">sync_binlog</code></a>
+      set to 1. For example, if you are using <code class="literal">InnoDB</code>
+      tables and the MySQL server processes a
+      <a class="link" href="commit.html" title="15.3.1 START TRANSACTION, COMMIT, and ROLLBACK Statements"><code class="literal">COMMIT</code></a> statement, it writes many
+      prepared transactions to the binary log in sequence, synchronizes
+      the binary log, and then commits the transaction into
+      <code class="literal">InnoDB</code>. If the server unexpectedly exited
+      between those two operations, the transaction would be rolled back
+      by <code class="literal">InnoDB</code> at restart but still exist in the
+      binary log. Such an issue was resolved in previous releases by
+      enabling <code class="literal">InnoDB</code> support for two-phase commit in
+      XA transactions. In MySQL 8.4,
+      <code class="literal">InnoDB</code> support for two-phase commit in XA
+      transactions is always enabled.
+    </p><p>
+      <code class="literal">InnoDB</code> support for two-phase commit in XA
+      transactions ensures that the binary log and
+      <code class="literal">InnoDB</code> data files are synchronized. However,
+      the MySQL server should also be configured to synchronize the
+      binary log and the <code class="literal">InnoDB</code> logs to disk before
+      committing the transaction. The <code class="literal">InnoDB</code> logs are
+      synchronized by default, and <code class="literal">sync_binlog=1</code>
+      ensures the binary log is synchronized. The effect of implicit
+      <code class="literal">InnoDB</code> support for two-phase commit in XA
+      transactions and <code class="literal">sync_binlog=1</code> is that at
+      restart after a crash, after doing a rollback of transactions, the
+      MySQL server scans the latest binary log file to collect
+      transaction <em class="replaceable"><code>xid</code></em> values and calculate
+      the last valid position in the binary log file. The MySQL server
+      then tells <code class="literal">InnoDB</code> to complete any prepared
+      transactions that were successfully written to the to the binary
+      log, and truncates the binary log to the last valid position. This
+      ensures that the binary log reflects the exact data of
+      <code class="literal">InnoDB</code> tables, and therefore the replica
+      remains in synchrony with the source because it does not receive a
+      statement which has been rolled back.
+    </p><p>
+      If the MySQL server discovers at crash recovery that the binary
+      log is shorter than it should have been, it lacks at least one
+      successfully committed <code class="literal">InnoDB</code> transaction. This
+      should not happen if <code class="literal">sync_binlog=1</code> and the
+      disk/file system do an actual sync when they are requested to
+      (some do not), so the server prints an error message <code class="literal">The
+      binary log <em class="replaceable"><code>file_name</code></em> is shorter than
+      its expected size</code>. In this case, this binary log is not
+      correct and replication should be restarted from a fresh snapshot
+      of the source's data.
+    </p><p>
+      The session values of the following system variables are written
+      to the binary log and honored by the replica when parsing the
+      binary log:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_sql_mode"><code class="literal">sql_mode</code></a> (except that the
+          <a class="link" href="sql-mode.html#sqlmode_no_dir_in_create"><code class="literal">NO_DIR_IN_CREATE</code></a> mode is not
+          replicated; see
+          <a class="xref" href="replication-features-variables.html" title="19.5.1.39 Replication and Variables">Section 19.5.1.39, “Replication and Variables”</a>)
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_foreign_key_checks"><code class="literal">foreign_key_checks</code></a>
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_unique_checks"><code class="literal">unique_checks</code></a>
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_character_set_client"><code class="literal">character_set_client</code></a>
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_collation_connection"><code class="literal">collation_connection</code></a>
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_collation_database"><code class="literal">collation_database</code></a>
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_collation_server"><code class="literal">collation_server</code></a>
+        </p></li><li class="listitem"><p>
+          <a class="link" href="server-system-variables.html#sysvar_sql_auto_is_null"><code class="literal">sql_auto_is_null</code></a>
+</p></li></ul>
+</div>
+</div><br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="query-log.html"
+        aria-label="Previous" title="Previous: The General Query Log"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="server-logs.html" title="Up: MySQL Server Logs"> UP</a> &nbsp;
+    <a href="binary-log-formats.html" aria-label="Next"
+        title="Next: Binary Logging Formats">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/binary-log.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:44 GMT -->
+</html>

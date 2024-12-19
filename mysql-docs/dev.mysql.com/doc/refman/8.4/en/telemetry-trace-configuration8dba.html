@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/telemetry-trace-configuration.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 35.3.1 Configuring Trace Telemetry</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="telemetry-trace.html" title="35.3 OpenTelemetry Trace" />
+<link rel="next" href="telemetry-trace-format8dba.html?ff=nopfpls" title="35.3.2 Trace Format" />
+<link rel="up" href="telemetry-trace.html" title="35.3 OpenTelemetry Trace" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7yjea-f-78ba1a1c1-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":206,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"190fda0f","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":18029,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134600","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==RxziOyA0rKaDMExaC2+7Dy9DpW8QOsu/D1coEm/Z59zCvq4fEwVdZjah0tne/JoG6wFBS/adFYMbU9n3DLYAK3ratFlozZI2T7quGc5GdwJdQUSDlVsa5f7GU+3mojJt638xF4+FDFfnNTTU2dIxoqsV1pj8roiOzjKe9OVQFsUZGfly8ht9UlSjijReel8qXF8ne+cScY5Fc3juQGyY1tpJjirQsJDucG15i7sfQEoDxpEiMQ6/BNXPR5SZ8xhq1qTwlkDjSCX+AZimVQpRKMeVIqPAcHFmn71wh2ASGWvdUvSnXvTczIKVVy7o9eVdY8ht7UrO8Hsb+xsqUlQO/doHeyKSSwEwBc6kvVNxCBtuQRDJ7b4l+ye84UJQRXr84acdO+xtZQNZrxATH3e34nzg5LxdY3vhtG7O0vO3Xy4=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Ftelemetry-trace-configuration.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="telemetry-trace.html"
+        aria-label="Previous" title="Previous: OpenTelemetry Trace"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="telemetry-trace.html" title="Up: OpenTelemetry Trace"><span class="icon-chevron-up"></span></a>
+    <a href="telemetry-trace-format.html" aria-label="Next"
+        title="Next: Trace Format"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="telemetry-trace-install.html">Installing OpenTelemetry Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="telemetry-system-variables.html">Telemetry Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry-trace.html">OpenTelemetry Trace</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="telemetry-trace-configuration.html">Configuring Trace Telemetry</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="telemetry-trace-format.html">Trace Format</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry-metrics.html">OpenTelemetry Metrics</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="telemetry-metrics-configuration.html">Configuring Metrics Telemetry</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="telemetry-metrics-meters.html">Server Meters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="telemetry-metrics-meter-metrics.html">Server Metrics</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/telemetry-trace-configuration.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/telemetry-trace-configuration.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         class="tooltip-left"
+                        data-tooltip="The page you are viewing does not exist in version 8.0.
+                        This link will take you to the Table of Contents."
+                                                href="https://dev.mysql.com/doc/refman/8.0/en/">
+                        8.0
+                                            </a><br />
+                                                                            <a                         class="tooltip-left"
+                        data-tooltip="The page you are viewing does not exist in version 5.7.
+                        This link will take you to the Table of Contents."
+                                                href="https://dev.mysql.com/doc/refman/5.7/en/">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     class="tooltip-left"
+                                    data-tooltip="The page you are viewing does not exist in version
+                                    8.0 (JA).
+                                    This link will take you to the Table of Contents."
+                                                                        href="https://dev.mysql.com/doc/refman/8.0/ja/">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="telemetry.html">Telemetry</a> &nbsp;/&nbsp;
+                                                            <a href="telemetry-trace.html">OpenTelemetry Trace</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Configuring Trace Telemetry
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="telemetry-trace-configuration"></a>35.3.1 Configuring Trace Telemetry</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        This section describes the configuration for server and client.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="telemetry-trace-configuration.html#telemetry-trace-configuration-server" title="Server Configuration">Server Configuration</a></p></li><li class="listitem"><p><a class="xref" href="telemetry-trace-configuration.html#telemetry-trace-configuration-client" title="Client Configuration">Client Configuration</a></p></li><li class="listitem"><p><a class="xref" href="telemetry-trace-configuration.html#telemetry-trace-configuration-client-conf-example" title="Client Configuration Example">Client Configuration Example</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h4 class="title"><a name="telemetry-trace-configuration-server"></a>Server Configuration</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The following are the server trace telemetry configuration
+          variables:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a name="sysvar_telemetry.trace_enabled"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.trace_enabled"><code class="literal">telemetry.trace_enabled</code></a>
+</p><a class="indexterm" name="idm45105520431680"></a><a class="indexterm" name="idm45105520430640"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.trace_enabled"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.trace_enabled">telemetry.trace_enabled</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>Yes</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ON</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Controls whether telemetry traces are collected or not .
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.query_text_enabled"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.query_text_enabled"><code class="literal">telemetry.query_text_enabled</code></a>
+</p><a class="indexterm" name="idm45105520408576"></a><a class="indexterm" name="idm45105520407472"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.query_text_enabled"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.query_text_enabled">telemetry.query_text_enabled</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>Yes</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ON</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Controls whether the SQL query text is included in the
+              trace
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_log_level"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_log_level"><code class="literal">telemetry.otel_log_level</code></a>
+</p><a class="indexterm" name="idm45105520385280"></a><a class="indexterm" name="idm45105520384176"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_log_level"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_log_level">telemetry.otel_log_level</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>Yes</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ERROR</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">SILENT</code></p><p class="valid-value"><code class="literal">INFO</code></p><p class="valid-value"><code class="literal">ERROR</code></p><p class="valid-value"><code class="literal">WARNING</code></p><p class="valid-value"><code class="literal">DEBUG</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+              Controls which OpenTelemetry logs are printed in the
+              server logs
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_resource_attributes"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_resource_attributes"><code class="literal">telemetry.otel_resource_attributes</code></a>
+</p><a class="indexterm" name="idm45105520355200"></a><a class="indexterm" name="idm45105520354160"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_resource_attributes"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_resource_attributes">telemetry.otel_resource_attributes</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">empty</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              See corresponding OpenTelemetry variable
+              OTEL_RESOURCE_ATTRIBUTES.
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_protocol"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_protocol"><code class="literal">telemetry.otel_exporter_otlp_traces_protocol</code></a>
+</p><a class="indexterm" name="idm45105520331872"></a><a class="indexterm" name="idm45105520330752"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_protocol"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_protocol">telemetry.otel_exporter_otlp_traces_protocol</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">http/protobuf</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">http/protobuf</code></p><p class="valid-value"><code class="literal">http/json</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+              OTLP transport protocol
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_endpoint"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_endpoint"><code class="literal">telemetry.otel_exporter_otlp_traces_endpoint</code></a>
+</p><a class="indexterm" name="idm45105520304672"></a><a class="indexterm" name="idm45105520303552"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_endpoint"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_endpoint">telemetry.otel_exporter_otlp_traces_endpoint</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">http://localhost:4318/v1/traces</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Target URL to which the exporter sends traces
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_certificates"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_certificates"><code class="literal">telemetry.otel_exporter_otlp_traces_certificates</code></a>
+</p><a class="indexterm" name="idm45105520281168"></a><a class="indexterm" name="idm45105520280048"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_certificates"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_certificates">telemetry.otel_exporter_otlp_traces_certificates</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              The trusted certificate to use when verifying a server's
+              TLS credentials.
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_client_key"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_client_key"><code class="literal">telemetry.otel_exporter_otlp_traces_client_key</code></a>
+</p><a class="indexterm" name="idm45105520257808"></a><a class="indexterm" name="idm45105520256688"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_client_key"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_client_key">telemetry.otel_exporter_otlp_traces_client_key</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Client's private key in PEM format.
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_client_certificates"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_client_certificates"><code class="literal">telemetry.otel_exporter_otlp_traces_client_certificates</code></a>
+</p><a class="indexterm" name="idm45105520234416"></a><a class="indexterm" name="idm45105520233376"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_client_certificates"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_client_certificates">telemetry.otel_exporter_otlp_traces_client_certificates</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Client certificate/chain trust for clients private key in
+              PEM format.
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_headers"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_headers"><code class="literal">telemetry.otel_exporter_otlp_traces_headers</code></a>
+</p><a class="indexterm" name="idm45105520211088"></a><a class="indexterm" name="idm45105520210048"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_headers"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_headers">telemetry.otel_exporter_otlp_traces_headers</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">empty</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              See corresponding OpenTelemetry variable
+              OTEL_EXPORTER_TRACES_HEADERS.
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_compression"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_compression"><code class="literal">telemetry.otel_exporter_otlp_traces_compression</code></a>
+</p><a class="indexterm" name="idm45105520187712"></a><a class="indexterm" name="idm45105520186592"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_compression"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_compression">telemetry.otel_exporter_otlp_traces_compression</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">none (no compression)</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">none (no compression)</code></p><p class="valid-value"><code class="literal">gzip</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+              Compression used by exporter
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_timeout"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_timeout"><code class="literal">telemetry.otel_exporter_otlp_traces_timeout</code></a>
+</p><a class="indexterm" name="idm45105520160432"></a><a class="indexterm" name="idm45105520159312"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_timeout"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_timeout">telemetry.otel_exporter_otlp_traces_timeout</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">10000</code></td>
+</tr><tr><th>Unit</th>
+<td>milliseconds</td>
+</tr></tbody></table>
+</div>
+<p>
+              Time in milliseconds the OLTP exporter waits for each
+              batch export.
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_bsp_schedule_delay"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_bsp_schedule_delay"><code class="literal">telemetry.otel_bsp_schedule_delay</code></a>
+</p><a class="indexterm" name="idm45105520134816"></a><a class="indexterm" name="idm45105520133776"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_bsp_schedule_delay"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_bsp_schedule_delay">telemetry.otel_bsp_schedule_delay</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">5000</code></td>
+</tr><tr><th>Unit</th>
+<td>milliseconds</td>
+</tr></tbody></table>
+</div>
+<p>
+              Delay interval between two consecutive exports in
+              milliseconds
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_bsp_max_queue_size"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_bsp_max_queue_size"><code class="literal">telemetry.otel_bsp_max_queue_size</code></a>
+</p><a class="indexterm" name="idm45105520109392"></a><a class="indexterm" name="idm45105520108352"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_bsp_max_queue_size"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_bsp_max_queue_size">telemetry.otel_bsp_max_queue_size</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">2048</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Maximum queue size
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_bsp_max_export_batch_size"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_bsp_max_export_batch_size"><code class="literal">telemetry.otel_bsp_max_export_batch_size</code></a>
+</p><a class="indexterm" name="idm45105520086064"></a><a class="indexterm" name="idm45105520084944"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_bsp_max_export_batch_size"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_bsp_max_export_batch_size">telemetry.otel_bsp_max_export_batch_size</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">512</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Maximum batch size
+            </p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_min_tls"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_min_tls"><code class="literal">telemetry.otel_exporter_otlp_traces_min_tls</code></a>
+</p><a class="indexterm" name="idm45105520062656"></a><a class="indexterm" name="idm45105520061536"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_min_tls"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_min_tls">telemetry.otel_exporter_otlp_traces_min_tls</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">[none]</code></p><p class="valid-value"><code class="literal">1.2</code></p><p class="valid-value"><code class="literal">1.3</code></p></td>
+</tr></tbody></table>
+</div>
+<p></p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_max_tls"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_max_tls"><code class="literal">telemetry.otel_exporter_otlp_traces_max_tls</code></a>
+</p><a class="indexterm" name="idm45105520034656"></a><a class="indexterm" name="idm45105520033536"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_max_tls"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_max_tls">telemetry.otel_exporter_otlp_traces_max_tls</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">[none]</code></p><p class="valid-value"><code class="literal">1.2</code></p><p class="valid-value"><code class="literal">1.3</code></p></td>
+</tr></tbody></table>
+</div>
+<p></p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_cipher"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_cipher"><code class="literal">telemetry.otel_exporter_otlp_traces_cipher</code></a>
+</p><a class="indexterm" name="idm45105520006688"></a><a class="indexterm" name="idm45105520005568"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_cipher"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_cipher">telemetry.otel_exporter_otlp_traces_cipher</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p></p></li><li class="listitem"><p><a name="sysvar_telemetry.otel_exporter_otlp_traces_cipher_suite"></a>
+              <a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_cipher_suite"><code class="literal">telemetry.otel_exporter_otlp_traces_cipher_suite</code></a>
+</p><a class="indexterm" name="idm45105519983488"></a><a class="indexterm" name="idm45105519982368"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry.otel_exporter_otlp_traces_cipher_suite"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>System Variable</th>
+<td><code class="literal"><a class="link" href="telemetry-trace-configuration.html#sysvar_telemetry.otel_exporter_otlp_traces_cipher_suite">telemetry.otel_exporter_otlp_traces_cipher_suite</a></code></td>
+</tr><tr><th>Scope</th>
+<td>Global</td>
+</tr><tr><th>Dynamic</th>
+<td>No</td>
+</tr><tr><th><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> Hint Applies</th>
+<td>No</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p></p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="telemetry-trace-configuration-client"></a>Client Configuration</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The MySQL client reads telemetry configuration from the
+          <code class="literal">[telemetry_client]</code> section of the
+          configuration file. See
+          <a class="xref" href="telemetry-trace-install.html#telemetry-trace-install-client" title="Installing Client Plugin">Installing Client Plugin</a> for
+          information on the <code class="literal">telemetry_client</code> option.
+          The following configuration options are available:
+</p>
+<div class="table">
+<a name="idm45105519958576"></a><p class="title"><b>Table 35.2 mysql client Telemetry Option Summary</b></p>
+<div class="table-contents">
+<table frame="box" rules="all" summary="Reference for telemetry options."><col style="width: 35%"><col style="width: 64%"><thead><tr><th>Option Name</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td><a class="link" href="mysql-command-options.html#option_mysql_telemetry_client">--telemetry_client</a></td>
+<td>Enables the telemetry client.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_bsp_max_export_batch_size">--otel_bsp_max_export_batch_size</a></td>
+<td>See variable OTEL_BSP_MAX_EXPORT_BATCH_SIZE.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_bsp_max_queue_size">--otel_bsp_max_queue_size</a></td>
+<td>See variable OTEL_BSP_MAX_QUEUE_SIZE.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_bsp_schedule_delay">--otel_bsp_schedule_delay</a></td>
+<td>See variable OTEL_BSP_SCHEDULE_DELAY.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_certificates">--otel_exporter_otlp_traces_certificates</a></td>
+<td>Not in use at this time. Reserved for future development.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_client_certificates">--otel_exporter_otlp_traces_client_certificates</a></td>
+<td>Not in use at this time. Reserved for future development.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_client_key">--otel_exporter_otlp_traces_client_key</a></td>
+<td>Not in use at this time. Reserved for future development.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_compression">--otel_exporter_otlp_traces_compression</a></td>
+<td>Compression type</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_endpoint">--otel_exporter_otlp_traces_endpoint</a></td>
+<td>The trace export endpoint</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_headers">--otel_exporter_otlp_traces_headers</a></td>
+<td>Key-value pairs to be used as headers associated with HTTP requests</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_protocol">--otel_exporter_otlp_traces_protocol</a></td>
+<td>The OTLP transport protocol</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_timeout">--otel_exporter_otlp_traces_timeout</a></td>
+<td>Time OLTP exporter waits for each batch export</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel-help">--otel-help</a></td>
+<td>When enabled, prints help about telemetry_client options.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_log_level">--otel_log_level</a></td>
+<td>Controls which opentelemetry logs are printed in the server logs</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_resource_attributes">--otel_resource_attributes</a></td>
+<td>See corresponding OpenTelemetry variable OTEL_RESOURCE_ATTRIBUTES.</td>
+</tr><tr><td><a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel-trace">--otel-trace</a></td>
+<td>This system variable controls whether telemetry traces are collected or not.</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break">
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a name="option_mysql_telemetry_client.otel-trace"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel-trace"><code class="option">trace</code></a>
+</p><a class="indexterm" name="idm45105519906976"></a><a class="indexterm" name="idm45105519905472"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel-trace"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel-trace</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ON</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Controls whether telemetry traces are collected or not .
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel-help"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel-help"><code class="option">help</code></a>
+</p><a class="indexterm" name="idm45105519891312"></a><a class="indexterm" name="idm45105519889856"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel-help"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel-help</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">OFF</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              When enabled, prints help about telemetry_client options .
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_log_level"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_log_level"><code class="option">otel_log_level</code></a>
+</p><a class="indexterm" name="idm45105519875616"></a><a class="indexterm" name="idm45105519874112"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_log_level"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_log_level</code></td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ERROR</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">ERROR</code></p><p class="valid-value"><code class="literal">SILENT</code></p><p class="valid-value"><code class="literal">WARNING</code></p><p class="valid-value"><code class="literal">INFO</code></p><p class="valid-value"><code class="literal">DEBUG</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+              Controls which OpenTelemetry logs are printed in the
+              server logs
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_resource_attributes"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_resource_attributes"><code class="option">otel_resource_attributes</code></a>
+</p><a class="indexterm" name="idm45105519853104"></a><a class="indexterm" name="idm45105519851648"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_resource_attributes"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_resource_attributes</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              See corresponding OpenTelemetry variable
+              OTEL_RESOURCE_ATTRIBUTES.
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_protocol"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_protocol"><code class="option">otel_exporter_otlp_traces_protocol</code></a>
+</p><a class="indexterm" name="idm45105519837360"></a><a class="indexterm" name="idm45105519835840"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_protocol"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_protocol</code></td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">http/protobuf</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">http/protobuf</code></p><p class="valid-value"><code class="literal">http/json</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+              OTLP transport protocol
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_endpoint"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_endpoint"><code class="option">otel_exporter_otlp_traces_endpoint</code></a>
+</p><a class="indexterm" name="idm45105519817664"></a><a class="indexterm" name="idm45105519816144"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_endpoint"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_endpoint</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">http://localhost:4318/v1/traces</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Target URL to which the exporter sends traces
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_certificates"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_certificates"><code class="option">otel_exporter_otlp_traces_certificates</code></a>
+</p><a class="indexterm" name="idm45105519801728"></a><a class="indexterm" name="idm45105519800208"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_certificates"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_certificates</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              The trusted certificate to use when verifying a server's
+              TLS credentials.
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_client_key"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_client_key"><code class="option">otel_exporter_otlp_traces_client_key</code></a>
+</p><a class="indexterm" name="idm45105519785920"></a><a class="indexterm" name="idm45105519784400"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_client_key"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_client_key</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Client's private key in PEM format.
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_client_certificates"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_client_certificates"><code class="option">otel_exporter_otlp_traces_client_certificates</code></a>
+</p><a class="indexterm" name="idm45105519770080"></a><a class="indexterm" name="idm45105519768544"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_client_certificates"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_client_certificates</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Client certificate/chain trust for clients private key in
+              PEM format.
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_headers"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_headers"><code class="option">otel_exporter_otlp_traces_headers</code></a>
+</p><a class="indexterm" name="idm45105519754304"></a><a class="indexterm" name="idm45105519752784"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_headers"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_headers</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+              See corresponding OpenTelemetry variable
+              OTEL_EXPORTER_TRACES_HEADERS.
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_compression"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_compression"><code class="option">otel_exporter_otlp_traces_compression</code></a>
+</p><a class="indexterm" name="idm45105519738576"></a><a class="indexterm" name="idm45105519737056"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_compression"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_compression</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">none</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">none</code></p><p class="valid-value"><code class="literal">gzip</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+              Compression used by exporter
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_exporter_otlp_traces_timeout"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_exporter_otlp_traces_timeout"><code class="option">otel_exporter_otlp_traces_timeout</code></a>
+</p><a class="indexterm" name="idm45105519718864"></a><a class="indexterm" name="idm45105519717344"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_exporter_otlp_traces_timeout"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_exporter_otlp_traces_timeout</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">10000</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Time OLTP exporter waits for each batch export
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_bsp_schedule_delay"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_bsp_schedule_delay"><code class="option">otel_bsp_schedule_delay</code></a>
+</p><a class="indexterm" name="idm45105519703104"></a><a class="indexterm" name="idm45105519701648"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_bsp_schedule_delay"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_bsp_schedule_delay</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">5000</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Delay interval between two consecutive exports in
+              milliseconds
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_bsp_max_queue_size"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_bsp_max_queue_size"><code class="option">otel_bsp_max_queue_size</code></a>
+</p><a class="indexterm" name="idm45105519687312"></a><a class="indexterm" name="idm45105519685856"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_bsp_max_queue_size"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_bsp_max_queue_size</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">2048</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Maximum queue size
+            </p></li><li class="listitem"><p><a name="option_mysql_telemetry_client.otel_bsp_max_export_batch_size"></a>
+              <a class="link" href="telemetry-trace-configuration.html#option_mysql_telemetry_client.otel_bsp_max_export_batch_size"><code class="option">otel_bsp_max_export_batch_size</code></a>
+</p><a class="indexterm" name="idm45105519671424"></a><a class="indexterm" name="idm45105519669904"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for telemetry_client.otel_bsp_max_export_batch_size"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--otel_bsp_max_export_batch_size</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">512</code></td>
+</tr></tbody></table>
+</div>
+<p>
+              Maximum batch size
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="telemetry-trace-configuration-client-conf-example"></a>Client Configuration Example</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The following is an example of a <code class="filename">my.cnf</code>
+          configuration file containing the Client Telemetry plugin
+          configuration:
+        </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysql]
+
+telemetry-client = ON
+
+[telemetry_client]
+help = ON
+trace = OFF
+otel-resource-attributes = "RK1=RV1, RK2=RV2, RK3=RV3"
+otel-log-level = "error"
+otel-exporter-otlp-traces-headers = "K1=V1, K2=V2"
+otel-exporter-otlp-traces-protocol = "http/json"</code></pre><p>
+          If <code class="literal">telemetry-client = ON</code> is set in the
+          configuration file, you do not need to specify
+          <code class="literal">--telemetry-client</code> when starting the
+          client.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="telemetry-trace.html"
+        aria-label="Previous" title="Previous: OpenTelemetry Trace"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="telemetry-trace.html" title="Up: OpenTelemetry Trace"> UP</a> &nbsp;
+    <a href="telemetry-trace-format.html" aria-label="Next"
+        title="Next: Trace Format">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/telemetry-trace-configuration.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:55 GMT -->
+</html>

@@ -1,0 +1,2672 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/audit-log-file-formats.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:00:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 8.4.5.4 Audit Log File Formats</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="audit-log-security.html" title="8.4.5.3 MySQL Enterprise Audit Security Considerations" />
+<link rel="next" href="audit-log-logging-configuration8dba.html?ff=nopfpls" title="8.4.5.5 Configuring Audit Logging Characteristics" />
+<link rel="up" href="audit-log.html" title="8.4.5 MySQL Enterprise Audit" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xf2q-f-dfe2b9693-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":134,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18aeae55","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5893,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730132341","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==TwNN/ArbiHZSaNO3k+0lrCdp6NXdgWG6SDmVY+HUEXv/CcA8gKNNjdZP+dRMNM8FQ/49LZX1tPrBoJVLAtty39yWeo/ErC0nQvBuw6l31lwvoovGx7Y7yRFvXLk/sdZHtCXeGpi4P9eOiGmQmicFNp2i9c3LkxVVnppMnVXsEEU9RM+hKGHL0yw7PyktewS1mxb985JQeMcauxWosej2cFhidIYHOZ77NJ9mbeAiRdZ4lpZvPl89LDZHe6G/MkVwpXB/m4+G4rGYk0qhOnhKe0cwgpnPI9m7tGeRxw096ceSWyvdLLxSqnf2n6xiOd6b+SoHs9+YDLQ8bmsFyMDtqmnKllY2vNsdPSGuK/R3L+EJs//6d+rsza/dhCf6TyDdL4Xi+00dgAgrwWOUEgPKt1flbnyye0P89+1Ehxz9ZyU=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Faudit-log-file-formats.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="audit-log-security.html"
+        aria-label="Previous" title="Previous: MySQL Enterprise Audit Security Considerations"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="audit-log.html" title="Up: MySQL Enterprise Audit"><span class="icon-chevron-up"></span></a>
+    <a href="audit-log-logging-configuration.html" aria-label="Next"
+        title="Next: Configuring Audit Logging Characteristics"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="general-security-issues.html">General Security Issues</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-guidelines.html">Security Guidelines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="password-security.html">Keeping Passwords Secure</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-user.html">End-User Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-admin.html">Administrator Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-logging.html">Passwords and Logging</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-against-attack.html">Making MySQL Secure Against Attackers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-options.html">Security-Related mysqld Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="changing-mysql-user.html">How to Run MySQL as a Normal User</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-data-local-security.html">Security Considerations for LOAD DATA LOCAL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="secure-client-programming.html">Client Programming Security Guidelines</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="access-control.html">Access Control and Account Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-names.html">Account User Names and Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privileges-provided.html">Privileges Provided by MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="grant-tables.html">Grant Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-names.html">Specifying Account Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="role-names.html">Specifying Role Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-access.html">Access Control, Stage 1: Connection Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="request-access.html">Access Control, Stage 2: Request Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-accounts.html">Adding Accounts, Assigning Privileges, and Dropping Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reserved-accounts.html">Reserved Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="roles.html">Using Roles</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-categories.html">Account Categories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partial-revokes.html">Privilege Restriction Using Partial Revokes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privilege-changes.html">When Privilege Changes Take Effect</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="assigning-passwords.html">Assigning Account Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-management.html">Password Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="expired-password-handling.html">Server Handling of Expired Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication.html">Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multifactor-authentication.html">Multifactor Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="proxy-users.html">Proxy Users</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-locking.html">Account Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-resources.html">Setting Account Resource Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="problems-connecting.html">Troubleshooting Problems Connecting to MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-activity-auditing.html">SQL-Based Account Activity Auditing</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="encrypted-connections.html">Using Encrypted Connections</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-encrypted-connections.html">Configuring MySQL to Use Encrypted Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="encrypted-connection-protocols-ciphers.html">Encrypted Connection TLS Protocols and Ciphers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files.html">Creating SSL and RSA Certificates and Keys</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files-using-mysql.html">Creating SSL and RSA Certificates and Keys using MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-files-using-openssl.html">Creating SSL Certificates and Keys Using openssl</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-rsa-files-using-openssl.html">Creating RSA Keys Using openssl</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-and-ssh.html">Connecting to MySQL Remotely from Windows with SSH</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reusing-ssl-sessions.html">Reusing SSL Sessions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security-plugins.html">Security Components and Plugins</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="authentication-plugins.html">Authentication Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="native-pluggable-authentication.html">Native Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="caching-sha2-pluggable-authentication.html">Caching SHA-2 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sha256-pluggable-authentication.html">SHA-256 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cleartext-pluggable-authentication.html">Client-Side Cleartext Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pam-pluggable-authentication.html">PAM Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-pluggable-authentication.html">Windows Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ldap-pluggable-authentication.html">LDAP Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="kerberos-pluggable-authentication.html">Kerberos Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="no-login-pluggable-authentication.html">No-Login Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="socket-pluggable-authentication.html">Socket Peer-Credential Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="webauthn-pluggable-authentication.html">WebAuthn Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="test-pluggable-authentication.html">Test Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication-system-variables.html">Pluggable Authentication System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-control.html">The Connection-Control Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-installation.html">Connection-Control Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-variables.html">Connection-Control System and Status Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="validate-password.html">The Password Validation Component</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-installation.html">Password Validation Component Installation and Uninstallation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-options-variables.html">Password Validation Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-transitioning.html">Transitioning to the Password Validation Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="keyring.html">The MySQL Keyring</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-plugin-comparison.html">Keyring Components Versus Keyring Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-installation.html">Keyring Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-plugin-installation.html">Keyring Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-file-component.html">Using the component_keyring_file File-Based Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-encrypted-file-component.html">Using the component_keyring_encrypted_file Encrypted File-Based Keyring
+Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-okv-plugin.html">Using the keyring_okv KMIP Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-aws-plugin.html">Using the keyring_aws Amazon Web Services Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-hashicorp-plugin.html">Using the HashiCorp Vault Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-oci-component.html">Using the Oracle Cloud Infrastructure Vault Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-types.html">Supported Keyring Key Types and Lengths</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-migration.html">Migrating Keys Between Keyring Keystores</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-general-purpose.html">General-Purpose Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-plugin-specific.html">Plugin-Specific Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-metadata.html">Keyring Metadata</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-options.html">Keyring Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-system-variables.html">Keyring System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="audit-log.html">MySQL Enterprise Audit</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-elements.html">Elements of MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-installation.html">Installing or Uninstalling MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-security.html">MySQL Enterprise Audit Security Considerations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="audit-log-file-formats.html">Audit Log File Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-logging-configuration.html">Configuring Audit Logging Characteristics</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-reading.html">Reading Audit Log Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filtering.html">Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filter-definitions.html">Writing Audit Log Filter Definitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-disabling.html">Disabling Audit Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-legacy-filtering.html">Legacy Mode Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-reference.html">Audit Log Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-restrictions.html">Audit Log Restrictions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-api-message-emit.html">The Audit Message Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="firewall.html">MySQL Enterprise Firewall</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-elements.html">Elements of MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-installation.html">Installing or Uninstalling MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-usage.html">Using MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-reference.html">MySQL Enterprise Firewall Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking.html">MySQL Enterprise Data Masking and De-Identification</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-vs-plugin.html">Data-Masking Components Versus the Data-Masking Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-components.html">MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-installation.html">MySQL Enterprise Data Masking and De-Identification Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-usage.html">Using MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-function-reference.html">MySQL Enterprise Data Masking and De-Identification Component Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-functions.html">MySQL Enterprise Data Masking and De-Identification Component Function Descriptions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-variables.html">MySQL Enterprise Data Masking and De-Identification Component Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin.html">MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-installation.html">MySQL Enterprise Data Masking and De-Identification Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-usage.html">Using the MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-function-reference.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-functions.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption.html">MySQL Enterprise Encryption</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-installation.html">MySQL Enterprise Encryption Installation and Upgrading</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-configuring.html">Configuring MySQL Enterprise Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-usage.html">MySQL Enterprise Encryption Usage and Examples</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-function-reference.html">MySQL Enterprise Encryption Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-functions.html">MySQL Enterprise Encryption Component Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux.html">SELinux</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-checking.html">Check if SELinux is Enabled</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-mode.html">Changing the SELinux Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-policies.html">MySQL Server SELinux Policies</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-file-context.html">SELinux File Context</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux-context-tcp-port.html">SELinux TCP Port Context</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysqld-tcp-port.html">Setting the TCP Port Context for mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysql-feature-ports.html">Setting the TCP Port Context for MySQL Features</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-troubleshooting.html">Troubleshooting SELinux</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="fips-mode.html">FIPS Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/audit-log-file-formats.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/audit-log-file-formats.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/audit-log-file-formats.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/audit-log-file-formats.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/audit-log-file-formats.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="security.html">Security</a> &nbsp;/&nbsp;
+                                                            <a href="security-plugins.html">Security Components and Plugins</a> &nbsp;/&nbsp;
+                                                            <a href="audit-log.html">MySQL Enterprise Audit</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Audit Log File Formats
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="audit-log-file-formats"></a>8.4.5.4 Audit Log File Formats</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The MySQL server calls the audit log plugin to write an audit
+        record to its log file whenever an auditable event occurs.
+        Typically the first audit record written after plugin startup
+        contains the server description and startup options. Elements
+        following that one represent events such as client connect and
+        disconnect events, executed SQL statements, and so forth. Only
+        top-level statements are logged, not statements within stored
+        programs such as triggers or stored procedures. Contents of
+        files referenced by statements such as <a class="link" href="load-data.html" title="15.2.9 LOAD DATA Statement"><code class="literal">LOAD
+        DATA</code></a> are not logged.
+      </p><p>
+        To select the log format that the audit log plugin uses to write
+        its log file, set the
+        <a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format</code></a> system
+        variable at server startup. These formats are available:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            New-style XML format
+            (<a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format=NEW</code></a>): An
+            XML format that has better compatibility with Oracle Audit
+            Vault than old-style XML format. MySQL 8.4 uses
+            new-style XML format by default.
+          </p></li><li class="listitem"><p>
+            Old-style XML format
+            (<a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format=OLD</code></a>): The
+            original audit log format used by default in older MySQL
+            series.
+          </p></li><li class="listitem"><p>
+            JSON format
+            (<a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format=JSON</code></a>):
+            Writes the audit log as a JSON array. Only this format
+            supports the optional query time and size statistics.
+</p></li></ul>
+</div>
+<p>
+        By default, audit log file contents are written in new-style XML
+        format, without compression or encryption.
+      </p><p>
+        If you change <a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format</code></a>,
+        it is recommended that you also change
+        <a class="link" href="audit-log-reference.html#sysvar_audit_log_file"><code class="literal">audit_log_file</code></a>. For example, if
+        you set <a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format</code></a> to
+        <code class="literal">JSON</code>, set
+        <a class="link" href="audit-log-reference.html#sysvar_audit_log_file"><code class="literal">audit_log_file</code></a> to
+        <code class="literal">audit.json</code>. Otherwise, newer log files will
+        have a different format than older files, but they will all have
+        the same base name with nothing to indicate when the format
+        changed.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="audit-log-file-formats.html#audit-log-file-new-style-xml-format" title="New-Style XML Audit Log File Format">New-Style XML Audit Log File Format</a></p></li><li class="listitem"><p><a class="xref" href="audit-log-file-formats.html#audit-log-file-old-style-xml-format" title="Old-Style XML Audit Log File Format">Old-Style XML Audit Log File Format</a></p></li><li class="listitem"><p><a class="xref" href="audit-log-file-formats.html#audit-log-file-json-format" title="JSON Audit Log File Format">JSON Audit Log File Format</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="audit-log-file-new-style-xml-format"></a>New-Style XML Audit Log File Format</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Here is a sample log file in new-style XML format
+          (<a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format=NEW</code></a>),
+          reformatted slightly for readability:
+        </p><pre class="programlisting copytoclipboard language-xml"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;AUDIT&gt;
+ &lt;AUDIT_RECORD&gt;
+  &lt;TIMESTAMP&gt;2019-10-03T14:06:33 UTC&lt;/TIMESTAMP&gt;
+  &lt;RECORD_ID&gt;1_2019-10-03T14:06:33&lt;/RECORD_ID&gt;
+  &lt;NAME&gt;Audit&lt;/NAME&gt;
+  &lt;SERVER_ID&gt;1&lt;/SERVER_ID&gt;
+  &lt;VERSION&gt;1&lt;/VERSION&gt;
+  &lt;STARTUP_OPTIONS&gt;/usr/local/mysql/bin/mysqld
+    --socket=/usr/local/mysql/mysql.sock
+    --port=3306&lt;/STARTUP_OPTIONS&gt;
+  &lt;OS_VERSION&gt;i686-Linux&lt;/OS_VERSION&gt;
+  &lt;MYSQL_VERSION&gt;5.7.21-log&lt;/MYSQL_VERSION&gt;
+ &lt;/AUDIT_RECORD&gt;
+ &lt;AUDIT_RECORD&gt;
+  &lt;TIMESTAMP&gt;2019-10-03T14:09:38 UTC&lt;/TIMESTAMP&gt;
+  &lt;RECORD_ID&gt;2_2019-10-03T14:06:33&lt;/RECORD_ID&gt;
+  &lt;NAME&gt;Connect&lt;/NAME&gt;
+  &lt;CONNECTION_ID&gt;5&lt;/CONNECTION_ID&gt;
+  &lt;STATUS&gt;0&lt;/STATUS&gt;
+  &lt;STATUS_CODE&gt;0&lt;/STATUS_CODE&gt;
+  &lt;USER&gt;root&lt;/USER&gt;
+  &lt;OS_LOGIN/&gt;
+  &lt;HOST&gt;localhost&lt;/HOST&gt;
+  &lt;IP&gt;127.0.0.1&lt;/IP&gt;
+  &lt;COMMAND_CLASS&gt;connect&lt;/COMMAND_CLASS&gt;
+  &lt;CONNECTION_TYPE&gt;SSL/TLS&lt;/CONNECTION_TYPE&gt;
+  &lt;CONNECTION_ATTRIBUTES&gt;
+   &lt;ATTRIBUTE&gt;
+    &lt;NAME&gt;_pid&lt;/NAME&gt;
+    &lt;VALUE&gt;42794&lt;/VALUE&gt;
+   &lt;/ATTRIBUTE&gt;
+   ...
+   &lt;ATTRIBUTE&gt;
+    &lt;NAME&gt;program_name&lt;/NAME&gt;
+    &lt;VALUE&gt;mysqladmin&lt;/VALUE&gt;
+   &lt;/ATTRIBUTE&gt;
+  &lt;/CONNECTION_ATTRIBUTES&gt;
+  &lt;PRIV_USER&gt;root&lt;/PRIV_USER&gt;
+  &lt;PROXY_USER/&gt;
+  &lt;DB&gt;test&lt;/DB&gt;
+ &lt;/AUDIT_RECORD&gt;
+
+...
+
+ &lt;AUDIT_RECORD&gt;
+  &lt;TIMESTAMP&gt;2019-10-03T14:09:38 UTC&lt;/TIMESTAMP&gt;
+  &lt;RECORD_ID&gt;6_2019-10-03T14:06:33&lt;/RECORD_ID&gt;
+  &lt;NAME&gt;Query&lt;/NAME&gt;
+  &lt;CONNECTION_ID&gt;5&lt;/CONNECTION_ID&gt;
+  &lt;STATUS&gt;0&lt;/STATUS&gt;
+  &lt;STATUS_CODE&gt;0&lt;/STATUS_CODE&gt;
+  &lt;USER&gt;root[root] @ localhost [127.0.0.1]&lt;/USER&gt;
+  &lt;OS_LOGIN/&gt;
+  &lt;HOST&gt;localhost&lt;/HOST&gt;
+  &lt;IP&gt;127.0.0.1&lt;/IP&gt;
+  &lt;COMMAND_CLASS&gt;drop_table&lt;/COMMAND_CLASS&gt;
+  &lt;SQLTEXT&gt;DROP TABLE IF EXISTS t&lt;/SQLTEXT&gt;
+ &lt;/AUDIT_RECORD&gt;
+
+...
+
+ &lt;AUDIT_RECORD&gt;
+  &lt;TIMESTAMP&gt;2019-10-03T14:09:39 UTC&lt;/TIMESTAMP&gt;
+  &lt;RECORD_ID&gt;8_2019-10-03T14:06:33&lt;/RECORD_ID&gt;
+  &lt;NAME&gt;Quit&lt;/NAME&gt;
+  &lt;CONNECTION_ID&gt;5&lt;/CONNECTION_ID&gt;
+  &lt;STATUS&gt;0&lt;/STATUS&gt;
+  &lt;STATUS_CODE&gt;0&lt;/STATUS_CODE&gt;
+  &lt;USER&gt;root&lt;/USER&gt;
+  &lt;OS_LOGIN/&gt;
+  &lt;HOST&gt;localhost&lt;/HOST&gt;
+  &lt;IP&gt;127.0.0.1&lt;/IP&gt;
+  &lt;COMMAND_CLASS&gt;connect&lt;/COMMAND_CLASS&gt;
+  &lt;CONNECTION_TYPE&gt;SSL/TLS&lt;/CONNECTION_TYPE&gt;
+ &lt;/AUDIT_RECORD&gt;
+
+...
+
+ &lt;AUDIT_RECORD&gt;
+  &lt;TIMESTAMP&gt;2019-10-03T14:09:43 UTC&lt;/TIMESTAMP&gt;
+  &lt;RECORD_ID&gt;11_2019-10-03T14:06:33&lt;/RECORD_ID&gt;
+  &lt;NAME&gt;Quit&lt;/NAME&gt;
+  &lt;CONNECTION_ID&gt;6&lt;/CONNECTION_ID&gt;
+  &lt;STATUS&gt;0&lt;/STATUS&gt;
+  &lt;STATUS_CODE&gt;0&lt;/STATUS_CODE&gt;
+  &lt;USER&gt;root&lt;/USER&gt;
+  &lt;OS_LOGIN/&gt;
+  &lt;HOST&gt;localhost&lt;/HOST&gt;
+  &lt;IP&gt;127.0.0.1&lt;/IP&gt;
+  &lt;COMMAND_CLASS&gt;connect&lt;/COMMAND_CLASS&gt;
+  &lt;CONNECTION_TYPE&gt;SSL/TLS&lt;/CONNECTION_TYPE&gt;
+ &lt;/AUDIT_RECORD&gt;
+ &lt;AUDIT_RECORD&gt;
+  &lt;TIMESTAMP&gt;2019-10-03T14:09:45 UTC&lt;/TIMESTAMP&gt;
+  &lt;RECORD_ID&gt;12_2019-10-03T14:06:33&lt;/RECORD_ID&gt;
+  &lt;NAME&gt;NoAudit&lt;/NAME&gt;
+  &lt;SERVER_ID&gt;1&lt;/SERVER_ID&gt;
+ &lt;/AUDIT_RECORD&gt;
+&lt;/AUDIT&gt;</code></pre><p>
+          The audit log file is written as XML, using UTF-8 (up to 4
+          bytes per character). The root element is
+          <code class="literal">&lt;AUDIT&gt;</code>. The root element contains
+          <code class="literal">&lt;AUDIT_RECORD&gt;</code> elements, each of
+          which provides information about an audited event. When the
+          audit log plugin begins writing a new log file, it writes the
+          XML declaration and opening <code class="literal">&lt;AUDIT&gt;</code>
+          root element tag. When the plugin closes a log file, it writes
+          the closing <code class="literal">&lt;/AUDIT&gt;</code> root element
+          tag. The closing tag is not present while the file is open.
+        </p><p>
+          Elements within <code class="literal">&lt;AUDIT_RECORD&gt;</code>
+          elements have these characteristics:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Some elements appear in every
+              <code class="literal">&lt;AUDIT_RECORD&gt;</code> element. Others
+              are optional and may appear depending on the audit record
+              type.
+            </p></li><li class="listitem"><p>
+              Order of elements within an
+              <code class="literal">&lt;AUDIT_RECORD&gt;</code> element is not
+              guaranteed.
+            </p></li><li class="listitem"><p>
+              Element values are not fixed length. Long values may be
+              truncated as indicated in the element descriptions given
+              later.
+            </p></li><li class="listitem"><p>
+              The <code class="literal">&lt;</code>, <code class="literal">&gt;</code>,
+              <code class="literal">"</code>, and <code class="literal">&amp;</code>
+              characters are encoded as <code class="literal">&amp;lt;</code>,
+              <code class="literal">&amp;gt;</code>,
+              <code class="literal">&amp;quot;</code>, and
+              <code class="literal">&amp;amp;</code>, respectively. NUL bytes
+              (U+00) are encoded as the <code class="literal">?</code> character.
+            </p></li><li class="listitem"><p>
+              Characters not valid as XML characters are encoded using
+              numeric character references. Valid XML characters are:
+            </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none">#x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]</code></pre></li></ul>
+</div>
+<p>
+          The following elements are mandatory in every
+          <code class="literal">&lt;AUDIT_RECORD&gt;</code> element:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <code class="literal">&lt;NAME&gt;</code>
+            </p><p>
+              A string representing the type of instruction that
+              generated the audit event, such as a command that the
+              server received from a client.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;NAME&gt;Query&lt;/NAME&gt;</code></pre><p>
+              Some common <code class="literal">&lt;NAME&gt;</code> values:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">Audit    When auditing starts, which may be server startup time
+Connect  When a client connects, also known as logging in
+Query    An SQL statement (executed directly)
+Prepare  Preparation of an SQL statement; usually followed by Execute
+Execute  Execution of an SQL statement; usually follows Prepare
+Shutdown Server shutdown
+Quit     When a client disconnects
+NoAudit  Auditing has been turned off</code></pre><p>
+              The possible values are <code class="literal">Audit</code>,
+              <code class="literal">Binlog Dump</code>, <code class="literal">Change
+              user</code>, <code class="literal">Close stmt</code>,
+              <code class="literal">Connect Out</code>,
+              <code class="literal">Connect</code>, <code class="literal">Create DB</code>,
+              <code class="literal">Daemon</code>, <code class="literal">Debug</code>,
+              <code class="literal">Delayed insert</code>, <code class="literal">Drop
+              DB</code>, <code class="literal">Execute</code>,
+              <code class="literal">Fetch</code>, <code class="literal">Field List</code>,
+              <code class="literal">Init DB</code>, <code class="literal">Kill</code>,
+              <code class="literal">Long Data</code>, <code class="literal">NoAudit</code>,
+              <code class="literal">Ping</code>, <code class="literal">Prepare</code>,
+              <code class="literal">Processlist</code>, <code class="literal">Query</code>,
+              <code class="literal">Quit</code>, <code class="literal">Refresh</code>,
+              <code class="literal">Register Slave</code>, <code class="literal">Reset
+              stmt</code>, <code class="literal">Set option</code>,
+              <code class="literal">Shutdown</code>, <code class="literal">Sleep</code>,
+              <code class="literal">Statistics</code>, <code class="literal">Table
+              Dump</code>, <code class="literal">TableDelete</code>,
+              <code class="literal">TableInsert</code>,
+              <code class="literal">TableRead</code>,
+              <code class="literal">TableUpdate</code>, <code class="literal">Time</code>.
+            </p><p>
+              Many of these values correspond to the
+              <code class="literal">COM_<em class="replaceable"><code>xxx</code></em></code>
+              command values listed in the
+              <code class="filename">my_command.h</code> header file. For
+              example, <code class="literal">Create DB</code> and <code class="literal">Change
+              user</code> correspond to
+              <code class="literal">COM_CREATE_DB</code> and
+              <code class="literal">COM_CHANGE_USER</code>, respectively.
+            </p><p>
+              Events having <code class="literal">&lt;NAME&gt;</code> values of
+              <code class="literal">Table<em class="replaceable"><code>XXX</code></em></code>
+              accompany <code class="literal">Query</code> events. For example,
+              the following statement generates one
+              <code class="literal">Query</code> event, two
+              <code class="literal">TableRead</code> events, and a
+              <code class="literal">TableInsert</code> events:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">INSERT INTO t3 SELECT t1.* FROM t1 JOIN t2;</code></pre><p>
+              Each
+              <code class="literal">Table<em class="replaceable"><code>XXX</code></em></code>
+              event contains <code class="literal">&lt;TABLE&gt;</code> and
+              <code class="literal">&lt;DB&gt;</code> elements to identify the
+              table to which the event refers and the database that
+              contains the table.
+            </p></li><li class="listitem"><p>
+              <code class="literal">&lt;RECORD_ID&gt;</code>
+            </p><p>
+              A unique identifier for the audit record. The value is
+              composed from a sequence number and timestamp, in the
+              format
+              <code class="literal"><em class="replaceable"><code>SEQ_TIMESTAMP</code></em></code>.
+              When the audit log plugin opens the audit log file, it
+              initializes the sequence number to the size of the audit
+              log file, then increments the sequence by 1 for each
+              record logged. The timestamp is a UTC value in
+              <code class="literal"><em class="replaceable"><code>YYYY-MM-DD</code></em>T<em class="replaceable"><code>hh:mm:ss</code></em></code>
+              format indicating the date and time when the audit log
+              plugin opened the file.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;RECORD_ID&gt;12_2019-10-03T14:06:33&lt;/RECORD_ID&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;TIMESTAMP&gt;</code>
+            </p><p>
+              A string representing a UTC value in
+              <code class="literal"><em class="replaceable"><code>YYYY-MM-DD</code></em>T<em class="replaceable"><code>hh:mm:ss</code></em>
+              UTC</code> format indicating the date and time when the
+              audit event was generated. For example, the event
+              corresponding to execution of an SQL statement received
+              from a client has a <code class="literal">&lt;TIMESTAMP&gt;</code>
+              value occurring after the statement finishes, not when it
+              was received.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;TIMESTAMP&gt;2019-10-03T14:09:45 UTC&lt;/TIMESTAMP&gt;</code></pre></li></ul>
+</div>
+<p>
+          The following elements are optional in
+          <code class="literal">&lt;AUDIT_RECORD&gt;</code> elements. Many of them
+          occur only with specific <code class="literal">&lt;NAME&gt;</code>
+          element values.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <code class="literal">&lt;COMMAND_CLASS&gt;</code>
+            </p><p>
+              A string that indicates the type of action performed.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;COMMAND_CLASS&gt;drop_table&lt;/COMMAND_CLASS&gt;</code></pre><p>
+              The values correspond to the
+              <code class="literal">statement/sql/<em class="replaceable"><code>xxx</code></em></code>
+              command counters. For example,
+              <em class="replaceable"><code>xxx</code></em> is
+              <code class="literal">drop_table</code> and
+              <code class="literal">select</code> for <a class="link" href="drop-table.html" title="15.1.32 DROP TABLE Statement"><code class="literal">DROP
+              TABLE</code></a> and <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+              statements, respectively. The following statement displays
+              the possible names:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT REPLACE(EVENT_NAME, 'statement/sql/', '') AS name
+FROM performance_schema.events_statements_summary_global_by_event_name
+WHERE EVENT_NAME LIKE 'statement/sql/%'
+ORDER BY name;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;CONNECTION_ATTRIBUTES&gt;</code>
+            </p><p>
+              Events with a <code class="literal">&lt;COMMAND_CLASS&gt;</code>
+              value of <code class="literal">connect</code> may include a
+              <code class="literal">&lt;CONNECTION_ATTRIBUTES&gt;</code> element
+              to display the connection attributes passed by the client
+              at connect time. (For information about these attributes,
+              which are also exposed in Performance Schema tables, see
+              <a class="xref" href="performance-schema-connection-attribute-tables.html" title="29.12.9 Performance Schema Connection Attribute Tables">Section 29.12.9, “Performance Schema Connection Attribute Tables”</a>.)
+            </p><p>
+              The <code class="literal">&lt;CONNECTION_ATTRIBUTES&gt;</code>
+              element contains one <code class="literal">&lt;ATTRIBUTE&gt;</code>
+              element per attribute, each of which contains
+              <code class="literal">&lt;NAME&gt;</code> and
+              <code class="literal">&lt;VALUE&gt;</code> elements to indicate the
+              attribute name and value, respectively.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml"><code class="language-xml">&lt;CONNECTION_ATTRIBUTES&gt;
+ &lt;ATTRIBUTE&gt;
+  &lt;NAME&gt;_pid&lt;/NAME&gt;
+  &lt;VALUE&gt;42794&lt;/VALUE&gt;
+ &lt;/ATTRIBUTE&gt;
+ &lt;ATTRIBUTE&gt;
+  &lt;NAME&gt;_os&lt;/NAME&gt;
+  &lt;VALUE&gt;macos0.14&lt;/VALUE&gt;
+ &lt;/ATTRIBUTE&gt;
+ &lt;ATTRIBUTE&gt;
+  &lt;NAME&gt;_platform&lt;/NAME&gt;
+  &lt;VALUE&gt;x86_64&lt;/VALUE&gt;
+ &lt;/ATTRIBUTE&gt;
+ &lt;ATTRIBUTE&gt;
+  &lt;NAME&gt;_client_version&lt;/NAME&gt;
+  &lt;VALUE&gt;8.4.0&lt;/VALUE&gt;
+ &lt;/ATTRIBUTE&gt;
+ &lt;ATTRIBUTE&gt;
+  &lt;NAME&gt;_client_name&lt;/NAME&gt;
+  &lt;VALUE&gt;libmysql&lt;/VALUE&gt;
+ &lt;/ATTRIBUTE&gt;
+ &lt;ATTRIBUTE&gt;
+  &lt;NAME&gt;program_name&lt;/NAME&gt;
+  &lt;VALUE&gt;mysqladmin&lt;/VALUE&gt;
+ &lt;/ATTRIBUTE&gt;
+&lt;/CONNECTION_ATTRIBUTES&gt;</code></pre><p>
+              If no connection attributes are present in the event, none
+              are logged and no
+              <code class="literal">&lt;CONNECTION_ATTRIBUTES&gt;</code> element
+              appears. This can occur if the connection attempt is
+              unsuccessful, the client passes no attributes, or the
+              connection occurs internally such as during server startup
+              or when initiated by a plugin.
+            </p></li><li class="listitem"><p>
+              <code class="literal">&lt;CONNECTION_ID&gt;</code>
+            </p><p>
+              An unsigned integer representing the client connection
+              identifier. This is the same as the value returned by the
+              <a class="link" href="information-functions.html#function_connection-id"><code class="literal">CONNECTION_ID()</code></a> function
+              within the session.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;CONNECTION_ID&gt;127&lt;/CONNECTION_ID&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;CONNECTION_TYPE&gt;</code>
+            </p><p>
+              The security state of the connection to the server.
+              Permitted values are <code class="literal">TCP/IP</code> (TCP/IP
+              connection established without encryption),
+              <code class="literal">SSL/TLS</code> (TCP/IP connection established
+              with encryption), <code class="literal">Socket</code> (Unix socket
+              file connection), <code class="literal">Named Pipe</code> (Windows
+              named pipe connection), and <code class="literal">Shared
+              Memory</code> (Windows shared memory connection).
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;CONNECTION_TYPE&gt;SSL/TLS&lt;/CONNECTION_TYPE&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;DB&gt;</code>
+            </p><p>
+              A string representing a database name.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;DB&gt;test&lt;/DB&gt;</code></pre><p>
+              For connect events, this element indicates the default
+              database; the element is empty if there is no default
+              database. For table-access events, the element indicates
+              the database to which the accessed table belongs.
+            </p></li><li class="listitem"><p>
+              <code class="literal">&lt;HOST&gt;</code>
+            </p><p>
+              A string representing the client host name.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;HOST&gt;localhost&lt;/HOST&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;IP&gt;</code>
+            </p><p>
+              A string representing the client IP address.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;IP&gt;127.0.0.1&lt;/IP&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;MYSQL_VERSION&gt;</code>
+            </p><p>
+              A string representing the MySQL server version. This is
+              the same as the value of the
+              <a class="link" href="information-functions.html#function_version"><code class="literal">VERSION()</code></a> function or
+              <a class="link" href="server-system-variables.html#sysvar_version"><code class="literal">version</code></a> system variable.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;MYSQL_VERSION&gt;5.7.21-log&lt;/MYSQL_VERSION&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;OS_LOGIN&gt;</code>
+            </p><p>
+              A string representing the external user name used during
+              the authentication process, as set by the plugin used to
+              authenticate the client. With native (built-in) MySQL
+              authentication, or if the plugin does not set the value,
+              this element is empty. The value is the same as that of
+              the <a class="link" href="server-system-variables.html#sysvar_external_user"><code class="literal">external_user</code></a> system
+              variable (see <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>).
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;OS_LOGIN&gt;jeffrey&lt;/OS_LOGIN&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;OS_VERSION&gt;</code>
+            </p><p>
+              A string representing the operating system on which the
+              server was built or is running.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;OS_VERSION&gt;x86_64-Linux&lt;/OS_VERSION&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;PRIV_USER&gt;</code>
+            </p><p>
+              A string representing the user that the server
+              authenticated the client as. This is the user name that
+              the server uses for privilege checking, and may differ
+              from the <code class="literal">&lt;USER&gt;</code> value.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;PRIV_USER&gt;jeffrey&lt;/PRIV_USER&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;PROXY_USER&gt;</code>
+            </p><p>
+              A string representing the proxy user (see
+              <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>). The value is empty if user
+              proxying is not in effect.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;PROXY_USER&gt;developer&lt;/PROXY_USER&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;SERVER_ID&gt;</code>
+            </p><p>
+              An unsigned integer representing the server ID. This is
+              the same as the value of the
+              <a class="link" href="replication-options.html#sysvar_server_id"><code class="literal">server_id</code></a> system
+              variable.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;SERVER_ID&gt;1&lt;/SERVER_ID&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;SQLTEXT&gt;</code>
+            </p><p>
+              A string representing the text of an SQL statement. The
+              value can be empty. Long values may be truncated. The
+              string, like the audit log file itself, is written using
+              UTF-8 (up to 4 bytes per character), so the value may be
+              the result of conversion. For example, the original
+              statement might have been received from the client as an
+              SJIS string.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;SQLTEXT&gt;DELETE FROM t1&lt;/SQLTEXT&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;STARTUP_OPTIONS&gt;</code>
+            </p><p>
+              A string representing the options that were given on the
+              command line or in option files when the MySQL server was
+              started. The first option is the path to the server
+              executable.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml"><code class="language-xml">&lt;STARTUP_OPTIONS&gt;/usr/local/mysql/bin/mysqld
+  --port=3306 --log_output=FILE&lt;/STARTUP_OPTIONS&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;STATUS&gt;</code>
+            </p><p>
+              An unsigned integer representing the command status: 0 for
+              success, nonzero if an error occurred. This is the same as
+              the value of the
+              <a class="ulink" href="https://dev.mysql.com/doc/c-api/8.4/en/mysql-errno.html" target="_top"><code class="literal">mysql_errno()</code></a> C API
+              function. See the description for
+              <code class="literal">&lt;STATUS_CODE&gt;</code> for information
+              about how it differs from
+              <code class="literal">&lt;STATUS&gt;</code>.
+            </p><p>
+              The audit log does not contain the SQLSTATE value or error
+              message. To see the associations between error codes,
+              SQLSTATE values, and messages, see
+              <a class="ulink" href="https://dev.mysql.com/doc/mysql-errors/8.4/en/server-error-reference.html" target="_top">Server Error Message Reference</a>.
+            </p><p>
+              Warnings are not logged.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;STATUS&gt;1051&lt;/STATUS&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;STATUS_CODE&gt;</code>
+            </p><p>
+              An unsigned integer representing the command status: 0 for
+              success, 1 if an error occurred.
+            </p><p>
+              The <code class="literal">STATUS_CODE</code> value differs from the
+              <code class="literal">STATUS</code> value:
+              <code class="literal">STATUS_CODE</code> is 0 for success and 1 for
+              error, which is compatible with the EZ_collector consumer
+              for Audit Vault. <code class="literal">STATUS</code> is the value of
+              the <a class="ulink" href="https://dev.mysql.com/doc/c-api/8.4/en/mysql-errno.html" target="_top"><code class="literal">mysql_errno()</code></a> C API
+              function. This is 0 for success and nonzero for error, and
+              thus is not necessarily 1 for error.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;STATUS_CODE&gt;0&lt;/STATUS_CODE&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;TABLE&gt;</code>
+            </p><p>
+              A string representing a table name.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;TABLE&gt;t3&lt;/TABLE&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;USER&gt;</code>
+            </p><p>
+              A string representing the user name sent by the client.
+              This may differ from the
+              <code class="literal">&lt;PRIV_USER&gt;</code> value.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;USER&gt;root[root] @ localhost [127.0.0.1]&lt;/USER&gt;</code></pre></li><li class="listitem"><p>
+              <code class="literal">&lt;VERSION&gt;</code>
+            </p><p>
+              An unsigned integer representing the version of the audit
+              log file format.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">&lt;VERSION&gt;1&lt;/VERSION&gt;</code></pre></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="audit-log-file-old-style-xml-format"></a>Old-Style XML Audit Log File Format</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Here is a sample log file in old-style XML format
+          (<a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format=OLD</code></a>),
+          reformatted slightly for readability:
+        </p><pre class="programlisting copytoclipboard language-xml"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;AUDIT&gt;
+  &lt;AUDIT_RECORD
+    TIMESTAMP="2019-10-03T14:25:00 UTC"
+    RECORD_ID="1_2019-10-03T14:25:00"
+    NAME="Audit"
+    SERVER_ID="1"
+    VERSION="1"
+    STARTUP_OPTIONS="--port=3306"
+    OS_VERSION="i686-Linux"
+    MYSQL_VERSION="5.7.21-log"/&gt;
+  &lt;AUDIT_RECORD
+    TIMESTAMP="2019-10-03T14:25:24 UTC"
+    RECORD_ID="2_2019-10-03T14:25:00"
+    NAME="Connect"
+    CONNECTION_ID="4"
+    STATUS="0"
+    STATUS_CODE="0"
+    USER="root"
+    OS_LOGIN=""
+    HOST="localhost"
+    IP="127.0.0.1"
+    COMMAND_CLASS="connect"
+    CONNECTION_TYPE="SSL/TLS"
+    PRIV_USER="root"
+    PROXY_USER=""
+    DB="test"/&gt;
+
+...
+
+  &lt;AUDIT_RECORD
+    TIMESTAMP="2019-10-03T14:25:24 UTC"
+    RECORD_ID="6_2019-10-03T14:25:00"
+    NAME="Query"
+    CONNECTION_ID="4"
+    STATUS="0"
+    STATUS_CODE="0"
+    USER="root[root] @ localhost [127.0.0.1]"
+    OS_LOGIN=""
+    HOST="localhost"
+    IP="127.0.0.1"
+    COMMAND_CLASS="drop_table"
+    SQLTEXT="DROP TABLE IF EXISTS t"/&gt;
+
+...
+
+  &lt;AUDIT_RECORD
+    TIMESTAMP="2019-10-03T14:25:24 UTC"
+    RECORD_ID="8_2019-10-03T14:25:00"
+    NAME="Quit"
+    CONNECTION_ID="4"
+    STATUS="0"
+    STATUS_CODE="0"
+    USER="root"
+    OS_LOGIN=""
+    HOST="localhost"
+    IP="127.0.0.1"
+    COMMAND_CLASS="connect"
+    CONNECTION_TYPE="SSL/TLS"/&gt;
+  &lt;AUDIT_RECORD
+    TIMESTAMP="2019-10-03T14:25:32 UTC"
+    RECORD_ID="12_2019-10-03T14:25:00"
+    NAME="NoAudit"
+    SERVER_ID="1"/&gt;
+&lt;/AUDIT&gt;</code></pre><p>
+          The audit log file is written as XML, using UTF-8 (up to 4
+          bytes per character). The root element is
+          <code class="literal">&lt;AUDIT&gt;</code>. The root element contains
+          <code class="literal">&lt;AUDIT_RECORD&gt;</code> elements, each of
+          which provides information about an audited event. When the
+          audit log plugin begins writing a new log file, it writes the
+          XML declaration and opening <code class="literal">&lt;AUDIT&gt;</code>
+          root element tag. When the plugin closes a log file, it writes
+          the closing <code class="literal">&lt;/AUDIT&gt;</code> root element
+          tag. The closing tag is not present while the file is open.
+        </p><p>
+          Attributes of <code class="literal">&lt;AUDIT_RECORD&gt;</code> elements
+          have these characteristics:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Some attributes appear in every
+              <code class="literal">&lt;AUDIT_RECORD&gt;</code> element. Others
+              are optional and may appear depending on the audit record
+              type.
+            </p></li><li class="listitem"><p>
+              Order of attributes within an
+              <code class="literal">&lt;AUDIT_RECORD&gt;</code> element is not
+              guaranteed.
+            </p></li><li class="listitem"><p>
+              Attribute values are not fixed length. Long values may be
+              truncated as indicated in the attribute descriptions given
+              later.
+            </p></li><li class="listitem"><p>
+              The <code class="literal">&lt;</code>, <code class="literal">&gt;</code>,
+              <code class="literal">"</code>, and <code class="literal">&amp;</code>
+              characters are encoded as <code class="literal">&amp;lt;</code>,
+              <code class="literal">&amp;gt;</code>,
+              <code class="literal">&amp;quot;</code>, and
+              <code class="literal">&amp;amp;</code>, respectively. NUL bytes
+              (U+00) are encoded as the <code class="literal">?</code> character.
+            </p></li><li class="listitem"><p>
+              Characters not valid as XML characters are encoded using
+              numeric character references. Valid XML characters are:
+            </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none">#x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]</code></pre></li></ul>
+</div>
+<p>
+          The following attributes are mandatory in every
+          <code class="literal">&lt;AUDIT_RECORD&gt;</code> element:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <code class="literal">NAME</code>
+            </p><p>
+              A string representing the type of instruction that
+              generated the audit event, such as a command that the
+              server received from a client.
+            </p><p>
+              Example: <code class="literal">NAME="Query"</code>
+            </p><p>
+              Some common <code class="literal">NAME</code> values:
+            </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">Audit    When auditing starts, which may be server startup time
+Connect  When a client connects, also known as logging in
+Query    An SQL statement (executed directly)
+Prepare  Preparation of an SQL statement; usually followed by Execute
+Execute  Execution of an SQL statement; usually follows Prepare
+Shutdown Server shutdown
+Quit     When a client disconnects
+NoAudit  Auditing has been turned off</code></pre><p>
+              The possible values are <code class="literal">Audit</code>,
+              <code class="literal">Binlog Dump</code>, <code class="literal">Change
+              user</code>, <code class="literal">Close stmt</code>,
+              <code class="literal">Connect Out</code>,
+              <code class="literal">Connect</code>, <code class="literal">Create DB</code>,
+              <code class="literal">Daemon</code>, <code class="literal">Debug</code>,
+              <code class="literal">Delayed insert</code>, <code class="literal">Drop
+              DB</code>, <code class="literal">Execute</code>,
+              <code class="literal">Fetch</code>, <code class="literal">Field List</code>,
+              <code class="literal">Init DB</code>, <code class="literal">Kill</code>,
+              <code class="literal">Long Data</code>, <code class="literal">NoAudit</code>,
+              <code class="literal">Ping</code>, <code class="literal">Prepare</code>,
+              <code class="literal">Processlist</code>, <code class="literal">Query</code>,
+              <code class="literal">Quit</code>, <code class="literal">Refresh</code>,
+              <code class="literal">Register Slave</code>, <code class="literal">Reset
+              stmt</code>, <code class="literal">Set option</code>,
+              <code class="literal">Shutdown</code>, <code class="literal">Sleep</code>,
+              <code class="literal">Statistics</code>, <code class="literal">Table
+              Dump</code>, <code class="literal">TableDelete</code>,
+              <code class="literal">TableInsert</code>,
+              <code class="literal">TableRead</code>,
+              <code class="literal">TableUpdate</code>, <code class="literal">Time</code>.
+            </p><p>
+              Many of these values correspond to the
+              <code class="literal">COM_<em class="replaceable"><code>xxx</code></em></code>
+              command values listed in the
+              <code class="filename">my_command.h</code> header file. For
+              example, <code class="literal">"Create DB"</code> and
+              <code class="literal">"Change user"</code> correspond to
+              <code class="literal">COM_CREATE_DB</code> and
+              <code class="literal">COM_CHANGE_USER</code>, respectively.
+            </p><p>
+              Events having <code class="literal">NAME</code> values of
+              <code class="literal">Table<em class="replaceable"><code>XXX</code></em></code>
+              accompany <code class="literal">Query</code> events. For example,
+              the following statement generates one
+              <code class="literal">Query</code> event, two
+              <code class="literal">TableRead</code> events, and a
+              <code class="literal">TableInsert</code> events:
+            </p><pre class="programlisting copytoclipboard language-xml one-line"><code class="language-xml">INSERT INTO t3 SELECT t1.* FROM t1 JOIN t2;</code></pre><p>
+              Each
+              <code class="literal">Table<em class="replaceable"><code>XXX</code></em></code>
+              event has <code class="literal">TABLE</code> and
+              <code class="literal">DB</code> attributes to identify the table to
+              which the event refers and the database that contains the
+              table.
+            </p><p>
+              <code class="literal">Connect</code> events for old-style XML audit
+              log format do not include connection attributes.
+            </p></li><li class="listitem"><p>
+              <code class="literal">RECORD_ID</code>
+            </p><p>
+              A unique identifier for the audit record. The value is
+              composed from a sequence number and timestamp, in the
+              format
+              <code class="literal"><em class="replaceable"><code>SEQ_TIMESTAMP</code></em></code>.
+              When the audit log plugin opens the audit log file, it
+              initializes the sequence number to the size of the audit
+              log file, then increments the sequence by 1 for each
+              record logged. The timestamp is a UTC value in
+              <code class="literal"><em class="replaceable"><code>YYYY-MM-DD</code></em>T<em class="replaceable"><code>hh:mm:ss</code></em></code>
+              format indicating the date and time when the audit log
+              plugin opened the file.
+            </p><p>
+              Example:
+              <code class="literal">RECORD_ID="12_2019-10-03T14:25:00"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">TIMESTAMP</code>
+            </p><p>
+              A string representing a UTC value in
+              <code class="literal"><em class="replaceable"><code>YYYY-MM-DD</code></em>T<em class="replaceable"><code>hh:mm:ss</code></em>
+              UTC</code> format indicating the date and time when the
+              audit event was generated. For example, the event
+              corresponding to execution of an SQL statement received
+              from a client has a <code class="literal">TIMESTAMP</code> value
+              occurring after the statement finishes, not when it was
+              received.
+            </p><p>
+              Example: <code class="literal">TIMESTAMP="2019-10-03T14:25:32
+              UTC"</code>
+</p></li></ul>
+</div>
+<p>
+          The following attributes are optional in
+          <code class="literal">&lt;AUDIT_RECORD&gt;</code> elements. Many of them
+          occur only for elements with specific values of the
+          <code class="literal">NAME</code> attribute.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <code class="literal">COMMAND_CLASS</code>
+            </p><p>
+              A string that indicates the type of action performed.
+            </p><p>
+              Example: <code class="literal">COMMAND_CLASS="drop_table"</code>
+            </p><p>
+              The values correspond to the
+              <code class="literal">statement/sql/<em class="replaceable"><code>xxx</code></em></code>
+              command counters. For example,
+              <em class="replaceable"><code>xxx</code></em> is
+              <code class="literal">drop_table</code> and
+              <code class="literal">select</code> for <a class="link" href="drop-table.html" title="15.1.32 DROP TABLE Statement"><code class="literal">DROP
+              TABLE</code></a> and <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+              statements, respectively. The following statement displays
+              the possible names:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT REPLACE(EVENT_NAME, 'statement/sql/', '') AS name
+FROM performance_schema.events_statements_summary_global_by_event_name
+WHERE EVENT_NAME LIKE 'statement/sql/%'
+ORDER BY name;</code></pre></li><li class="listitem"><p>
+              <code class="literal">CONNECTION_ID</code>
+            </p><p>
+              An unsigned integer representing the client connection
+              identifier. This is the same as the value returned by the
+              <a class="link" href="information-functions.html#function_connection-id"><code class="literal">CONNECTION_ID()</code></a> function
+              within the session.
+            </p><p>
+              Example: <code class="literal">CONNECTION_ID="127"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">CONNECTION_TYPE</code>
+            </p><p>
+              The security state of the connection to the server.
+              Permitted values are <code class="literal">TCP/IP</code> (TCP/IP
+              connection established without encryption),
+              <code class="literal">SSL/TLS</code> (TCP/IP connection established
+              with encryption), <code class="literal">Socket</code> (Unix socket
+              file connection), <code class="literal">Named Pipe</code> (Windows
+              named pipe connection), and <code class="literal">Shared
+              Memory</code> (Windows shared memory connection).
+            </p><p>
+              Example: <code class="literal">CONNECTION_TYPE="SSL/TLS"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">DB</code>
+            </p><p>
+              A string representing a database name.
+            </p><p>
+              Example: <code class="literal">DB="test"</code>
+            </p><p>
+              For connect events, this attribute indicates the default
+              database; the attribute is empty if there is no default
+              database. For table-access events, the attribute indicates
+              the database to which the accessed table belongs.
+            </p></li><li class="listitem"><p>
+              <code class="literal">HOST</code>
+            </p><p>
+              A string representing the client host name.
+            </p><p>
+              Example: <code class="literal">HOST="localhost"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">IP</code>
+            </p><p>
+              A string representing the client IP address.
+            </p><p>
+              Example: <code class="literal">IP="127.0.0.1"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">MYSQL_VERSION</code>
+            </p><p>
+              A string representing the MySQL server version. This is
+              the same as the value of the
+              <a class="link" href="information-functions.html#function_version"><code class="literal">VERSION()</code></a> function or
+              <a class="link" href="server-system-variables.html#sysvar_version"><code class="literal">version</code></a> system variable.
+            </p><p>
+              Example: <code class="literal">MYSQL_VERSION="5.7.21-log"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">OS_LOGIN</code>
+            </p><p>
+              A string representing the external user name used during
+              the authentication process, as set by the plugin used to
+              authenticate the client. With native (built-in) MySQL
+              authentication, or if the plugin does not set the value,
+              this attribute is empty. The value is the same as that of
+              the <a class="link" href="server-system-variables.html#sysvar_external_user"><code class="literal">external_user</code></a> system
+              variable (see <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>).
+            </p><p>
+              Example: <code class="literal">OS_LOGIN="jeffrey"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">OS_VERSION</code>
+            </p><p>
+              A string representing the operating system on which the
+              server was built or is running.
+            </p><p>
+              Example: <code class="literal">OS_VERSION="x86_64-Linux"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">PRIV_USER</code>
+            </p><p>
+              A string representing the user that the server
+              authenticated the client as. This is the user name that
+              the server uses for privilege checking, and it may differ
+              from the <code class="literal">USER</code> value.
+            </p><p>
+              Example: <code class="literal">PRIV_USER="jeffrey"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">PROXY_USER</code>
+            </p><p>
+              A string representing the proxy user (see
+              <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>). The value is empty if user
+              proxying is not in effect.
+            </p><p>
+              Example: <code class="literal">PROXY_USER="developer"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">SERVER_ID</code>
+            </p><p>
+              An unsigned integer representing the server ID. This is
+              the same as the value of the
+              <a class="link" href="replication-options.html#sysvar_server_id"><code class="literal">server_id</code></a> system
+              variable.
+            </p><p>
+              Example: <code class="literal">SERVER_ID="1"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">SQLTEXT</code>
+            </p><p>
+              A string representing the text of an SQL statement. The
+              value can be empty. Long values may be truncated. The
+              string, like the audit log file itself, is written using
+              UTF-8 (up to 4 bytes per character), so the value may be
+              the result of conversion. For example, the original
+              statement might have been received from the client as an
+              SJIS string.
+            </p><p>
+              Example: <code class="literal">SQLTEXT="DELETE FROM t1"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">STARTUP_OPTIONS</code>
+            </p><p>
+              A string representing the options that were given on the
+              command line or in option files when the MySQL server was
+              started.
+            </p><p>
+              Example: <code class="literal">STARTUP_OPTIONS="--port=3306
+              --log_output=FILE"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">STATUS</code>
+            </p><p>
+              An unsigned integer representing the command status: 0 for
+              success, nonzero if an error occurred. This is the same as
+              the value of the
+              <a class="ulink" href="https://dev.mysql.com/doc/c-api/8.4/en/mysql-errno.html" target="_top"><code class="literal">mysql_errno()</code></a> C API
+              function. See the description for
+              <code class="literal">STATUS_CODE</code> for information about how
+              it differs from <code class="literal">STATUS</code>.
+            </p><p>
+              The audit log does not contain the SQLSTATE value or error
+              message. To see the associations between error codes,
+              SQLSTATE values, and messages, see
+              <a class="ulink" href="https://dev.mysql.com/doc/mysql-errors/8.4/en/server-error-reference.html" target="_top">Server Error Message Reference</a>.
+            </p><p>
+              Warnings are not logged.
+            </p><p>
+              Example: <code class="literal">STATUS="1051"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">STATUS_CODE</code>
+            </p><p>
+              An unsigned integer representing the command status: 0 for
+              success, 1 if an error occurred.
+            </p><p>
+              The <code class="literal">STATUS_CODE</code> value differs from the
+              <code class="literal">STATUS</code> value:
+              <code class="literal">STATUS_CODE</code> is 0 for success and 1 for
+              error, which is compatible with the EZ_collector consumer
+              for Audit Vault. <code class="literal">STATUS</code> is the value of
+              the <a class="ulink" href="https://dev.mysql.com/doc/c-api/8.4/en/mysql-errno.html" target="_top"><code class="literal">mysql_errno()</code></a> C API
+              function. This is 0 for success and nonzero for error, and
+              thus is not necessarily 1 for error.
+            </p><p>
+              Example: <code class="literal">STATUS_CODE="0"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">TABLE</code>
+            </p><p>
+              A string representing a table name.
+            </p><p>
+              Example: <code class="literal">TABLE="t3"</code>
+            </p></li><li class="listitem"><p>
+              <code class="literal">USER</code>
+            </p><p>
+              A string representing the user name sent by the client.
+              This may differ from the <code class="literal">PRIV_USER</code>
+              value.
+            </p></li><li class="listitem"><p>
+              <code class="literal">VERSION</code>
+            </p><p>
+              An unsigned integer representing the version of the audit
+              log file format.
+            </p><p>
+              Example: <code class="literal">VERSION="1"</code>
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="audit-log-file-json-format"></a>JSON Audit Log File Format</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          For JSON-format audit logging
+          (<a class="link" href="audit-log-reference.html#sysvar_audit_log_format"><code class="literal">audit_log_format=JSON</code></a>), the
+          log file contents form a <a class="link" href="json.html" title="13.5 The JSON Data Type"><code class="literal">JSON</code></a>
+          array with each array element representing an audited event as
+          a <a class="link" href="json.html" title="13.5 The JSON Data Type"><code class="literal">JSON</code></a> hash of key-value pairs.
+          Examples of complete event records appear later in this
+          section. The following is an excerpt of partial events:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">[
+  {
+    "timestamp": "2019-10-03 13:50:01",
+    "id": 0,
+    "class": "audit",
+    "event": "startup",
+    ...
+  },
+  {
+    "timestamp": "2019-10-03 15:02:32",
+    "id": 0,
+    "class": "connection",
+    "event": "connect",
+    ...
+  },
+  ...
+  {
+    "timestamp": "2019-10-03 17:37:26",
+    "id": 0,
+    "class": "table_access",
+    "event": "insert",
+      ...
+  }
+  ...
+]</code></pre><p>
+          The audit log file is written using UTF-8 (up to 4 bytes per
+          character). When the audit log plugin begins writing a new log
+          file, it writes the opening <code class="literal">[</code> array marker.
+          When the plugin closes a log file, it writes the closing
+          <code class="literal">]</code> array marker. The closing marker is not
+          present while the file is open.
+        </p><p>
+          Items within audit records have these characteristics:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Some items appear in every audit record. Others are
+              optional and may appear depending on the audit record
+              type.
+            </p></li><li class="listitem"><p>
+              Order of items within an audit record is not guaranteed.
+            </p></li><li class="listitem"><p>
+              Item values are not fixed length. Long values may be
+              truncated as indicated in the item descriptions given
+              later.
+            </p></li><li class="listitem"><p>
+              The <code class="literal">"</code> and <code class="literal">\</code>
+              characters are encoded as <code class="literal">\"</code> and
+              <code class="literal">\\</code>, respectively.
+</p></li></ul>
+</div>
+<p>
+          JSON format is the only audit log file format that supports
+          the optional query time and size statistics. This data is
+          available in the slow query log for qualifying queries, and in
+          the context of the audit log it similarly helps to detect
+          outliers for activity analysis.
+        </p><p>
+          To add the query statistics to the log file, you must set them
+          up as a filter using the
+          <a class="link" href="audit-log-reference.html#function_audit-log-filter-set-filter"><code class="literal">audit_log_filter_set_filter()</code></a>
+          audit log function as the service element of the JSON
+          filtering syntax. For instructions to do this, see
+          <a class="xref" href="audit-log-logging-configuration.html#audit-log-query-statistics" title="Adding Query Statistics for Outlier Detection">Adding Query Statistics for Outlier Detection</a>. For the
+          <code class="literal">bytes_sent</code> and
+          <code class="literal">bytes_received</code> fields to be populated, the
+          system variable
+          <a class="link" href="server-system-variables.html#sysvar_log_slow_extra"><code class="literal">log_slow_extra</code></a> must be set to
+          ON.
+        </p><p>
+          The following examples show the JSON object formats for
+          different event types (as indicated by the
+          <code class="literal">class</code> and <code class="literal">event</code> items),
+          reformatted slightly for readability:
+        </p><p>
+          Auditing startup event:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2019-10-03 14:21:56",
+  "id": 0,
+  "class": "audit",
+  "event": "startup",
+  "connection_id": 0,
+  "startup_data": { "server_id": 1,
+                    "os_version": "i686-Linux",
+                    "mysql_version": "5.7.21-log",
+                    "args": ["/usr/local/mysql/bin/mysqld",
+                             "--loose-audit-log-format=JSON",
+                             "--log-error=log.err",
+                             "--pid-file=mysqld.pid",
+                             "--port=3306" ] } }</code></pre><p>
+          When the audit log plugin starts as a result of server startup
+          (as opposed to being enabled at runtime),
+          <code class="literal">connection_id</code> is set to 0, and
+          <code class="literal">account</code> and <code class="literal">login</code> are
+          not present.
+        </p><p>
+          Auditing shutdown event:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2019-10-03 14:28:20",
+  "id": 3,
+  "class": "audit",
+  "event": "shutdown",
+  "connection_id": 0,
+  "shutdown_data": { "server_id": 1 } }</code></pre><p>
+          When the audit log plugin is uninstalled as a result of server
+          shutdown (as opposed to being disabled at runtime),
+          <code class="literal">connection_id</code> is set to 0, and
+          <code class="literal">account</code> and <code class="literal">login</code> are
+          not present.
+        </p><p>
+          Connect or change-user event:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2019-10-03 14:23:18",
+  "id": 1,
+  "class": "connection",
+  "event": "connect",
+  "connection_id": 5,
+  "account": { "user": "root", "host": "localhost" },
+  "login": { "user": "root", "os": "", "ip": "::1", "proxy": "" },
+  "connection_data": { "connection_type": "ssl",
+                       "status": 0,
+                       "db": "test",
+                       "connection_attributes": {
+                         "_pid": "43236",
+                         ...
+                         "program_name": "mysqladmin"
+                       } }
+}</code></pre><p>
+          Disconnect event:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2019-10-03 14:24:45",
+  "id": 3,
+  "class": "connection",
+  "event": "disconnect",
+  "connection_id": 5,
+  "account": { "user": "root", "host": "localhost" },
+  "login": { "user": "root", "os": "", "ip": "::1", "proxy": "" },
+  "connection_data": { "connection_type": "ssl" } }</code></pre><p>
+          Query event:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2019-10-03 14:23:35",
+  "id": 2,
+  "class": "general",
+  "event": "status",
+  "connection_id": 5,
+  "account": { "user": "root", "host": "localhost" },
+  "login": { "user": "root", "os": "", "ip": "::1", "proxy": "" },
+  "general_data": { "command": "Query",
+                    "sql_command": "show_variables",
+                    "query": "SHOW VARIABLES",
+                    "status": 0 } }</code></pre><p>
+          Query event with optional query statistics for outlier
+          detection:
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2022-01-28 13:09:30", 
+  "id": 0, 
+  "class": "general", 
+  "event": "status", 
+  "connection_id": 46, 
+  "account": { "user": "user", "host": "localhost" }, 
+  "login": { "user": "user", “os": "", “ip": "127.0.0.1", “proxy": "" }, 
+  "general_data": { "command": "Query", 
+                    "sql_command": "insert",
+	            "query": "INSERT INTO audit_table VALUES(4)",
+	            "status": 1146 }
+  "query_statistics": { "query_time": 0.116250,
+                        "bytes_sent": 18384,
+                        "bytes_received": 78858,
+                        "rows_sent": 3,
+                        "rows_examined": 20878 } }</code></pre><p>
+          Table access event (read, delete, insert, update):
+        </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">{ "timestamp": "2019-10-03 14:23:41",
+  "id": 0,
+  "class": "table_access",
+  "event": "insert",
+  "connection_id": 5,
+  "account": { "user": "root", "host": "localhost" },
+  "login": { "user": "root", "os": "", "ip": "127.0.0.1", "proxy": "" },
+  "table_access_data": { "db": "test",
+                         "table": "t1",
+                         "query": "INSERT INTO t1 (i) VALUES(1),(2),(3)",
+                         "sql_command": "insert" } }</code></pre><p>
+          The items in the following list appear at the top level of
+          JSON-format audit records: Each item value is either a scalar
+          or a <a class="link" href="json.html" title="13.5 The JSON Data Type"><code class="literal">JSON</code></a> hash. For items that
+          have a hash value, the description lists only the item names
+          within that hash. For more complete descriptions of
+          second-level hash items, see later in this section.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <code class="literal">account</code>
+            </p><p>
+              The MySQL account associated with the event. The value is
+              a hash containing these items equivalent to the value of
+              the <a class="link" href="information-functions.html#function_current-user"><code class="literal">CURRENT_USER()</code></a> function
+              within the section: <code class="literal">user</code>,
+              <code class="literal">host</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"account": { "user": "root", "host": "localhost" }</code></pre></li><li class="listitem"><p>
+              <code class="literal">class</code>
+            </p><p>
+              A string representing the event class. The class defines
+              the type of event, when taken together with the
+              <code class="literal">event</code> item that specifies the event
+              subclass.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"class": "connection"</code></pre><p>
+              The following table shows the permitted combinations of
+              <code class="literal">class</code> and <code class="literal">event</code>
+              values.
+</p>
+<div class="table">
+<a name="audit-log-class-event-combinations"></a><p class="title"><b>Table 8.33 Audit Log Class and Event Combinations</b></p>
+<div class="table-contents">
+<table summary="Permitted combinations of audit log class and event values."><col style="width: 30%"><col style="width: 40%"><thead><tr>
+                  <th>Class Value</th>
+                  <th>Permitted Event Values</th>
+                </tr></thead><tbody><tr>
+                  <td><code class="literal">audit</code></td>
+                  <td><code class="literal">startup</code>, <code class="literal">shutdown</code></td>
+                </tr><tr>
+                  <td><code class="literal">connection</code></td>
+                  <td><code class="literal">connect</code>, <code class="literal">change_user</code>,
+                    <code class="literal">disconnect</code></td>
+                </tr><tr>
+                  <td><code class="literal">general</code></td>
+                  <td><code class="literal">status</code></td>
+                </tr><tr>
+                  <td><code class="literal">table_access_data</code></td>
+                  <td><code class="literal">read</code>, <code class="literal">delete</code>,
+                    <code class="literal">insert</code>, <code class="literal">update</code></td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break"></li><li class="listitem"><p>
+              <code class="literal">connection_data</code>
+            </p><p>
+              Information about a client connection. The value is a hash
+              containing these items:
+              <code class="literal">connection_type</code>,
+              <code class="literal">status</code>, <code class="literal">db</code>, and
+              possibly <code class="literal">connection_attributes</code>. This
+              item occurs only for audit records with a
+              <code class="literal">class</code> value of
+              <code class="literal">connection</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"connection_data": { "connection_type": "ssl",
+                     "status": 0,
+                     "db": "test" }</code></pre><p>
+              Events with a <code class="literal">class</code> value of
+              <code class="literal">connection</code> and <code class="literal">event</code>
+              value of <code class="literal">connect</code> may include a
+              <code class="literal">connection_attributes</code> item to display
+              the connection attributes passed by the client at connect
+              time. (For information about these attributes, which are
+              also exposed in Performance Schema tables, see
+              <a class="xref" href="performance-schema-connection-attribute-tables.html" title="29.12.9 Performance Schema Connection Attribute Tables">Section 29.12.9, “Performance Schema Connection Attribute Tables”</a>.)
+            </p><p>
+              The <code class="literal">connection_attributes</code> value is a
+              hash that represents each attribute by its name and value.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"connection_attributes": {
+  "_pid": "43236",
+  "_os": "macos0.14",
+  "_platform": "x86_64",
+  "_client_version": "8.4.0",
+  "_client_name": "libmysql",
+  "program_name": "mysqladmin"
+}</code></pre><p>
+              If no connection attributes are present in the event, none
+              are logged and no <code class="literal">connection_attributes</code>
+              item appears. This can occur if the connection attempt is
+              unsuccessful, the client passes no attributes, or the
+              connection occurs internally such as during server startup
+              or when initiated by a plugin.
+            </p></li><li class="listitem"><p>
+              <code class="literal">connection_id</code>
+            </p><p>
+              An unsigned integer representing the client connection
+              identifier. This is the same as the value returned by the
+              <a class="link" href="information-functions.html#function_connection-id"><code class="literal">CONNECTION_ID()</code></a> function
+              within the session.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"connection_id": 5</code></pre></li><li class="listitem"><p>
+              <code class="literal">event</code>
+            </p><p>
+              A string representing the subclass of the event class. The
+              subclass defines the type of event, when taken together
+              with the <code class="literal">class</code> item that specifies the
+              event class. For more information, see the
+              <code class="literal">class</code> item description.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"event": "connect"</code></pre></li><li class="listitem"><p>
+              <code class="literal">general_data</code>
+            </p><p>
+              Information about an executed statement or command. The
+              value is a hash containing these items:
+              <code class="literal">command</code>,
+              <code class="literal">sql_command</code>, <code class="literal">query</code>,
+              <code class="literal">status</code>. This item occurs only for audit
+              records with a <code class="literal">class</code> value of
+              <code class="literal">general</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"general_data": { "command": "Query",
+                  "sql_command": "show_variables",
+                  "query": "SHOW VARIABLES",
+                  "status": 0 }</code></pre></li><li class="listitem"><p>
+              <code class="literal">id</code>
+            </p><p>
+              An unsigned integer representing an event ID.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"id": 2</code></pre><p>
+              For audit records that have the same
+              <code class="literal">timestamp</code> value, their
+              <code class="literal">id</code> values distinguish them and form a
+              sequence. Within the audit log,
+              <code class="literal">timestamp</code>/<code class="literal">id</code> pairs
+              are unique. These pairs are bookmarks that identify event
+              locations within the log.
+            </p></li><li class="listitem"><p>
+              <code class="literal">login</code>
+            </p><p>
+              Information indicating how a client connected to the
+              server. The value is a hash containing these items:
+              <code class="literal">user</code>, <code class="literal">os</code>,
+              <code class="literal">ip</code>, <code class="literal">proxy</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"login": { "user": "root", "os": "", "ip": "::1", "proxy": "" }</code></pre></li><li class="listitem"><p>
+              <code class="literal">query_statistics</code>
+            </p><p>
+              Optional query statistics for outlier detection. The value
+              is a hash containing these items:
+              <code class="literal">query_time</code>,
+              <code class="literal">rows_sent</code>,
+              <code class="literal">rows_examined</code>,
+              <code class="literal">bytes_received</code>,
+              <code class="literal">bytes_sent</code>. For instructions to set up
+              the query statistics, see
+              <a class="xref" href="audit-log-logging-configuration.html#audit-log-query-statistics" title="Adding Query Statistics for Outlier Detection">Adding Query Statistics for Outlier Detection</a>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"query_statistics": { "query_time": 0.116250,
+                      "bytes_sent": 18384,
+                      "bytes_received": 78858,
+                      "rows_sent": 3,
+                      "rows_examined": 20878 }</code></pre></li><li class="listitem"><p>
+              <code class="literal">shutdown_data</code>
+            </p><p>
+              Information pertaining to audit log plugin termination.
+              The value is a hash containing these items:
+              <code class="literal">server_id</code> This item occurs only for
+              audit records with <code class="literal">class</code> and
+              <code class="literal">event</code> values of
+              <code class="literal">audit</code> and <code class="literal">shutdown</code>,
+              respectively.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"shutdown_data": { "server_id": 1 }</code></pre></li><li class="listitem"><p>
+              <code class="literal">startup_data</code>
+            </p><p>
+              Information pertaining to audit log plugin initialization.
+              The value is a hash containing these items:
+              <code class="literal">server_id</code>,
+              <code class="literal">os_version</code>,
+              <code class="literal">mysql_version</code>, <code class="literal">args</code>.
+              This item occurs only for audit records with
+              <code class="literal">class</code> and <code class="literal">event</code>
+              values of <code class="literal">audit</code> and
+              <code class="literal">startup</code>, respectively.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"startup_data": { "server_id": 1,
+                  "os_version": "i686-Linux",
+                  "mysql_version": "5.7.21-log",
+                  "args": ["/usr/local/mysql/bin/mysqld",
+                           "--loose-audit-log-format=JSON",
+                           "--log-error=log.err",
+                           "--pid-file=mysqld.pid",
+                           "--port=3306" ] }</code></pre></li><li class="listitem"><p>
+              <code class="literal">table_access_data</code>
+            </p><p>
+              Information about an access to a table. The value is a
+              hash containing these items: <code class="literal">db</code>,
+              <code class="literal">table</code>, <code class="literal">query</code>,
+              <code class="literal">sql_command</code>, This item occurs only for
+              audit records with a <code class="literal">class</code> value of
+              <code class="literal">table_access</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"table_access_data": { "db": "test",
+                       "table": "t1",
+                       "query": "INSERT INTO t1 (i) VALUES(1),(2),(3)",
+                       "sql_command": "insert" }</code></pre></li><li class="listitem"><p>
+              <code class="literal">time</code>
+            </p><p>
+              This field is similar to that in the
+              <code class="literal">timestamp</code> field, but the value is an
+              integer and represents the UNIX timestamp value indicating
+              the date and time when the audit event was generated.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"time" : 1618498687</code></pre><p>
+              The <code class="literal">time</code> field occurs in JSON-format
+              log files only if the
+              <a class="link" href="audit-log-reference.html#sysvar_audit_log_format_unix_timestamp"><code class="literal">audit_log_format_unix_timestamp</code></a>
+              system variable is enabled.
+            </p></li><li class="listitem"><p>
+              <code class="literal">timestamp</code>
+            </p><p>
+              A string representing a UTC value in
+              <em class="replaceable"><code>YYYY-MM-DD hh:mm:ss</code></em> format
+              indicating the date and time when the audit event was
+              generated. For example, the event corresponding to
+              execution of an SQL statement received from a client has a
+              <code class="literal">timestamp</code> value occurring after the
+              statement finishes, not when it was received.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"timestamp": "2019-10-03 13:50:01"</code></pre><p>
+              For audit records that have the same
+              <code class="literal">timestamp</code> value, their
+              <code class="literal">id</code> values distinguish them and form a
+              sequence. Within the audit log,
+              <code class="literal">timestamp</code>/<code class="literal">id</code> pairs
+              are unique. These pairs are bookmarks that identify event
+              locations within the log.
+</p></li></ul>
+</div>
+<p>
+          These items appear within hash values associated with
+          top-level items of JSON-format audit records:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <code class="literal">args</code>
+            </p><p>
+              An array of options that were given on the command line or
+              in option files when the MySQL server was started. The
+              first option is the path to the server executable.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json"><code class="language-json">"args": ["/usr/local/mysql/bin/mysqld",
+         "--loose-audit-log-format=JSON",
+         "--log-error=log.err",
+         "--pid-file=mysqld.pid",
+         "--port=3306" ]</code></pre></li><li class="listitem"><p>
+              <code class="literal">bytes_received</code>
+            </p><p>
+              The number of bytes received from the client. This item is
+              part of the optional query statistics. For this field to
+              be populated, the system variable
+              <a class="link" href="server-system-variables.html#sysvar_log_slow_extra"><code class="literal">log_slow_extra</code></a> must be
+              set to <code class="literal">ON</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"bytes_received": 78858</code></pre></li><li class="listitem"><p>
+              <code class="literal">bytes_sent</code>
+            </p><p>
+              The number of bytes sent to the client. This item is part
+              of the optional query statistics. For this field to be
+              populated, the system variable
+              <a class="link" href="server-system-variables.html#sysvar_log_slow_extra"><code class="literal">log_slow_extra</code></a> must be
+              set to <code class="literal">ON</code>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"bytes_sent": 18384</code></pre></li><li class="listitem"><p>
+              <code class="literal">command</code>
+            </p><p>
+              A string representing the type of instruction that
+              generated the audit event, such as a command that the
+              server received from a client.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"command": "Query"</code></pre></li><li class="listitem"><p>
+              <code class="literal">connection_type</code>
+            </p><p>
+              The security state of the connection to the server.
+              Permitted values are <code class="literal">tcp/ip</code> (TCP/IP
+              connection established without encryption),
+              <code class="literal">ssl</code> (TCP/IP connection established with
+              encryption), <code class="literal">socket</code> (Unix socket file
+              connection), <code class="literal">named_pipe</code> (Windows named
+              pipe connection), and <code class="literal">shared_memory</code>
+              (Windows shared memory connection).
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"connection_type": "tcp/tcp"</code></pre></li><li class="listitem"><p>
+              <code class="literal">db</code>
+            </p><p>
+              A string representing a database name. For
+              <code class="literal">connection_data</code>, it is the default
+              database. For <code class="literal">table_access_data</code>, it is
+              the table database.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"db": "test"</code></pre></li><li class="listitem"><p>
+              <code class="literal">host</code>
+            </p><p>
+              A string representing the client host name.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"host": "localhost"</code></pre></li><li class="listitem"><p>
+              <code class="literal">ip</code>
+            </p><p>
+              A string representing the client IP address.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"ip": "::1"</code></pre></li><li class="listitem"><p>
+              <code class="literal">mysql_version</code>
+            </p><p>
+              A string representing the MySQL server version. This is
+              the same as the value of the
+              <a class="link" href="information-functions.html#function_version"><code class="literal">VERSION()</code></a> function or
+              <a class="link" href="server-system-variables.html#sysvar_version"><code class="literal">version</code></a> system variable.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"mysql_version": "5.7.21-log"</code></pre></li><li class="listitem"><p>
+              <code class="literal">os</code>
+            </p><p>
+              A string representing the external user name used during
+              the authentication process, as set by the plugin used to
+              authenticate the client. With native (built-in) MySQL
+              authentication, or if the plugin does not set the value,
+              this attribute is empty. The value is the same as that of
+              the <a class="link" href="server-system-variables.html#sysvar_external_user"><code class="literal">external_user</code></a> system
+              variable. See <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"os": "jeffrey"</code></pre></li><li class="listitem"><p>
+              <code class="literal">os_version</code>
+            </p><p>
+              A string representing the operating system on which the
+              server was built or is running.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"os_version": "i686-Linux"</code></pre></li><li class="listitem"><p>
+              <code class="literal">proxy</code>
+            </p><p>
+              A string representing the proxy user (see
+              <a class="xref" href="proxy-users.html" title="8.2.19 Proxy Users">Section 8.2.19, “Proxy Users”</a>). The value is empty if user
+              proxying is not in effect.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"proxy": "developer"</code></pre></li><li class="listitem"><p>
+              <code class="literal">query</code>
+            </p><p>
+              A string representing the text of an SQL statement. The
+              value can be empty. Long values may be truncated. The
+              string, like the audit log file itself, is written using
+              UTF-8 (up to 4 bytes per character), so the value may be
+              the result of conversion. For example, the original
+              statement might have been received from the client as an
+              SJIS string.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"query": "DELETE FROM t1"</code></pre></li><li class="listitem"><p>
+              <code class="literal">query_time</code>
+            </p><p>
+              The query execution time in microseconds (if the
+              <code class="literal">longlong</code> data type is selected) or
+              seconds (if the <code class="literal">double</code> data type is
+              selected). This item is part of the optional query
+              statistics.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"query_time": 0.116250</code></pre></li><li class="listitem"><p>
+              <code class="literal">rows_examined</code>
+            </p><p>
+              The number of rows accessed during the query. This item is
+              part of the optional query statistics.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"rows_examined": 20878</code></pre></li><li class="listitem"><p>
+              <code class="literal">rows_sent</code>
+            </p><p>
+              The number of rows sent to the client as a result. This
+              item is part of the optional query statistics.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"rows_sent": 3</code></pre></li><li class="listitem"><p>
+              <code class="literal">server_id</code>
+            </p><p>
+              An unsigned integer representing the server ID. This is
+              the same as the value of the
+              <a class="link" href="replication-options.html#sysvar_server_id"><code class="literal">server_id</code></a> system
+              variable.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"server_id": 1</code></pre></li><li class="listitem"><p>
+              <code class="literal">sql_command</code>
+            </p><p>
+              A string that indicates the SQL statement type.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"sql_command": "insert"</code></pre><p>
+              The values correspond to the
+              <code class="literal">statement/sql/<em class="replaceable"><code>xxx</code></em></code>
+              command counters. For example,
+              <em class="replaceable"><code>xxx</code></em> is
+              <code class="literal">drop_table</code> and
+              <code class="literal">select</code> for <a class="link" href="drop-table.html" title="15.1.32 DROP TABLE Statement"><code class="literal">DROP
+              TABLE</code></a> and <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+              statements, respectively. The following statement displays
+              the possible names:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT REPLACE(EVENT_NAME, 'statement/sql/', '') AS name
+FROM performance_schema.events_statements_summary_global_by_event_name
+WHERE EVENT_NAME LIKE 'statement/sql/%'
+ORDER BY name;</code></pre></li><li class="listitem"><p>
+              <code class="literal">status</code>
+            </p><p>
+              An unsigned integer representing the command status: 0 for
+              success, nonzero if an error occurred. This is the same as
+              the value of the
+              <a class="ulink" href="https://dev.mysql.com/doc/c-api/8.4/en/mysql-errno.html" target="_top"><code class="literal">mysql_errno()</code></a> C API
+              function.
+            </p><p>
+              The audit log does not contain the SQLSTATE value or error
+              message. To see the associations between error codes,
+              SQLSTATE values, and messages, see
+              <a class="ulink" href="https://dev.mysql.com/doc/mysql-errors/8.4/en/server-error-reference.html" target="_top">Server Error Message Reference</a>.
+            </p><p>
+              Warnings are not logged.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"status": 1051</code></pre></li><li class="listitem"><p>
+              <code class="literal">table</code>
+            </p><p>
+              A string representing a table name.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"table": "t1"</code></pre></li><li class="listitem"><p>
+              <code class="literal">user</code>
+            </p><p>
+              A string representing a user name. The meaning differs
+              depending on the item within which <code class="literal">user</code>
+              occurs:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  Within <code class="literal">account</code> items,
+                  <code class="literal">user</code> is a string representing the
+                  user that the server authenticated the client as. This
+                  is the user name that the server uses for privilege
+                  checking.
+                </p></li><li class="listitem"><p>
+                  Within <code class="literal">login</code> items,
+                  <code class="literal">user</code> is a string representing the
+                  user name sent by the client.
+</p></li></ul>
+</div>
+<p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-json one-line"><code class="language-json">"user": "root"</code></pre></li></ul>
+</div>
+
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="audit-log-security.html"
+        aria-label="Previous" title="Previous: MySQL Enterprise Audit Security Considerations"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="audit-log.html" title="Up: MySQL Enterprise Audit"> UP</a> &nbsp;
+    <a href="audit-log-logging-configuration.html" aria-label="Next"
+        title="Next: Configuring Audit Logging Characteristics">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/audit-log-file-formats.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:00:22 GMT -->
+</html>

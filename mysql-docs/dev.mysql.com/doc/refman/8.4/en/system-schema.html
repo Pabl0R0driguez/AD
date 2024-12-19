@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/system-schema.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:38:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 7.3 The mysql System Schema</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="data-directory.html" title="7.2 The MySQL Data Directory" />
+<link rel="next" href="server-logs8dba.html?ff=nopfpls" title="7.4 MySQL Server Logs" />
+<link rel="up" href="server-administration.html" title="7 MySQL Server Administration" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7wqqq-f-6812e644a-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":190,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1869fa95","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":11668,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730130977","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==AEUHZg7xFtG8ytlZvyu9D0ZgHTxx/udFIEWBO6xjijtw1URC2wN5yFlHSGdpsN9SpIrrOMXFoUFPDRYR1VfYEbvi9z93Ttpzi9MzOzIdMjbLmvGcAr+fDzEgXjcH1LsUnxVgVq6xOKNB3Nd1KX/zT7lHqL/GjU/Pk2GI750n+zsiMn6WEhFrUeJU2pHpaPxQ1vUrW8E5uy4Tkfwpec59ZVDvgZ/WIAWQrME75kSsLEj9W7mJAvLEJNXVLcvg8ead16gU0JRFxwcqnfN1MojhY+mMbDB7MbOaaiguRsOICGaGo2MnKBUyoPb5HpSk15BKMSXu2KAg6UFnkHvZSxXDoIqA+OK7UbOzYlbtRu6l09wUIoKcqR+M0mSGvtxzj19Dehc0Yl14xEUgujWIV8SPJ3cDdqGyQOudMV4nb6mmG8A=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fsystem-schema.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="data-directory.html"
+        aria-label="Previous" title="Previous: The MySQL Data Directory"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="server-administration.html" title="Up: MySQL Server Administration"><span class="icon-chevron-up"></span></a>
+    <a href="server-logs.html" aria-label="Next"
+        title="Next: MySQL Server Logs"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqld-server.html">The MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration.html">Configuring the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-defaults.html">Server Configuration Defaults</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-validation.html">Server Configuration Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-option-variable-reference.html">Server Option, System Variable, and Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variable-reference.html">Server System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variable-reference.html">Server Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-options.html">Server Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variables.html">Server System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="using-system-variables.html">Using System Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-variable-privileges.html">System Variable Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dynamic-system-variables.html">Dynamic System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="persisted-system-variables.html">Persisted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nonpersistible-system-variables.html">Nonpersistible and Persist-Restricted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="structured-system-variables.html">Structured System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variables.html">Server Status Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sql-mode.html">Server SQL Modes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-management.html">Connection Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-interfaces.html">Connection Interfaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="administrative-connection-interface.html">Administrative Connection Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="host-cache.html">DNS Lookups and the Host Cache</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ipv6-support.html">IPv6 Support</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-system-support.html">Verifying System Support for IPv6</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-server-config.html">Configuring the MySQL Server to Permit IPv6 Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-local-connections.html">Connecting Using the IPv6 Local Host Address</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-remote-connections.html">Connecting Using IPv6 Nonlocal Host Addresses</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-brokers.html">Obtaining an IPv6 Address from a Broker</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="network-namespace-support.html">Network Namespace Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="time-zone-support.html">MySQL Server Time Zone Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="resource-groups.html">Resource Groups</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-side-help-support.html">Server-Side Help Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="session-state-tracking.html">Server Tracking of Client Session State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-shutdown.html">The Server Shutdown Process</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-directory.html">The MySQL Data Directory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="system-schema.html">The mysql System Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-logs.html">MySQL Server Logs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-destinations.html">Selecting General Query Log and Slow Query Log Output Destinations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-log.html">The Error Log</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-configuration.html">Error Log Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-destination-configuration.html">Default Error Log Destination Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-event-fields.html">Error Event Fields</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-filtering.html">Types of Error Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-priority-based-filtering.html">Priority-Based Error Log Filtering (log_filter_internal)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rule-based-filtering.html">Rule-Based Error Log Filtering (log_filter_dragnet)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-json.html">Error Logging in JSON Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-syslog.html">Error Logging to the System Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-format.html">Error Log Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rotation.html">Error Log File Flushing and Renaming</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-log.html">The General Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="binary-log.html">The Binary Log</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-formats.html">Binary Logging Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-setting.html">Setting The Binary Log Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mixed.html">Mixed Binary Logging Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mysql-database.html">Logging Format for Changes to mysql Database Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-transaction-compression.html">Binary Log Transaction Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="slow-query-log.html">The Slow Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-file-maintenance.html">Server Log Maintenance</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="components.html">MySQL Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="component-loading.html">Installing and Uninstalling Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-component-information.html">Obtaining Component Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-components.html">Error Log Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-attribute-components.html">Query Attribute Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="scheduler-component.html">Scheduler Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-plugins.html">MySQL Server Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="plugin-loading.html">Installing and Uninstalling Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-plugin-information.html">Obtaining Server Plugin Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="thread-pool.html">MySQL Enterprise Thread Pool</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-elements.html">Thread Pool Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-installation.html">Thread Pool Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-operation.html">Thread Pool Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-tuning.html">Thread Pool Tuning</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin.html">The Rewriter Query Rewrite Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-installation.html">Installing or Uninstalling the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-usage.html">Using the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-reference.html">Rewriter Query Rewrite Plugin Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter.html">The ddl_rewriter Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-installation.html">Installing or Uninstalling ddl_rewriter</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-options.html">ddl_rewriter Plugin Options</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="version-tokens.html">Version Tokens</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-elements.html">Version Tokens Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-installation.html">Installing or Uninstalling Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-usage.html">Using Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-reference.html">Version Tokens Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="clone-plugin.html">The Clone Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-installation.html">Installing the Clone Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-local.html">Cloning Data Locally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-remote.html">Cloning Remote Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-concurrent-ddl.html">Cloning and Concurrent DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-encrypted-data.html">Cloning Encrypted Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-compressed-data.html">Cloning Compressed Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-replication.html">Cloning for Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-directories.html">Directories and Files Created During a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-failure-handling.html">Remote Cloning Operation Failure Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-monitoring.html">Monitoring Cloning Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-stop.html">Stopping a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-option-variable-reference.html">Clone System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-options-variables.html">Clone System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-limitations.html">Clone Plugin Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="daemon-keyring-proxy-plugin.html">The Keyring Proxy Bridge Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="plugin-services.html">MySQL Plugin Services</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="locking-service.html">The Locking Service</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-service.html">The Keyring Service</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-loadable-functions.html">MySQL Server Loadable Functions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="function-loading.html">Installing and Uninstalling Loadable Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-loadable-function-information.html">Obtaining Information About Loadable Functions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-servers.html">Running Multiple MySQL Instances on One Machine</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-data-directories.html">Setting Up Multiple Data Directories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-servers.html">Running Multiple MySQL Instances on Windows</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-command-line-servers.html">Starting Multiple MySQL Instances at the Windows Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-services.html">Starting Multiple MySQL Instances as Windows Services</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-unix-servers.html">Running Multiple MySQL Instances on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-server-clients.html">Using Client Programs in a Multiple-Server Environment</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-mysql.html">Debugging MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-server.html">Debugging a MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="compiling-for-debugging.html">Compiling MySQL for Debugging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-trace-files.html">Creating Trace Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-windows-dumps.html">Using WER with PDB to create a Windows crashdump</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-gdb-on-mysqld.html">Debugging mysqld under gdb</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-stack-trace.html">Using a Stack Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-log-files.html">Using Server Logs to Find Causes of Errors in mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reproducible-test-case.html">Making a Test Case If You Experience Table Corruption</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="debugging-client.html">Debugging a MySQL Client</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lock-order-tool.html">The LOCK_ORDER Tool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dbug-package.html">The DBUG Package</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/system-schema.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/system-schema.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/system-schema.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/system-schema.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/system-schema.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                                                        <a href="server-administration.html">MySQL Server Administration</a> &nbsp;/&nbsp;
+                                                                                    The mysql System Schema
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title"><a name="system-schema"></a>7.3 The mysql System Schema</h2>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      The <code class="literal">mysql</code> schema is the system schema. It
+      contains tables that store information required by the MySQL
+      server as it runs. A broad categorization is that the
+      <code class="literal">mysql</code> schema contains data dictionary tables
+      that store database object metadata, and system tables used for
+      other operational purposes. The following discussion further
+      subdivides the set of system tables into smaller categories.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-data-dictionary-tables" title="Data Dictionary Tables">Data Dictionary Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-grant-tables" title="Grant System Tables">Grant System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-object-tables" title="Object Information System Tables">Object Information System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-log-tables" title="Log System Tables">Log System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-help-tables" title="Server-Side Help System Tables">Server-Side Help System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-time-zone-tables" title="Time Zone System Tables">Time Zone System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-replication-tables" title="Replication System Tables">Replication System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-optimizer-tables" title="Optimizer System Tables">Optimizer System Tables</a></p></li><li class="listitem"><p><a class="xref" href="system-schema.html#system-schema-miscellaneous-tables" title="Miscellaneous System Tables">Miscellaneous System Tables</a></p></li></ul>
+</div>
+<p>
+      The remainder of this section enumerates the tables in each
+      category, with cross references for additional information. Data
+      dictionary tables and system tables use the
+      <code class="literal">InnoDB</code> storage engine unless otherwise
+      indicated.
+    </p><p>
+      <code class="literal">mysql</code> system tables and data dictionary tables
+      reside in a single <code class="literal">InnoDB</code> tablespace file named
+      <code class="filename">mysql.ibd</code> in the MySQL data directory.
+      Previously, these tables were created in individual tablespace
+      files in the <code class="literal">mysql</code> database directory.
+    </p><p>
+      Data-at-rest encryption can be enabled for the
+      <code class="literal">mysql</code> system schema tablespace. For more
+      information, see <a class="xref" href="innodb-data-encryption.html" title="17.13 InnoDB Data-at-Rest Encryption">Section 17.13, “InnoDB Data-at-Rest Encryption”</a>.
+</p>
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h3 class="title"><a name="system-schema-data-dictionary-tables"></a>Data Dictionary Tables</h3>
+</div>
+</div>
+</div>
+<p>
+        These tables comprise the data dictionary, which contains
+        metadata about database objects. For additional information, see
+        <a class="xref" href="data-dictionary.html" title="Chapter 16 MySQL Data Dictionary">Chapter 16, <i>MySQL Data Dictionary</i></a>.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">catalogs</code>: Catalog information.
+          </p><a class="indexterm" name="idm45105720572128"></a><a class="indexterm" name="idm45105720570640"></a></li><li class="listitem"><p>
+            <code class="literal">character_sets</code>: Information about
+            available character sets.
+          </p><a class="indexterm" name="idm45105720567616"></a><a class="indexterm" name="idm45105720566128"></a></li><li class="listitem"><p>
+            <code class="literal">check_constraints</code>: Information about
+            <code class="literal">CHECK</code> constraints defined on tables. See
+            <a class="xref" href="create-table-check-constraints.html" title="15.1.20.6 CHECK Constraints">Section 15.1.20.6, “CHECK Constraints”</a>.
+          </p><a class="indexterm" name="idm45105720561456"></a><a class="indexterm" name="idm45105720559968"></a></li><li class="listitem"><p>
+            <code class="literal">collations</code>: Information about collations
+            for each character set.
+          </p><a class="indexterm" name="idm45105720556928"></a><a class="indexterm" name="idm45105720555440"></a></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720553312"></a>
+
+            <a class="indexterm" name="idm45105720551824"></a>
+
+            <code class="literal">column_statistics</code>: Histogram statistics
+            for column values. See
+            <a class="xref" href="optimizer-statistics.html" title="10.9.6 Optimizer Statistics">Section 10.9.6, “Optimizer Statistics”</a>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">column_type_elements</code>: Information about
+            types used by columns.
+          </p><a class="indexterm" name="idm45105720547280"></a><a class="indexterm" name="idm45105720545776"></a></li><li class="listitem"><p>
+            <code class="literal">columns</code>: Information about columns in
+            tables.
+          </p><a class="indexterm" name="idm45105720542736"></a><a class="indexterm" name="idm45105720541248"></a></li><li class="listitem"><p>
+            <code class="literal">dd_properties</code>: A table that identifies
+            data dictionary properties, such as its version. The server
+            uses this to determine whether the data dictionary must be
+            upgraded to a newer version.
+          </p><a class="indexterm" name="idm45105720538064"></a><a class="indexterm" name="idm45105720536576"></a></li><li class="listitem"><p>
+            <code class="literal">events</code>: Information about Event Scheduler
+            events. See <a class="xref" href="event-scheduler.html" title="27.4 Using the Event Scheduler">Section 27.4, “Using the Event Scheduler”</a>. If the server
+            is started with the
+            <a class="link" href="server-options.html#option_mysqld_skip-grant-tables"><code class="option">--skip-grant-tables</code></a> option,
+            the event scheduler is disabled and events registered in the
+            table do not run. See
+            <a class="xref" href="events-configuration.html" title="27.4.2 Event Scheduler Configuration">Section 27.4.2, “Event Scheduler Configuration”</a>.
+          </p><a class="indexterm" name="idm45105720530880"></a><a class="indexterm" name="idm45105720529392"></a></li><li class="listitem"><p>
+            <code class="literal">foreign_keys</code>,
+            <code class="literal">foreign_key_column_usage</code>: Information
+            about foreign keys.
+          </p><a class="indexterm" name="idm45105720525632"></a><a class="indexterm" name="idm45105720524144"></a><a class="indexterm" name="idm45105720522656"></a><a class="indexterm" name="idm45105720521152"></a></li><li class="listitem"><p>
+            <code class="literal">index_column_usage</code>: Information about
+            columns used by indexes.
+          </p><a class="indexterm" name="idm45105720518112"></a><a class="indexterm" name="idm45105720516608"></a></li><li class="listitem"><p>
+            <code class="literal">index_partitions</code>: Information about
+            partitions used by indexes.
+          </p><a class="indexterm" name="idm45105720513568"></a><a class="indexterm" name="idm45105720512080"></a></li><li class="listitem"><p>
+            <code class="literal">index_stats</code>: Used to store dynamic index
+            statistics generated when <a class="link" href="analyze-table.html" title="15.7.3.1 ANALYZE TABLE Statement"><code class="literal">ANALYZE
+            TABLE</code></a> is executed.
+          </p><a class="indexterm" name="idm45105720507792"></a><a class="indexterm" name="idm45105720506304"></a></li><li class="listitem"><p>
+            <code class="literal">indexes</code>: Information about table indexes.
+          </p><a class="indexterm" name="idm45105720503296"></a><a class="indexterm" name="idm45105720501808"></a></li><li class="listitem"><p>
+            <code class="literal">innodb_ddl_log</code>: Stores DDL logs for
+            crash-safe DDL operations.
+          </p><a class="indexterm" name="idm45105720498784"></a><a class="indexterm" name="idm45105720497296"></a></li><li class="listitem"><p>
+            <code class="literal">parameter_type_elements</code>: Information
+            about stored procedure and function parameters, and about
+            return values for stored functions.
+          </p><a class="indexterm" name="idm45105720494192"></a><a class="indexterm" name="idm45105720492688"></a></li><li class="listitem"><p>
+            <code class="literal">parameters</code>: Information about stored
+            procedures and functions. See
+            <a class="xref" href="stored-routines.html" title="27.2 Using Stored Routines">Section 27.2, “Using Stored Routines”</a>.
+          </p><a class="indexterm" name="idm45105720488784"></a><a class="indexterm" name="idm45105720487296"></a></li><li class="listitem"><p>
+            <code class="literal">resource_groups</code>: Information about
+            resource groups. See <a class="xref" href="resource-groups.html" title="7.1.16 Resource Groups">Section 7.1.16, “Resource Groups”</a>.
+          </p><a class="indexterm" name="idm45105720483616"></a><a class="indexterm" name="idm45105720482128"></a></li><li class="listitem"><p>
+            <code class="literal">routines</code>: Information about stored
+            procedures and functions. See
+            <a class="xref" href="stored-routines.html" title="27.2 Using Stored Routines">Section 27.2, “Using Stored Routines”</a>.
+          </p><a class="indexterm" name="idm45105720478416"></a><a class="indexterm" name="idm45105720476928"></a></li><li class="listitem"><p>
+            <code class="literal">schemata</code>: Information about schemata. In
+            MySQL, a schema is a database, so this table provides
+            information about databases.
+          </p><a class="indexterm" name="idm45105720473824"></a><a class="indexterm" name="idm45105720472336"></a></li><li class="listitem"><p>
+            <code class="literal">st_spatial_reference_systems</code>: Information
+            about available spatial reference systems for spatial data.
+          </p><a class="indexterm" name="idm45105720469264"></a><a class="indexterm" name="idm45105720467760"></a></li><li class="listitem"><p>
+            <code class="literal">table_partition_values</code>: Information about
+            values used by table partitions.
+          </p><a class="indexterm" name="idm45105720464704"></a><a class="indexterm" name="idm45105720463200"></a></li><li class="listitem"><p>
+            <code class="literal">table_partitions</code>: Information about
+            partitions used by tables.
+          </p><a class="indexterm" name="idm45105720460160"></a><a class="indexterm" name="idm45105720458672"></a></li><li class="listitem"><p>
+            <code class="literal">table_stats</code>: Information about dynamic
+            table statistics generated when <a class="link" href="analyze-table.html" title="15.7.3.1 ANALYZE TABLE Statement"><code class="literal">ANALYZE
+            TABLE</code></a> is executed.
+          </p><a class="indexterm" name="idm45105720454368"></a><a class="indexterm" name="idm45105720452880"></a></li><li class="listitem"><p>
+            <code class="literal">tables</code>: Information about tables in
+            databases.
+          </p><a class="indexterm" name="idm45105720449856"></a><a class="indexterm" name="idm45105720448368"></a></li><li class="listitem"><p>
+            <code class="literal">tablespace_files</code>: Information about files
+            used by tablespaces.
+          </p><a class="indexterm" name="idm45105720445344"></a><a class="indexterm" name="idm45105720443856"></a></li><li class="listitem"><p>
+            <code class="literal">tablespaces</code>: Information about active
+            tablespaces.
+          </p><a class="indexterm" name="idm45105720440832"></a><a class="indexterm" name="idm45105720439344"></a></li><li class="listitem"><p>
+            <code class="literal">triggers</code>: Information about triggers.
+          </p><a class="indexterm" name="idm45105720436336"></a><a class="indexterm" name="idm45105720434848"></a></li><li class="listitem"><p>
+            <code class="literal">view_routine_usage</code>: Information about
+            dependencies between views and stored functions used by
+            them.
+          </p><a class="indexterm" name="idm45105720431776"></a><a class="indexterm" name="idm45105720430272"></a></li><li class="listitem"><p>
+            <code class="literal">view_table_usage</code>: Used to track
+            dependencies between views and their underlying tables.
+</p><a class="indexterm" name="idm45105720427200"></a><a class="indexterm" name="idm45105720425712"></a></li></ul>
+</div>
+<p>
+        Data dictionary tables are invisible. They cannot be read with
+        <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>, do not appear in the
+        output of <a class="link" href="show-tables.html" title="15.7.7.39 SHOW TABLES Statement"><code class="literal">SHOW TABLES</code></a>, are not
+        listed in the <code class="literal">INFORMATION_SCHEMA.TABLES</code>
+        table, and so forth. However, in most cases there are
+        corresponding <code class="literal">INFORMATION_SCHEMA</code> tables that
+        can be queried. Conceptually, the
+        <code class="literal">INFORMATION_SCHEMA</code> provides a view through
+        which MySQL exposes data dictionary metadata. For example, you
+        cannot select from the <code class="literal">mysql.schemata</code> table
+        directly:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT * FROM mysql.schemata;
+ERROR 3554 (HY000): Access to data dictionary table 'mysql.schemata' is rejected.</code></pre><p>
+        Instead, select that information from the corresponding
+        <code class="literal">INFORMATION_SCHEMA</code> table:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT * FROM INFORMATION_SCHEMA.SCHEMATA\G
+*************************** 1. row ***************************
+              CATALOG_NAME: def
+               SCHEMA_NAME: mysql
+DEFAULT_CHARACTER_SET_NAME: utf8mb4
+    DEFAULT_COLLATION_NAME: utf8mb4_0900_ai_ci
+                  SQL_PATH: NULL
+        DEFAULT_ENCRYPTION: NO
+*************************** 2. row ***************************
+              CATALOG_NAME: def
+               SCHEMA_NAME: information_schema
+DEFAULT_CHARACTER_SET_NAME: utf8mb3
+    DEFAULT_COLLATION_NAME: utf8mb3_general_ci
+                  SQL_PATH: NULL
+        DEFAULT_ENCRYPTION: NO
+*************************** 3. row ***************************
+              CATALOG_NAME: def
+               SCHEMA_NAME: performance_schema
+DEFAULT_CHARACTER_SET_NAME: utf8mb4
+    DEFAULT_COLLATION_NAME: utf8mb4_0900_ai_ci
+                  SQL_PATH: NULL
+        DEFAULT_ENCRYPTION: NO
+...</code></pre><p>
+        There is no Information Schema table that corresponds exactly to
+        <code class="literal">mysql.indexes</code>, but
+        <a class="link" href="information-schema-statistics-table.html" title="28.3.34 The INFORMATION_SCHEMA STATISTICS Table"><code class="literal">INFORMATION_SCHEMA.STATISTICS</code></a>
+        contains much of the same information.
+      </p><p>
+        As of yet, there are no <code class="literal">INFORMATION_SCHEMA</code>
+        tables that correspond exactly to
+        <code class="literal">mysql.foreign_keys</code>,
+        <code class="literal">mysql.foreign_key_column_usage</code>. The standard
+        SQL way to obtain foreign key information is by using the
+        <code class="literal">INFORMATION_SCHEMA</code>
+        <a class="link" href="information-schema-referential-constraints-table.html" title="28.3.25 The INFORMATION_SCHEMA REFERENTIAL_CONSTRAINTS Table"><code class="literal">REFERENTIAL_CONSTRAINTS</code></a> and
+        <a class="link" href="information-schema-key-column-usage-table.html" title="28.3.16 The INFORMATION_SCHEMA KEY_COLUMN_USAGE Table"><code class="literal">KEY_COLUMN_USAGE</code></a> tables; these
+        tables are now implemented as views on the
+        <code class="literal">foreign_keys</code>,
+        <code class="literal">foreign_key_column_usage</code>, and other data
+        dictionary tables.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-grant-tables"></a>Grant System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        These system tables contain grant information about user
+        accounts and the privileges held by them. For additional
+        information about the structure, contents, and purpose of the
+        these tables, see <a class="xref" href="grant-tables.html" title="8.2.3 Grant Tables">Section 8.2.3, “Grant Tables”</a>.
+      </p><p>
+        The MySQL 8.4 grant tables are
+        <a class="link" href="innodb-storage-engine.html" title="Chapter 17 The InnoDB Storage Engine"><code class="literal">InnoDB</code></a> (transactional) tables.
+        Account-management statements are transactional and either
+        succeed for all named users or roll back and have no effect if
+        any error occurs.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">user</code>: User accounts, global privileges,
+            and other nonprivilege columns.
+          </p><a class="indexterm" name="idm45105720396560"></a><a class="indexterm" name="idm45105720395072"></a><a class="indexterm" name="idm45105720393584"></a></li><li class="listitem"><p>
+            <code class="literal">global_grants</code>: Assignments of dynamic
+            global privileges to users; see
+            <a class="xref" href="privileges-provided.html#static-dynamic-privileges" title="Static Versus Dynamic Privileges">Static Versus Dynamic Privileges</a>.
+          </p><a class="indexterm" name="idm45105720389680"></a><a class="indexterm" name="idm45105720388192"></a><a class="indexterm" name="idm45105720386704"></a></li><li class="listitem"><p>
+            <code class="literal">db</code>: Database-level privileges.
+          </p><a class="indexterm" name="idm45105720383744"></a><a class="indexterm" name="idm45105720382256"></a><a class="indexterm" name="idm45105720380768"></a></li><li class="listitem"><p>
+            <code class="literal">tables_priv</code>: Table-level privileges.
+          </p><a class="indexterm" name="idm45105720377776"></a><a class="indexterm" name="idm45105720376288"></a><a class="indexterm" name="idm45105720374800"></a></li><li class="listitem"><p>
+            <code class="literal">columns_priv</code>: Column-level privileges.
+          </p><a class="indexterm" name="idm45105720371808"></a><a class="indexterm" name="idm45105720370320"></a><a class="indexterm" name="idm45105720368832"></a></li><li class="listitem"><p>
+            <code class="literal">procs_priv</code>: Stored procedure and function
+            privileges.
+          </p><a class="indexterm" name="idm45105720365808"></a><a class="indexterm" name="idm45105720364320"></a><a class="indexterm" name="idm45105720362832"></a></li><li class="listitem"><p>
+            <code class="literal">proxies_priv</code>: Proxy-user privileges.
+          </p><a class="indexterm" name="idm45105720359840"></a><a class="indexterm" name="idm45105720358352"></a><a class="indexterm" name="idm45105720356864"></a></li><li class="listitem"><p>
+            <code class="literal">default_roles</code>: This table lists default
+            roles to be activated after a user connects and
+            authenticates, or executes
+            <a class="link" href="set-role.html" title="15.7.1.11 SET ROLE Statement"><code class="literal">SET ROLE
+            DEFAULT</code></a>.
+          </p><a class="indexterm" name="idm45105720352512"></a><a class="indexterm" name="idm45105720351024"></a><a class="indexterm" name="idm45105720349536"></a></li><li class="listitem"><p>
+            <code class="literal">role_edges</code>: This table lists edges for
+            role subgraphs.
+          </p><p>
+            A given <code class="literal">user</code> table row might refer to a
+            user account or a role. The server can distinguish whether a
+            row represents a user account, a role, or both by consulting
+            the <code class="literal">role_edges</code> table for information
+            about relations between authentication IDs.
+          </p><a class="indexterm" name="idm45105720344400"></a><a class="indexterm" name="idm45105720342912"></a><a class="indexterm" name="idm45105720341424"></a></li><li class="listitem"><p>
+            <code class="literal">password_history</code>: Information about
+            password changes.
+</p><a class="indexterm" name="idm45105720338400"></a><a class="indexterm" name="idm45105720336912"></a><a class="indexterm" name="idm45105720335424"></a></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-object-tables"></a>Object Information System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        These system tables contain information about components,
+        loadable functions, and server-side plugins:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">component</code>: The registry for server
+            components installed using <a class="link" href="install-component.html" title="15.7.4.3 INSTALL COMPONENT Statement"><code class="literal">INSTALL
+            COMPONENT</code></a>. Any components listed in this table are
+            installed by a loader service during the server startup
+            sequence. See <a class="xref" href="component-loading.html" title="7.5.1 Installing and Uninstalling Components">Section 7.5.1, “Installing and Uninstalling Components”</a>.
+          </p><a class="indexterm" name="idm45105720327856"></a><a class="indexterm" name="idm45105720326368"></a></li><li class="listitem"><p>
+            <code class="literal">func</code>: The registry for loadable functions
+            installed using
+            <a class="link" href="create-function-loadable.html" title="15.7.4.1 CREATE FUNCTION Statement for Loadable Functions"><code class="literal">CREATE
+            FUNCTION</code></a>. During the normal startup sequence, the
+            server loads functions registered in this table. If the
+            server is started with the
+            <a class="link" href="server-options.html#option_mysqld_skip-grant-tables"><code class="option">--skip-grant-tables</code></a> option,
+            functions registered in the table are not loaded and are
+            unavailable. See <a class="xref" href="function-loading.html" title="7.7.1 Installing and Uninstalling Loadable Functions">Section 7.7.1, “Installing and Uninstalling Loadable Functions”</a>.
+</p><a class="indexterm" name="idm45105720319968"></a><a class="indexterm" name="idm45105720318480"></a>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+              Like the <code class="literal">mysql.func</code> system table, the
+              Performance Schema
+              <a class="link" href="performance-schema-user-defined-functions-table.html" title="29.12.22.10 The user_defined_functions Table"><code class="literal">user_defined_functions</code></a> table
+              lists loadable functions installed using
+              <a class="link" href="create-function-loadable.html" title="15.7.4.1 CREATE FUNCTION Statement for Loadable Functions"><code class="literal">CREATE
+              FUNCTION</code></a>. Unlike the
+              <code class="literal">mysql.func</code> table, the
+              <a class="link" href="performance-schema-user-defined-functions-table.html" title="29.12.22.10 The user_defined_functions Table"><code class="literal">user_defined_functions</code></a> table
+              also lists functions installed automatically by server
+              components or plugins. This difference makes
+              <a class="link" href="performance-schema-user-defined-functions-table.html" title="29.12.22.10 The user_defined_functions Table"><code class="literal">user_defined_functions</code></a>
+              preferable to <code class="literal">mysql.func</code> for checking
+              which functions are installed. See
+              <a class="xref" href="performance-schema-user-defined-functions-table.html" title="29.12.22.10 The user_defined_functions Table">Section 29.12.22.10, “The user_defined_functions Table”</a>.
+</p>
+</div>
+</li><li class="listitem"><p>
+            <code class="literal">plugin</code>: The registry for server-side
+            plugins installed using <a class="link" href="install-plugin.html" title="15.7.4.4 INSTALL PLUGIN Statement"><code class="literal">INSTALL
+            PLUGIN</code></a>. During the normal startup sequence, the
+            server loads plugins registered in this table. If the server
+            is started with the
+            <a class="link" href="server-options.html#option_mysqld_skip-grant-tables"><code class="option">--skip-grant-tables</code></a> option,
+            plugins registered in the table are not loaded and are
+            unavailable. See <a class="xref" href="plugin-loading.html" title="7.6.1 Installing and Uninstalling Plugins">Section 7.6.1, “Installing and Uninstalling Plugins”</a>.
+</p><a class="indexterm" name="idm45105720302832"></a><a class="indexterm" name="idm45105720301344"></a></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-log-tables"></a>Log System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The server uses these system tables for logging:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720297120"></a>
+
+            <a class="indexterm" name="idm45105720295632"></a>
+
+            <code class="literal">general_log</code>: The general query log table.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720292624"></a>
+
+            <a class="indexterm" name="idm45105720291136"></a>
+
+            <code class="literal">slow_log</code>: The slow query log table.
+</p></li></ul>
+</div>
+<p>
+        Log tables use the <code class="literal">CSV</code> storage engine.
+      </p><p>
+        For more information, see <a class="xref" href="server-logs.html" title="7.4 MySQL Server Logs">Section 7.4, “MySQL Server Logs”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-help-tables"></a>Server-Side Help System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105720285072"></a><a class="indexterm" name="idm45105720283584"></a><p>
+        These system tables contain server-side help information:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720280848"></a>
+
+            <a class="indexterm" name="idm45105720279360"></a>
+
+            <code class="literal">help_category</code>: Information about help
+            categories.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720276336"></a>
+
+            <a class="indexterm" name="idm45105720274848"></a>
+
+            <code class="literal">help_keyword</code>: Keywords associated with
+            help topics.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720271824"></a>
+
+            <a class="indexterm" name="idm45105720270336"></a>
+
+            <code class="literal">help_relation</code>: Mappings between help
+            keywords and topics.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720267312"></a>
+
+            <a class="indexterm" name="idm45105720265824"></a>
+
+            <code class="literal">help_topic</code>: Help topic contents.
+</p></li></ul>
+</div>
+<p>
+        For more information, see
+        <a class="xref" href="server-side-help-support.html" title="7.1.17 Server-Side Help Support">Section 7.1.17, “Server-Side Help Support”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-time-zone-tables"></a>Time Zone System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105720260752"></a><a class="indexterm" name="idm45105720259264"></a><p>
+        These system tables contain time zone information:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720256544"></a>
+
+            <a class="indexterm" name="idm45105720255056"></a>
+
+            <code class="literal">time_zone</code>: Time zone IDs and whether they
+            use leap seconds.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720252016"></a>
+
+            <a class="indexterm" name="idm45105720250560"></a>
+
+            <code class="literal">time_zone_leap_second</code>: When leap seconds
+            occur.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720247536"></a>
+
+            <a class="indexterm" name="idm45105720246048"></a>
+
+            <code class="literal">time_zone_name</code>: Mappings between time
+            zone IDs and names.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720243024"></a>
+
+            <a class="indexterm" name="idm45105720241520"></a>
+
+            <a class="indexterm" name="idm45105720240016"></a>
+
+            <a class="indexterm" name="idm45105720238512"></a>
+
+            <code class="literal">time_zone_transition</code>,
+            <code class="literal">time_zone_transition_type</code>: Time zone
+            descriptions.
+</p></li></ul>
+</div>
+<p>
+        For more information, see <a class="xref" href="time-zone-support.html" title="7.1.15 MySQL Server Time Zone Support">Section 7.1.15, “MySQL Server Time Zone Support”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-replication-tables"></a>Replication System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The server uses these system tables to support replication:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720231504"></a>
+
+            <a class="indexterm" name="idm45105720230016"></a>
+
+            <code class="literal">gtid_executed</code>: Table for storing GTID
+            values. See
+            <a class="xref" href="replication-gtids-concepts.html#replication-gtids-gtid-executed-table" title="mysql.gtid_executed Table">mysql.gtid_executed Table</a>.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720226112"></a>
+
+            <a class="indexterm" name="idm45105720224624"></a>
+
+            <code class="literal">ndb_binlog_index</code>: Binary log information
+            for NDB Cluster replication. This table is created only if
+            the server is built with
+            <a class="link" href="mysql-cluster.html" title="Chapter 25 MySQL NDB Cluster 8.4"><code class="literal">NDBCLUSTER</code></a> support. See
+            <a class="xref" href="mysql-cluster-replication-schema.html" title="25.7.4 NDB Cluster Replication Schema and Tables">Section 25.7.4, “NDB Cluster Replication Schema and Tables”</a>.
+          </p></li><li class="listitem"><p>
+            
+
+            <a class="indexterm" name="idm45105720218672"></a>
+
+            <a class="indexterm" name="idm45105720217184"></a>
+
+            <a class="indexterm" name="idm45105720215696"></a>
+
+            <a class="indexterm" name="idm45105720214240"></a>
+
+            <a class="indexterm" name="idm45105720212736"></a>
+
+            <a class="indexterm" name="idm45105720211248"></a>
+
+            <code class="literal">slave_master_info</code>,
+            <code class="literal">slave_relay_log_info</code>,
+            <code class="literal">slave_worker_info</code>: Used to store
+            replication information on replica servers. See
+            <a class="xref" href="replica-logs.html" title="19.2.4 Relay Log and Replication Metadata Repositories">Section 19.2.4, “Relay Log and Replication Metadata Repositories”</a>.
+</p></li></ul>
+</div>
+<p>
+        All of the tables just listed use the
+        <a class="link" href="innodb-storage-engine.html" title="Chapter 17 The InnoDB Storage Engine"><code class="literal">InnoDB</code></a> storage engine.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-optimizer-tables"></a>Optimizer System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        These system tables are for use by the optimizer:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720202240"></a>
+
+            <a class="indexterm" name="idm45105720200784"></a>
+
+            <a class="indexterm" name="idm45105720199280"></a>
+
+            <a class="indexterm" name="idm45105720197776"></a>
+
+            <code class="literal">innodb_index_stats</code>,
+            <code class="literal">innodb_table_stats</code>: Used for
+            <code class="literal">InnoDB</code> persistent optimizer statistics.
+            See <a class="xref" href="innodb-persistent-stats.html" title="17.8.10.1 Configuring Persistent Optimizer Statistics Parameters">Section 17.8.10.1, “Configuring Persistent Optimizer Statistics Parameters”</a>.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720192640"></a>
+
+            <a class="indexterm" name="idm45105720191152"></a>
+
+            <a class="indexterm" name="idm45105720189664"></a>
+
+            <a class="indexterm" name="idm45105720188176"></a>
+
+            <code class="literal">server_cost</code>,
+            <code class="literal">engine_cost</code>: The optimizer cost model
+            uses tables that contain cost estimate information about
+            operations that occur during query execution.
+            <code class="literal">server_cost</code> contains optimizer cost
+            estimates for general server operations.
+            <code class="literal">engine_cost</code> contains estimates for
+            operations specific to particular storage engines. See
+            <a class="xref" href="cost-model.html" title="10.9.5 The Optimizer Cost Model">Section 10.9.5, “The Optimizer Cost Model”</a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="system-schema-miscellaneous-tables"></a>Miscellaneous System Tables</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        Other system tables do not fit the preceding categories:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720179744"></a>
+
+            <a class="indexterm" name="idm45105720178256"></a>
+
+            <a class="indexterm" name="idm45105720176768"></a>
+
+            <a class="indexterm" name="idm45105720175280"></a>
+
+            <code class="literal">audit_log_filter</code>,
+            <code class="literal">audit_log_user</code>: If MySQL Enterprise Audit is
+            installed, these tables provide persistent storage of audit
+            log filter definitions and user accounts. See
+            <a class="xref" href="audit-log-reference.html#audit-log-tables" title="Audit Log Tables">Audit Log Tables</a>.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720170576"></a>
+
+            <a class="indexterm" name="idm45105720169072"></a>
+
+            <a class="indexterm" name="idm45105720167568"></a>
+
+            <a class="indexterm" name="idm45105720166080"></a>
+
+            <a class="indexterm" name="idm45105720164592"></a>
+
+            <a class="indexterm" name="idm45105720163088"></a>
+
+            <a class="indexterm" name="idm45105720161584"></a>
+
+            <a class="indexterm" name="idm45105720160096"></a>
+
+            <a class="indexterm" name="idm45105720158608"></a>
+
+            <a class="indexterm" name="idm45105720157104"></a>
+
+            <code class="literal">firewall_group_allowlist</code>,
+            <code class="literal">firewall_groups</code>,
+            <code class="literal">firewall_memebership</code>,
+            <code class="literal">firewall_users</code>,
+            <code class="literal">firewall_whitelist</code>: If MySQL Enterprise Firewall is
+            installed, these tables provide persistent storage for
+            information used by the firewall. See
+            <a class="xref" href="firewall.html" title="8.4.7 MySQL Enterprise Firewall">Section 8.4.7, “MySQL Enterprise Firewall”</a>.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720150400"></a>
+
+            <a class="indexterm" name="idm45105720148912"></a>
+
+            <code class="literal">servers</code>: Used by the
+            <code class="literal">FEDERATED</code> storage engine. See
+            <a class="xref" href="federated-create-server.html" title="18.8.2.2 Creating a FEDERATED Table Using CREATE SERVER">Section 18.8.2.2, “Creating a FEDERATED Table Using CREATE SERVER”</a>.
+          </p></li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105720144384"></a>
+
+            <a class="indexterm" name="idm45105720142880"></a>
+
+            <code class="literal">innodb_dynamic_metadata</code>: Used by the
+            <code class="literal">InnoDB</code> storage engine to store
+            fast-changing table metadata such as auto-increment counter
+            values and index tree corruption flags. Replaces the data
+            dictionary buffer table that resided in the
+            <code class="literal">InnoDB</code> system tablespace.
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="data-directory.html"
+        aria-label="Previous" title="Previous: The MySQL Data Directory"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="server-administration.html" title="Up: MySQL Server Administration"> UP</a> &nbsp;
+    <a href="server-logs.html" aria-label="Next"
+        title="Next: MySQL Server Logs">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/system-schema.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:38:05 GMT -->
+</html>

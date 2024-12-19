@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/partitioning-limitations.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 26.6 Restrictions and Limitations on Partitioning</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="partitioning-selection.html" title="26.5 Partition Selection" />
+<link rel="next" href="partitioning-limitations-partitioning-keys-unique-keys8dba.html?ff=nopfpls" title="26.6.1 Partitioning Keys, Primary Keys, and Unique Keys" />
+<link rel="up" href="partitioning.html" title="26 Partitioning" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7yfva-f-b1361896e-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":150,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1904f6be","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":11705,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134378","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==dLGSUjNB3bFZc0Va6jQ6ASXjVRAMOhzT0Xnn/1ewaanlDz9MAUSVc24eN2SkDtOlNUtkiIxYXk+Yj8F2ie4BozSZC1nSpp1T6sul53LOPIhnsdsofaAGMCYpNKpuwV5e5i7WKflYLmqf6O48rIkbJjw8pHuAkjXhwX+28dd1z+crAjUQDXXrGGRZlBAu3odvLFzTOsJAyMte8F6MWxf2J59TRIqDkGipyJX6ctpECAKuvdsRsaDNFr6sY973/XhwDbfPBhLf8o0q5sHCvobi9SSrOrHuAvv+Y3vtU6GsuqaboQRH3UQQ9GDT5cV2NSOCnOteNkclvkROlXlXxMxw8hiO6Yq7XPpqrigeFTW8oQaxlmry7P5eRLHQkp6HaPozHOSXh+m2tYHbdZQvUdcgVamZoiUNganw43qVNDNzWas=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fpartitioning-limitations.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="partitioning-selection.html"
+        aria-label="Previous" title="Previous: Partition Selection"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="partitioning.html" title="Up: Partitioning"><span class="icon-chevron-up"></span></a>
+    <a href="partitioning-limitations-partitioning-keys-unique-keys.html" aria-label="Next"
+        title="Next: Partitioning Keys, Primary Keys, and Unique Keys"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-overview.html">Overview of Partitioning in MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning-types.html">Partitioning Types</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-range.html">RANGE Partitioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-list.html">LIST Partitioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning-columns.html">COLUMNS Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-columns-range.html">RANGE COLUMNS partitioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-columns-list.html">LIST COLUMNS partitioning</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning-hash.html">HASH Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-linear-hash.html">LINEAR HASH Partitioning</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-key.html">KEY Partitioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-subpartitions.html">Subpartitioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-handling-nulls.html">How MySQL Partitioning Handles NULL</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning-management.html">Partition Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-management-range-list.html">Management of RANGE and LIST Partitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-management-hash-key.html">Management of HASH and KEY Partitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-management-exchange.html">Exchanging Partitions and Subpartitions with Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-maintenance.html">Maintenance of Partitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-info.html">Obtaining Information About Partitions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-pruning.html">Partition Pruning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-selection.html">Partition Selection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link current"><a href="partitioning-limitations.html">Restrictions and Limitations on Partitioning</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-limitations-partitioning-keys-unique-keys.html">Partitioning Keys, Primary Keys, and Unique Keys</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-limitations-storage-engines.html">Partitioning Limitations Relating to Storage Engines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partitioning-limitations-functions.html">Partitioning Limitations Relating to Functions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/partitioning-limitations.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/partitioning-limitations.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/partitioning-limitations.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/partitioning-limitations.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/partitioning-limitations.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                                                        <a href="partitioning.html">Partitioning</a> &nbsp;/&nbsp;
+                                                                                    Restrictions and Limitations on Partitioning
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title"><a name="partitioning-limitations"></a>26.6 Restrictions and Limitations on Partitioning</h2>
+
+</div>
+
+</div>
+
+</div>
+<div class="toc">
+<dl class="toc"><dt><span class="section"><a href="partitioning-limitations-partitioning-keys-unique-keys.html">26.6.1 Partitioning Keys, Primary Keys, and Unique Keys</a></span></dt><dt><span class="section"><a href="partitioning-limitations-storage-engines.html">26.6.2 Partitioning Limitations Relating to Storage Engines</a></span></dt><dt><span class="section"><a href="partitioning-limitations-functions.html">26.6.3 Partitioning Limitations Relating to Functions</a></span></dt></dl>
+</div>
+<a class="indexterm" name="idm45105543790960"></a><p>
+      This section discusses current restrictions and limitations on
+      MySQL partitioning support.
+    </p><p><b>Prohibited constructs. </b>
+        The following constructs are not permitted in partitioning
+        expressions:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          Stored procedures, stored functions, loadable functions, or
+          plugins.
+        </p></li><li class="listitem"><p>
+          Declared variables or user variables.
+</p></li></ul>
+</div>
+<p>
+      For a list of SQL functions which are permitted in partitioning
+      expressions, see
+      <a class="xref" href="partitioning-limitations-functions.html" title="26.6.3 Partitioning Limitations Relating to Functions">Section 26.6.3, “Partitioning Limitations Relating to Functions”</a>.
+    </p><p><b>Arithmetic and logical operators. </b>
+        <a class="indexterm" name="idm45105543783456"></a>
+
+        <a class="indexterm" name="idm45105543781936"></a>
+
+        Use of the arithmetic operators
+        <a class="link" href="arithmetic-functions.html#operator_plus"><code class="literal">+</code></a>,
+        <a class="link" href="arithmetic-functions.html#operator_minus"><code class="literal">-</code></a>, and
+        <a class="link" href="arithmetic-functions.html#operator_times"><code class="literal">*</code></a> is permitted in
+        partitioning expressions. However, the result must be an integer
+        value or <code class="literal">NULL</code> (except in the case of
+        <code class="literal">[LINEAR] KEY</code> partitioning, as discussed
+        elsewhere in this chapter; see
+        <a class="xref" href="partitioning-types.html" title="26.2 Partitioning Types">Section 26.2, “Partitioning Types”</a>, for more information).
+      </p><p>
+      The <a class="link" href="arithmetic-functions.html#operator_div"><code class="literal">DIV</code></a> operator is also supported;
+      the <a class="link" href="arithmetic-functions.html#operator_divide"><code class="literal">/</code></a> operator is
+      not permitted.
+    </p><p>
+      The bit operators
+      <a class="link" href="bit-functions.html#operator_bitwise-or"><code class="literal">|</code></a>,
+      <a class="link" href="bit-functions.html#operator_bitwise-and"><code class="literal">&amp;</code></a>,
+      <a class="link" href="bit-functions.html#operator_bitwise-xor"><code class="literal">^</code></a>,
+      <a class="link" href="bit-functions.html#operator_left-shift"><code class="literal">&lt;&lt;</code></a>,
+      <a class="link" href="bit-functions.html#operator_right-shift"><code class="literal">&gt;&gt;</code></a>, and
+      <a class="link" href="bit-functions.html#operator_bitwise-invert"><code class="literal">~</code></a> are not
+      permitted in partitioning expressions.
+    </p><p><b>Server SQL mode. </b>
+        <a class="indexterm" name="idm45105543762640"></a>
+
+        <a class="indexterm" name="idm45105543761152"></a>
+
+        Tables employing user-defined partitioning do not preserve the
+        SQL mode in effect at the time that they were created. As
+        discussed elsewhere in this Manual (see
+        <a class="xref" href="sql-mode.html" title="7.1.11 Server SQL Modes">Section 7.1.11, “Server SQL Modes”</a>), the results of many MySQL functions
+        and operators may change according to the server SQL mode.
+        Therefore, a change in the SQL mode at any time after the
+        creation of partitioned tables may lead to major changes in the
+        behavior of such tables, and could easily lead to corruption or
+        loss of data. For these reasons, <span class="emphasis"><em>it is strongly
+        recommended that you never change the server SQL mode after
+        creating partitioned tables</em></span>.
+      </p><p>
+      For one such change in the server SQL mode making a partitioned
+      tables unusable, consider the following
+      <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE TABLE</code></a> statement, which can
+      be executed successfully only if the
+      <a class="link" href="sql-mode.html#sqlmode_no_unsigned_subtraction"><code class="literal">NO_UNSIGNED_SUBTRACTION</code></a> mode is
+      in effect:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT @@sql_mode;
++------------+
+| @@sql_mode |
++------------+
+|            |
++------------+
+1 row in set (0.00 sec)
+
+mysql&gt; CREATE TABLE tu (c1 BIGINT UNSIGNED)
+    -&gt;   PARTITION BY RANGE(c1 - 10) (
+    -&gt;     PARTITION p0 VALUES LESS THAN (-5),
+    -&gt;     PARTITION p1 VALUES LESS THAN (0),
+    -&gt;     PARTITION p2 VALUES LESS THAN (5),
+    -&gt;     PARTITION p3 VALUES LESS THAN (10),
+    -&gt;     PARTITION p4 VALUES LESS THAN (MAXVALUE)
+    -&gt; );
+ERROR 1563 (HY000): Partition constant is out of partition function domain
+
+mysql&gt; SET sql_mode='NO_UNSIGNED_SUBTRACTION';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SELECT @@sql_mode;
++-------------------------+
+| @@sql_mode              |
++-------------------------+
+| NO_UNSIGNED_SUBTRACTION |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; CREATE TABLE tu (c1 BIGINT UNSIGNED)
+    -&gt;   PARTITION BY RANGE(c1 - 10) (
+    -&gt;     PARTITION p0 VALUES LESS THAN (-5),
+    -&gt;     PARTITION p1 VALUES LESS THAN (0),
+    -&gt;     PARTITION p2 VALUES LESS THAN (5),
+    -&gt;     PARTITION p3 VALUES LESS THAN (10),
+    -&gt;     PARTITION p4 VALUES LESS THAN (MAXVALUE)
+    -&gt; );
+Query OK, 0 rows affected (0.05 sec)</code></pre><p>
+      If you remove the
+      <a class="link" href="sql-mode.html#sqlmode_no_unsigned_subtraction"><code class="literal">NO_UNSIGNED_SUBTRACTION</code></a> server
+      SQL mode after creating <code class="literal">tu</code>, you may no longer
+      be able to access this table:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SET sql_mode='';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; SELECT * FROM tu;
+ERROR 1563 (HY000): Partition constant is out of partition function domain
+mysql&gt; INSERT INTO tu VALUES (20);
+ERROR 1563 (HY000): Partition constant is out of partition function domain</code></pre><p>
+      See also <a class="xref" href="sql-mode.html" title="7.1.11 Server SQL Modes">Section 7.1.11, “Server SQL Modes”</a>.
+    </p><p>
+      Server SQL modes also impact replication of partitioned tables.
+      Disparate SQL modes on source and replica can lead to partitioning
+      expressions being evaluated differently; this can cause the
+      distribution of data among partitions to be different in the
+      source's and replica's copies of a given table, and may
+      even cause inserts into partitioned tables that succeed on the
+      source to fail on the replica. For best results, you should always
+      use the same server SQL mode on the source and on the replica.
+    </p><p><b>Performance considerations. </b>
+        Some effects of partitioning operations on performance are given
+        in the following list:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a name="partitioning-limitations-file-system-ops"></a><b>File system operations. </b>
+            Partitioning and repartitioning operations (such as
+            <a class="link" href="alter-table-partition-operations.html" title="15.1.9.1 ALTER TABLE Partition Operations"><code class="literal">ALTER
+            TABLE</code></a> with <code class="literal">PARTITION BY ...</code>,
+            <code class="literal">REORGANIZE PARTITION</code>, or <code class="literal">REMOVE
+            PARTITIONING</code>) depend on file system operations for
+            their implementation. This means that the speed of these
+            operations is affected by such factors as file system type
+            and characteristics, disk speed, swap space, file handling
+            efficiency of the operating system, and MySQL server options
+            and variables that relate to file handling. In particular,
+            you should make sure that
+            <a class="link" href="server-system-variables.html#sysvar_large_files_support"><code class="literal">large_files_support</code></a> is
+            enabled and that
+            <a class="link" href="server-system-variables.html#sysvar_open_files_limit"><code class="literal">open_files_limit</code></a> is set
+            properly. Partitioning and repartitioning operations
+            involving <code class="literal">InnoDB</code> tables may be made more
+            efficient by enabling
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_file_per_table"><code class="literal">innodb_file_per_table</code></a>.
+          </p><p>
+          See also
+          <a class="xref" href="partitioning-limitations.html#partitioning-limitations-max-partitions" title="Maximum number of partitions">Maximum number of partitions</a>.
+        </p></li><li class="listitem"><p><b>Table locks. </b>
+            Generally, the process executing a partitioning operation on
+            a table takes a write lock on the table. Reads from such
+            tables are relatively unaffected; pending
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> and
+            <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a> operations are
+            performed as soon as the partitioning operation has
+            completed. For <code class="literal">InnoDB</code>-specific exceptions
+            to this limitation, see
+            <a class="xref" href="innodb-online-ddl-operations.html#online-ddl-partitioning" title="Partitioning Operations">Partitioning Operations</a>.
+          </p></li><li class="listitem"><p><b>Indexes; partition pruning. </b>
+            As with nonpartitioned tables, proper use of indexes can
+            speed up queries on partitioned tables significantly. In
+            addition, designing partitioned tables and queries on these
+            tables to take advantage of
+            <span class="firstterm">partition pruning</span> can
+            improve performance dramatically. See
+            <a class="xref" href="partitioning-pruning.html" title="26.4 Partition Pruning">Section 26.4, “Partition Pruning”</a>, for more
+            information.
+          </p><p>
+          Index condition pushdown is supported for partitioned tables.
+          See <a class="xref" href="index-condition-pushdown-optimization.html" title="10.2.1.6 Index Condition Pushdown Optimization">Section 10.2.1.6, “Index Condition Pushdown Optimization”</a>.
+        </p></li><li class="listitem"><p><b>Performance with LOAD DATA. </b>
+            In MySQL 8.4, <a class="link" href="load-data.html" title="15.2.9 LOAD DATA Statement"><code class="literal">LOAD
+            DATA</code></a> uses buffering to improve performance. You
+            should be aware that the buffer uses 130 KB memory per
+            partition to achieve this.
+</p></li></ul>
+</div>
+<p><a name="partitioning-limitations-max-partitions"></a><b>Maximum number of partitions. </b><a class="indexterm" name="idm45105543701904"></a><a class="indexterm" name="idm45105543700400"></a>
+        The maximum possible number of partitions for a given table not
+        using the <a class="link" href="mysql-cluster.html" title="Chapter 25 MySQL NDB Cluster 8.4"><code class="literal">NDB</code></a> storage engine is
+        8192. This number includes subpartitions.
+      </p><p>
+      The maximum possible number of user-defined partitions for a table
+      using the <a class="link" href="mysql-cluster.html" title="Chapter 25 MySQL NDB Cluster 8.4"><code class="literal">NDB</code></a> storage engine is
+      determined according to the version of the NDB Cluster software
+      being used, the number of data nodes, and other factors. See
+      <a class="xref" href="mysql-cluster-nodes-groups.html#mysql-cluster-nodes-groups-user-partitioning" title="NDB and user-defined partitioning">NDB and user-defined partitioning</a>,
+      for more information.
+    </p><p>
+      If, when creating tables with a large number of partitions (but
+      less than the maximum), you encounter an error message such as
+      <span class="errortext">Got error ... from storage engine: Out of resources
+      when opening file</span>, you may be able to address the
+      issue by increasing the value of the
+      <a class="link" href="server-system-variables.html#sysvar_open_files_limit"><code class="literal">open_files_limit</code></a> system variable.
+      However, this is dependent on the operating system, and may not be
+      possible or advisable on all platforms; see
+      <a class="xref" href="not-enough-file-handles.html" title="B.3.2.16 File Not Found and Similar Errors">Section B.3.2.16, “File Not Found and Similar Errors”</a>, for more information.
+      In some cases, using large numbers (hundreds) of partitions may
+      also not be advisable due to other concerns, so using more
+      partitions does not automatically lead to better results.
+    </p><p>
+      See also
+      <a class="xref" href="partitioning-limitations.html#partitioning-limitations-file-system-ops" title="File system operations">File system operations</a>.
+    </p><p><b>Foreign keys not supported for partitioned InnoDB tables. </b><a class="indexterm" name="idm45105543688944"></a>
+        Partitioned tables using the <a class="link" href="innodb-storage-engine.html" title="Chapter 17 The InnoDB Storage Engine"><code class="literal">InnoDB</code></a>
+        storage engine do not support foreign keys. More specifically,
+        this means that the following two statements are true:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+          No definition of an <code class="literal">InnoDB</code> table employing
+          user-defined partitioning may contain foreign key references;
+          no <code class="literal">InnoDB</code> table whose definition contains
+          foreign key references may be partitioned.
+        </p></li><li class="listitem"><p>
+          No <code class="literal">InnoDB</code> table definition may contain a
+          foreign key reference to a user-partitioned table; no
+          <code class="literal">InnoDB</code> table with user-defined partitioning
+          may contain columns referenced by foreign keys.
+</p></li></ol>
+</div>
+<p>
+      The scope of the restrictions just listed includes all tables that
+      use the <code class="literal">InnoDB</code> storage engine.
+      <a class="link" href="create-table-foreign-keys.html" title="15.1.20.5 FOREIGN KEY Constraints"><code class="literal">CREATE
+      TABLE</code></a> and <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a>
+      statements that would result in tables violating these
+      restrictions are not allowed.
+    </p><p><b>ALTER TABLE ... ORDER BY. </b>
+        An <code class="literal">ALTER TABLE ... ORDER BY
+        <em class="replaceable"><code>column</code></em></code> statement run
+        against a partitioned table causes ordering of rows only within
+        each partition.
+      </p><p><b>ADD COLUMN ... ALGORITHM=INSTANT. </b>
+        Once you perform
+        <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE ... ADD
+        COLUMN ... ALGORITHM=INSTANT</code></a> on a partitioned table,
+        it is no longer possible to exchange partitions with this table.
+      </p><p><b>Effects on REPLACE statements by modification of primary keys. </b>
+        It can be desirable in some cases (see
+        <a class="xref" href="partitioning-limitations-partitioning-keys-unique-keys.html" title="26.6.1 Partitioning Keys, Primary Keys, and Unique Keys">Section 26.6.1, “Partitioning Keys, Primary Keys, and Unique Keys”</a>)
+        to modify a table's primary key. Be aware that, if your
+        application uses <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE</code></a>
+        statements and you do this, the results of these statements can
+        be drastically altered. See <a class="xref" href="replace.html" title="15.2.12 REPLACE Statement">Section 15.2.12, “REPLACE Statement”</a>, for more
+        information and an example.
+      </p><p><b>FULLTEXT indexes. </b><a class="indexterm" name="idm45105543666224"></a>
+        Partitioned tables do not support <code class="literal">FULLTEXT</code>
+        indexes or searches.
+      </p><p><b>Spatial columns. </b>
+        Columns with spatial data types such as <code class="literal">POINT</code>
+        or <code class="literal">GEOMETRY</code> cannot be used in partitioned
+        tables.
+      </p><p><b>Temporary tables. </b><a class="indexterm" name="idm45105543660032"></a>
+        Temporary tables cannot be partitioned.
+      </p><p><b>Log tables. </b>
+        It is not possible to partition the log tables; an
+        <a class="link" href="alter-table-partition-operations.html" title="15.1.9.1 ALTER TABLE Partition Operations"><code class="literal">ALTER
+        TABLE ... PARTITION BY ...</code></a> statement on such a table
+        fails with an error.
+      </p><p><b>Data type of partitioning key. </b><a class="indexterm" name="idm45105543654672"></a>
+        A partitioning key must be either an integer column or an
+        expression that resolves to an integer. Expressions employing
+        <a class="link" href="enum.html" title="13.3.5 The ENUM Type"><code class="literal">ENUM</code></a> columns cannot be used. The
+        column or expression value may also be <code class="literal">NULL</code>;
+        see <a class="xref" href="partitioning-handling-nulls.html" title="26.2.7 How MySQL Partitioning Handles NULL">Section 26.2.7, “How MySQL Partitioning Handles NULL”</a>.
+      </p><p>
+      There are two exceptions to this restriction:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+          When partitioning by [<code class="literal">LINEAR</code>]
+          <code class="literal">KEY</code>, it is possible to use columns of any
+          valid MySQL data type other than
+          <a class="link" href="blob.html" title="13.3.4 The BLOB and TEXT Types"><code class="literal">TEXT</code></a> or
+          <a class="link" href="blob.html" title="13.3.4 The BLOB and TEXT Types"><code class="literal">BLOB</code></a> as partitioning keys,
+          because the internal key-hashing functions produce the correct
+          data type from these types. For example, the following two
+          <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE TABLE</code></a> statements are
+          valid:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE tkc (c1 CHAR)
+PARTITION BY KEY(c1)
+PARTITIONS 4;
+
+CREATE TABLE tke
+    ( c1 ENUM('red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet') )
+PARTITION BY LINEAR KEY(c1)
+PARTITIONS 6;</code></pre></li><li class="listitem"><p>
+          When partitioning by <code class="literal">RANGE COLUMNS</code> or
+          <code class="literal">LIST COLUMNS</code>, it is possible to use string,
+          <a class="link" href="datetime.html" title="13.2.2 The DATE, DATETIME, and TIMESTAMP Types"><code class="literal">DATE</code></a>, and
+          <a class="link" href="datetime.html" title="13.2.2 The DATE, DATETIME, and TIMESTAMP Types"><code class="literal">DATETIME</code></a> columns. For example,
+          each of the following <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE
+          TABLE</code></a> statements is valid:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE rc (c1 INT, c2 DATE)
+PARTITION BY RANGE COLUMNS(c2) (
+    PARTITION p0 VALUES LESS THAN('1990-01-01'),
+    PARTITION p1 VALUES LESS THAN('1995-01-01'),
+    PARTITION p2 VALUES LESS THAN('2000-01-01'),
+    PARTITION p3 VALUES LESS THAN('2005-01-01'),
+    PARTITION p4 VALUES LESS THAN(MAXVALUE)
+);
+
+CREATE TABLE lc (c1 INT, c2 CHAR(1))
+PARTITION BY LIST COLUMNS(c2) (
+    PARTITION p0 VALUES IN('a', 'd', 'g', 'j', 'm', 'p', 's', 'v', 'y'),
+    PARTITION p1 VALUES IN('b', 'e', 'h', 'k', 'n', 'q', 't', 'w', 'z'),
+    PARTITION p2 VALUES IN('c', 'f', 'i', 'l', 'o', 'r', 'u', 'x', NULL)
+);</code></pre></li></ol>
+</div>
+<p>
+      Neither of the preceding exceptions applies to
+      <a class="link" href="blob.html" title="13.3.4 The BLOB and TEXT Types"><code class="literal">BLOB</code></a> or
+      <a class="link" href="blob.html" title="13.3.4 The BLOB and TEXT Types"><code class="literal">TEXT</code></a> column types.
+    </p><p><b>Subqueries. </b><a class="indexterm" name="idm45105543629920"></a>
+        A partitioning key may not be a subquery, even if that subquery
+        resolves to an integer value or <code class="literal">NULL</code>.
+      </p><a class="indexterm" name="idm45105543627072"></a><a class="indexterm" name="idm45105543625584"></a><p><a name="partitioning-limitations-prefixes"></a><b>Column index prefixes not supported for key partitioning. </b>
+        When creating a table that is partitioned by key, any columns in
+        the partitioning key which use column prefixes are not allowed
+        in the table's partitioning function. Consider the
+        following <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE TABLE</code></a> statement,
+        which has three <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> columns,
+        and whose primary key uses all three columns and specifies a
+        prefix for one of them. This statement is rejected with an
+        error, as shown here:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; USE d;
+Database changed
+mysql&gt; CREATE TABLE t1 (
+    -&gt;     a VARCHAR(10000),
+    -&gt;     b VARCHAR(25),
+    -&gt;     c VARCHAR(10),
+    -&gt;     PRIMARY KEY (a(10), b, c)
+    -&gt; ) PARTITION BY KEY() PARTITIONS 2;
+ERROR 6123 (HY000): Column 'd.t1.a' having prefix key part 'a(10)' in the
+PARTITION BY KEY() clause is not supported.</code></pre><p>
+      For general information about partitioning tables by key, see
+      <a class="xref" href="partitioning-key.html" title="26.2.5 KEY Partitioning">Section 26.2.5, “KEY Partitioning”</a>.
+    </p><p><a name="partitioning-limitations-subpartitions"></a><b>Issues with subpartitions. </b><a class="indexterm" name="idm45105543610832"></a><a class="indexterm" name="idm45105543609344"></a>
+        Subpartitions must use <code class="literal">HASH</code> or
+        <code class="literal">KEY</code> partitioning. Only
+        <code class="literal">RANGE</code> and <code class="literal">LIST</code> partitions
+        may be subpartitioned; <code class="literal">HASH</code> and
+        <code class="literal">KEY</code> partitions cannot be subpartitioned.
+      </p><p>
+      <a class="indexterm" name="idm45105543602704"></a>
+
+      <code class="literal">SUBPARTITION BY KEY</code> requires that the
+      subpartitioning column or columns be specified explicitly, unlike
+      the case with <code class="literal">PARTITION BY KEY</code>, where it can be
+      omitted (in which case the table's primary key column is used
+      by default). Consider the table created by this statement:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE ts (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)
+);</code></pre><p>
+      You can create a table having the same columns, partitioned by
+      <code class="literal">KEY</code>, using a statement such as this one:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE ts (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)
+)
+PARTITION BY KEY()
+PARTITIONS 4;</code></pre><p>
+      The previous statement is treated as though it had been written
+      like this, with the table's primary key column used as the
+      partitioning column:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE ts (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)
+)
+PARTITION BY KEY(id)
+PARTITIONS 4;</code></pre><p>
+      However, the following statement that attempts to create a
+      subpartitioned table using the default column as the
+      subpartitioning column fails, and the column must be specified for
+      the statement to succeed, as shown here:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; CREATE TABLE ts (
+    -&gt;     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -&gt;     name VARCHAR(30)
+    -&gt; )
+    -&gt; PARTITION BY RANGE(id)
+    -&gt; SUBPARTITION BY KEY()
+    -&gt; SUBPARTITIONS 4
+    -&gt; (
+    -&gt;     PARTITION p0 VALUES LESS THAN (100),
+    -&gt;     PARTITION p1 VALUES LESS THAN (MAXVALUE)
+    -&gt; );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MySQL server version for the right syntax to use near ')
+
+mysql&gt; CREATE TABLE ts (
+    -&gt;     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -&gt;     name VARCHAR(30)
+    -&gt; )
+    -&gt; PARTITION BY RANGE(id)
+    -&gt; SUBPARTITION BY KEY(id)
+    -&gt; SUBPARTITIONS 4
+    -&gt; (
+    -&gt;     PARTITION p0 VALUES LESS THAN (100),
+    -&gt;     PARTITION p1 VALUES LESS THAN (MAXVALUE)
+    -&gt; );
+Query OK, 0 rows affected (0.07 sec)</code></pre><p>
+      This is a known issue (see Bug #51470).
+    </p><p><b>DATA DIRECTORY and INDEX DIRECTORY options. </b>
+        Table-level <code class="literal">DATA DIRECTORY</code> and <code class="literal">INDEX
+        DIRECTORY</code> options are ignored (see Bug #32091). You
+        can employ these options for individual partitions or
+        subpartitions of <a class="link" href="innodb-storage-engine.html" title="Chapter 17 The InnoDB Storage Engine"><code class="literal">InnoDB</code></a> tables. The
+        directory specified in a <code class="literal">DATA DIRECTORY</code>
+        clause must be known to <a class="link" href="innodb-storage-engine.html" title="Chapter 17 The InnoDB Storage Engine"><code class="literal">InnoDB</code></a>. For
+        more information, see
+        <a class="xref" href="innodb-create-table-external.html#innodb-create-table-external-data-directory" title="Using the DATA DIRECTORY Clause">Using the DATA DIRECTORY Clause</a>.
+      </p><p><b>Repairing and rebuilding partitioned tables. </b>
+        The statements <a class="link" href="check-table.html" title="15.7.3.2 CHECK TABLE Statement"><code class="literal">CHECK TABLE</code></a>,
+        <a class="link" href="optimize-table.html" title="15.7.3.4 OPTIMIZE TABLE Statement"><code class="literal">OPTIMIZE TABLE</code></a>,
+        <a class="link" href="analyze-table.html" title="15.7.3.1 ANALYZE TABLE Statement"><code class="literal">ANALYZE TABLE</code></a>, and
+        <a class="link" href="repair-table.html" title="15.7.3.5 REPAIR TABLE Statement"><code class="literal">REPAIR TABLE</code></a> are supported for
+        partitioned tables.
+      </p><p>
+      In addition, you can use <code class="literal">ALTER TABLE ... REBUILD
+      PARTITION</code> to rebuild one or more partitions of a
+      partitioned table; <code class="literal">ALTER TABLE ... REORGANIZE
+      PARTITION</code> also causes partitions to be rebuilt. See
+      <a class="xref" href="alter-table.html" title="15.1.9 ALTER TABLE Statement">Section 15.1.9, “ALTER TABLE Statement”</a>, for more information about these
+      two statements.
+    </p><p>
+      <code class="literal">ANALYZE</code>, <code class="literal">CHECK</code>,
+      <code class="literal">OPTIMIZE</code>, <code class="literal">REPAIR</code>, and
+      <code class="literal">TRUNCATE</code> operations are supported with
+      subpartitions. See
+      <a class="xref" href="alter-table-partition-operations.html" title="15.1.9.1 ALTER TABLE Partition Operations">Section 15.1.9.1, “ALTER TABLE Partition Operations”</a>.
+    </p><p><b>File name delimiters for partitions and subpartitions. </b>
+        Table partition and subpartition file names include generated
+        delimiters such as <code class="literal">#P#</code> and
+        <code class="literal">#SP#</code>. The lettercase of such delimiters can
+        vary and should not be depended upon.
+</p>
+</div><br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="partitioning-selection.html"
+        aria-label="Previous" title="Previous: Partition Selection"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="partitioning.html" title="Up: Partitioning"> UP</a> &nbsp;
+    <a href="partitioning-limitations-partitioning-keys-unique-keys.html" aria-label="Next"
+        title="Next: Partitioning Keys, Primary Keys, and Unique Keys">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/partitioning-limitations.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:53 GMT -->
+</html>

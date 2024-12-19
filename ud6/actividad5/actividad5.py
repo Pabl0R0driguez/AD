@@ -139,6 +139,7 @@ if __name__ == "__main__":
     manager = DatabaseManagerObject()
     manager.conectar()
 
+    # Bloque para crear motocicletas con transacción
     try:
         # 1) Crear motocicletas con transacción
         manager.iniciar_transaccion()
@@ -147,9 +148,14 @@ if __name__ == "__main__":
         manager.crear_motocicleta(3, "Kawasaki", 1000, 18000)
         manager.confirmar_transaccion()
 
+    except Exception as e:
+        logging.error(f"Error general: {e}")
+        manager.revertir_transaccion()
+
         # 2) Mostrar todos los objetos
         manager.leer_motocicletas()
 
+    try:
         # 3) Intentar insertar un objeto con un ID ya creado, controlado con transacciones
         manager.iniciar_transaccion()
         manager.crear_motocicleta(
@@ -157,9 +163,14 @@ if __name__ == "__main__":
         )  # Intentar crear un ID duplicado
         manager.confirmar_transaccion()
 
+    except Exception as e:
+        logging.error(f"Error general: {e}")
+        manager.revertir_transaccion()
+
         # 4) Mostrar todos los objetos nuevamente
         manager.leer_motocicletas()
 
+    try:
         # 5) Actualiza un objeto cambiando cualquier atributo, controlado con transacciones
         manager.iniciar_transaccion()
         manager.actualizar_motocicleta(
@@ -167,20 +178,24 @@ if __name__ == "__main__":
         )  # Cambiar cilindrada y precio
         manager.confirmar_transaccion()
 
+    except Exception as e:
+        logging.error(f"Error general: {e}")
+        manager.revertir_transaccion()
+
         # 6) Mostrar todos los objetos
         manager.leer_motocicletas()
 
+    try:
         # 7) Elimina un objeto con id que no exista, controlado con transacciones
         manager.iniciar_transaccion()
         manager.eliminar_motocicleta(99)  # Intentar eliminar un ID que no existe
         manager.confirmar_transaccion()
 
-        # 8) Mostrar todos los objetos
-        manager.leer_motocicletas()
-
     except Exception as e:
         logging.error(f"Error general: {e}")
         manager.revertir_transaccion()
 
-    finally:
-        manager.desconectar()
+        # 8) Mostrar todos los objetos
+        manager.leer_motocicletas()
+
+    manager.desconectar()
