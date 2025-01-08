@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/group-replication-cloning.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:15:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 20.5.4.2 Cloning for Distributed Recovery</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="group-replication-distributed-recovery-connections.html" title="20.5.4.1 Connections for Distributed Recovery" />
+<link rel="next" href="group-replication-tuning-recovery8dba.html?ff=nopfpls" title="20.5.4.3 Configuring Distributed Recovery" />
+<link rel="up" href="group-replication-distributed-recovery.html" title="20.5.4 Distributed Recovery" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7ytra-f-05cbadf6e-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":120,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"192ebce3","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5924,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730135266","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==qE8ziTEK261fMbvBET9Arn+CleA0uJZ4t/JtkvAhEIpHN+p5IXrYtzRr3rXjasV+xMQtXQpIak83PV8ifCEYeQVaMO5FUMXBBfh80Jp9CSMjPrCmHsz6fX4LohGX4qaW1a8wga+kNnkYYIk6C6rys41/oPjFB1J0eGZzHbsrvwDKEn/tg5Hg8O7wDU4HBW0x7t505UFuWdVka29mxcjr0Hfo9KfYfbgo6H5vEmekZmKnYNsiHtUzRPRA2uGXYffA0W8tFLCHTj+/Ufc6b/ZqV5Hbzhs1I6YMHhek6aOdzPspCsAjNymrlxkw0FIrrW4UWi1+wngCHREl/QkZNS9iHcxY8K6OQpe/vc72WdKmvjUR5gVLXrqddnj9WwRE++6TQQKRb6nx/RnIK5ZUyjszlOiFr8JdKK1j+KmbusFIugU=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fgroup-replication-cloning.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="group-replication-distributed-recovery-connections.html"
+        aria-label="Previous" title="Previous: Connections for Distributed Recovery"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="group-replication-distributed-recovery.html" title="Up: Distributed Recovery"><span class="icon-chevron-up"></span></a>
+    <a href="group-replication-tuning-recovery.html" aria-label="Next"
+        title="Next: Configuring Distributed Recovery"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-background.html">Group Replication Background</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-replication-technologies.html">Replication Technologies</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-primary-secondary-replication.html">Source to Replica Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-summary.html">Group Replication</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-use-cases.html">Group Replication Use Cases</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-deploying-in-multi-primary-or-single-primary-mode.html">Multi-Primary and Single-Primary Modes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-single-primary-mode.html">Single-Primary Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-multi-primary-mode.html">Multi-Primary Mode</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-details.html">Group Replication Services</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-group-membership.html">Group Membership</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-failure-detection.html">Failure Detection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-fault-tolerance.html">Fault-tolerance</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-observability.html">Observability</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-plugin-architecture.html">Group Replication Plugin Architecture</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-getting-started.html">Getting Started</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-deploying-in-single-primary-mode.html">Deploying Group Replication in Single-Primary Mode</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-deploying-instances.html">Deploying Instances for Group Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-configuring-instances.html">Configuring an Instance for Group Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-user-credentials.html">User Credentials For Distributed Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-launching.html">Launching Group Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-bootstrap.html">Bootstrapping the Group</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-adding-instances.html">Adding Instances to the Group</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-deploying-locally.html">Deploying Group Replication Locally</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-requirements-and-limitations.html">Requirements and Limitations</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-requirements.html">Group Replication Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-limitations.html">Group Replication Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-monitoring.html">Monitoring Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-gtids.html">GTIDs and Group Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-server-states.html">Group Replication Server States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-replication-group-members.html">The replication_group_members Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-replication-group-member-stats.html">The replication_group_member_stats Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-operations.html">Group Replication Operations</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-configuring-online-group.html">Configuring an Online Group</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-change-primary.html">Changing the Primary</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-changing-group-mode.html">Changing the Group Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-group-write-consensus.html">Using Group Replication Group Write Consensus</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-communication-protocol.html">Setting a Group&#039;s Communication Protocol Version</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-member-actions.html">Configuring Member Actions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-restarting-group.html">Restarting a Group</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-consistency-guarantees.html">Transaction Consistency Guarantees</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-understanding-consistency-guarantees.html">Understanding Transaction Consistency Guarantees</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-configuring-consistency-guarantees.html">Configuring Transaction Consistency Guarantees</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-distributed-recovery.html">Distributed Recovery</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-distributed-recovery-connections.html">Connections for Distributed Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="group-replication-cloning.html">Cloning for Distributed Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-tuning-recovery.html">Configuring Distributed Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-distributed-recovery-fault.html">Fault Tolerance for Distributed Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-view-changes.html">How Distributed Recovery Works</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-ipv6.html">Support For IPv6 And For Mixed IPv6 And IPv4 Groups</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-enterprise-backup.html">Using MySQL Enterprise Backup with Group Replication</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-security.html">Group Replication Security</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-connection-security.html">Communication Stack for Connection Security Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-secure-socket-layer-support-ssl.html">Securing Group Communication Connections with Secure Socket Layer (SSL)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-distributed-recovery-securing.html">Securing Distributed Recovery Connections</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-secure-user.html">Secure User Credentials for Distributed Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-configuring-ssl-for-recovery.html">Secure Socket Layer (SSL) Connections for Distributed Recovery</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-ip-address-permissions.html">Group Replication IP Address Permissions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-performance.html">Group Replication Performance and Troubleshooting</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-fine-tuning-the-group-communication-thread.html">Fine Tuning the Group Communication Thread</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-flow-control.html">Flow Control</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-probes-and-statistics.html">Probes and Statistics</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-throttling.html">Group Replication Throttling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-single-consensus-leader.html">Single Consensus Leader</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-message-compression.html">Message Compression</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-performance-message-fragmentation.html">Message Fragmentation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-performance-xcom-cache.html">XCom Cache Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-performance-xcom-cache-increase.html">Increasing the cache size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-performance-xcom-cache-reduce.html">Reducing the cache size</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-responses-failure.html">Responses to Failure Detection and Network Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-responses-failure-expel.html">Expel Timeout</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-responses-failure-partition.html">Unreachable Majority Timeout</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-responses-failure-rejoin.html">Auto-Rejoin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-responses-failure-exit.html">Exit Action</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-network-partitioning.html">Handling a Network Partition and Loss of Quorum</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-gr-memory-monitoring-ps-instruments.html">Monitoring Group Replication Memory Usage with Performance Schema Memory
+      Instrumentation</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-gr-memory-monitoring-ps-instruments-enable.html">Enabling or Disabling Group Replication Instrumentation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-gr-memory-monitoring-ps-sample-queries.html">Example Queries</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-upgrade.html">Upgrading Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-online-upgrade-combining-versions.html">Combining Different Member Versions in a Group</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-compatibility-upgrade.html">Member Versions During Upgrades</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-compatibility-communication.html">Group Replication Communication Protocol Version</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-offline-upgrade.html">Group Replication Offline Upgrade</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-online-upgrade.html">Group Replication Online Upgrade</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-online-upgrade-considerations.html">Online Upgrade Considerations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-upgrading-member.html">Upgrading a Group Replication Member</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-online-upgrade-methods.html">Group Replication Online Upgrade Methods</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-upgrade-with-mysqlbackup.html">Group Replication Upgrade with mysqlbackup</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication-options.html">Group Replication Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-system-variables.html">Group Replication System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-status-variables.html">Group Replication Status Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-replication-frequently-asked-questions.html">Frequently Asked Questions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/group-replication-cloning.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/group-replication-cloning.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/group-replication-cloning.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         class="tooltip-left"
+                        data-tooltip="The page you are viewing does not exist in version 5.7.
+                        This link will take you to the Table of Contents."
+                                                href="https://dev.mysql.com/doc/refman/5.7/en/">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/group-replication-cloning.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="group-replication.html">Group Replication</a> &nbsp;/&nbsp;
+                                                            <a href="group-replication-operations.html">Group Replication Operations</a> &nbsp;/&nbsp;
+                                                            <a href="group-replication-distributed-recovery.html">Distributed Recovery</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Cloning for Distributed Recovery
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="group-replication-cloning"></a>20.5.4.2 Cloning for Distributed Recovery</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        If you want to use remote cloning operations for distributed
+        recovery in a group, you must set up existing members and
+        joining members beforehand to support this function. If you do
+        not want to use this function in a group, do not set it up, in
+        which case Group Replication only uses state transfer from the
+        binary log.
+      </p><p>
+        To use cloning, at least one existing group member and the
+        joining member must be set up beforehand to support remote
+        cloning operations. As a minimum, you must install the clone
+        plugin on the donor and joining member, grant the
+        <a class="link" href="privileges-provided.html#priv_backup-admin"><code class="literal">BACKUP_ADMIN</code></a> permission to the
+        replication user for distributed recovery, and set the
+        <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_clone_threshold"><code class="literal">group_replication_clone_threshold</code></a>
+        system variable to an appropriate level. To ensure the maximum
+        availability of donors, it is advisable to set up all current
+        and future group members to support remote cloning operations.
+      </p><p>
+        Be aware that a remote cloning operation removes user-created
+        tablespaces and data from the joining member before transferring
+        the data from the donor. If the operation is stopped while in
+        progress, the joining member might be left with partial data or
+        no data. This can be repaired by retrying the remote cloning
+        operation, which Group Replication does automatically.
+</p>
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title"><a name="group-replication-cloning-prerequisites"></a>20.5.4.2.1 Prerequisites for Cloning</h5>
+</div>
+</div>
+</div>
+<p>
+          For full instructions to set up and configure the clone
+          plugin, see <a class="xref" href="clone-plugin.html" title="7.6.7 The Clone Plugin">Section 7.6.7, “The Clone Plugin”</a> . Detailed
+          prerequisites for a remote cloning operation are covered in
+          <a class="xref" href="clone-plugin-remote.html" title="7.6.7.3 Cloning Remote Data">Section 7.6.7.3, “Cloning Remote Data”</a> . For Group Replication,
+          note the following key points and differences:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              The donor (an existing group member) and the recipient
+              (the joining member) must have the clone plugin installed
+              and active. For instructions to do this, see
+              <a class="xref" href="clone-plugin-installation.html" title="7.6.7.1 Installing the Clone Plugin">Section 7.6.7.1, “Installing the Clone Plugin”</a> .
+            </p></li><li class="listitem"><p>
+              The donor and the recipient must run on the same operating
+              system, and must use the same MySQL Server release series.
+              Cloning is therefore not suitable for groups where members
+              run different minor MySQL Server versions, such as MySQL
+              8.0 and 8.4.
+            </p></li><li class="listitem"><p>
+              The donor and the recipient must have the Group
+              Replication plugin installed and active, and any other
+              plugins that are active on the donor (such as a keyring
+              plugin) must also be active on the recipient.
+            </p></li><li class="listitem"><p>
+              If distributed recovery is configured to use SSL
+              (<a class="link" href="group-replication-system-variables.html#sysvar_group_replication_recovery_use_ssl"><code class="literal">group_replication_recovery_use_ssl=ON</code></a>),
+              Group Replication applies this setting for remote cloning
+              operations. Group Replication automatically configures the
+              settings for the clone SSL options
+              (<a class="link" href="clone-plugin-options-variables.html#sysvar_clone_ssl_ca"><code class="literal">clone_ssl_ca</code></a>,
+              <a class="link" href="clone-plugin-options-variables.html#sysvar_clone_ssl_cert"><code class="literal">clone_ssl_cert</code></a>, and
+              <a class="link" href="clone-plugin-options-variables.html#sysvar_clone_ssl_key"><code class="literal">clone_ssl_key</code></a>) to match
+              your settings for the corresponding Group Replication
+              distributed recovery options
+              (<a class="link" href="group-replication-system-variables.html#sysvar_group_replication_recovery_ssl_ca"><code class="literal">group_replication_recovery_ssl_ca</code></a>,
+              <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_recovery_ssl_cert"><code class="literal">group_replication_recovery_ssl_cert</code></a>,
+              and
+              <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_recovery_ssl_key"><code class="literal">group_replication_recovery_ssl_key</code></a>).
+            </p></li><li class="listitem"><p>
+              You do not need to set up a list of valid donors in the
+              <a class="link" href="clone-plugin-options-variables.html#sysvar_clone_valid_donor_list"><code class="literal">clone_valid_donor_list</code></a>
+              system variable for the purpose of joining a replication
+              group. Group Replication configures this setting
+              automatically for you after it selects a donor from the
+              existing group members. Note that remote cloning
+              operations use the server's SQL protocol hostname and
+              port.
+            </p></li><li class="listitem"><p>
+              The clone plugin has a number of system variables to
+              manage the network load and performance impact of the
+              remote cloning operation. Group Replication does not
+              configure these settings, so you can review them and set
+              them if you want to, or allow them to default. Note that
+              when a remote cloning operation is used for distributed
+              recovery, the clone plugin's
+              <a class="link" href="clone-plugin-options-variables.html#sysvar_clone_enable_compression"><code class="literal">clone_enable_compression</code></a>
+              setting applies to the operation, rather than the Group
+              Replication compression setting.
+            </p></li><li class="listitem"><p>
+              To invoke the remote cloning operation on the recipient,
+              Group Replication uses the internal
+              <code class="literal">mysql.session</code> user, which already has
+              the <a class="link" href="privileges-provided.html#priv_clone-admin"><code class="literal">CLONE_ADMIN</code></a> privilege,
+              so you do not need to set this up.
+            </p></li><li class="listitem"><p>
+              As the clone user on the donor for the remote cloning
+              operation, Group Replication uses the replication user
+              that you set up for distributed recovery (which is covered
+              in <a class="xref" href="group-replication-user-credentials.html" title="20.2.1.3 User Credentials For Distributed Recovery">Section 20.2.1.3, “User Credentials For Distributed Recovery”</a>).
+              You must therefore give the
+              <a class="link" href="privileges-provided.html#priv_backup-admin"><code class="literal">BACKUP_ADMIN</code></a> privilege to
+              this replication user on all group members that support
+              cloning. Also give the privilege to the replication user
+              on joining members when you are configuring them for Group
+              Replication, because they can act as donors after they
+              join the group. The same replication user is used for
+              distributed recovery on every group member. To give this
+              privilege to the replication user on existing members, you
+              can issue this statement on each group member individually
+              with binary logging disabled, or on one group member with
+              binary logging enabled:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">GRANT BACKUP_ADMIN ON *.* TO <em class="replaceable">rpl_user</em>@'%';</code></pre></li><li class="listitem"><p>
+              If you use <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START
+              GROUP_REPLICATION</code></a> to specify the replication
+              user credentials on a server that previously supplied the
+              user credentials using <a class="link" href="change-replication-source-to.html" title="15.4.2.2 CHANGE REPLICATION SOURCE TO Statement"><code class="literal">CHANGE
+              REPLICATION SOURCE TO</code></a>, ensure that you remove
+              the user credentials from the replication metadata
+              repositories before any remote cloning operations take
+              place. Also ensure that
+              <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_start_on_boot"><code class="literal">group_replication_start_on_boot=OFF</code></a>
+              is set on the joining member. For instructions, see
+              <a class="xref" href="group-replication-distributed-recovery-securing.html" title="20.6.3 Securing Distributed Recovery Connections">Section 20.6.3, “Securing Distributed Recovery Connections”</a>.
+              If you do not unset the user credentials, they are
+              transferred to the joining member during remote cloning
+              operations. The
+              <code class="literal">group_replication_recovery</code> channel
+              could then be inadvertently started with the stored
+              credentials, on either the original member or members that
+              were cloned from it. An automatic start of Group
+              Replication on server boot (including after a remote
+              cloning operation) would use the stored user credentials,
+              and they would also be used if an operator did not specify
+              the distributed recovery credentials on a
+              <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START GROUP_REPLICATION</code></a>
+              statement.
+</p></li></ul>
+</div>
+
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title"><a name="group-replication-cloning-threshold"></a>20.5.4.2.2 Threshold for Cloning</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          When group members have been set up to support cloning, the
+          <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_clone_threshold"><code class="literal">group_replication_clone_threshold</code></a>
+          system variable specifies a threshold, expressed as a number
+          of transactions, for the use of a remote cloning operation in
+          distributed recovery. If the gap between the transactions on
+          the donor and the transactions on the joining member is larger
+          than this number, a remote cloning operation is used for state
+          transfer to the joining member when this is technically
+          possible. Group Replication calculates whether the threshold
+          has been exceeded based on the
+          <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> sets of the
+          existing group members. Using a remote cloning operation in
+          the event of a large transaction gap lets you add new members
+          to the group without transferring the group's data to the
+          server manually beforehand, and also enables a member that is
+          very out of date to catch up more efficiently.
+        </p><p>
+          The default setting for the
+          <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_clone_threshold"><code class="literal">group_replication_clone_threshold</code></a>
+          Group Replication system variable is extremely high (the
+          maximum permitted sequence number for a transaction in a
+          GTID), so it effectively deactivates cloning wherever state
+          transfer from the binary log is possible. To enable Group
+          Replication to select a remote cloning operation for state
+          transfer where this is more appropriate, set the system
+          variable to specify a number of transactions as the
+          transaction gap above which you want cloning to take place.
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Warning
+</div>
+<p>
+            Do not use a low setting for
+            <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_clone_threshold"><code class="literal">group_replication_clone_threshold</code></a>
+            in an active group. If a number of transactions above the
+            threshold takes place in the group while the remote cloning
+            operation is in progress, the joining member triggers a
+            remote cloning operation again after restarting, and could
+            continue this indefinitely. To avoid this situation, ensure
+            that you set the threshold to a number higher than the
+            number of transactions that you would expect to occur in the
+            group during the time taken for the remote cloning
+            operation.
+</p>
+</div>
+<p>
+          Group Replication attempts to execute a remote cloning
+          operation regardless of your threshold when state transfer
+          from a donor's binary log is impossible, for example because
+          the transactions needed by the joining member are not
+          available in the binary log on any existing group member.
+          Group Replication identifies this based on the
+          <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> sets of the
+          existing group members. You cannot use the
+          <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_clone_threshold"><code class="literal">group_replication_clone_threshold</code></a>
+          system variable to deactivate cloning when the required
+          transactions are not available in any member's binary log
+          files, because in that situation cloning is the only
+          alternative to transferring data to the joining member
+          manually.
+</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title"><a name="group-replication-cloning-operations"></a>20.5.4.2.3 Cloning Operations</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          When group members and joining members are set up for cloning,
+          Group Replication manages remote cloning operations for you. A
+          remote cloning operation might take some time to complete,
+          depending on the size of the data. See
+          <a class="xref" href="clone-plugin-monitoring.html" title="7.6.7.10 Monitoring Cloning Operations">Section 7.6.7.10, “Monitoring Cloning Operations”</a> for information on
+          monitoring the process.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+            When state transfer is complete, Group Replication restarts
+            the joining member to complete the process. If
+            <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_start_on_boot"><code class="literal">group_replication_start_on_boot=OFF</code></a>
+            is set on the joining member, for example because you
+            specify the replication user credentials on the
+            <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START GROUP_REPLICATION</code></a>
+            statement, you must issue <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START
+            GROUP_REPLICATION</code></a> manually again following this
+            restart. If
+            <a class="link" href="group-replication-system-variables.html#sysvar_group_replication_start_on_boot"><code class="literal">group_replication_start_on_boot=ON</code></a>
+            and other settings required to start Group Replication were
+            set in a configuration file or using a <code class="literal">SET
+            PERSIST</code> statement, you do not need to intervene
+            and the process continues automatically to bring the joining
+            member online.
+</p>
+</div>
+<p>
+          A remote cloning operation clones settings that are persisted
+          in tables from the donor to the recipient, as well as the
+          data. Group Replication manages the settings that relate
+          specifically to Group Replication channels. Group Replication
+          member settings that are persisted in configuration files,
+          such as the group replication local address, are not cloned
+          and are not changed on the joining member. Group Replication
+          also preserves the channel settings that relate to the use of
+          SSL, so these are unique to the individual member.
+        </p><p>
+          If the replication user credentials used by the donor for the
+          <code class="literal">group_replication_recovery</code> replication
+          channel have been stored in the replication metadata
+          repositories using a <a class="link" href="change-replication-source-to.html" title="15.4.2.2 CHANGE REPLICATION SOURCE TO Statement"><code class="literal">CHANGE REPLICATION
+          SOURCE TO</code></a> statement, they are transferred to and
+          used by the joining member after cloning, and they must be
+          valid there. With stored credentials, all group members that
+          received state transfer by a remote cloning operation
+          therefore automatically receive the replication user and
+          password for distributed recovery. If you specify the
+          replication user credentials on the <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START
+          GROUP_REPLICATION</code></a> statement, these are used to start
+          the remote cloning operation, but they are not transferred to
+          and used by the joining member after cloning. If you do not
+          want the credentials transferred to new joiners and recorded
+          there, ensure that you unset them before remote cloning
+          operations take place, as described in
+          <a class="xref" href="group-replication-distributed-recovery-securing.html" title="20.6.3 Securing Distributed Recovery Connections">Section 20.6.3, “Securing Distributed Recovery Connections”</a>,
+          and use <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START GROUP_REPLICATION</code></a>
+          to supply them instead.
+        </p><p>
+          If a <code class="literal">PRIVILEGE_CHECKS_USER</code> account has been
+          used to help secure the replication appliers (see
+          <a class="xref" href="replication-privilege-checks-gr.html" title="19.3.3.2 Privilege Checks For Group Replication Channels">Section 19.3.3.2, “Privilege Checks For Group Replication Channels”</a>), the
+          <code class="literal">PRIVILEGE_CHECKS_USER</code> account and related
+          settings from the donor are cloned to the joining member. If
+          the joining member is set to start Group Replication on boot,
+          it automatically uses the account for privilege checks on the
+          appropriate replication channels.
+</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title"><a name="group-replication-cloning-manual"></a>20.5.4.2.4 Cloning for Other Purposes</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Group Replication initiates and manages cloning operations for
+          distributed recovery. Group members that have been set up to
+          support cloning may also participate in cloning operations
+          that a user initiates manually. For example, you might want to
+          create a new server instance by cloning from a group member as
+          the donor, but you do not want the new server instance to join
+          the group immediately, or maybe not ever.
+        </p><p>
+          In all releases that support cloning, you can initiate a
+          cloning operation manually involving a group member on which
+          Group Replication is stopped. Note that because cloning
+          requires that the active plugins on a donor and recipient must
+          match, the Group Replication plugin must be installed and
+          active on the other server instance, even if you do not intend
+          that server instance to join a group. You can install the
+          plugin by issuing this statement:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">INSTALL PLUGIN group_replication SONAME 'group_replication.so';</code></pre><p>
+          You can initiate a cloning operation manually if the operation
+          involves a group member on which Group Replication is running,
+          provided that the cloning operation does not remove and
+          replace the data on the recipient. The statement to initiate
+          the cloning operation must therefore include the <code class="literal">DATA
+          DIRECTORY</code> clause if Group Replication is running.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="group-replication-distributed-recovery-connections.html"
+        aria-label="Previous" title="Previous: Connections for Distributed Recovery"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="group-replication-distributed-recovery.html" title="Up: Distributed Recovery"> UP</a> &nbsp;
+    <a href="group-replication-tuning-recovery.html" aria-label="Next"
+        title="Next: Configuring Distributed Recovery">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/group-replication-cloning.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:15:03 GMT -->
+</html>

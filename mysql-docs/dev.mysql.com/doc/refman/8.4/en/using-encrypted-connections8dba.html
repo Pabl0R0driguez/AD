@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/using-encrypted-connections.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 8.3.1 Configuring MySQL to Use Encrypted Connections</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="encrypted-connections.html" title="8.3 Using Encrypted Connections" />
+<link rel="next" href="encrypted-connection-protocols-ciphers8dba.html?ff=nopfpls" title="8.3.2 Encrypted Connection TLS Protocols and Ciphers" />
+<link rel="up" href="encrypted-connections.html" title="8.3 Using Encrypted Connections" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xy2a-f-3b80920f7-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":70,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18dff722","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5949,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730133556","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==lh1zl6STYWdmGzXXTMb9qPwQxv3jAf5OhyHL7/1jO27+VgOdHdDMRCcH4nnSPJdpn0QgrMqqtVyPZUfqOH8X9A98N7dU6X9ypazhUqB9ILJule21f+Jz8RGSagy3YprcELeRsIG67YPdRU+MCc2rAuJTIFsdTAha8yj24mt7GUpmiB8M42i3ADw4fky4BO9vf7vdqDAJF1fU0I6wz/kHCrPqL1icW+5IaUrj29b6rHvz/UzBCGP7wnVtG8U8QkpwQ7PnMiNJ+G9ohfutf8Bwlb9IIDuznXALjOF2QuaTXVdto0bf/18kMPAxnvAryzAjmu53xj4gmFFxKTeCd270PY7zbxv9haVg4LecRD7x9LnTzyBkWMJWzKym2e8XHNJVzlSb1bqhmIueN/aPMiAs8gEJmS7/I9U3ZS9CE0Cd5F0=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fusing-encrypted-connections.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="encrypted-connections.html"
+        aria-label="Previous" title="Previous: Using Encrypted Connections"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="encrypted-connections.html" title="Up: Using Encrypted Connections"><span class="icon-chevron-up"></span></a>
+    <a href="encrypted-connection-protocols-ciphers.html" aria-label="Next"
+        title="Next: Encrypted Connection TLS Protocols and Ciphers"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="general-security-issues.html">General Security Issues</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-guidelines.html">Security Guidelines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="password-security.html">Keeping Passwords Secure</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-user.html">End-User Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-security-admin.html">Administrator Guidelines for Password Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-logging.html">Passwords and Logging</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-against-attack.html">Making MySQL Secure Against Attackers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="security-options.html">Security-Related mysqld Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="changing-mysql-user.html">How to Run MySQL as a Normal User</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-data-local-security.html">Security Considerations for LOAD DATA LOCAL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="secure-client-programming.html">Client Programming Security Guidelines</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="access-control.html">Access Control and Account Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-names.html">Account User Names and Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privileges-provided.html">Privileges Provided by MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="grant-tables.html">Grant Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-names.html">Specifying Account Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="role-names.html">Specifying Role Names</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-access.html">Access Control, Stage 1: Connection Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="request-access.html">Access Control, Stage 2: Request Verification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-accounts.html">Adding Accounts, Assigning Privileges, and Dropping Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reserved-accounts.html">Reserved Accounts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="roles.html">Using Roles</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-categories.html">Account Categories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="partial-revokes.html">Privilege Restriction Using Partial Revokes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privilege-changes.html">When Privilege Changes Take Effect</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="assigning-passwords.html">Assigning Account Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="password-management.html">Password Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="expired-password-handling.html">Server Handling of Expired Passwords</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication.html">Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multifactor-authentication.html">Multifactor Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="proxy-users.html">Proxy Users</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-locking.html">Account Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="user-resources.html">Setting Account Resource Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="problems-connecting.html">Troubleshooting Problems Connecting to MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="account-activity-auditing.html">SQL-Based Account Activity Auditing</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="encrypted-connections.html">Using Encrypted Connections</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="using-encrypted-connections.html">Configuring MySQL to Use Encrypted Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="encrypted-connection-protocols-ciphers.html">Encrypted Connection TLS Protocols and Ciphers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files.html">Creating SSL and RSA Certificates and Keys</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-rsa-files-using-mysql.html">Creating SSL and RSA Certificates and Keys using MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-ssl-files-using-openssl.html">Creating SSL Certificates and Keys Using openssl</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-rsa-files-using-openssl.html">Creating RSA Keys Using openssl</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-and-ssh.html">Connecting to MySQL Remotely from Windows with SSH</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reusing-ssl-sessions.html">Reusing SSL Sessions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security-plugins.html">Security Components and Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="authentication-plugins.html">Authentication Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="native-pluggable-authentication.html">Native Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="caching-sha2-pluggable-authentication.html">Caching SHA-2 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sha256-pluggable-authentication.html">SHA-256 Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cleartext-pluggable-authentication.html">Client-Side Cleartext Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pam-pluggable-authentication.html">PAM Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-pluggable-authentication.html">Windows Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ldap-pluggable-authentication.html">LDAP Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="kerberos-pluggable-authentication.html">Kerberos Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="no-login-pluggable-authentication.html">No-Login Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="socket-pluggable-authentication.html">Socket Peer-Credential Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="webauthn-pluggable-authentication.html">WebAuthn Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="test-pluggable-authentication.html">Test Pluggable Authentication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="pluggable-authentication-system-variables.html">Pluggable Authentication System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-control.html">The Connection-Control Plugins</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-installation.html">Connection-Control Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-control-variables.html">Connection-Control System and Status Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="validate-password.html">The Password Validation Component</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-installation.html">Password Validation Component Installation and Uninstallation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-options-variables.html">Password Validation Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="validate-password-transitioning.html">Transitioning to the Password Validation Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="keyring.html">The MySQL Keyring</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-plugin-comparison.html">Keyring Components Versus Keyring Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-component-installation.html">Keyring Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-plugin-installation.html">Keyring Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-file-component.html">Using the component_keyring_file File-Based Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-encrypted-file-component.html">Using the component_keyring_encrypted_file Encrypted File-Based Keyring
+Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-okv-plugin.html">Using the keyring_okv KMIP Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-aws-plugin.html">Using the keyring_aws Amazon Web Services Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-hashicorp-plugin.html">Using the HashiCorp Vault Keyring Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-oci-component.html">Using the Oracle Cloud Infrastructure Vault Keyring Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-types.html">Supported Keyring Key Types and Lengths</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-key-migration.html">Migrating Keys Between Keyring Keystores</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-general-purpose.html">General-Purpose Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-functions-plugin-specific.html">Plugin-Specific Keyring Key-Management Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-metadata.html">Keyring Metadata</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-options.html">Keyring Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-system-variables.html">Keyring System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="audit-log.html">MySQL Enterprise Audit</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-elements.html">Elements of MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-installation.html">Installing or Uninstalling MySQL Enterprise Audit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-security.html">MySQL Enterprise Audit Security Considerations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-formats.html">Audit Log File Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-logging-configuration.html">Configuring Audit Logging Characteristics</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-file-reading.html">Reading Audit Log Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filtering.html">Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-filter-definitions.html">Writing Audit Log Filter Definitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-disabling.html">Disabling Audit Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-legacy-filtering.html">Legacy Mode Audit Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-reference.html">Audit Log Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-log-restrictions.html">Audit Log Restrictions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="audit-api-message-emit.html">The Audit Message Component</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="firewall.html">MySQL Enterprise Firewall</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-elements.html">Elements of MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-installation.html">Installing or Uninstalling MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-usage.html">Using MySQL Enterprise Firewall</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="firewall-reference.html">MySQL Enterprise Firewall Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking.html">MySQL Enterprise Data Masking and De-Identification</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-vs-plugin.html">Data-Masking Components Versus the Data-Masking Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-components.html">MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-components-installation.html">MySQL Enterprise Data Masking and De-Identification Component Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-usage.html">Using MySQL Enterprise Data Masking and De-Identification Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-function-reference.html">MySQL Enterprise Data Masking and De-Identification Component Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-functions.html">MySQL Enterprise Data Masking and De-Identification Component Function Descriptions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-component-variables.html">MySQL Enterprise Data Masking and De-Identification Component Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin.html">MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-installation.html">MySQL Enterprise Data Masking and De-Identification Plugin Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-usage.html">Using the MySQL Enterprise Data Masking and De-Identification Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-function-reference.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-masking-plugin-functions.html">MySQL Enterprise Data Masking and De-Identification Plugin Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption.html">MySQL Enterprise Encryption</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-installation.html">MySQL Enterprise Encryption Installation and Upgrading</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-configuring.html">Configuring MySQL Enterprise Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-usage.html">MySQL Enterprise Encryption Usage and Examples</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-function-reference.html">MySQL Enterprise Encryption Function Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="enterprise-encryption-functions.html">MySQL Enterprise Encryption Component Function Descriptions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux.html">SELinux</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-checking.html">Check if SELinux is Enabled</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-mode.html">Changing the SELinux Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-policies.html">MySQL Server SELinux Policies</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-file-context.html">SELinux File Context</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="selinux-context-tcp-port.html">SELinux TCP Port Context</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysqld-tcp-port.html">Setting the TCP Port Context for mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-context-mysql-feature-ports.html">Setting the TCP Port Context for MySQL Features</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="selinux-troubleshooting.html">Troubleshooting SELinux</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="fips-mode.html">FIPS Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/using-encrypted-connections.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/using-encrypted-connections.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/using-encrypted-connections.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/using-encrypted-connections.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="security.html">Security</a> &nbsp;/&nbsp;
+                                                            <a href="encrypted-connections.html">Using Encrypted Connections</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Configuring MySQL to Use Encrypted Connections
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="using-encrypted-connections"></a>8.3.1 Configuring MySQL to Use Encrypted Connections</h3>
+</div>
+</div>
+</div>
+<a class="indexterm" name="idm45105707898352"></a><a class="indexterm" name="idm45105707897312"></a><a class="indexterm" name="idm45105707895840"></a><p>
+      Several configuration parameters are available to indicate whether
+      to use encrypted connections, and to specify the appropriate
+      certificate and key files. This section provides general guidance
+      about configuring the server and clients for encrypted
+      connections:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="using-encrypted-connections.html#using-encrypted-connections-server-side-startup-configuration" title="Server-Side Startup Configuration for Encrypted Connections">Server-Side Startup Configuration for Encrypted Connections</a></p></li><li class="listitem"><p><a class="xref" href="using-encrypted-connections.html#using-encrypted-connections-server-side-runtime-configuration" title="Server-Side Runtime Configuration and Monitoring for Encrypted Connections">Server-Side Runtime Configuration and Monitoring for Encrypted
+Connections</a></p></li><li class="listitem"><p><a class="xref" href="using-encrypted-connections.html#using-encrypted-connections-client-side-configuration" title="Client-Side Configuration for Encrypted Connections">Client-Side Configuration for Encrypted Connections</a></p></li><li class="listitem"><p><a class="xref" href="using-encrypted-connections.html#enforce-certificate-validation" title="Configuring Certificate Validation Enforcement">Configuring Certificate Validation Enforcement</a></p></li><li class="listitem"><p><a class="xref" href="using-encrypted-connections.html#mandatory-encrypted-connections" title="Configuring Encrypted Connections as Mandatory">Configuring Encrypted Connections as Mandatory</a></p></li></ul>
+</div>
+<p>
+      Encrypted connections also can be used in other contexts, as
+      discussed in these additional sections:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          Between source and replica replication servers. See
+          <a class="xref" href="replication-encrypted-connections.html" title="19.3.1 Setting Up Replication to Use Encrypted Connections">Section 19.3.1, “Setting Up Replication to Use Encrypted Connections”</a>.
+        </p></li><li class="listitem"><p>
+          Among Group Replication servers. See
+          <a class="xref" href="group-replication-secure-socket-layer-support-ssl.html" title="20.6.2 Securing Group Communication Connections with Secure Socket Layer (SSL)">Section 20.6.2, “Securing Group Communication Connections with Secure Socket Layer (SSL)”</a>.
+        </p></li><li class="listitem"><p>
+          By client programs that are based on the MySQL C API. See
+          <a class="ulink" href="https://dev.mysql.com/doc/c-api/8.4/en/c-api-encrypted-connections.html" target="_top">Support for Encrypted Connections</a>.
+</p></li></ul>
+</div>
+<p>
+      Instructions for creating any required certificate and key files
+      are available in <a class="xref" href="creating-ssl-rsa-files.html" title="8.3.3 Creating SSL and RSA Certificates and Keys">Section 8.3.3, “Creating SSL and RSA Certificates and Keys”</a>.
+</p>
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h4 class="title"><a name="using-encrypted-connections-server-side-startup-configuration"></a>Server-Side Startup Configuration for Encrypted Connections</h4>
+</div>
+</div>
+</div>
+<p>
+        To require that clients connect using encrypted connections,
+        enable the
+        <a class="link" href="server-system-variables.html#sysvar_require_secure_transport"><code class="literal">require_secure_transport</code></a> system
+        variable. See <a class="xref" href="using-encrypted-connections.html#mandatory-encrypted-connections" title="Configuring Encrypted Connections as Mandatory">Configuring Encrypted Connections as Mandatory</a>.
+      </p><p>
+        These system variables on the server side specify the
+        certificate and key files the server uses when permitting
+        clients to establish encrypted connections:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="server-system-variables.html#sysvar_ssl_ca"><code class="literal">ssl_ca</code></a>: The path name of
+            the Certificate Authority (CA) certificate file.
+            (<a class="link" href="server-system-variables.html#sysvar_ssl_capath"><code class="literal">ssl_capath</code></a> is similar but
+            specifies the path name of a directory of CA certificate
+            files.)
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-system-variables.html#sysvar_ssl_cert"><code class="literal">ssl_cert</code></a>: The path name of
+            the server public key certificate file. This certificate can
+            be sent to the client and authenticated against the CA
+            certificate that it has.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-system-variables.html#sysvar_ssl_key"><code class="literal">ssl_key</code></a>: The path name of
+            the server private key file.
+</p></li></ul>
+</div>
+<p>
+        For example, to enable the server for encrypted connections,
+        start it with these lines in the <code class="filename">my.cnf</code>
+        file, changing the file names as necessary:
+      </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+ssl_ca=ca.pem
+ssl_cert=server-cert.pem
+ssl_key=server-key.pem</code></pre><p>
+        To specify in addition that clients are required to use
+        encrypted connections, enable the
+        <a class="link" href="server-system-variables.html#sysvar_require_secure_transport"><code class="literal">require_secure_transport</code></a> system
+        variable:
+      </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+ssl_ca=ca.pem
+ssl_cert=server-cert.pem
+ssl_key=server-key.pem
+require_secure_transport=ON</code></pre><p>
+        Each certificate and key system variable names a file in PEM
+        format. Should you need to create the required certificate and
+        key files, see <a class="xref" href="creating-ssl-rsa-files.html" title="8.3.3 Creating SSL and RSA Certificates and Keys">Section 8.3.3, “Creating SSL and RSA Certificates and Keys”</a>. MySQL
+        servers compiled using OpenSSL can generate missing certificate
+        and key files automatically at startup. See
+        <a class="xref" href="creating-ssl-rsa-files-using-mysql.html" title="8.3.3.1 Creating SSL and RSA Certificates and Keys using MySQL">Section 8.3.3.1, “Creating SSL and RSA Certificates and Keys using MySQL”</a>.
+        Alternatively, if you have a MySQL source distribution, you can
+        test your setup using the demonstration certificate and key
+        files in its <code class="filename">mysql-test/std_data</code> directory.
+      </p><p>
+        The server performs certificate and key file autodiscovery. If
+        no explicit encrypted-connection options are given to configure
+        encrypted connections, the server attempts to enable
+        encrypted-connection support automatically at startup:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If the server discovers valid certificate and key files
+            named <code class="filename">ca.pem</code>,
+            <code class="filename">server-cert.pem</code>, and
+            <code class="filename">server-key.pem</code> in the data directory,
+            it enables support for encrypted connections by clients.
+            (The files need not have been generated automatically; what
+            matters is that they have those names and are valid.)
+          </p></li><li class="listitem"><p>
+            If the server does not find valid certificate and key files
+            in the data directory, it continues executing but without
+            support for encrypted connections.
+</p></li></ul>
+</div>
+<p>
+        If the server automatically enables encrypted connection
+        support, it writes a note to the error log. If the server
+        discovers that the CA certificate is self-signed, it writes a
+        warning to the error log. (The certificate is self-signed if
+        created automatically by the server.)
+      </p><p>
+        MySQL also provides these system variables for server-side
+        encrypted-connection control:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="server-system-variables.html#sysvar_ssl_cipher"><code class="literal">ssl_cipher</code></a>: The list of
+            permissible ciphers for connection encryption.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-system-variables.html#sysvar_ssl_crl"><code class="literal">ssl_crl</code></a>: The path name of
+            the file containing certificate revocation lists.
+            (<a class="link" href="server-system-variables.html#sysvar_ssl_crlpath"><code class="literal">ssl_crlpath</code></a> is similar but
+            specifies the path name of a directory of certificate
+            revocation-list files.)
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-system-variables.html#sysvar_tls_version"><code class="literal">tls_version</code></a>,
+            <a class="link" href="server-system-variables.html#sysvar_tls_ciphersuites"><code class="literal">tls_ciphersuites</code></a>: Which
+            encryption protocols and ciphersuites the server permits for
+            encrypted connections; see
+            <a class="xref" href="encrypted-connection-protocols-ciphers.html" title="8.3.2 Encrypted Connection TLS Protocols and Ciphers">Section 8.3.2, “Encrypted Connection TLS Protocols and Ciphers”</a>.
+            For example, you can configure
+            <a class="link" href="server-system-variables.html#sysvar_tls_version"><code class="literal">tls_version</code></a> to prevent
+            clients from using less-secure protocols.
+</p></li></ul>
+</div>
+<p>
+        If the server cannot create a valid TLS context from the system
+        variables for server-side encrypted-connection control, the
+        server executes without support for encrypted connections.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="using-encrypted-connections-server-side-runtime-configuration"></a>Server-Side Runtime Configuration and Monitoring for Encrypted
+Connections</h4>
+</div>
+</div>
+</div>
+<p>
+        The <code class="literal">tls_<em class="replaceable"><code>xxx</code></em></code> and
+        <code class="literal">ssl_<em class="replaceable"><code>xxx</code></em></code> system
+        variables are dynamic and can be set at runtime, not just at
+        startup. If changed with
+        <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+        GLOBAL</code></a>, the new values apply only until server
+        restart. If changed with
+        <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+        PERSIST</code></a>, the new values also carry over to subsequent
+        server restarts. See <a class="xref" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment">Section 15.7.6.1, “SET Syntax for Variable Assignment”</a>. However,
+        runtime changes to these variables do not immediately affect the
+        TLS context for new connections, as explained later in this
+        section.
+      </p><p>
+        Along with the change that enables runtime changes to the TLS
+        context-related system variables, the server enables runtime
+        updates to the actual TLS context used for new connections. This
+        capability may be useful, for example, to avoid restarting a
+        MySQL server that has been running so long that its SSL
+        certificate has expired.
+      </p><p>
+        To create the initial TLS context, the server uses the values
+        that the context-related system variables have at startup. To
+        expose the context values, the server also initializes a set of
+        corresponding status variables. The following table shows the
+        system variables that define the TLS context and the
+        corresponding status variables that expose the currently active
+        context values.
+</p>
+<div class="table">
+<a name="tls-context-variables-table"></a><p class="title"><b>Table 8.12 System and Status Variables for Server Main Connection Interface TLS Context</b></p>
+<div class="table-contents">
+<table summary="The system variables that define the server TLS context and the corresponding status variables that expose active context values."><col style="width: 45%"><col style="width: 55%"><thead><tr>
+            <th>System Variable Name</th>
+            <th>Corresponding Status Variable Name</th>
+          </tr></thead><tbody><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_ca"><code class="literal">ssl_ca</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_ca"><code class="literal">Current_tls_ca</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_capath"><code class="literal">ssl_capath</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_capath"><code class="literal">Current_tls_capath</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_cert"><code class="literal">ssl_cert</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_cert"><code class="literal">Current_tls_cert</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_cipher"><code class="literal">ssl_cipher</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_cipher"><code class="literal">Current_tls_cipher</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_crl"><code class="literal">ssl_crl</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_crl"><code class="literal">Current_tls_crl</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_crlpath"><code class="literal">ssl_crlpath</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_crlpath"><code class="literal">Current_tls_crlpath</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_ssl_key"><code class="literal">ssl_key</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_key"><code class="literal">Current_tls_key</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_tls_ciphersuites"><code class="literal">tls_ciphersuites</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_ciphersuites"><code class="literal">Current_tls_ciphersuites</code></a></td>
+          </tr><tr>
+            <td><a class="link" href="server-system-variables.html#sysvar_tls_version"><code class="literal">tls_version</code></a></td>
+            <td><a class="link" href="server-status-variables.html#statvar_Current_tls_version"><code class="literal">Current_tls_version</code></a></td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break"><p>
+        Those active TLS context values are also exposed as properties
+        in the Performance Schema
+        <a class="link" href="performance-schema-tls-channel-status-table.html" title="29.12.22.9 The tls_channel_status Table"><code class="literal">tls_channel_status</code></a> table, along
+        with the properties for any other active TLS contexts.
+      </p><p>
+        To reconfigure the TLS context at runtime, use this procedure:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+            Set each TLS context-related system variable that should be
+            changed to its new value.
+          </p></li><li class="listitem"><p>
+            Execute <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD
+            TLS</code></a>. This statement reconfigures the active TLS
+            context from the current values of the TLS context-related
+            system variables. It also sets the context-related status
+            variables to reflect the new active context values. The
+            statement requires the
+            <a class="link" href="privileges-provided.html#priv_connection-admin"><code class="literal">CONNECTION_ADMIN</code></a> privilege.
+          </p></li><li class="listitem"><p>
+            New connections established after execution of
+            <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD TLS</code></a> use
+            the new TLS context. Existing connections remain unaffected.
+            If existing connections should be terminated, use the
+            <a class="link" href="kill.html" title="15.7.8.4 KILL Statement"><code class="literal">KILL</code></a> statement.
+</p></li></ol>
+</div>
+<p>
+        The members of each pair of system and status variables may have
+        different values temporarily due to the way the reconfiguration
+        procedure works:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Changes to the system variables prior to
+            <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD TLS</code></a> do
+            not change the TLS context. At this point, those changes
+            have no effect on new connections, and corresponding
+            context-related system and status variables may have
+            different values. This enables you to make any changes
+            required to individual system variables, then update the
+            active TLS context atomically with
+            <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD TLS</code></a>
+            after all system variable changes have been made.
+          </p></li><li class="listitem"><p>
+            After <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD
+            TLS</code></a>, corresponding system and status variables
+            have the same values. This remains true until the next
+            change to the system variables.
+</p></li></ul>
+</div>
+<p>
+        In some cases, <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD
+        TLS</code></a> by itself may suffice to reconfigure the TLS
+        context, without changing any system variables. Suppose that the
+        certificate in the file named by
+        <a class="link" href="server-system-variables.html#sysvar_ssl_cert"><code class="literal">ssl_cert</code></a> has expired. It is
+        sufficient to replace the existing file contents with a
+        nonexpired certificate and execute <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER
+        INSTANCE RELOAD TLS</code></a> to cause the new file contents to
+        be read and used for new connections.
+      </p><p>
+        The server implements independent connection-encryption
+        configuration for the administrative connection interface. See
+        <a class="xref" href="administrative-connection-interface.html#administrative-interface-encrypted-connections" title="Administrative Interface Support for Encrypted Connections">Administrative Interface Support for Encrypted Connections</a>.
+        In addition, <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD
+        TLS</code></a> is extended with a <code class="literal">FOR CHANNEL</code>
+        clause that enables specifying the channel (interface) for which
+        to reload the TLS context. See <a class="xref" href="alter-instance.html" title="15.1.5 ALTER INSTANCE Statement">Section 15.1.5, “ALTER INSTANCE Statement”</a>.
+        There are no status variables to expose the administrative
+        interface TLS context, but the Performance Schema
+        <a class="link" href="performance-schema-tls-channel-status-table.html" title="29.12.22.9 The tls_channel_status Table"><code class="literal">tls_channel_status</code></a> table exposes
+        TLS properties for both the main and administrative interfaces.
+        See
+        <a class="xref" href="performance-schema-tls-channel-status-table.html" title="29.12.22.9 The tls_channel_status Table">Section 29.12.22.9, “The tls_channel_status Table”</a>.
+      </p><p>
+        Updating the main interface TLS context has these effects:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            The update changes the TLS context used for new connections
+            on the main connection interface.
+          </p></li><li class="listitem"><p>
+            The update also changes the TLS context used for new
+            connections on the administrative interface unless some
+            nondefault TLS parameter value is configured for that
+            interface.
+          </p></li><li class="listitem"><p>
+            The update does not affect the TLS context used by other
+            enabled server plugins or components such as Group
+            Replication or X Plugin:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                To apply the main interface reconfiguration to Group
+                Replication's group communication connections, which
+                take their settings from the server's TLS
+                context-related system variables, you must execute
+                <a class="link" href="stop-group-replication.html" title="15.4.3.2 STOP GROUP_REPLICATION Statement"><code class="literal">STOP GROUP_REPLICATION</code></a>
+                followed by <a class="link" href="start-group-replication.html" title="15.4.3.1 START GROUP_REPLICATION Statement"><code class="literal">START
+                GROUP_REPLICATION</code></a> to stop and restart Group
+                Replication.
+              </p></li><li class="listitem"><p>
+                X Plugin initializes its TLS context at plugin
+                initialization as described at
+                <a class="xref" href="x-plugin-encrypted-connections.html" title="22.5.3 Using Encrypted Connections with X Plugin">Section 22.5.3, “Using Encrypted Connections with X Plugin”</a>. This
+                context does not change thereafter.
+</p></li></ul>
+</div>
+</li></ul>
+</div>
+<p>
+        By default, the <code class="literal">RELOAD TLS</code> action rolls back
+        with an error and has no effect if the configuration values do
+        not permit creation of the new TLS context. The previous context
+        values continue to be used for new connections. If the optional
+        <code class="literal">NO ROLLBACK ON ERROR</code> clause is given and the
+        new context cannot be created, rollback does not occur. Instead,
+        a warning is generated and encryption is disabled for new
+        connections on the interface to which the statement applies.
+      </p><p>
+        Options that enable or disable encrypted connections on a
+        connection interface have an effect only at startup. For
+        example, the <a class="link" href="server-system-variables.html#sysvar_tls_version"><code class="option">--tls-version</code></a> and
+        <a class="link" href="server-system-variables.html#sysvar_admin_tls_version"><code class="option">--admin-tls-version</code></a> options
+        affect only at startup whether the main and administrative
+        interfaces support those TLS versions. Such options are ignored
+        and have no effect on the operation of
+        <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD TLS</code></a> at
+        runtime. For example, you can set
+        <a class="link" href="server-system-variables.html#sysvar_tls_version"><code class="option">tls_version=''</code></a> to start the
+        server with encrypted connections disabled on the main
+        interface, then reconfigure TLS and execute
+        <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER INSTANCE RELOAD TLS</code></a> to
+        enable encrypted connections at runtime.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="using-encrypted-connections-client-side-configuration"></a>Client-Side Configuration for Encrypted Connections</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        For a complete list of client options related to establishment
+        of encrypted connections, see
+        <a class="xref" href="connection-options.html#encrypted-connection-options" title="Command Options for Encrypted Connections">Command Options for Encrypted Connections</a>.
+      </p><p>
+        By default, MySQL client programs attempt to establish an
+        encrypted connection if the server supports encrypted
+        connections, with further control available through the
+        <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode</code></a> option:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            In the absence of an
+            <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode</code></a> option, clients
+            attempt to connect using encryption, falling back to an
+            unencrypted connection if an encrypted connection cannot be
+            established. This is also the behavior with an explicit
+            <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=PREFERRED</code></a> option.
+          </p></li><li class="listitem"><p>
+            With <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=REQUIRED</code></a>,
+            clients require an encrypted connection and fail if one
+            cannot be established.
+          </p></li><li class="listitem"><p>
+            With <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=DISABLED</code></a>,
+            clients use an unencrypted connection.
+          </p></li><li class="listitem"><p>
+            With <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_CA</code></a> or
+            <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_IDENTITY</code></a>,
+            clients require an encrypted connection, and also perform
+            verification against the server CA certificate and (with
+            <code class="literal">VERIFY_IDENTITY</code>) against the server host
+            name in its certificate.
+</p></li></ul>
+</div>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Important
+</div>
+<p>
+          The default setting,
+          <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=PREFERRED</code></a>, produces
+          an encrypted connection if the other default settings are
+          unchanged. However, to help prevent sophisticated
+          man-in-the-middle attacks, it is important for the client to
+          verify the server’s identity. The settings
+          <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_CA</code></a> and
+          <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_IDENTITY</code></a>
+          are a better choice than the default setting to help prevent
+          this type of attack. <code class="literal">VERIFY_CA</code> makes the
+          client check that the server’s certificate is valid.
+          <code class="literal">VERIFY_IDENTITY</code> makes the client check that
+          the server’s certificate is valid, and also makes the client
+          check that the host name the client is using matches the
+          identity in the server’s certificate. To implement one of
+          these settings, you must first ensure that the CA certificate
+          for the server is reliably available to all the clients that
+          use it in your environment, otherwise availability issues will
+          result. For this reason, they are not the default setting.
+</p>
+</div>
+<p>
+        Attempts to establish an unencrypted connection fail if the
+        <a class="link" href="server-system-variables.html#sysvar_require_secure_transport"><code class="literal">require_secure_transport</code></a> system
+        variable is enabled on the server side to cause the server to
+        require encrypted connections. See
+        <a class="xref" href="using-encrypted-connections.html#mandatory-encrypted-connections" title="Configuring Encrypted Connections as Mandatory">Configuring Encrypted Connections as Mandatory</a>.
+      </p><p>
+        The following options on the client side identify the
+        certificate and key files clients use when establishing
+        encrypted connections to the server. They are similar to the
+        <a class="link" href="server-system-variables.html#sysvar_ssl_ca"><code class="literal">ssl_ca</code></a>,
+        <a class="link" href="server-system-variables.html#sysvar_ssl_cert"><code class="literal">ssl_cert</code></a>, and
+        <a class="link" href="server-system-variables.html#sysvar_ssl_key"><code class="literal">ssl_key</code></a> system variables used
+        on the server side, but
+        <a class="link" href="connection-options.html#option_general_ssl-cert"><code class="option">--ssl-cert</code></a> and
+        <a class="link" href="connection-options.html#option_general_ssl-key"><code class="option">--ssl-key</code></a> identify the client
+        public and private key:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="connection-options.html#option_general_ssl-ca"><code class="option">--ssl-ca</code></a>: The path name of
+            the Certificate Authority (CA) certificate file. This
+            option, if used, must specify the same certificate used by
+            the server. (<code class="option">--ssl-capath</code> is similar but
+            specifies the path name of a directory of CA certificate
+            files.)
+          </p></li><li class="listitem"><p>
+            <a class="link" href="connection-options.html#option_general_ssl-cert"><code class="option">--ssl-cert</code></a>: The path name of
+            the client public key certificate file.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="connection-options.html#option_general_ssl-key"><code class="option">--ssl-key</code></a>: The path name of
+            the client private key file.
+</p></li></ul>
+</div>
+<p>
+        For additional security relative to that provided by the default
+        encryption, clients can supply a CA certificate matching the one
+        used by the server and enable host name identity verification.
+        In this way, the server and client place their trust in the same
+        CA certificate and the client verifies that the host to which it
+        connected is the one intended:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            To specify the CA certificate, use
+            <a class="link" href="connection-options.html#option_general_ssl-ca"><code class="option">--ssl-ca</code></a> (or
+            <a class="link" href="connection-options.html#option_general_ssl-capath"><code class="option">--ssl-capath</code></a>), and specify
+            <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_CA</code></a>.
+          </p></li><li class="listitem"><p>
+            To enable host name identity verification as well, use
+            <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_IDENTITY</code></a>
+            rather than
+            <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=VERIFY_CA</code></a>.
+</p></li></ul>
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+          Host name identity verification with
+          <code class="literal">VERIFY_IDENTITY</code> does not work with
+          self-signed certificates that are created automatically by the
+          server (see
+          <a class="xref" href="creating-ssl-rsa-files-using-mysql.html" title="8.3.3.1 Creating SSL and RSA Certificates and Keys using MySQL">Section 8.3.3.1, “Creating SSL and RSA Certificates and Keys using MySQL”</a>). Such
+          self-signed certificates do not contain the server name as the
+          Common Name value.
+</p>
+</div>
+<p>
+        MySQL also provides these options for client-side
+        encrypted-connection control:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="connection-options.html#option_general_ssl-cipher"><code class="option">--ssl-cipher</code></a>: The list of
+            permissible ciphers for connection encryption.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="connection-options.html#option_general_ssl-crl"><code class="option">--ssl-crl</code></a>: The path name of
+            the file containing certificate revocation lists.
+            (<code class="option">--ssl-crlpath</code> is similar but specifies the
+            path name of a directory of certificate revocation-list
+            files.)
+          </p></li><li class="listitem"><p>
+            <a class="link" href="connection-options.html#option_general_tls-version"><code class="option">--tls-version</code></a>,
+            <a class="link" href="connection-options.html#option_general_tls-ciphersuites"><code class="option">--tls-ciphersuites</code></a>: The
+            permitted encryption protocols and ciphersuites; see
+            <a class="xref" href="encrypted-connection-protocols-ciphers.html" title="8.3.2 Encrypted Connection TLS Protocols and Ciphers">Section 8.3.2, “Encrypted Connection TLS Protocols and Ciphers”</a>.
+</p></li></ul>
+</div>
+<p>
+        Depending on the encryption requirements of the MySQL account
+        used by a client, the client may be required to specify certain
+        options to connect using encryption to the MySQL server.
+      </p><p>
+        Suppose that you want to connect using an account that has no
+        special encryption requirements or that was created using a
+        <a class="link" href="create-user.html" title="15.7.1.3 CREATE USER Statement"><code class="literal">CREATE USER</code></a> statement that
+        included the <code class="literal">REQUIRE SSL</code> clause. Assuming
+        that the server supports encrypted connections, a client can
+        connect using encryption with no
+        <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode</code></a> option or with an
+        explicit <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=PREFERRED</code></a>
+        option:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysql</code></pre><p>
+        Or:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysql --ssl-mode=PREFERRED</code></pre><p>
+        For an account created with a <code class="literal">REQUIRE SSL</code>
+        clause, the connection attempt fails if an encrypted connection
+        cannot be established. For an account with no special encryption
+        requirements, the attempt falls back to an unencrypted
+        connection if an encrypted connection cannot be established. To
+        prevent fallback and fail if an encrypted connection cannot be
+        obtained, connect like this:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysql --ssl-mode=REQUIRED</code></pre><p>
+        If the account has more stringent security requirements, other
+        options must be specified to establish an encrypted connection:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            For accounts created with a <code class="literal">REQUIRE X509</code>
+            clause, clients must specify at least
+            <a class="link" href="connection-options.html#option_general_ssl-cert"><code class="option">--ssl-cert</code></a> and
+            <a class="link" href="connection-options.html#option_general_ssl-key"><code class="option">--ssl-key</code></a>. In addition,
+            <a class="link" href="connection-options.html#option_general_ssl-ca"><code class="option">--ssl-ca</code></a> (or
+            <a class="link" href="connection-options.html#option_general_ssl-capath"><code class="option">--ssl-capath</code></a>) is recommended
+            so that the public certificate provided by the server can be
+            verified. For example (enter the command on a single line):
+          </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysql --ssl-ca=ca.pem
+      --ssl-cert=client-cert.pem
+      --ssl-key=client-key.pem</code></pre></li><li class="listitem"><p>
+            For accounts created with a <code class="literal">REQUIRE
+            ISSUER</code> or <code class="literal">REQUIRE SUBJECT</code>
+            clause, the encryption requirements are the same as for
+            <code class="literal">REQUIRE X509</code>, but the certificate must
+            match the issue or subject, respectively, specified in the
+            account definition.
+</p></li></ul>
+</div>
+<p>
+        For additional information about the <code class="literal">REQUIRE</code>
+        clause, see <a class="xref" href="create-user.html" title="15.7.1.3 CREATE USER Statement">Section 15.7.1.3, “CREATE USER Statement”</a>.
+      </p><p>
+        MySQL servers can generate client certificate and key files that
+        clients can use to connect to MySQL server instances. See
+        <a class="xref" href="creating-ssl-rsa-files.html" title="8.3.3 Creating SSL and RSA Certificates and Keys">Section 8.3.3, “Creating SSL and RSA Certificates and Keys”</a>.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+          If a client connecting to a MySQL server instance uses an SSL
+          certificate with the <code class="literal">extendedKeyUsage</code>
+          extension (an X.509 v3 extension), the extended key usage must
+          include client authentication (<code class="literal">clientAuth</code>).
+          If the SSL certificate is only specified for server
+          authentication (<code class="literal">serverAuth</code>) and other
+          non-client certificate purposes, certificate verification
+          fails and the client connection to the MySQL server instance
+          fails. There is no <code class="literal">extendedKeyUsage</code>
+          extension in SSL certificates generated by MySQL Server (as
+          described in
+          <a class="xref" href="creating-ssl-rsa-files-using-mysql.html" title="8.3.3.1 Creating SSL and RSA Certificates and Keys using MySQL">Section 8.3.3.1, “Creating SSL and RSA Certificates and Keys using MySQL”</a>),
+          and SSL certificates created using the
+          <span class="command"><strong>openssl</strong></span> command following the instructions
+          in <a class="xref" href="creating-ssl-files-using-openssl.html" title="8.3.3.2 Creating SSL Certificates and Keys Using openssl">Section 8.3.3.2, “Creating SSL Certificates and Keys Using openssl”</a>. If you
+          use your own client certificate created in another way, ensure
+          any <code class="literal">extendedKeyUsage</code> extension includes
+          client authentication.
+</p>
+</div>
+<p>
+        To prevent use of encryption and override other
+        <code class="option">--ssl-<em class="replaceable"><code>xxx</code></em></code> options,
+        invoke the client program with
+        <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode=DISABLED</code></a>:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysql --ssl-mode=DISABLED</code></pre><p>
+        To determine whether the current connection with the server uses
+        encryption, check the session value of the
+        <a class="link" href="server-status-variables.html#statvar_Ssl_cipher"><code class="literal">Ssl_cipher</code></a> status variable. If
+        the value is empty, the connection is not encrypted. Otherwise,
+        the connection is encrypted and the value indicates the
+        encryption cipher. For example:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW SESSION STATUS LIKE 'Ssl_cipher';
++---------------+---------------------------+
+| Variable_name | Value                     |
++---------------+---------------------------+
+| Ssl_cipher    | DHE-RSA-AES128-GCM-SHA256 |
++---------------+---------------------------+</code></pre><p>
+        For the <a class="link" href="mysql.html" title="6.5.1 mysql — The MySQL Command-Line Client"><span class="command"><strong>mysql</strong></span></a> client, an alternative is to
+        use the <code class="literal">STATUS</code> or <code class="literal">\s</code>
+        command and check the <code class="literal">SSL</code> line:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; \s
+...
+SSL: Not in use
+...</code></pre><p>
+        Or:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; \s
+...
+SSL: Cipher in use is DHE-RSA-AES128-GCM-SHA256
+...</code></pre>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="enforce-certificate-validation"></a>Configuring Certificate Validation Enforcement</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105707640944"></a><p>
+        The
+        <a class="link" href="server-system-variables.html#sysvar_tls_certificates_enforced_validation"><code class="option">--tls-certificates-enforced-validation</code></a>
+        option enables validation of the server public key certificate
+        file, Certificate Authority (CA) certificate files, and
+        certificate revocation-list files at server startup:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysqld --tls-certificates-enforced-validation</code></pre><p>
+        If set to <code class="literal">ON</code>, the server stops execution of
+        the startup in case of invalid certificates. The server informs
+        DBAs by providing valid debug messages, error messages, or both
+        depending on the status of the certificates. This capability may
+        be useful, for example, to avoid restarting a MySQL server that
+        has been running so long that its SSL certificate has expired.
+      </p><p>
+        Similarly, when you execute the <a class="link" href="alter-instance.html#alter-instance-reload-tls"><code class="literal">ALTER
+        INSTANCE RELOAD TLS</code></a> statement to change the TLS
+        context at runtime, the new server and CA certificate files are
+        not used if validation fails. The server continues to use the
+        old certificates in this case. For more information about
+        changing the TLS context dynamically, see
+        <a class="xref" href="using-encrypted-connections.html#using-encrypted-connections-server-side-runtime-configuration" title="Server-Side Runtime Configuration and Monitoring for Encrypted Connections">Server-Side Runtime Configuration and Monitoring for Encrypted
+        Connections</a>.
+      </p><p>
+        <span class="strong"><strong>Validating CA Certificates</strong></span>
+      </p><p>
+        For a connection using the server main interface:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_ssl_ca"><code class="option">--ssl_ca</code></a> is specified,
+            then the server validates the respective CA certificate and
+            gives the DBA an appropriate warning message.
+          </p></li><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_ssl_capath"><code class="option">--ssl_capath</code></a> is specified,
+            then the server validates all the CA certificates in the
+            respective folder and gives the DBA an appropriate warning
+            message.
+          </p></li><li class="listitem"><p>
+            If SSL parameters are not specified, by default the server
+            validates the CA certificate present in the data directory
+            and gives the DBA an appropriate warning message.
+</p></li></ul>
+</div>
+<p>
+        For a connection using the server administrative interface:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_admin_ssl_ca"><code class="option">--admin_ssl_ca</code></a> is
+            specified, then the server validates the respective CA
+            certificate and gives the DBA an appropriate warning
+            message.
+          </p></li><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_admin_ssl_capath"><code class="option">--admin_ssl_capath</code></a> is
+            specified, then the server validates all of the CA
+            certificates in the respective folder and gives the DBA an
+            appropriate warning message.
+          </p></li><li class="listitem"><p>
+            If administrative SSL parameters are not specified, by
+            default the server validates the CA certificate present in
+            the data directory and gives the DBA an appropriate warning
+            message.
+</p></li></ul>
+</div>
+<p>
+        <span class="strong"><strong>Validating the Server
+        Certificate</strong></span>
+      </p><p>
+        For a connection using the server main interface:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_ssl_cert"><code class="option">--ssl_cert</code></a> is not
+            specified, then the server validates the server certificate
+            in default data directory.
+          </p></li><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_ssl_cert"><code class="option">--ssl_cert</code></a> is given, then
+            the server validates the server certificate, taking into
+            consideration <a class="link" href="server-system-variables.html#sysvar_ssl_crl"><code class="option">--ssl_crl</code></a>, if
+            specified.
+          </p></li><li class="listitem"><p>
+            If a DBA sets the command-line option to validate
+            certificates, then the server stops in case of invalid
+            certificates and an appropriate error message is displayed
+            to the DBA. Otherwise, the server emits warning messages to
+            the DBA and the server starts.
+</p></li></ul>
+</div>
+<p>
+        For a connection using the server administrative interface:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_admin_ssl_cert"><code class="option">--admin_ssl_cert</code></a> is not
+            specified, then the server validates the server certificate
+            in default data directory.
+          </p></li><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_admin_ssl_cert"><code class="option">--admin_ssl_cert</code></a> is given,
+            then the server validates the server certificate, taking
+            into consideration
+            <a class="link" href="server-system-variables.html#sysvar_admin_ssl_crl"><code class="option">--admin_ssl_crl</code></a>, if
+            specified.
+          </p></li><li class="listitem"><p>
+            If a DBA sets the command-line option to validate
+            certificates, then the server stops in case of invalid
+            certificates and an appropriate error message is displayed
+            to the DBA. Otherwise, the server emits warning messages to
+            the DBA and the server starts.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="mandatory-encrypted-connections"></a>Configuring Encrypted Connections as Mandatory</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105707603776"></a><p>
+        For some MySQL deployments it may be not only desirable but
+        mandatory to use encrypted connections (for example, to satisfy
+        regulatory requirements). This section discusses configuration
+        settings that enable you to do this. These levels of control are
+        available:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            You can configure the server to require that clients connect
+            using encrypted connections.
+          </p></li><li class="listitem"><p>
+            You can invoke individual client programs to require an
+            encrypted connection, even if the server permits but does
+            not require encryption.
+          </p></li><li class="listitem"><p>
+            You can configure individual MySQL accounts to be usable
+            only over encrypted connections.
+</p></li></ul>
+</div>
+<p>
+        To require that clients connect using encrypted connections,
+        enable the
+        <a class="link" href="server-system-variables.html#sysvar_require_secure_transport"><code class="literal">require_secure_transport</code></a> system
+        variable. For example, put these lines in the server
+        <code class="filename">my.cnf</code> file:
+      </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+require_secure_transport=ON</code></pre><p>
+        Alternatively, to set and persist the value at runtime, use this
+        statement:
+      </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET PERSIST require_secure_transport=ON;</code></pre><p>
+        <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+        PERSIST</code></a> sets a value for the running MySQL instance.
+        It also saves the value, causing it to be used for subsequent
+        server restarts. See <a class="xref" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment">Section 15.7.6.1, “SET Syntax for Variable Assignment”</a>.
+      </p><p>
+        With <a class="link" href="server-system-variables.html#sysvar_require_secure_transport"><code class="literal">require_secure_transport</code></a>
+        enabled, client connections to the server are required to use
+        some form of secure transport, and the server permits only
+        TCP/IP connections that use SSL, or connections that use a
+        socket file (on Unix) or shared memory (on Windows). The server
+        rejects nonsecure connection attempts, which fail with an
+        <a class="ulink" href="https://dev.mysql.com/doc/mysql-errors/8.4/en/server-error-reference.html#error_er_secure_transport_required" target="_top"><code class="literal">ER_SECURE_TRANSPORT_REQUIRED</code></a>
+        error.
+      </p><p>
+        To invoke a client program such that it requires an encrypted
+        connection whether or not the server requires encryption, use an
+        <a class="link" href="connection-options.html#option_general_ssl-mode"><code class="option">--ssl-mode</code></a> option value of
+        <code class="literal">REQUIRED</code>, <code class="literal">VERIFY_CA</code>, or
+        <code class="literal">VERIFY_IDENTITY</code>. For example:
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">mysql --ssl-mode=REQUIRED
+mysqldump --ssl-mode=VERIFY_CA
+mysqladmin --ssl-mode=VERIFY_IDENTITY</code></pre><p>
+        To configure a MySQL account to be usable only over encrypted
+        connections, include a <code class="literal">REQUIRE</code> clause in the
+        <a class="link" href="create-user.html" title="15.7.1.3 CREATE USER Statement"><code class="literal">CREATE USER</code></a> statement that
+        creates the account, specifying in that clause the encryption
+        characteristics you require. For example, to require an
+        encrypted connection and the use of a valid X.509 certificate,
+        use <code class="literal">REQUIRE X509</code>:
+      </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">CREATE USER 'jeffrey'@'localhost' REQUIRE X509;</code></pre><p>
+        For additional information about the <code class="literal">REQUIRE</code>
+        clause, see <a class="xref" href="create-user.html" title="15.7.1.3 CREATE USER Statement">Section 15.7.1.3, “CREATE USER Statement”</a>.
+      </p><p>
+        To modify existing accounts that have no encryption
+        requirements, use the <a class="link" href="alter-user.html" title="15.7.1.1 ALTER USER Statement"><code class="literal">ALTER USER</code></a>
+        statement.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="encrypted-connections.html"
+        aria-label="Previous" title="Previous: Using Encrypted Connections"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="encrypted-connections.html" title="Up: Using Encrypted Connections"> UP</a> &nbsp;
+    <a href="encrypted-connection-protocols-ciphers.html" aria-label="Next"
+        title="Next: Encrypted Connection TLS Protocols and Ciphers">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/using-encrypted-connections.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:45 GMT -->
+</html>

@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/myisamchk-table-info.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 6.6.4.5 Obtaining Table Information with myisamchk</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="myisamchk-other-options.html" title="6.6.4.4 Other myisamchk Options" />
+<link rel="next" href="myisamchk-memory8dba.html?ff=nopfpls" title="6.6.4.6 myisamchk Memory Usage" />
+<link rel="up" href="myisamchk.html" title="6.6.4 myisamchk &mdash; MyISAM Table-Maintenance Utility" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7ykyq-f-ede0f50a2-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":151,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1914e495","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5912,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134705","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==ght3qNkwonUMThJ7pdfcyK89bDzN1V1Sk86htWWFkW/yZduXO0IT1GAJsULNlS7G8pHeVvowcfg8zHMobC9GvZ39tc8k6ZOBzbVM3uFa8afTSF94uaKgPlwUUCtQ0c95x65Ifnxx0ITiAzboMknQGZFdaiPHWODl1ND58dCdkp+/WM/D13PLfcL9sDHnallkqkKRLvWD9IW8VjOtuN2J3B1B2A/tizYW1j80GiJPVXvFmTMYNWdYZuzuwhVNEQ2rXteuBJE1p9SSkbjoQcVlQilprhUimb3oqTuSrqa4hLBrjP9MqOpEESpAiOZv6kRJtbvo0AdWp63dNJ+m2XlrsFa9ygGtaSvjMrGNvKybKSwfMxd8FBSrjUeeV7NiFVEBibXI7XnXYCf8FqJDv/Y9xSN505UPqQxaGTjhjExePCQ=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fmyisamchk-table-info.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="myisamchk-other-options.html"
+        aria-label="Previous" title="Previous: Other myisamchk Options"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="myisamchk.html" title="Up: myisamchk — MyISAM Table-Maintenance Utility"><span class="icon-chevron-up"></span></a>
+    <a href="myisamchk-memory.html" aria-label="Next"
+        title="Next: myisamchk Memory Usage"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="programs-overview.html">Overview of MySQL Programs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-using.html">Using MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="invoking-programs.html">Invoking MySQL Programs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="program-options.html">Specifying Program Options</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="command-line-options.html">Using Options on the Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-files.html">Using Option Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-file-options.html">Command-Line Options that Affect Option-File Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-modifiers.html">Program Option Modifiers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="program-variables.html">Using Options to Set Program Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-defaults-equals.html">Option Defaults, Options Expecting Values, and the = Sign</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-options.html">Command Options for Connecting to the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connecting.html">Connecting to the MySQL Server Using Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connecting-using-uri-or-key-value-pairs.html">Connecting to the Server Using URI-Like Strings or Key-Value Pairs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connecting-using-dns-srv.html">Connecting to the Server Using DNS SRV Records</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="transport-protocols.html">Connection Transport Protocols</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-compression-control.html">Connection Compression Control</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="setting-environment-variables.html">Setting Environment Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-server.html">Server and Server-Startup Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqld.html">mysqld — The MySQL Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqld-safe.html">mysqld_safe — MySQL Server Startup Script</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-server.html">mysql.server — MySQL Server Startup Script</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqld-multi.html">mysqld_multi — Manage Multiple MySQL Servers</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-installation.html">Installation-Related Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="comp-err.html">comp_err — Compile MySQL Error Message File</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-secure-installation.html">mysql_secure_installation — Improve MySQL Installation Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-tzinfo-to-sql.html">mysql_tzinfo_to_sql — Load the Time Zone Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-client.html">Client Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql.html">mysql — The MySQL Command-Line Client</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-command-options.html">mysql Client Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-commands.html">mysql Client Commands</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-logging.html">mysql Client Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-server-side-help.html">mysql Client Server-Side Help</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-batch-commands.html">Executing SQL Statements from a Text File</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-tips.html">mysql Client Tips</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqladmin.html">mysqladmin — A MySQL Server Administration Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlcheck.html">mysqlcheck — A Table Maintenance Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqldump.html">mysqldump — A Database Backup Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlimport.html">mysqlimport — A Data Import Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlshow.html">mysqlshow — Display Database, Table, and Column Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlslap.html">mysqlslap — A Load Emulation Client</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-admin-utils.html">Administrative and Utility Programs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ibd2sdi.html">ibd2sdi — InnoDB Tablespace SDI Extraction Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innochecksum.html">innochecksum — Offline InnoDB File Checksum Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisam-ftdump.html">myisam_ftdump — Display Full-Text Index information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="myisamchk.html">myisamchk — MyISAM Table-Maintenance Utility</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-general-options.html">myisamchk General Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-check-options.html">myisamchk Check Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-repair-options.html">myisamchk Repair Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-other-options.html">Other myisamchk Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="myisamchk-table-info.html">Obtaining Table Information with myisamchk</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-memory.html">myisamchk Memory Usage</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamlog.html">myisamlog — Display MyISAM Log File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisampack.html">myisampack — Generate Compressed, Read-Only MyISAM Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-config-editor.html">mysql_config_editor — MySQL Configuration Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-migrate-keyring.html">mysql_migrate_keyring — Keyring Key Migration Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog.html">mysqlbinlog — Utility for Processing Binary Log Files</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-hexdump.html">mysqlbinlog Hex Dump Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-row-events.html">mysqlbinlog Row Event Display</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-backup.html">Using mysqlbinlog to Back Up Binary Log Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-server-id.html">Specifying the mysqlbinlog Server ID</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqldumpslow.html">mysqldumpslow — Summarize Slow Query Log Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-development.html">Program Development Utilities</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-config.html">mysql_config — Display Options for Compiling Clients</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="my-print-defaults.html">my_print_defaults — Display Options from Option Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-miscellaneous.html">Miscellaneous Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="perror.html">perror — Display MySQL Error Message Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="environment-variables.html">Environment Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="unix-signal-response.html">Unix Signal Handling in MySQL</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/myisamchk-table-info.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/myisamchk-table-info.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/myisamchk-table-info.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/myisamchk-table-info.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/myisamchk-table-info.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="programs.html">MySQL Programs</a> &nbsp;/&nbsp;
+                                                            <a href="programs-admin-utils.html">Administrative and Utility Programs</a> &nbsp;/&nbsp;
+                                                            <a href="myisamchk.html">myisamchk — MyISAM Table-Maintenance Utility</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Obtaining Table Information with myisamchk
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="myisamchk-table-info"></a>6.6.4.5 Obtaining Table Information with myisamchk</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105767519584"></a><a class="indexterm" name="idm45105767518128"></a><a class="indexterm" name="idm45105767516640"></a><a class="indexterm" name="idm45105767515152"></a><p>
+        To obtain a description of a <code class="literal">MyISAM</code> table or
+        statistics about it, use the commands shown here. The output
+        from these commands is explained later in this section.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -d
+            <em class="replaceable"><code>tbl_name</code></em></strong></span></a>
+          </p><p>
+            Runs <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a> in <span class="quote">“<span class="quote">describe
+            mode</span>”</span> to produce a description of your table. If you
+            start the MySQL server with external locking disabled,
+            <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a> may report an error for a table
+            that is updated while it runs. However, because
+            <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a> does not change the table in
+            describe mode, there is no risk of destroying data.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -dv
+            <em class="replaceable"><code>tbl_name</code></em></strong></span></a>
+          </p><p>
+            Adding <code class="option">-v</code> runs <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a>
+            in verbose mode so that it produces more information about
+            the table. Adding <code class="option">-v</code> a second time produces
+            even more information.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -eis
+            <em class="replaceable"><code>tbl_name</code></em></strong></span></a>
+          </p><p>
+            Shows only the most important information from a table. This
+            operation is slow because it must read the entire table.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -eiv
+            <em class="replaceable"><code>tbl_name</code></em></strong></span></a>
+          </p><p>
+            This is like <code class="option">-eis</code>, but tells you what is
+            being done.
+</p></li></ul>
+</div>
+<p>
+        The <em class="replaceable"><code>tbl_name</code></em> argument can be either
+        the name of a <code class="literal">MyISAM</code> table or the name of its
+        index file, as described in <a class="xref" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility">Section 6.6.4, “myisamchk — MyISAM Table-Maintenance Utility”</a>.
+        Multiple <em class="replaceable"><code>tbl_name</code></em> arguments can be
+        given.
+      </p><p>
+        Suppose that a table named <code class="literal">person</code> has the
+        following structure. (The <code class="literal">MAX_ROWS</code> table
+        option is included so that in the example output from
+        <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a> shown later, some values are
+        smaller and fit the output format more easily.)
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE person
+(
+  id         INT NOT NULL AUTO_INCREMENT,
+  last_name  VARCHAR(20) NOT NULL,
+  first_name VARCHAR(20) NOT NULL,
+  birth      DATE,
+  death      DATE,
+  PRIMARY KEY (id),
+  INDEX (last_name, first_name),
+  INDEX (birth)
+) MAX_ROWS = 1000000 ENGINE=MYISAM;</code></pre><p>
+        Suppose also that the table has these data and index file sizes:
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">-rw-rw----  1 mysql  mysql  9347072 Aug 19 11:47 person.MYD
+-rw-rw----  1 mysql  mysql  6066176 Aug 19 11:47 person.MYI</code></pre><p>
+        Example of <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -dvv</strong></span></a> output:
+      </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">MyISAM file:         person
+Record format:       Packed
+Character set:       utf8mb4_0900_ai_ci (255)
+File-version:        1
+Creation time:       2017-03-30 21:21:30
+Status:              checked,analyzed,optimized keys,sorted index pages
+Auto increment key:              1  Last value:                306688
+Data records:               306688  Deleted blocks:                 0
+Datafile parts:             306688  Deleted data:                   0
+Datafile pointer (bytes):        4  Keyfile pointer (bytes):        3
+Datafile length:           9347072  Keyfile length:           6066176
+Max datafile length:    4294967294  Max keyfile length:   17179868159
+Recordlength:                   54
+
+table description:
+Key Start Len Index   Type                     Rec/key         Root  Blocksize
+1   2     4   unique  long                           1                    1024
+2   6     80  multip. varchar prefix                 0                    1024
+    87    80          varchar                        0
+3   168   3   multip. uint24 NULL                    0                    1024
+
+Field Start Length Nullpos Nullbit Type
+1     1     1
+2     2     4                      no zeros
+3     6     81                     varchar
+4     87    81                     varchar
+5     168   3      1       1       no zeros
+6     171   3      1       2       no zeros</code></pre><p>
+        Explanations for the types of information
+        <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a> produces are given here.
+        <span class="quote">“<span class="quote">Keyfile</span>”</span> refers to the index file.
+        <span class="quote">“<span class="quote">Record</span>”</span> and <span class="quote">“<span class="quote">row</span>”</span> are synonymous, as
+        are <span class="quote">“<span class="quote">field</span>”</span> and <span class="quote">“<span class="quote">column.</span>”</span>
+      </p><p>
+        The initial part of the table description contains these values:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">MyISAM file</code>
+          </p><p>
+            Name of the <code class="literal">MyISAM</code> (index) file.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Record format</code>
+          </p><p>
+            The format used to store table rows. The preceding examples
+            use <code class="literal">Fixed length</code>. Other possible values
+            are <code class="literal">Compressed</code> and
+            <code class="literal">Packed</code>. (<code class="literal">Packed</code>
+            corresponds to what <code class="literal">SHOW TABLE STATUS</code>
+            reports as <code class="literal">Dynamic</code>.)
+          </p></li><li class="listitem"><p>
+            <code class="literal">Chararacter set</code>
+          </p><p>
+            The table default character set.
+          </p></li><li class="listitem"><p>
+            <code class="literal">File-version</code>
+          </p><p>
+            Version of <code class="literal">MyISAM</code> format. Always 1.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Creation time</code>
+          </p><p>
+            When the data file was created.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Recover time</code>
+          </p><p>
+            When the index/data file was last reconstructed.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Status</code>
+          </p><p>
+            Table status flags. Possible values are
+            <code class="literal">crashed</code>, <code class="literal">open</code>,
+            <code class="literal">changed</code>, <code class="literal">analyzed</code>,
+            <code class="literal">optimized keys</code>, and <code class="literal">sorted index
+            pages</code>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Auto increment key</code>, <code class="literal">Last
+            value</code>
+          </p><p>
+            The key number associated the table's
+            <code class="literal">AUTO_INCREMENT</code> column, and the most
+            recently generated value for this column. These fields do
+            not appear if there is no such column.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Data records</code>
+          </p><p>
+            The number of rows in the table.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Deleted blocks</code>
+          </p><p>
+            How many deleted blocks still have reserved space. You can
+            optimize your table to minimize this space. See
+            <a class="xref" href="myisam-optimization.html" title="9.6.4 MyISAM Table Optimization">Section 9.6.4, “MyISAM Table Optimization”</a>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Datafile parts</code>
+          </p><p>
+            For dynamic-row format, this indicates how many data blocks
+            there are. For an optimized table without fragmented rows,
+            this is the same as <code class="literal">Data records</code>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Deleted data</code>
+          </p><p>
+            How many bytes of unreclaimed deleted data there are. You
+            can optimize your table to minimize this space. See
+            <a class="xref" href="myisam-optimization.html" title="9.6.4 MyISAM Table Optimization">Section 9.6.4, “MyISAM Table Optimization”</a>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Datafile pointer</code>
+          </p><p>
+            The size of the data file pointer, in bytes. It is usually
+            2, 3, 4, or 5 bytes. Most tables manage with 2 bytes, but
+            this cannot be controlled from MySQL yet. For fixed tables,
+            this is a row address. For dynamic tables, this is a byte
+            address.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Keyfile pointer</code>
+          </p><p>
+            The size of the index file pointer, in bytes. It is usually
+            1, 2, or 3 bytes. Most tables manage with 2 bytes, but this
+            is calculated automatically by MySQL. It is always a block
+            address.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Max datafile length</code>
+          </p><p>
+            How long the table data file can become, in bytes.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Max keyfile length</code>
+          </p><p>
+            How long the table index file can become, in bytes.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Recordlength</code>
+          </p><p>
+            How much space each row takes, in bytes.
+</p></li></ul>
+</div>
+<p>
+        The <code class="literal">table description</code> part of the output
+        includes a list of all keys in the table. For each key,
+        <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a> displays some low-level
+        information:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">Key</code>
+          </p><p>
+            This key's number. This value is shown only for the first
+            column of the key. If this value is missing, the line
+            corresponds to the second or later column of a
+            multiple-column key. For the table shown in the example,
+            there are two <code class="literal">table description</code> lines for
+            the second index. This indicates that it is a multiple-part
+            index with two parts.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Start</code>
+          </p><p>
+            Where in the row this portion of the index starts.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Len</code>
+          </p><p>
+            How long this portion of the index is. For packed numbers,
+            this should always be the full length of the column. For
+            strings, it may be shorter than the full length of the
+            indexed column, because you can index a prefix of a string
+            column. The total length of a multiple-part key is the sum
+            of the <code class="literal">Len</code> values for all key parts.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Index</code>
+          </p><p>
+            Whether a key value can exist multiple times in the index.
+            Possible values are <code class="literal">unique</code> or
+            <code class="literal">multip.</code> (multiple).
+          </p></li><li class="listitem"><p>
+            <code class="literal">Type</code>
+          </p><p>
+            What data type this portion of the index has. This is a
+            <code class="literal">MyISAM</code> data type with the possible values
+            <code class="literal">packed</code>, <code class="literal">stripped</code>, or
+            <code class="literal">empty</code>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Root</code>
+          </p><p>
+            Address of the root index block.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Blocksize</code>
+          </p><p>
+            The size of each index block. By default this is 1024, but
+            the value may be changed at compile time when MySQL is built
+            from source.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Rec/key</code>
+          </p><p>
+            This is a statistical value used by the optimizer. It tells
+            how many rows there are per value for this index. A unique
+            index always has a value of 1. This may be updated after a
+            table is loaded (or greatly changed) with <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk
+            -a</strong></span></a>. If this is not updated at all, a default value
+            of 30 is given.
+</p></li></ul>
+</div>
+<p>
+        The last part of the output provides information about each
+        column:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">Field</code>
+          </p><p>
+            The column number.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Start</code>
+          </p><p>
+            The byte position of the column within table rows.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Length</code>
+          </p><p>
+            The length of the column in bytes.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Nullpos</code>, <code class="literal">Nullbit</code>
+          </p><p>
+            For columns that can be <code class="literal">NULL</code>,
+            <code class="literal">MyISAM</code> stores <code class="literal">NULL</code>
+            values as a flag in a byte. Depending on how many nullable
+            columns there are, there can be one or more bytes used for
+            this purpose. The <code class="literal">Nullpos</code> and
+            <code class="literal">Nullbit</code> values, if nonempty, indicate
+            which byte and bit contains that flag indicating whether the
+            column is <code class="literal">NULL</code>.
+          </p><p>
+            The position and number of bytes used to store
+            <code class="literal">NULL</code> flags is shown in the line for field
+            1. This is why there are six <code class="literal">Field</code> lines
+            for the <code class="literal">person</code> table even though it has
+            only five columns.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Type</code>
+          </p><p>
+            The data type. The value may contain any of the following
+            descriptors:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                <code class="literal">constant</code>
+              </p><p>
+                All rows have the same value.
+              </p></li><li class="listitem"><p>
+                <code class="literal">no endspace</code>
+              </p><p>
+                Do not store endspace.
+              </p></li><li class="listitem"><p>
+                <code class="literal">no endspace, not_always</code>
+              </p><p>
+                Do not store endspace and do not do endspace compression
+                for all values.
+              </p></li><li class="listitem"><p>
+                <code class="literal">no endspace, no empty</code>
+              </p><p>
+                Do not store endspace. Do not store empty values.
+              </p></li><li class="listitem"><p>
+                <code class="literal">table-lookup</code>
+              </p><p>
+                The column was converted to an
+                <a class="link" href="enum.html" title="13.3.5 The ENUM Type"><code class="literal">ENUM</code></a>.
+              </p></li><li class="listitem"><p>
+                <code class="literal">zerofill(<em class="replaceable"><code>N</code></em>)</code>
+              </p><p>
+                The most significant <em class="replaceable"><code>N</code></em> bytes
+                in the value are always 0 and are not stored.
+              </p></li><li class="listitem"><p>
+                <code class="literal">no zeros</code>
+              </p><p>
+                Do not store zeros.
+              </p></li><li class="listitem"><p>
+                <code class="literal">always zero</code>
+              </p><p>
+                Zero values are stored using one bit.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+            <code class="literal">Huff tree</code>
+          </p><p>
+            The number of the Huffman tree associated with the column.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Bits</code>
+          </p><p>
+            The number of bits used in the Huffman tree.
+</p></li></ul>
+</div>
+<p>
+        The <code class="literal">Huff tree</code> and <code class="literal">Bits</code>
+        fields are displayed if the table has been compressed with
+        <a class="link" href="myisampack.html" title="6.6.6 myisampack — Generate Compressed, Read-Only MyISAM Tables"><span class="command"><strong>myisampack</strong></span></a>. See <a class="xref" href="myisampack.html" title="6.6.6 myisampack — Generate Compressed, Read-Only MyISAM Tables">Section 6.6.6, “myisampack — Generate Compressed, Read-Only MyISAM Tables”</a>,
+        for an example of this information.
+      </p><p>
+        Example of <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -eiv</strong></span></a> output:
+      </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">Checking MyISAM file: person
+Data records:  306688   Deleted blocks:       0
+- check file-size
+- check record delete-chain
+No recordlinks
+- check key delete-chain
+block_size 1024:
+- check index reference
+- check data record references index: 1
+Key:  1:  Keyblocks used:  98%  Packed:    0%  Max levels:  3
+- check data record references index: 2
+Key:  2:  Keyblocks used:  99%  Packed:   97%  Max levels:  3
+- check data record references index: 3
+Key:  3:  Keyblocks used:  98%  Packed:  -14%  Max levels:  3
+Total:    Keyblocks used:  98%  Packed:   89%
+
+- check records and index references
+<em class="replaceable">*** LOTS OF ROW NUMBERS DELETED ***</em>
+
+Records:            306688  M.recordlength:       25  Packed:            83%
+Recordspace used:       97% Empty space:           2% Blocks/Record:   1.00
+Record blocks:      306688  Delete blocks:         0
+Record data:       7934464  Deleted data:          0
+Lost space:         256512  Linkdata:        1156096
+
+User time 43.08, System time 1.68
+Maximum resident set size 0, Integral resident set size 0
+Non-physical pagefaults 0, Physical pagefaults 0, Swaps 0
+Blocks in 0 out 7, Messages in 0 out 0, Signals 0
+Voluntary context switches 0, Involuntary context switches 0
+Maximum memory usage: 1046926 bytes (1023k)</code></pre><p>
+        <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk -eiv</strong></span></a> output includes the following
+        information:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">Data records</code>
+          </p><p>
+            The number of rows in the table.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Deleted blocks</code>
+          </p><p>
+            How many deleted blocks still have reserved space. You can
+            optimize your table to minimize this space. See
+            <a class="xref" href="myisam-optimization.html" title="9.6.4 MyISAM Table Optimization">Section 9.6.4, “MyISAM Table Optimization”</a>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Key</code>
+          </p><p>
+            The key number.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Keyblocks used</code>
+          </p><p>
+            What percentage of the keyblocks are used. When a table has
+            just been reorganized with <a class="link" href="myisamchk.html" title="6.6.4 myisamchk — MyISAM Table-Maintenance Utility"><span class="command"><strong>myisamchk</strong></span></a>, the
+            values are very high (very near theoretical maximum).
+          </p></li><li class="listitem"><p>
+            <code class="literal">Packed</code>
+          </p><p>
+            MySQL tries to pack key values that have a common suffix.
+            This can only be used for indexes on
+            <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">CHAR</code></a> and
+            <a class="link" href="char.html" title="13.3.2 The CHAR and VARCHAR Types"><code class="literal">VARCHAR</code></a> columns. For long
+            indexed strings that have similar leftmost parts, this can
+            significantly reduce the space used. In the preceding
+            example, the second key is 40 bytes long and a 97% reduction
+            in space is achieved.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Max levels</code>
+          </p><p>
+            How deep the B-tree for this key is. Large tables with long
+            key values get high values.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Records</code>
+          </p><p>
+            How many rows are in the table.
+          </p></li><li class="listitem"><p>
+            <code class="literal">M.recordlength</code>
+          </p><p>
+            The average row length. This is the exact row length for
+            tables with fixed-length rows, because all rows have the
+            same length.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Packed</code>
+          </p><p>
+            MySQL strips spaces from the end of strings. The
+            <code class="literal">Packed</code> value indicates the percentage of
+            savings achieved by doing this.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Recordspace used</code>
+          </p><p>
+            What percentage of the data file is used.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Empty space</code>
+          </p><p>
+            What percentage of the data file is unused.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Blocks/Record</code>
+          </p><p>
+            Average number of blocks per row (that is, how many links a
+            fragmented row is composed of). This is always 1.0 for
+            fixed-format tables. This value should stay as close to 1.0
+            as possible. If it gets too large, you can reorganize the
+            table. See <a class="xref" href="myisam-optimization.html" title="9.6.4 MyISAM Table Optimization">Section 9.6.4, “MyISAM Table Optimization”</a>.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Recordblocks</code>
+          </p><p>
+            How many blocks (links) are used. For fixed-format tables,
+            this is the same as the number of rows.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Deleteblocks</code>
+          </p><p>
+            How many blocks (links) are deleted.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Recorddata</code>
+          </p><p>
+            How many bytes in the data file are used.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Deleted data</code>
+          </p><p>
+            How many bytes in the data file are deleted (unused).
+          </p></li><li class="listitem"><p>
+            <code class="literal">Lost space</code>
+          </p><p>
+            If a row is updated to a shorter length, some space is lost.
+            This is the sum of all such losses, in bytes.
+          </p></li><li class="listitem"><p>
+            <code class="literal">Linkdata</code>
+          </p><p>
+            When the dynamic table format is used, row fragments are
+            linked with pointers (4 to 7 bytes each).
+            <code class="literal">Linkdata</code> is the sum of the amount of
+            storage used by all such pointers.
+</p></li></ul>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="myisamchk-other-options.html"
+        aria-label="Previous" title="Previous: Other myisamchk Options"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="myisamchk.html" title="Up: myisamchk — MyISAM Table-Maintenance Utility"> UP</a> &nbsp;
+    <a href="myisamchk-memory.html" aria-label="Next"
+        title="Next: myisamchk Memory Usage">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/myisamchk-table-info.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:57 GMT -->
+</html>

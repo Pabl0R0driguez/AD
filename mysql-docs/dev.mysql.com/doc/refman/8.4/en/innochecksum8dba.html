@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innochecksum.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 6.6.2 innochecksum — Offline InnoDB File Checksum Utility</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="ibd2sdi.html" title="6.6.1 ibd2sdi &mdash; InnoDB Tablespace SDI Extraction Utility" />
+<link rel="next" href="myisam-ftdump8dba.html?ff=nopfpls" title="6.6.3 myisam_ftdump &mdash; Display Full-Text Index information" />
+<link rel="up" href="programs-admin-utils.html" title="6.6 Administrative and Utility Programs" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xxda-f-a38ad0cbf-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":171,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18db5fd2","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5901,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730133446","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==dle2LZJBfCH3OiMwXVWjQHxDEmhF9jrhpTvaKpCtcb1bSKdZc9RYOuqo9pe0pek4opkI887j860d21+CLZ+HgOfPGoe21FMLOnLQgpkEEjAR+e/6v+0YE9PjVwkiuQLJNLBD4ElkhqWeBX8F3ShGdhhV2UOVPXlzS7DQnSs9o7ipVzeXwcr5NRQEbwtQBPQ4VZxoRBGyWcBAROB1zzm0LcO+hArFbSapGIEQXa3iDhK584R6LNUUiIAwtRbe5Q/mXxCWijGam+NrV07dfFSLEUUSsTuZNoqoxLOK5KSoTgu5hVcf//3IWjSgoUpM6H7eSeAYJuaScsuynierKn/pTnpOAFMm1nuipzMxquy4zNiiNi+w4Mvv1UAcsN+HKH0hJp96I1B861y87Q5us3IQktdK+wUtSZMxGKh63NkfOws=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Finnochecksum.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="ibd2sdi.html"
+        aria-label="Previous" title="Previous: ibd2sdi — InnoDB Tablespace SDI Extraction Utility"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="programs-admin-utils.html" title="Up: Administrative and Utility Programs"><span class="icon-chevron-up"></span></a>
+    <a href="myisam-ftdump.html" aria-label="Next"
+        title="Next: myisam_ftdump — Display Full-Text Index information"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="programs-overview.html">Overview of MySQL Programs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-using.html">Using MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="invoking-programs.html">Invoking MySQL Programs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="program-options.html">Specifying Program Options</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="command-line-options.html">Using Options on the Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-files.html">Using Option Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-file-options.html">Command-Line Options that Affect Option-File Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-modifiers.html">Program Option Modifiers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="program-variables.html">Using Options to Set Program Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="option-defaults-equals.html">Option Defaults, Options Expecting Values, and the = Sign</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-options.html">Command Options for Connecting to the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connecting.html">Connecting to the MySQL Server Using Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connecting-using-uri-or-key-value-pairs.html">Connecting to the Server Using URI-Like Strings or Key-Value Pairs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connecting-using-dns-srv.html">Connecting to the Server Using DNS SRV Records</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="transport-protocols.html">Connection Transport Protocols</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-compression-control.html">Connection Compression Control</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="setting-environment-variables.html">Setting Environment Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-server.html">Server and Server-Startup Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqld.html">mysqld — The MySQL Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqld-safe.html">mysqld_safe — MySQL Server Startup Script</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-server.html">mysql.server — MySQL Server Startup Script</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqld-multi.html">mysqld_multi — Manage Multiple MySQL Servers</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-installation.html">Installation-Related Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="comp-err.html">comp_err — Compile MySQL Error Message File</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-secure-installation.html">mysql_secure_installation — Improve MySQL Installation Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-tzinfo-to-sql.html">mysql_tzinfo_to_sql — Load the Time Zone Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-client.html">Client Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql.html">mysql — The MySQL Command-Line Client</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-command-options.html">mysql Client Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-commands.html">mysql Client Commands</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-logging.html">mysql Client Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-server-side-help.html">mysql Client Server-Side Help</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-batch-commands.html">Executing SQL Statements from a Text File</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-tips.html">mysql Client Tips</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqladmin.html">mysqladmin — A MySQL Server Administration Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlcheck.html">mysqlcheck — A Table Maintenance Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqldump.html">mysqldump — A Database Backup Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlimport.html">mysqlimport — A Data Import Program</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlshow.html">mysqlshow — Display Database, Table, and Column Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlslap.html">mysqlslap — A Load Emulation Client</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-admin-utils.html">Administrative and Utility Programs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ibd2sdi.html">ibd2sdi — InnoDB Tablespace SDI Extraction Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="innochecksum.html">innochecksum — Offline InnoDB File Checksum Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisam-ftdump.html">myisam_ftdump — Display Full-Text Index information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="myisamchk.html">myisamchk — MyISAM Table-Maintenance Utility</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-general-options.html">myisamchk General Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-check-options.html">myisamchk Check Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-repair-options.html">myisamchk Repair Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-other-options.html">Other myisamchk Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-table-info.html">Obtaining Table Information with myisamchk</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamchk-memory.html">myisamchk Memory Usage</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisamlog.html">myisamlog — Display MyISAM Log File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="myisampack.html">myisampack — Generate Compressed, Read-Only MyISAM Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-config-editor.html">mysql_config_editor — MySQL Configuration Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-migrate-keyring.html">mysql_migrate_keyring — Keyring Key Migration Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog.html">mysqlbinlog — Utility for Processing Binary Log Files</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-hexdump.html">mysqlbinlog Hex Dump Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-row-events.html">mysqlbinlog Row Event Display</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-backup.html">Using mysqlbinlog to Back Up Binary Log Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqlbinlog-server-id.html">Specifying the mysqlbinlog Server ID</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysqldumpslow.html">mysqldumpslow — Summarize Slow Query Log Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-development.html">Program Development Utilities</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-config.html">mysql_config — Display Options for Compiling Clients</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="my-print-defaults.html">my_print_defaults — Display Options from Option Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs-miscellaneous.html">Miscellaneous Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="perror.html">perror — Display MySQL Error Message Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="environment-variables.html">Environment Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="unix-signal-response.html">Unix Signal Handling in MySQL</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/innochecksum.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/innochecksum.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/innochecksum.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/innochecksum.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/innochecksum.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="programs.html">MySQL Programs</a> &nbsp;/&nbsp;
+                                                            <a href="programs-admin-utils.html">Administrative and Utility Programs</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        innochecksum — Offline InnoDB File Checksum Utility
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="innochecksum"></a>6.6.2 innochecksum — Offline InnoDB File Checksum Utility</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105769024816"></a><p>
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> prints checksums for
+        <code class="literal">InnoDB</code> files. This tool reads an
+        <code class="literal">InnoDB</code> tablespace file, calculates the
+        checksum for each page, compares the calculated checksum to the
+        stored checksum, and reports mismatches, which indicate damaged
+        pages. It was originally developed to speed up verifying the
+        integrity of tablespace files after power outages but can also
+        be used after file copies. Because checksum mismatches cause
+        <code class="literal">InnoDB</code> to deliberately shut down a running
+        server, it may be preferable to use this tool rather than
+        waiting for an in-production server to encounter the damaged
+        pages.
+      </p><p>
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> cannot be used on tablespace
+        files that the server already has open. For such files, you
+        should use <a class="link" href="check-table.html" title="15.7.3.2 CHECK TABLE Statement"><code class="literal">CHECK TABLE</code></a> to check
+        tables within the tablespace. Attempting to run
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> on a tablespace that the server
+        already has open results in an <span class="errortext">Unable to lock
+        file</span> error.
+      </p><p>
+        If checksum mismatches are found, restore the tablespace from
+        backup or start the server and attempt to use
+        <a class="link" href="mysqldump.html" title="6.5.4 mysqldump — A Database Backup Program"><span class="command"><strong>mysqldump</strong></span></a> to make a backup of the tables
+        within the tablespace.
+      </p><p>
+        Invoke <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> like this:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum [<em class="replaceable">options</em>] <em class="replaceable">file_name</em></code></pre>
+<h4><a name="idm45105769009392"></a>innochecksum Options</h4>
+<p>
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> supports the following options.
+        For options that refer to page numbers, the numbers are
+        zero-based.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a name="option_innochecksum_help"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_help"><code class="option">--help</code></a>,
+            <code class="option">-?</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for help"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--help</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">false</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768994016"></a><a class="indexterm" name="idm45105768992528"></a><p>
+            Displays command line help. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --help</code></pre></li><li class="listitem"><p><a name="option_innochecksum_info"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_info"><code class="option">--info</code></a>,
+            <code class="option">-I</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for info"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--info</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">false</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768976880"></a><a class="indexterm" name="idm45105768975392"></a><p>
+            Synonym for <a class="link" href="innochecksum.html#option_innochecksum_help"><code class="option">--help</code></a>.
+            Displays command line help. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --info</code></pre></li><li class="listitem"><p><a name="option_innochecksum_version"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_version"><code class="option">--version</code></a>,
+            <code class="option">-V</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for version"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--version</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">false</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768958704"></a><a class="indexterm" name="idm45105768957216"></a><p>
+            Displays version information. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --version</code></pre></li><li class="listitem"><p><a name="option_innochecksum_verbose"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_verbose"><code class="option">--verbose</code></a>,
+            <code class="option">-v</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for verbose"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--verbose</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">false</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768941520"></a><a class="indexterm" name="idm45105768940032"></a><p>
+            Verbose mode; prints a progress indicator to the log file
+            every five seconds. In order for the progress indicator to
+            be printed, the log file must be specified using the
+            <code class="literal">--log option</code>. To turn on
+            <code class="literal">verbose</code> mode, run:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --verbose</code></pre><p>
+            To turn off verbose mode, run:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --verbose=FALSE</code></pre><p>
+            The <code class="literal">--verbose</code> option and
+            <code class="literal">--log</code> option can be specified at the same
+            time. For example:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --verbose --log=/var/lib/mysql/test/logtest.txt</code></pre><p>
+            To locate the progress indicator information in the log
+            file, you can perform the following search:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">cat ./logtest.txt | grep -i "okay"</code></pre><p>
+            The progress indicator information in the log file appears
+            similar to the following:
+          </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">page 1663 okay: 2.863% done
+page 8447 okay: 14.537% done
+page 13695 okay: 23.568% done
+page 18815 okay: 32.379% done
+page 23039 okay: 39.648% done
+page 28351 okay: 48.789% done
+page 33023 okay: 56.828% done
+page 37951 okay: 65.308% done
+page 44095 okay: 75.881% done
+page 49407 okay: 85.022% done
+page 54463 okay: 93.722% done
+...</code></pre></li><li class="listitem"><p><a name="option_innochecksum_count"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_count"><code class="option">--count</code></a>,
+            <code class="option">-c</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for count"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--count</code></td>
+</tr><tr><th>Type</th>
+<td>Base name</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">true</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768915088"></a><a class="indexterm" name="idm45105768913600"></a><p>
+            Print a count of the number of pages in the file and exit.
+            Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --count ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_start-page"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_start-page"><code class="option">--start-page=<em class="replaceable"><code>num</code></em></code></a>,
+            <code class="option">-s <em class="replaceable"><code>num</code></em></code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for start-page"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--start-page=#</code></td>
+</tr><tr><th>Type</th>
+<td>Numeric</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">0</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768897328"></a><a class="indexterm" name="idm45105768895840"></a><p>
+            Start at this page number. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --start-page=600 ../data/test/tab1.ibd</code></pre><p>
+            or:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum -s 600 ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_end-page"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_end-page"><code class="option">--end-page=<em class="replaceable"><code>num</code></em></code></a>,
+            <code class="option">-e <em class="replaceable"><code>num</code></em></code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for end-page"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--end-page=#</code></td>
+</tr><tr><th>Type</th>
+<td>Numeric</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">0</code></td>
+</tr><tr><th>Minimum Value</th>
+<td><code class="literal">0</code></td>
+</tr><tr><th>Maximum Value</th>
+<td><code class="literal">18446744073709551615</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768873296"></a><a class="indexterm" name="idm45105768871808"></a><p>
+            End at this page number. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --end-page=700 ../data/test/tab1.ibd</code></pre><p>
+            or:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --p 700 ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_page"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_page"><code class="option">--page=<em class="replaceable"><code>num</code></em></code></a>,
+            <code class="option">-p <em class="replaceable"><code>num</code></em></code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for page"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--page=#</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">0</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768854240"></a><a class="indexterm" name="idm45105768852752"></a><p>
+            Check only this page number. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --page=701 ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_strict-check"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_strict-check"><code class="option">--strict-check</code></a>,
+            <code class="option">-C</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for strict-check"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--strict-check=algorithm</code></td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">crc32</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">innodb</code></p><p class="valid-value"><code class="literal">crc32</code></p><p class="valid-value"><code class="literal">none</code></p></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768832320"></a><a class="indexterm" name="idm45105768830832"></a><p>
+            Specify a strict checksum algorithm. Options include
+            <code class="literal">innodb</code>, <code class="literal">crc32</code>, and
+            <code class="literal">none</code>.
+          </p><p>
+            In this example, the <code class="literal">innodb</code> checksum
+            algorithm is specified:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --strict-check=innodb ../data/test/tab1.ibd</code></pre><p>
+            In this example, the <code class="literal">crc32</code> checksum
+            algorithm is specified:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum -C crc32 ../data/test/tab1.ibd</code></pre><p>
+            The following conditions apply:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                If you do not specify the
+                <a class="link" href="innochecksum.html#option_innochecksum_strict-check"><code class="option">--strict-check</code></a>
+                option, <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> validates
+                against <code class="literal">innodb</code>,
+                <code class="literal">crc32</code> and <code class="literal">none</code>.
+              </p></li><li class="listitem"><p>
+                If you specify the <code class="literal">none</code> option, only
+                checksums generated by <code class="literal">none</code> are
+                allowed.
+              </p></li><li class="listitem"><p>
+                If you specify the <code class="literal">innodb</code> option,
+                only checksums generated by <code class="literal">innodb</code>
+                are allowed.
+              </p></li><li class="listitem"><p>
+                If you specify the <code class="literal">crc32</code> option, only
+                checksums generated by <code class="literal">crc32</code> are
+                allowed.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p><a name="option_innochecksum_no-check"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_no-check"><code class="option">--no-check</code></a>,
+            <code class="option">-n</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for no-check"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--no-check</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">false</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768796496"></a><a class="indexterm" name="idm45105768795008"></a><p>
+            Ignore the checksum verification when rewriting a checksum.
+            This option may only be used with the
+            <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_write"><code class="option">--write</code></a> option. If the
+            <a class="link" href="innochecksum.html#option_innochecksum_write"><code class="option">--write</code></a> option is not
+            specified, <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> terminates.
+          </p><p>
+            In this example, an <code class="literal">innodb</code> checksum is
+            rewritten to replace an invalid checksum:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --no-check --write innodb ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_allow-mismatches"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_allow-mismatches"><code class="option">--allow-mismatches</code></a>,
+            <code class="option">-a</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for allow-mismatches"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--allow-mismatches=#</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">0</code></td>
+</tr><tr><th>Minimum Value</th>
+<td><code class="literal">0</code></td>
+</tr><tr><th>Maximum Value</th>
+<td><code class="literal">18446744073709551615</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768768560"></a><a class="indexterm" name="idm45105768767072"></a><p>
+            The maximum number of checksum mismatches allowed before
+            <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> terminates. The default
+            setting is 0. If
+            <code class="literal">--allow-mismatches=</code><em class="replaceable"><code>N</code></em>,
+            where <code class="literal"><em class="replaceable"><code>N</code></em>&gt;=0</code>,
+            <em class="replaceable"><code>N</code></em> mismatches are permitted and
+            <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> terminates at
+            <code class="literal"><em class="replaceable"><code>N</code></em>+1</code>. When
+            <code class="literal">--allow-mismatches</code> is set to 0,
+            <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> terminates on the first
+            checksum mismatch.
+          </p><p>
+            In this example, an existing <code class="literal">innodb</code>
+            checksum is rewritten to set
+            <code class="literal">--allow-mismatches</code> to 1.
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --allow-mismatches=1 --write innodb ../data/test/tab1.ibd</code></pre><p>
+            With <code class="literal">--allow-mismatches</code> set to 1, if
+            there is a mismatch at page 600 and another at page 700 on a
+            file with 1000 pages, the checksum is updated for pages
+            0-599 and 601-699. Because
+            <code class="literal">--allow-mismatches</code> is set to 1, the
+            checksum tolerates the first mismatch and terminates on the
+            second mismatch, leaving page 600 and pages 700-999
+            unchanged.
+          </p></li><li class="listitem"><p><a name="option_innochecksum_write"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_write"><code class="option">--write=<em class="replaceable"><code>name</code></em></code></a>,
+            <code class="option">-w <em class="replaceable"><code>num</code></em></code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for write"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--write=algorithm</code></td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">crc32</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">innodb</code></p><p class="valid-value"><code class="literal">crc32</code></p><p class="valid-value"><code class="literal">none</code></p></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768734048"></a><a class="indexterm" name="idm45105768732560"></a><p>
+            Rewrite a checksum. When rewriting an invalid checksum, the
+            <a class="link" href="innochecksum.html#option_innochecksum_no-check"><code class="option">--no-check</code></a> option must
+            be used together with the <code class="option">--write</code> option.
+            The <a class="link" href="innochecksum.html#option_innochecksum_no-check"><code class="option">--no-check</code></a> option
+            tells <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> to ignore verification
+            of the invalid checksum. You do not have to specify the
+            <a class="link" href="innochecksum.html#option_innochecksum_no-check"><code class="option">--no-check</code></a> option if
+            the current checksum is valid.
+          </p><p>
+            An algorithm must be specified when using the
+            <a class="link" href="innochecksum.html#option_innochecksum_write"><code class="option">--write</code></a> option.
+            Possible values for the <code class="option">--write</code> option are:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                <code class="literal">innodb</code>: A checksum calculated in
+                software, using the original algorithm from
+                <code class="literal">InnoDB</code>.
+              </p></li><li class="listitem"><p>
+                <code class="literal">crc32</code>: A checksum calculated using
+                the <code class="literal">crc32</code> algorithm, possibly done
+                with a hardware assist.
+              </p></li><li class="listitem"><p>
+                <code class="literal">none</code>: A constant number.
+</p></li></ul>
+</div>
+<p>
+            The <code class="option">--write</code> option rewrites entire pages to
+            disk. If the new checksum is identical to the existing
+            checksum, the new checksum is not written to disk in order
+            to minimize I/O.
+          </p><p>
+            <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> obtains an exclusive lock
+            when the <code class="option">--write</code> option is used.
+          </p><p>
+            In this example, a <code class="literal">crc32</code> checksum is
+            written for <code class="filename">tab1.ibd</code>:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum -w crc32 ../data/test/tab1.ibd</code></pre><p>
+            In this example, a <code class="literal">crc32</code> checksum is
+            rewritten to replace an invalid <code class="literal">crc32</code>
+            checksum:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --no-check --write crc32 ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_page-type-summary"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_page-type-summary"><code class="option">--page-type-summary</code></a>,
+            <code class="option">-S</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for page-type-summary"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--page-type-summary</code></td>
+</tr><tr><th>Type</th>
+<td>Boolean</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">false</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768695632"></a><a class="indexterm" name="idm45105768694128"></a><p>
+            Display a count of each page type in a tablespace. Example
+            usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --page-type-summary ../data/test/tab1.ibd</code></pre><p>
+            Sample output for <code class="literal">--page-type-summary</code>:
+          </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">File::../data/test/tab1.ibd
+================PAGE TYPE SUMMARY==============
+#PAGE_COUNT PAGE_TYPE
+===============================================
+       2        Index page
+       0        Undo log page
+       1        Inode page
+       0        Insert buffer free list page
+       2        Freshly allocated page
+       1        Insert buffer bitmap
+       0        System page
+       0        Transaction system page
+       1        File Space Header
+       0        Extent descriptor page
+       0        BLOB page
+       0        Compressed BLOB page
+       0        Other type of page
+===============================================
+Additional information:
+Undo page type: 0 insert, 0 update, 0 other
+Undo page state: 0 active, 0 cached, 0 to_free, 0 to_purge, 0 prepared, 0 other</code></pre></li><li class="listitem"><p><a name="option_innochecksum_page-type-dump"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_page-type-dump"><code class="option">--page-type-dump</code></a>,
+            <code class="option">-D</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for page-type-dump"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--page-type-dump=name</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768676256"></a><a class="indexterm" name="idm45105768674768"></a><p>
+            Dump the page type information for each page in a tablespace
+            to <code class="literal">stderr</code> or <code class="literal">stdout</code>.
+            Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --page-type-dump=/tmp/a.txt ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_log"></a>
+            <a class="link" href="innochecksum.html#option_innochecksum_log"><code class="option">--log</code></a>,
+            <code class="option">-l</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for log"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--log=path</code></td>
+</tr><tr><th>Type</th>
+<td>File name</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<a class="indexterm" name="idm45105768657712"></a><a class="indexterm" name="idm45105768656224"></a><p>
+            Log output for the <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> tool. A
+            log file name must be provided. Log output contains checksum
+            values for each tablespace page. For uncompressed tables,
+            LSN values are also provided. Example usage:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum --log=/tmp/log.txt ../data/test/tab1.ibd</code></pre><p>
+            or:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum -l /tmp/log.txt ../data/test/tab1.ibd</code></pre></li><li class="listitem"><p><a name="option_innochecksum_read-from-standard-in"></a>
+            <code class="literal">-</code> option.
+          </p><a class="indexterm" name="idm45105768648384"></a><a class="indexterm" name="idm45105768646880"></a><p>
+            Specify the <code class="literal">-</code> option to read from
+            standard input. If the <code class="literal">-</code> option is
+            missing when <span class="quote">“<span class="quote">read from standard in</span>”</span> is
+            expected, <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> prints
+            <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> usage information indicating
+            that the <span class="quote">“<span class="quote">-</span>”</span> option was omitted. Example
+            usages:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">cat t1.ibd | innochecksum -</code></pre><p>
+            In this example, <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> writes the
+            <code class="literal">crc32</code> checksum algorithm to
+            <code class="filename">a.ibd</code> without changing the original
+            <code class="filename">t1.ibd</code> file.
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">cat t1.ibd | innochecksum --write=crc32 - &gt; a.ibd</code></pre></li></ul>
+</div>
+<h4><a name="idm45105768634016"></a>Running innochecksum on Multiple User-defined Tablespace Files</h4>
+<p>
+        The following examples demonstrate how to run
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> on multiple user-defined
+        tablespace files (<code class="filename">.ibd</code> files).
+      </p><p>
+        Run <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> for all tablespace
+        (<code class="filename">.ibd</code>) files in the <span class="quote">“<span class="quote">test</span>”</span>
+        database:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum ./data/test/*.ibd</code></pre><p>
+        Run <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> for all tablespace files
+        (<code class="filename">.ibd</code> files) that have a file name starting
+        with <span class="quote">“<span class="quote">t</span>”</span>:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum ./data/test/t*.ibd</code></pre><p>
+        Run <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> for all tablespace files
+        (<code class="filename">.ibd</code> files) in the
+        <code class="filename">data</code> directory:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">innochecksum ./data/*/*.ibd</code></pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          Running <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> on multiple
+          user-defined tablespace files is not supported on Windows
+          operating systems, as Windows shells such as
+          <span class="command"><strong>cmd.exe</strong></span> do not support glob pattern
+          expansion. On Windows systems, <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a>
+          must be run separately for each user-defined tablespace file.
+          For example:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">innochecksum.exe t1.ibd
+innochecksum.exe t2.ibd
+innochecksum.exe t3.ibd</code></pre>
+</div>
+<h4><a name="idm45105768613744"></a>Running innochecksum on Multiple System Tablespace Files</h4>
+<p>
+        By default, there is only one <code class="literal">InnoDB</code> system
+        tablespace file (<code class="filename">ibdata1</code>) but multiple
+        files for the system tablespace can be defined using the
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_data_file_path"><code class="literal">innodb_data_file_path</code></a> option.
+        In the following example, three files for the system tablespace
+        are defined using the
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_data_file_path"><code class="literal">innodb_data_file_path</code></a> option:
+        <code class="filename">ibdata1</code>, <code class="filename">ibdata2</code>, and
+        <code class="filename">ibdata3</code>.
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">./bin/mysqld --no-defaults --innodb-data-file-path="ibdata1:10M;ibdata2:10M;ibdata3:10M:autoextend"</code></pre><p>
+        The three files (<code class="filename">ibdata1</code>,
+        <code class="filename">ibdata2</code>, and <code class="filename">ibdata3</code>)
+        form one logical system tablespace. To run
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> on multiple files that form one
+        logical system tablespace, <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a>
+        requires the <code class="literal">-</code> option to read tablespace
+        files in from standard input, which is equivalent to
+        concatenating multiple files to create one single file. For the
+        example provided above, the following
+        <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> command would be used:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">cat ibdata* | innochecksum -</code></pre><p>
+        Refer to the <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> options information
+        for more information about the <span class="quote">“<span class="quote">-</span>”</span> option.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          Running <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> on multiple files in
+          the same tablespace is not supported on Windows operating
+          systems, as Windows shells such as <span class="command"><strong>cmd.exe</strong></span>
+          do not support glob pattern expansion. On Windows systems,
+          <a class="link" href="innochecksum.html" title="6.6.2 innochecksum — Offline InnoDB File Checksum Utility"><span class="command"><strong>innochecksum</strong></span></a> must be run separately for
+          each system tablespace file. For example:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">innochecksum.exe ibdata1
+innochecksum.exe ibdata2
+innochecksum.exe ibdata3</code></pre>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="ibd2sdi.html"
+        aria-label="Previous" title="Previous: ibd2sdi — InnoDB Tablespace SDI Extraction Utility"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="programs-admin-utils.html" title="Up: Administrative and Utility Programs"> UP</a> &nbsp;
+    <a href="myisam-ftdump.html" aria-label="Next"
+        title="Next: myisam_ftdump — Display Full-Text Index information">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innochecksum.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:44 GMT -->
+</html>

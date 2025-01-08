@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-data-encryption.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 17.13 InnoDB Data-at-Rest Encryption</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="innodb-online-ddl-limitations.html" title="17.12.8 Online DDL Limitations" />
+<link rel="next" href="innodb-parameters8dba.html?ff=nopfpls" title="17.14 InnoDB Startup Options and System Variables" />
+<link rel="up" href="innodb-storage-engine.html" title="17 The InnoDB Storage Engine" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7ybda-f-75bfe40a7-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":111,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18f74213","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5915,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134086","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==Iby/Y8pKdRvPwiXyuWg+t6UpNP0JUWzS6vpxt3uFY0l8kdHW2xPEBHkJ6zHL6vV/deY2CrDnjeVcOMGlMuEkS/yrAmmbs+FkYcAGPz5hU5TXXmyFl8/OnHFZCm4kxoeFWIkzTJX9KyqIHLMvKeRkRyGY7aKge2LzHpwrmFoVD1Es9tJIVp2zfT8cmfriQI03A/osMCTcmG48F5VUbA1e2RqS4l6xe5L02jx5LgmpFBixyUxz3Viar+ORZA8GrBq/sbHP8p+ykJigm6vYqNG+4kVGv+LfUxx1foNZzRxhkUtqtzAT4xf4ZHPjIokzYjozCwUmoa4yrceR9HQdUFPeU6bziDnh1OLndMmi2yEKWeCkEfUkNZFujqV+DTc4YsLdSiSxTUnAxnQi3d53G/+yITOIs0KIYO6sObQMi/s++dI=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Finnodb-data-encryption.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="innodb-online-ddl-limitations.html"
+        aria-label="Previous" title="Previous: Online DDL Limitations"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="innodb-storage-engine.html" title="Up: The InnoDB Storage Engine"><span class="icon-chevron-up"></span></a>
+    <a href="innodb-parameters.html" aria-label="Next"
+        title="Next: InnoDB Startup Options and System Variables"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-introduction.html">Introduction to InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benefits.html">Benefits of Using InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-best-practices.html">Best Practices for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-check-availability.html">Verifying that InnoDB is the Default Storage Engine</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benchmarking.html">Testing and Benchmarking with InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-acid.html">InnoDB and the ACID Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multi-versioning.html">InnoDB Multi-Versioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-architecture.html">InnoDB Architecture</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-in-memory-structures.html">InnoDB In-Memory Structures</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool.html">Buffer Pool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-change-buffer.html">Change Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-adaptive-hash.html">Adaptive Hash Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log-buffer.html">Log Buffer</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-on-disk-structures.html">InnoDB On-Disk Structures</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tables.html">Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-innodb-tables.html">Creating InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-create-table-external.html">Creating Tables Externally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-table-import.html">Importing InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-migration.html">Moving or Copying InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="converting-tables-to-innodb.html">Converting Tables from MyISAM to InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-auto-increment-handling.html">AUTO_INCREMENT Handling in InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-index-types.html">Clustered and Secondary Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-physical-structure.html">The Physical Structure of an InnoDB Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sorted-index-builds.html">Sorted Index Builds</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-fulltext-index.html">InnoDB Full-Text Indexes</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace.html">Tablespaces</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-system-tablespace.html">The System Tablespace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-per-table-tablespaces.html">File-Per-Table Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="general-tablespaces.html">General Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-tablespaces.html">Undo Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-temporary-tablespace.html">Temporary Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-moving-data-files-offline.html">Moving Tablespace Files While the Server is Offline</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disabling-tablespace-path-validation.html">Disabling Tablespace Path Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-optimize-tablespace-page-allocation.html">Optimizing Tablespace Space Allocation on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace-autoextend-size.html">Tablespace AUTOEXTEND_SIZE Configuration</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-doublewrite-buffer.html">Doublewrite Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log.html">Redo Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-logs.html">Undo Logs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-transaction-model.html">InnoDB Locking and Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking.html">InnoDB Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-model.html">InnoDB Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-isolation-levels.html">Transaction Isolation Levels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-autocommit-commit-rollback.html">autocommit, Commit, and Rollback</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-consistent-read.html">Consistent Nonlocking Reads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-reads.html">Locking Reads</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locks-set.html">Locks Set by Different SQL Statements in InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-next-key-locking.html">Phantom Rows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks.html">Deadlocks in InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-example.html">An InnoDB Deadlock Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-detection.html">Deadlock Detection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks-handling.html">How to Minimize and Handle Deadlocks</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-scheduling.html">Transaction Scheduling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-configuration.html">InnoDB Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-init-startup-configuration.html">InnoDB Startup Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-read-only-instance.html">Configuring InnoDB for Read-Only Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-buffer-pool.html">InnoDB Buffer Pool Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-resize.html">Configuring InnoDB Buffer Pool Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multiple-buffer-pools.html">Configuring Multiple Buffer Pool Instances</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-midpoint_insertion.html">Making the Buffer Pool Scan Resistant</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-read_ahead.html">Configuring InnoDB Buffer Pool Prefetching (Read-Ahead)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-flushing.html">Configuring Buffer Pool Flushing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-preload-buffer-pool.html">Saving and Restoring the Buffer Pool State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-in-core-file.html">Excluding or Including Buffer Pool Pages from Core Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-thread_concurrency.html">Configuring Thread Concurrency for InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-multiple_io_threads.html">Configuring the Number of Background InnoDB I/O Threads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-linux-native-aio.html">Using Asynchronous I/O on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-configuring-io-capacity.html">Configuring InnoDB I/O Capacity</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-spin_lock_polling.html">Configuring Spin Lock Polling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-purge-configuration.html">Purge Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-optimizer-statistics.html">Configuring Optimizer Statistics for InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-persistent-stats.html">Configuring Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-statistics-estimation.html">Configuring Non-Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-analyze-table-complexity.html">Estimating ANALYZE TABLE Complexity for InnoDB Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-page-merge-threshold.html">Configuring the Merge Threshold for Index Pages</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-dedicated-server.html">Enabling Automatic InnoDB Configuration for a Dedicated MySQL Server</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-compression.html">InnoDB Table and Page Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-table-compression.html">InnoDB Table Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-background.html">Overview of Table Compression</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-usage.html">Creating Compressed Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning.html">Tuning Compression for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning-monitoring.html">Monitoring InnoDB Table Compression at Runtime</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-internals.html">How Compression Works for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-compression-oltp.html">Compression for OLTP Workloads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-syntax-warnings.html">SQL Compression Syntax Warnings and Errors</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-page-compression.html">InnoDB Page Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-row-format.html">InnoDB Row Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-management.html">InnoDB Disk I/O and File Space Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-io.html">InnoDB Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-space.html">File Space Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-checkpoints.html">InnoDB Checkpoints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-defragmenting.html">Defragmenting a Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-truncate-table-reclaim-space.html">Reclaiming Disk Space with TRUNCATE TABLE</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl.html">InnoDB and Online DDL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-operations.html">Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-performance.html">Online DDL Performance and Concurrency</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-space-requirements.html">Online DDL Space Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-memory-management.html">Online DDL Memory Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-parallel-thread-configuration.html">Configuring Parallel Threads for Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-single-multi.html">Simplifying DDL Statements with Online DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-failure-conditions.html">Online DDL Failure Conditions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-limitations.html">Online DDL Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="innodb-data-encryption.html">InnoDB Data-at-Rest Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-parameters.html">InnoDB Startup Options and System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema.html">InnoDB INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-compression-tables.html">InnoDB INFORMATION_SCHEMA Tables about Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmp.html">INNODB_CMP and INNODB_CMP_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmpmem.html">INNODB_CMPMEM and INNODB_CMPMEM_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples-compression-sect.html">Using the Compression Information Schema Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-transactions.html">InnoDB INFORMATION_SCHEMA Transaction and Locking Information</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples.html">Using InnoDB Transaction and Locking Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-understanding-innodb-locking.html">InnoDB Lock and Lock-Wait Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-internal-data.html">Persistence and Consistency of InnoDB Transaction and Locking
+Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-system-tables.html">InnoDB INFORMATION_SCHEMA Schema Object Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-fulltext_index-tables.html">InnoDB INFORMATION_SCHEMA FULLTEXT Index Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-buffer-pool-tables.html">InnoDB INFORMATION_SCHEMA Buffer Pool Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-metrics-table.html">InnoDB INFORMATION_SCHEMA Metrics Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-temp-table-info.html">InnoDB INFORMATION_SCHEMA Temporary Table Info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-files-table.html">Retrieving InnoDB Tablespace Metadata from INFORMATION_SCHEMA.FILES</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-schema.html">InnoDB Integration with MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-alter-table-performance-schema.html">Monitoring ALTER TABLE Progress for InnoDB Tables Using Performance
+      Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-innodb-mutex-waits-performance-schema.html">Monitoring InnoDB Mutex Waits Using Performance Schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-monitors.html">InnoDB Monitors</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-monitor-types.html">InnoDB Monitor Types</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-enabling-monitors.html">Enabling InnoDB Monitors</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-standard-monitor.html">InnoDB Standard Monitor and Lock Monitor Output</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-backup-recovery.html">InnoDB Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-backup.html">InnoDB Backup</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-recovery.html">InnoDB Recovery</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-and-mysql-replication.html">InnoDB and MySQL Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting.html">InnoDB Troubleshooting</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-creating-innodb.html">Troubleshooting InnoDB I/O Problems</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-recovery.html">Troubleshooting Recovery Failures</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="forcing-innodb-recovery.html">Forcing InnoDB Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-datadict.html">Troubleshooting InnoDB Data Dictionary Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-error-handling.html">InnoDB Error Handling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-limits.html">InnoDB Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-restrictions-limitations.html">InnoDB Restrictions and Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/innodb-data-encryption.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/innodb-data-encryption.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/innodb-data-encryption.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/innodb-data-encryption.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/innodb-data-encryption.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                                                        <a href="innodb-storage-engine.html">The InnoDB Storage Engine</a> &nbsp;/&nbsp;
+                                                                                    InnoDB Data-at-Rest Encryption
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title"><a name="innodb-data-encryption"></a>17.13 InnoDB Data-at-Rest Encryption</h2>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105620324256"></a><a class="indexterm" name="idm45105620323248"></a><a class="indexterm" name="idm45105620322240"></a><a class="indexterm" name="idm45105620321232"></a><a class="indexterm" name="idm45105620320224"></a><a class="indexterm" name="idm45105620319216"></a><a class="indexterm" name="idm45105620318208"></a><a class="indexterm" name="idm45105620317200"></a><a class="indexterm" name="idm45105620316192"></a><a class="indexterm" name="idm45105620315184"></a><a class="indexterm" name="idm45105620314176"></a><p>
+    <code class="literal">InnoDB</code> supports data-at-rest encryption for
+    <a class="link" href="glossary.html#glos_file_per_table" title="file-per-table">file-per-table</a>
+    tablespaces, <a class="link" href="glossary.html#glos_general_tablespace" title="general tablespace">general</a>
+    tablespaces, the <code class="literal">mysql</code> system tablespace, redo
+    logs, and undo logs.
+  </p><p>
+    You can set an encryption default for schemas and general
+    tablespaces; this permits DBAs to control whether tables created in
+    those schemas and tablespaces are encrypted.
+  </p><p>
+    <code class="literal">InnoDB</code> data-at-rest encryption features and
+    capabilities are described under the following topics in this
+    section.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-about" title="About Data-at-Rest Encryption">About Data-at-Rest Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-encryption-prerequisites" title="Encryption Prerequisites">Encryption Prerequisites</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-schema-tablespace-encryption-default" title="Defining an Encryption Default for Schemas and General Tablespaces">Defining an Encryption Default for Schemas and General Tablespaces</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-enabling-disabling" title="File-Per-Table Tablespace Encryption">File-Per-Table Tablespace Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-general-tablespace-encryption-enabling-disabling" title="General Tablespace Encryption">General Tablespace Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-doublewrite-file-encryption" title="Doublewrite File Encryption">Doublewrite File Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-mysql-tablespace-encryption-enabling-disabling" title="mysql System Tablespace Encryption">mysql System Tablespace Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-redo-log" title="Redo Log Encryption">Redo Log Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-undo-log" title="Undo Log Encryption">Undo Log Encryption</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-master-key-rotation" title="Master Key Rotation">Master Key Rotation</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-recovery" title="Encryption and Recovery">Encryption and Recovery</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-exporting" title="Exporting Encrypted Tablespaces">Exporting Encrypted Tablespaces</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-replication" title="Encryption and Replication">Encryption and Replication</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-identifying" title="Identifying Encrypted Tablespaces and Schemas">Identifying Encrypted Tablespaces and Schemas</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-progress-monitoring" title="Monitoring Encryption Progress">Monitoring Encryption Progress</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-usage-notes" title="Encryption Usage Notes">Encryption Usage Notes</a></p></li><li class="listitem"><p><a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-limitations" title="Encryption Limitations">Encryption Limitations</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-about"></a>About Data-at-Rest Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      <code class="literal">InnoDB</code> uses a two tier encryption key
+      architecture, consisting of a master encryption key and tablespace
+      keys. When a tablespace is encrypted, a tablespace key is
+      encrypted and stored in the tablespace header. When an application
+      or authenticated user wants to access encrypted tablespace data,
+      <code class="literal">InnoDB</code> uses a master encryption key to decrypt
+      the tablespace key. The decrypted version of a tablespace key
+      never changes, but the master encryption key can be changed as
+      required. This action is referred to as <span class="emphasis"><em>master key
+      rotation</em></span>.
+    </p><p>
+      The data-at-rest encryption feature relies on a keyring component
+      or plugin for master encryption key management.
+    </p><p>
+      All MySQL editions provide a
+      <code class="literal">component_keyring_file</code> component, which stores
+      keyring data in a file local to the server host.
+    </p><p>
+      MySQL Enterprise Edition offers additional keyring components and plugins:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          <code class="literal">component_keyring_encrypted_file</code>: Stores
+          keyring data in an encrypted, password-protected file local to
+          the server host.
+        </p></li><li class="listitem"><p>
+          <code class="literal">keyring_okv</code>: A KMIP 1.1 plugin for use with
+          KMIP-compatible back end keyring storage products. Supported
+          KMIP-compatible products include centralized key management
+          solutions such as Oracle Key Vault, Gemalto KeySecure, Thales
+          Vormetric key management server, and Fornetix Key
+          Orchestration.
+        </p></li><li class="listitem"><p>
+          <code class="literal">keyring_aws</code>: Communicates with the Amazon
+          Web Services Key Management Service (AWS KMS) as a back end
+          for key generation and uses a local file for key storage.
+        </p></li><li class="listitem"><p>
+          <code class="literal">keyring_hashicorp</code>: Communicates with
+          HashiCorp Vault for back end storage.
+</p></li></ul>
+</div>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Warning
+</div>
+<p>
+        For encryption key management, the
+        <code class="literal">component_keyring_file</code> and
+        <code class="literal">component_keyring_encrypted_file</code> components
+        are not intended as a regulatory compliance solution. Security
+        standards such as PCI, FIPS, and others require use of key
+        management systems to secure, manage, and protect encryption
+        keys in key vaults or hardware security modules (HSMs).
+</p>
+</div>
+<p>
+      A secure and robust encryption key management solution is critical
+      for security and for compliance with various security standards.
+      When the data-at-rest encryption feature uses a centralized key
+      management solution, the feature is referred to as <span class="quote">“<span class="quote">MySQL
+      Enterprise Transparent Data Encryption (TDE)</span>”</span>.
+    </p><p>
+      The data-at-rest encryption feature supports the Advanced
+      Encryption Standard (AES) block-based encryption algorithm. It
+      uses Electronic Codebook (ECB) block encryption mode for
+      tablespace key encryption and Cipher Block Chaining (CBC) block
+      encryption mode for data encryption.
+    </p><p>
+      For frequently asked questions about the data-at-rest encryption
+      feature, see <a class="xref" href="faqs-tablespace-encryption.html" title="A.17 MySQL 8.4 FAQ: InnoDB Data-at-Rest Encryption">Section A.17, “MySQL 8.4 FAQ: InnoDB Data-at-Rest Encryption”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-encryption-prerequisites"></a>Encryption Prerequisites</h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          A keyring component or plugin must be installed and configured
+          at startup. Early loading ensures that the component or plugin
+          is available prior to initialization of the
+          <code class="literal">InnoDB</code> storage engine. For keyring
+          installation and configuration instructions, see
+          <a class="xref" href="keyring.html" title="8.4.4 The MySQL Keyring">Section 8.4.4, “The MySQL Keyring”</a>. The instructions show how to ensure
+          that the chosen component or plugin is active.
+        </p><p>
+          Only one keyring component or plugin should be enabled at a
+          time. Enabling multiple keyring components or plugins is
+          unsupported and results may not be as anticipated.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+            Once encrypted tablespaces are created in a MySQL instance,
+            the keyring component or plugin that was loaded when
+            creating the encrypted tablespace must continue to be loaded
+            at startup. Failing to do so results in errors when starting
+            the server and during <code class="literal">InnoDB</code> recovery.
+</p>
+</div>
+</li><li class="listitem"><p>
+          When encrypting production data, ensure that you take steps to
+          prevent loss of the master encryption key. <span class="emphasis"><em>If the
+          master encryption key is lost, data stored in encrypted
+          tablespace files is unrecoverable.</em></span> If you use the
+          <code class="literal">component_keyring_file</code> or
+          <code class="literal">component_keyring_encrypted_file</code> component
+          create a backup of the keyring data file immediately after
+          creating the first encrypted tablespace, before master key
+          rotation, and after master key rotation. For each component,
+          its configuration file indicates the data file location. If
+          you use the <code class="literal">keyring_okv</code> or
+          <code class="literal">keyring_aws</code> plugin, ensure that you have
+          performed the necessary configuration. For instructions, see
+          <a class="xref" href="keyring.html" title="8.4.4 The MySQL Keyring">Section 8.4.4, “The MySQL Keyring”</a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-schema-tablespace-encryption-default"></a>Defining an Encryption Default for Schemas and General Tablespaces</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105620266016"></a><p>
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> system
+      variable defines the default encryption setting for schemas and
+      general tablespaces. <a class="link" href="create-tablespace.html" title="15.1.21 CREATE TABLESPACE Statement"><code class="literal">CREATE
+      TABLESPACE</code></a> and
+      <a class="link" href="create-database.html" title="15.1.12 CREATE DATABASE Statement"><code class="literal">CREATE
+      SCHEMA</code></a> operations apply the
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> setting
+      when an <code class="literal">ENCRYPTION</code> clause is not specified
+      explicitly.
+    </p><p>
+      <a class="link" href="alter-database.html" title="15.1.2 ALTER DATABASE Statement"><code class="literal">ALTER
+      SCHEMA</code></a> and <a class="link" href="alter-tablespace.html" title="15.1.10 ALTER TABLESPACE Statement"><code class="literal">ALTER
+      TABLESPACE</code></a> operations do not apply the
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> setting.
+      An <code class="literal">ENCRYPTION</code> clause must be specified
+      explicitly to alter the encryption of an existing schema or
+      general tablespace.
+    </p><p>
+      The <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a>
+      variable can be set for an individual client connection or
+      globally using
+      <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET</code></a>
+      syntax. For example, the following statement enables default
+      schema and tablespace encryption globally:
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; SET GLOBAL default_table_encryption=ON;</code></pre><p>
+      The default encryption setting for a schema can also be defined
+      using the <code class="literal">DEFAULT ENCRYPTION</code> clause when
+      creating or altering a schema, as in this example:
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; CREATE SCHEMA test DEFAULT ENCRYPTION = 'Y';</code></pre><p>
+      If the <code class="literal">DEFAULT ENCRYPTION</code> clause is not
+      specified when creating a schema, the
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> setting
+      is applied. The <code class="literal">DEFAULT ENCRYPTION</code> clause must
+      be specified to alter the default encryption of an existing
+      schema. Otherwise, the schema retains its current encryption
+      setting.
+    </p><p>
+      By default, a table inherits the encryption setting of the schema
+      or general tablespace it is created in. For example, a table
+      created in an encryption-enabled schema is encrypted by default.
+      This behavior enables a DBA to control table encryption usage by
+      defining and enforcing schema and general tablespace encryption
+      defaults.
+    </p><p>
+      Encryption defaults are enforced by enabling the
+      <a class="link" href="server-system-variables.html#sysvar_table_encryption_privilege_check"><code class="literal">table_encryption_privilege_check</code></a>
+      system variable. When
+      <a class="link" href="server-system-variables.html#sysvar_table_encryption_privilege_check"><code class="literal">table_encryption_privilege_check</code></a>
+      is enabled, a privilege check occurs when creating or altering a
+      schema or general tablespace with an encryption setting that
+      differs from the
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> setting,
+      or when creating or altering a table with an encryption setting
+      that differs from the default schema encryption. When
+      <a class="link" href="server-system-variables.html#sysvar_table_encryption_privilege_check"><code class="literal">table_encryption_privilege_check</code></a>
+      is disabled (the default), the privilege check does not occur and
+      the previously mentioned operations are permitted to proceed with
+      a warning.
+    </p><p>
+      The <a class="link" href="privileges-provided.html#priv_table-encryption-admin"><code class="literal">TABLE_ENCRYPTION_ADMIN</code></a>
+      privilege is required to override default encryption settings when
+      <a class="link" href="server-system-variables.html#sysvar_table_encryption_privilege_check"><code class="literal">table_encryption_privilege_check</code></a>
+      is enabled. A DBA can grant this privilege to enable a user to
+      deviate from the
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> setting
+      when creating or altering a schema or general tablespace, or to
+      deviate from the default schema encryption when creating or
+      altering a table. This privilege does not permit deviating from
+      the encryption of a general tablespace when creating or altering a
+      table. A table must have the same encryption setting as the
+      general tablespace it resides in.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-enabling-disabling"></a>File-Per-Table Tablespace Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      A file-per-table tablespace inherits the default encryption of the
+      schema in which the table is created unless an
+      <code class="literal">ENCRYPTION</code> clause is specified explicitly in
+      the <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE TABLE</code></a> statement.
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; CREATE TABLE t1 (c1 INT) ENCRYPTION = 'Y';</code></pre><p>
+      To alter the encryption of an existing file-per-table tablespace,
+      an <code class="literal">ENCRYPTION</code> clause must be specified.
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER TABLE t1 ENCRYPTION = 'Y';</code></pre><p>
+      <a class="link" href="server-system-variables.html#sysvar_table_encryption_privilege_check"><code class="literal">table_encryption_privilege_check</code></a>
+      is enabled, specifying an <code class="literal">ENCRYPTION</code> clause
+      with a setting that differs from the default schema encryption
+      requires the <a class="link" href="privileges-provided.html#priv_table-encryption-admin"><code class="literal">TABLE_ENCRYPTION_ADMIN</code></a>
+      privilege. See
+      <a class="xref" href="innodb-data-encryption.html#innodb-schema-tablespace-encryption-default" title="Defining an Encryption Default for Schemas and General Tablespaces">Defining an Encryption Default for Schemas and General Tablespaces</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-general-tablespace-encryption-enabling-disabling"></a>General Tablespace Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      The <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a>
+      variable determines the encryption of a newly created general
+      tablespace unless an <code class="literal">ENCRYPTION</code> clause is
+      specified explicitly in the <a class="link" href="create-tablespace.html" title="15.1.21 CREATE TABLESPACE Statement"><code class="literal">CREATE
+      TABLESPACE</code></a> statement.
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; CREATE TABLESPACE `ts1` ADD DATAFILE 'ts1.ibd' ENCRYPTION = 'Y' Engine=InnoDB;</code></pre><p>
+      To alter the encryption of an existing general tablespace, an
+      <code class="literal">ENCRYPTION</code> clause must be specified.
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER TABLESPACE ts1 ENCRYPTION = 'Y';</code></pre><p>
+      If
+      <a class="link" href="server-system-variables.html#sysvar_table_encryption_privilege_check"><code class="literal">table_encryption_privilege_check</code></a>
+      is enabled, specifying an <code class="literal">ENCRYPTION</code> clause
+      with a setting that differs from the
+      <a class="link" href="server-system-variables.html#sysvar_default_table_encryption"><code class="literal">default_table_encryption</code></a> setting
+      requires the <a class="link" href="privileges-provided.html#priv_table-encryption-admin"><code class="literal">TABLE_ENCRYPTION_ADMIN</code></a>
+      privilege. See
+      <a class="xref" href="innodb-data-encryption.html#innodb-schema-tablespace-encryption-default" title="Defining an Encryption Default for Schemas and General Tablespaces">Defining an Encryption Default for Schemas and General Tablespaces</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-doublewrite-file-encryption"></a>Doublewrite File Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      In MySQL 8.4, <code class="literal">InnoDB</code> automatically
+      encrypts doublewrite file pages that belong to encrypted
+      tablespaces. No action is required. Doublewrite file pages are
+      encrypted using the encryption key of the associated tablespace.
+      The same encrypted page written to a tablespace data file is also
+      written to a doublewrite file. Doublewrite file pages that belong
+      to an unencrypted tablespace remain unencrypted.
+    </p><p>
+      During recovery, encrypted doublewrite file pages are unencrypted
+      and checked for corruption.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-mysql-tablespace-encryption-enabling-disabling"></a>mysql System Tablespace Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      The <code class="literal">mysql</code> system tablespace contains the
+      <code class="literal">mysql</code> system database and MySQL data dictionary
+      tables. It is unencrypted by default. To enable encryption for the
+      <code class="literal">mysql</code> system tablespace, specify the tablespace
+      name and the <code class="literal">ENCRYPTION</code> option in an
+      <a class="link" href="alter-tablespace.html" title="15.1.10 ALTER TABLESPACE Statement"><code class="literal">ALTER TABLESPACE</code></a> statement.
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER TABLESPACE mysql ENCRYPTION = 'Y';</code></pre><p>
+      To disable encryption for the <code class="literal">mysql</code> system
+      tablespace, set <code class="literal">ENCRYPTION = 'N'</code> using an
+      <a class="link" href="alter-tablespace.html" title="15.1.10 ALTER TABLESPACE Statement"><code class="literal">ALTER TABLESPACE</code></a> statement.
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER TABLESPACE mysql ENCRYPTION = 'N';</code></pre><p>
+      Enabling or disabling encryption for the <code class="literal">mysql</code>
+      system tablespace requires the <a class="link" href="privileges-provided.html#priv_create-tablespace"><code class="literal">CREATE
+      TABLESPACE</code></a> privilege on all tables in the instance
+      (<code class="literal">CREATE TABLESPACE on *.*)</code>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-redo-log"></a>Redo Log Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      Redo log data encryption is enabled using the
+      <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_encrypt"><code class="literal">innodb_redo_log_encrypt</code></a>
+      configuration option. Redo log encryption is disabled by default.
+    </p><p>
+      As with tablespace data, redo log data encryption occurs when redo
+      log data is written to disk, and decryption occurs when redo log
+      data is read from disk. Once redo log data is read into memory, it
+      is in unencrypted form. Redo log data is encrypted and decrypted
+      using the tablespace encryption key.
+    </p><p>
+      When <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_encrypt"><code class="literal">innodb_redo_log_encrypt</code></a> is
+      enabled, unencrypted redo log pages that are present on disk
+      remain unencrypted, and new redo log pages are written to disk in
+      encrypted form. Likewise, when
+      <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_encrypt"><code class="literal">innodb_redo_log_encrypt</code></a> is
+      disabled, encrypted redo log pages that are present on disk remain
+      encrypted, and new redo log pages are written to disk in
+      unencrypted form.
+    </p><p>
+      Redo log encryption metadata, including the tablespace encryption
+      key, is stored in the header of the redo log file with the most
+      recent checkpoint LSN. If the redo log file with the encryption
+      metadata is removed, redo log encryption is disabled.
+    </p><p>
+      Once redo log encryption is enabled, a normal restart without the
+      keyring component or plugin or without the encryption key is not
+      possible, as <code class="literal">InnoDB</code> must be able to scan redo
+      pages during startup, which is not possible if redo log pages are
+      encrypted. Without the keyring component or plugin or the
+      encryption key, only a forced startup without the redo logs
+      (<code class="literal">SRV_FORCE_NO_LOG_REDO</code>) is possible. See
+      <a class="xref" href="forcing-innodb-recovery.html" title="17.20.3 Forcing InnoDB Recovery">Section 17.20.3, “Forcing InnoDB Recovery”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-undo-log"></a>Undo Log Encryption</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      Undo log data encryption is enabled using the
+      <a class="link" href="innodb-parameters.html#sysvar_innodb_undo_log_encrypt"><code class="literal">innodb_undo_log_encrypt</code></a>
+      configuration option. Undo log encryption applies to undo logs
+      that reside in <a class="link" href="glossary.html#glos_undo_tablespace" title="undo tablespace">undo
+      tablespaces</a>. See <a class="xref" href="innodb-undo-tablespaces.html" title="17.6.3.4 Undo Tablespaces">Section 17.6.3.4, “Undo Tablespaces”</a>.
+      Undo log data encryption is disabled by default.
+    </p><p>
+      As with tablespace data, undo log data encryption occurs when undo
+      log data is written to disk, and decryption occurs when undo log
+      data is read from disk. Once undo log data is read into memory, it
+      is in unencrypted form. Undo log data is encrypted and decrypted
+      using the tablespace encryption key.
+    </p><p>
+      When <a class="link" href="innodb-parameters.html#sysvar_innodb_undo_log_encrypt"><code class="literal">innodb_undo_log_encrypt</code></a> is
+      enabled, unencrypted undo log pages that are present on disk
+      remain unencrypted, and new undo log pages are written to disk in
+      encrypted form. Likewise, when
+      <a class="link" href="innodb-parameters.html#sysvar_innodb_undo_log_encrypt"><code class="literal">innodb_undo_log_encrypt</code></a> is
+      disabled, encrypted undo log pages that are present on disk remain
+      encrypted, and new undo log pages are written to disk in
+      unencrypted form.
+    </p><p>
+      Undo log encryption metadata, including the tablespace encryption
+      key, is stored in the header of the undo log file.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+        When undo log encryption is disabled, the server continues to
+        require the keyring component or plugin that was used to encrypt
+        undo log data until the undo tablespaces that contained the
+        encrypted undo log data are truncated. (An encryption header is
+        only removed from an undo tablespace when the undo tablespace is
+        truncated.) For information about truncating undo tablespaces,
+        see <a class="xref" href="innodb-undo-tablespaces.html#truncate-undo-tablespace" title="Truncating Undo Tablespaces">Truncating Undo Tablespaces</a>.
+</p>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-master-key-rotation"></a>Master Key Rotation</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      The master encryption key should be rotated periodically and
+      whenever you suspect that the key has been compromised.
+    </p><p>
+      Master key rotation is an atomic, instance-level operation. Each
+      time the master encryption key is rotated, all tablespace keys in
+      the MySQL instance are re-encrypted and saved back to their
+      respective tablespace headers. As an atomic operation,
+      re-encryption must succeed for all tablespace keys once a rotation
+      operation is initiated. If master key rotation is interrupted by a
+      server failure, <code class="literal">InnoDB</code> rolls the operation
+      forward on server restart. For more information, see
+      <a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-recovery" title="Encryption and Recovery">Encryption and Recovery</a>.
+    </p><p>
+      Rotating the master encryption key only changes the master
+      encryption key and re-encrypts tablespace keys. It does not
+      decrypt or re-encrypt associated tablespace data.
+    </p><p>
+      Rotating the master encryption key requires the
+      <a class="link" href="privileges-provided.html#priv_encryption-key-admin"><code class="literal">ENCRYPTION_KEY_ADMIN</code></a> privilege (or
+      the deprecated <a class="link" href="privileges-provided.html#priv_super"><code class="literal">SUPER</code></a> privilege).
+    </p><p>
+      To rotate the master encryption key, run:
+    </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER INSTANCE ROTATE INNODB MASTER KEY;</code></pre><p>
+      <a class="link" href="alter-instance.html#alter-instance-rotate-innodb-master-key"><code class="literal">ALTER INSTANCE ROTATE INNODB MASTER
+      KEY</code></a> supports concurrent DML. However, it cannot be run
+      concurrently with tablespace encryption operations, and locks are
+      taken to prevent conflicts that could arise from concurrent
+      execution. If an <a class="link" href="alter-instance.html#alter-instance-rotate-innodb-master-key"><code class="literal">ALTER INSTANCE ROTATE INNODB
+      MASTER KEY</code></a> operation is running, it must finish before a
+      tablespace encryption operation can proceed, and vice versa.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-recovery"></a>Encryption and Recovery</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      If a server failure occurs during an encryption operation, the
+      operation is rolled forward when the server is restarted. For
+      general tablespaces, the encryption operation is resumed in a
+      background thread from the last processed page.
+    </p><p>
+      If a server failure occurs during master key rotation,
+      <code class="literal">InnoDB</code> continues the operation on server
+      restart.
+    </p><p>
+      The keyring component or plugin must be loaded prior to storage
+      engine initialization so that the information necessary to decrypt
+      tablespace data pages can be retrieved from tablespace headers
+      before <code class="literal">InnoDB</code> initialization and recovery
+      activities access tablespace data. (See
+      <a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-encryption-prerequisites" title="Encryption Prerequisites">Encryption Prerequisites</a>.)
+    </p><p>
+      When <code class="literal">InnoDB</code> initialization and recovery begin,
+      the master key rotation operation resumes. Due to the server
+      failure, some tablespace keys may already be encrypted using the
+      new master encryption key. <code class="literal">InnoDB</code> reads the
+      encryption data from each tablespace header, and if the data
+      indicates that the tablespace key is encrypted using the old
+      master encryption key, <code class="literal">InnoDB</code> retrieves the old
+      key from the keyring and uses it to decrypt the tablespace key.
+      <code class="literal">InnoDB</code> then re-encrypts the tablespace key
+      using the new master encryption key and saves the re-encrypted
+      tablespace key back to the tablespace header.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-exporting"></a>Exporting Encrypted Tablespaces</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      Tablespace export is only supported for file-per-table
+      tablespaces.
+    </p><p>
+      When an encrypted tablespace is exported,
+      <code class="literal">InnoDB</code> generates a <span class="emphasis"><em>transfer
+      key</em></span> that is used to encrypt the tablespace key. The
+      encrypted tablespace key and transfer key are stored in a
+      <code class="filename"><em class="replaceable"><code>tablespace_name</code></em>.cfp</code>
+      file. This file together with the encrypted tablespace file is
+      required to perform an import operation. On import,
+      <code class="literal">InnoDB</code> uses the transfer key to decrypt the
+      tablespace key in the
+      <code class="filename"><em class="replaceable"><code>tablespace_name</code></em>.cfp</code>
+      file. For related information, see
+      <a class="xref" href="innodb-table-import.html" title="17.6.1.3 Importing InnoDB Tables">Section 17.6.1.3, “Importing InnoDB Tables”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-replication"></a>Encryption and Replication</h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          The <a class="link" href="alter-instance.html#alter-instance-rotate-innodb-master-key"><code class="literal">ALTER INSTANCE ROTATE INNODB MASTER
+          KEY</code></a> statement is only supported in replication
+          environments where the source and replica run a version of
+          MySQL that supports tablespace encryption.
+        </p></li><li class="listitem"><p>
+          Successful <a class="link" href="alter-instance.html#alter-instance-rotate-innodb-master-key"><code class="literal">ALTER INSTANCE ROTATE INNODB
+          MASTER KEY</code></a> statements are written to the binary log
+          for replication on replicas.
+        </p></li><li class="listitem"><p>
+          If an <a class="link" href="alter-instance.html#alter-instance-rotate-innodb-master-key"><code class="literal">ALTER INSTANCE ROTATE INNODB MASTER
+          KEY</code></a> statement fails, it is not logged to the binary
+          log and is not replicated on replicas.
+        </p></li><li class="listitem"><p>
+          Replication of an <a class="link" href="alter-instance.html#alter-instance-rotate-innodb-master-key"><code class="literal">ALTER INSTANCE ROTATE
+          INNODB MASTER KEY</code></a> operation fails if the keyring
+          component or plugin is installed on the source but not on the
+          replica.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-identifying"></a>Identifying Encrypted Tablespaces and Schemas</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      The Information Schema
+      <a class="link" href="information-schema-innodb-tablespaces-table.html" title="28.4.24 The INFORMATION_SCHEMA INNODB_TABLESPACES Table"><code class="literal">INNODB_TABLESPACES</code></a> table includes an
+      <code class="literal">ENCRYPTION</code> column that can be used to identify
+      encrypted tablespaces.
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT SPACE, NAME, SPACE_TYPE, ENCRYPTION FROM INFORMATION_SCHEMA.INNODB_TABLESPACES
+       WHERE ENCRYPTION='Y'\G
+*************************** 1. row ***************************
+     SPACE: 4294967294
+      NAME: mysql
+SPACE_TYPE: General
+ENCRYPTION: Y
+*************************** 2. row ***************************
+     SPACE: 2
+      NAME: test/t1
+SPACE_TYPE: Single
+ENCRYPTION: Y
+*************************** 3. row ***************************
+     SPACE: 3
+      NAME: ts1
+SPACE_TYPE: General
+ENCRYPTION: Y</code></pre><p>
+      When the <code class="literal">ENCRYPTION</code> option is specified in a
+      <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE TABLE</code></a> or
+      <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE</code></a> statement, it is
+      recorded in the <code class="literal">CREATE_OPTIONS</code> column of
+      <a class="link" href="information-schema-tables-table.html" title="28.3.38 The INFORMATION_SCHEMA TABLES Table"><code class="literal">INFORMATION_SCHEMA.TABLES</code></a>. This
+      column can be queried to identify tables that reside in encrypted
+      file-per-table tablespaces.
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT TABLE_SCHEMA, TABLE_NAME, CREATE_OPTIONS FROM INFORMATION_SCHEMA.TABLES
+       WHERE CREATE_OPTIONS LIKE '%ENCRYPTION%';
++--------------+------------+----------------+
+| TABLE_SCHEMA | TABLE_NAME | CREATE_OPTIONS |
++--------------+------------+----------------+
+| test         | t1         | ENCRYPTION="Y" |
++--------------+------------+----------------+</code></pre><p>
+      Query the Information Schema
+      <a class="link" href="information-schema-innodb-tablespaces-table.html" title="28.4.24 The INFORMATION_SCHEMA INNODB_TABLESPACES Table"><code class="literal">INNODB_TABLESPACES</code></a> table to retrieve
+      information about the tablespace associated with a particular
+      schema and table.
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT SPACE, NAME, SPACE_TYPE FROM INFORMATION_SCHEMA.INNODB_TABLESPACES WHERE NAME='test/t1';
++-------+---------+------------+
+| SPACE | NAME    | SPACE_TYPE |
++-------+---------+------------+
+|     3 | test/t1 | Single     |
++-------+---------+------------+</code></pre><p>
+      You can identify encryption-enabled schemas by querying the
+      Information Schema <a class="link" href="information-schema-schemata-table.html" title="28.3.31 The INFORMATION_SCHEMA SCHEMATA Table"><code class="literal">SCHEMATA</code></a> table.
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT SCHEMA_NAME, DEFAULT_ENCRYPTION FROM INFORMATION_SCHEMA.SCHEMATA
+       WHERE DEFAULT_ENCRYPTION='YES';
++-------------+--------------------+
+| SCHEMA_NAME | DEFAULT_ENCRYPTION |
++-------------+--------------------+
+| test        | YES                |
++-------------+--------------------+</code></pre><p>
+      <a class="link" href="show-create-database.html" title="15.7.7.7 SHOW CREATE DATABASE Statement"><code class="literal">SHOW CREATE
+      SCHEMA</code></a> also shows the <code class="literal">DEFAULT
+      ENCRYPTION</code> clause.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-progress-monitoring"></a>Monitoring Encryption Progress</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105620121552"></a><a class="indexterm" name="idm45105620120160"></a><p>
+      You can monitor general tablespace and <code class="literal">mysql</code>
+      system tablespace encryption progress using
+      <a class="link" href="performance-schema.html" title="Chapter 29 MySQL Performance Schema">Performance Schema</a>.
+    </p><p>
+      The <code class="literal">stage/innodb/alter tablespace (encryption)</code>
+      stage event instrument reports <code class="literal">WORK_ESTIMATED</code>
+      and <code class="literal">WORK_COMPLETED</code> information for general
+      tablespace encryption operations.
+    </p><p>
+      The following example demonstrates how to enable the
+      <code class="literal">stage/innodb/alter tablespace (encryption)</code>
+      stage event instrument and related consumer tables to monitor
+      general tablespace or <code class="literal">mysql</code> system tablespace
+      encryption progress. For information about Performance Schema
+      stage event instruments and related consumers, see
+      <a class="xref" href="performance-schema-stage-tables.html" title="29.12.5 Performance Schema Stage Event Tables">Section 29.12.5, “Performance Schema Stage Event Tables”</a>.
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+          Enable the <code class="literal">stage/innodb/alter tablespace
+          (encryption)</code> instrument:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; USE performance_schema;
+mysql&gt; UPDATE setup_instruments SET ENABLED = 'YES'
+       WHERE NAME LIKE 'stage/innodb/alter tablespace (encryption)';</code></pre></li><li class="listitem"><p>
+          Enable the stage event consumer tables, which include
+          <a class="link" href="performance-schema-events-stages-current-table.html" title="29.12.5.1 The events_stages_current Table"><code class="literal">events_stages_current</code></a>,
+          <a class="link" href="performance-schema-events-stages-history-table.html" title="29.12.5.2 The events_stages_history Table"><code class="literal">events_stages_history</code></a>, and
+          <a class="link" href="performance-schema-events-stages-history-long-table.html" title="29.12.5.3 The events_stages_history_long Table"><code class="literal">events_stages_history_long</code></a>.
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; UPDATE setup_consumers SET ENABLED = 'YES' WHERE NAME LIKE '%stages%';</code></pre></li><li class="listitem"><p>
+          Run a tablespace encryption operation. In this example, a
+          general tablespace named <code class="literal">ts1</code> is encrypted.
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER TABLESPACE ts1 ENCRYPTION = 'Y';</code></pre></li><li class="listitem"><p>
+          Check the progress of the encryption operation by querying the
+          Performance Schema
+          <a class="link" href="performance-schema-events-stages-current-table.html" title="29.12.5.1 The events_stages_current Table"><code class="literal">events_stages_current</code></a> table.
+          <code class="literal">WORK_ESTIMATED</code> reports the total number of
+          pages in the tablespace. <code class="literal">WORK_COMPLETED</code>
+          reports the number of pages processed.
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT EVENT_NAME, WORK_ESTIMATED, WORK_COMPLETED FROM events_stages_current;
++--------------------------------------------+----------------+----------------+
+| EVENT_NAME                                 | WORK_COMPLETED | WORK_ESTIMATED |
++--------------------------------------------+----------------+----------------+
+| stage/innodb/alter tablespace (encryption) |           1056 |           1407 |
++--------------------------------------------+----------------+----------------+</code></pre><p>
+          The <a class="link" href="performance-schema-events-stages-current-table.html" title="29.12.5.1 The events_stages_current Table"><code class="literal">events_stages_current</code></a> table
+          returns an empty set if the encryption operation has
+          completed. In this case, you can check the
+          <a class="link" href="performance-schema-events-stages-history-table.html" title="29.12.5.2 The events_stages_history Table"><code class="literal">events_stages_history</code></a> table to
+          view event data for the completed operation. For example:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT EVENT_NAME, WORK_COMPLETED, WORK_ESTIMATED FROM events_stages_history;
++--------------------------------------------+----------------+----------------+
+| EVENT_NAME                                 | WORK_COMPLETED | WORK_ESTIMATED |
++--------------------------------------------+----------------+----------------+
+| stage/innodb/alter tablespace (encryption) |           1407 |           1407 |
++--------------------------------------------+----------------+----------------+</code></pre></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-usage-notes"></a>Encryption Usage Notes</h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          Plan appropriately when altering an existing file-per-table
+          tablespace with the <code class="literal">ENCRYPTION</code> option.
+          Tables residing in file-per-table tablespaces are rebuilt
+          using the <code class="literal">COPY</code> algorithm. The
+          <code class="literal">INPLACE</code> algorithm is used when altering the
+          <code class="literal">ENCRYPTION</code> attribute of a general
+          tablespace or the <code class="literal">mysql</code> system tablespace.
+          The <code class="literal">INPLACE</code> algorithm permits concurrent
+          DML on tables that reside in the general tablespace.
+          Concurrent DDL is blocked.
+        </p></li><li class="listitem"><p>
+          When a general tablespace or the <code class="literal">mysql</code>
+          system tablespace is encrypted, all tables residing in the
+          tablespace are encrypted. Likewise, a table created in an
+          encrypted tablespace is encrypted.
+        </p></li><li class="listitem"><p>
+          If the server exits or is stopped during normal operation, it
+          is recommended to restart the server using the same encryption
+          settings that were configured previously.
+        </p></li><li class="listitem"><p>
+          The first master encryption key is generated when the first
+          new or existing tablespace is encrypted.
+        </p></li><li class="listitem"><p>
+          Master key rotation re-encrypts tablespaces keys but does not
+          change the tablespace key itself. To change a tablespace key,
+          you must disable and re-enable encryption. For file-per-table
+          tablespaces, re-encrypting the tablespace is an
+          <code class="literal">ALGORITHM=COPY</code> operation that rebuilds the
+          table. For general tablespaces and the
+          <code class="literal">mysql</code> system tablespace, it is an
+          <code class="literal">ALGORITHM=INPLACE</code> operation, which does not
+          require rebuilding tables that reside in the tablespace.
+        </p></li><li class="listitem"><p>
+          If a table is created with both the
+          <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">COMPRESSION</code></a>
+          and
+          <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">ENCRYPTION</code></a>
+          options, compression is performed before tablespace data is
+          encrypted.
+        </p></li><li class="listitem"><p>
+          Uninstalling the <code class="literal">component_keyring_file</code> or
+          <code class="literal">component_keyring_encrypted_file</code> component
+          does not remove an existing keyring data file.
+        </p></li><li class="listitem"><p>
+          It is recommended that you not place a keyring data file under
+          the same directory as tablespace data files.
+        </p></li><li class="listitem"><p>
+          Encryption is supported for the <code class="literal">InnoDB</code>
+          <code class="literal">FULLTEXT</code> index tables that are created
+          implicitly when adding a <code class="literal">FULLTEXT</code> index.
+          For related information, see
+          <a class="xref" href="innodb-fulltext-index.html#innodb-fulltext-index-tables" title="InnoDB Full-Text Index Tables">InnoDB Full-Text Index Tables</a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="innodb-data-encryption-limitations"></a>Encryption Limitations</h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          Advanced Encryption Standard (AES) is the only supported
+          encryption algorithm. <code class="literal">InnoDB</code> tablespace
+          encryption uses Electronic Codebook (ECB) block encryption
+          mode for tablespace key encryption and Cipher Block Chaining
+          (CBC) block encryption mode for data encryption. Padding is
+          not used with CBC block encryption mode. Instead,
+          <code class="literal">InnoDB</code> ensures that the text to be
+          encrypted is a multiple of the block size.
+        </p></li><li class="listitem"><p>
+          Encryption is supported only for
+          <a class="link" href="glossary.html#glos_file_per_table" title="file-per-table">file-per-table</a>
+          tablespaces,
+          <a class="link" href="glossary.html#glos_general_tablespace" title="general tablespace">general</a>
+          tablespaces, and the <code class="literal">mysql</code> system
+          tablespace. Encryption is not supported for other tablespace
+          types including the <code class="literal">InnoDB</code>
+          <a class="link" href="glossary.html#glos_system_tablespace" title="system tablespace">system
+          tablespace</a>.
+        </p></li><li class="listitem"><p>
+          You cannot move or copy a table from an encrypted
+          <a class="link" href="glossary.html#glos_file_per_table" title="file-per-table">file-per-table</a>
+          tablespace,
+          <a class="link" href="glossary.html#glos_general_tablespace" title="general tablespace">general</a>
+          tablespace, or the <code class="literal">mysql</code> system tablespace
+          to a tablespace type that does not support encryption.
+        </p></li><li class="listitem"><p>
+          You cannot move or copy a table from an encrypted tablespace
+          to an unencrypted tablespace. However, moving a table from an
+          unencrypted tablespace to an encrypted one is permitted. For
+          example, you can move or copy a table from a unencrypted
+          <a class="link" href="glossary.html#glos_file_per_table" title="file-per-table">file-per-table</a> or
+          <a class="link" href="glossary.html#glos_general_tablespace" title="general tablespace">general</a>
+          tablespace to an encrypted general tablespace.
+        </p></li><li class="listitem"><p>
+          By default, tablespace encryption only applies to data in the
+          tablespace. Redo log and undo log data can be encrypted by
+          enabling
+          <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_encrypt"><code class="literal">innodb_redo_log_encrypt</code></a> and
+          <a class="link" href="innodb-parameters.html#sysvar_innodb_undo_log_encrypt"><code class="literal">innodb_undo_log_encrypt</code></a>. See
+          <a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-redo-log" title="Redo Log Encryption">Redo Log Encryption</a>, and
+          <a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-undo-log" title="Undo Log Encryption">Undo Log Encryption</a>. For
+          information about binary log file and relay log file
+          encryption, see
+          <a class="xref" href="replication-binlog-encryption.html" title="19.3.2 Encrypting Binary Log Files and Relay Log Files">Section 19.3.2, “Encrypting Binary Log Files and Relay Log Files”</a>.
+        </p></li><li class="listitem"><p>
+          It is not permitted to change the storage engine of a table
+          that resides in, or previously resided in, an encrypted
+          tablespace.
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="innodb-online-ddl-limitations.html"
+        aria-label="Previous" title="Previous: Online DDL Limitations"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="innodb-storage-engine.html" title="Up: The InnoDB Storage Engine"> UP</a> &nbsp;
+    <a href="innodb-parameters.html" aria-label="Next"
+        title="Next: InnoDB Startup Options and System Variables">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-data-encryption.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:50 GMT -->
+</html>

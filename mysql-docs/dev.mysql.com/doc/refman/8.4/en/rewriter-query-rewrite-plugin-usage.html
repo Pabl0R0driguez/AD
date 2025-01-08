@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/rewriter-query-rewrite-plugin-usage.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:59:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 7.6.4.2 Using the Rewriter Query Rewrite Plugin</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="rewriter-query-rewrite-plugin-installation.html" title="7.6.4.1 Installing or Uninstalling the Rewriter Query Rewrite Plugin" />
+<link rel="next" href="rewriter-query-rewrite-plugin-reference8dba.html?ff=nopfpls" title="7.6.4.3 Rewriter Query Rewrite Plugin Reference" />
+<link rel="up" href="rewriter-query-rewrite-plugin.html" title="7.6.4 The Rewriter Query Rewrite Plugin" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xera-f-6789d7c23-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":81,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18ab33b2","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5793,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730132258","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==KJhraenu7gYBM1RyUxkaWbuQvebK3s6xm7c4dFjWazU8sYMUy4V6Bjmcs0B8PnIdukxgBHKdGyV2tDog5lFS9stVebXElT/KjK0gS6HMZ62/PnRLut2KvvI6vw3iOaa/QLGgwmV8gTdnqHkdfqoyc1FJpHk1R3KiVPZtnpOTlBQXDT8YxiKKAC5wmvAyd8NQN+M0wszCNGyRibUGvK6QxNImrz2/TuOSSqpaVb1g6ugYbpnQluyE/49IpNbgm47X68KJLAsvtz4NCU0grhKuoSC7qy3aqZP9k1C2cEk38tyr2WczqNj3tC2qwM8a1zsnjf6jNaiMhJ9yBQR/N/a5LS6h6Vx7Kjlw5Zrtk88X24sbZ5XgdESeEltceLEctgQZ5SImLBMZeq4wCseTGQxQpxl27ff1r96qHGvEdrfaq0I=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Frewriter-query-rewrite-plugin-usage.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="rewriter-query-rewrite-plugin-installation.html"
+        aria-label="Previous" title="Previous: Installing or Uninstalling the Rewriter Query Rewrite Plugin"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="rewriter-query-rewrite-plugin.html" title="Up: The Rewriter Query Rewrite Plugin"><span class="icon-chevron-up"></span></a>
+    <a href="rewriter-query-rewrite-plugin-reference.html" aria-label="Next"
+        title="Next: Rewriter Query Rewrite Plugin Reference"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqld-server.html">The MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration.html">Configuring the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-defaults.html">Server Configuration Defaults</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-configuration-validation.html">Server Configuration Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-option-variable-reference.html">Server Option, System Variable, and Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variable-reference.html">Server System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variable-reference.html">Server Status Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-options.html">Server Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-system-variables.html">Server System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="using-system-variables.html">Using System Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-variable-privileges.html">System Variable Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dynamic-system-variables.html">Dynamic System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="persisted-system-variables.html">Persisted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nonpersistible-system-variables.html">Nonpersistible and Persist-Restricted System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="structured-system-variables.html">Structured System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-status-variables.html">Server Status Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sql-mode.html">Server SQL Modes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connection-management.html">Connection Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="connection-interfaces.html">Connection Interfaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="administrative-connection-interface.html">Administrative Connection Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="host-cache.html">DNS Lookups and the Host Cache</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ipv6-support.html">IPv6 Support</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-system-support.html">Verifying System Support for IPv6</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-server-config.html">Configuring the MySQL Server to Permit IPv6 Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-local-connections.html">Connecting Using the IPv6 Local Host Address</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-remote-connections.html">Connecting Using IPv6 Nonlocal Host Addresses</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ipv6-brokers.html">Obtaining an IPv6 Address from a Broker</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="network-namespace-support.html">Network Namespace Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="time-zone-support.html">MySQL Server Time Zone Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="resource-groups.html">Resource Groups</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-side-help-support.html">Server-Side Help Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="session-state-tracking.html">Server Tracking of Client Session State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="server-shutdown.html">The Server Shutdown Process</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-directory.html">The MySQL Data Directory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-schema.html">The mysql System Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-logs.html">MySQL Server Logs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-destinations.html">Selecting General Query Log and Slow Query Log Output Destinations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-log.html">The Error Log</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-configuration.html">Error Log Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-destination-configuration.html">Default Error Log Destination Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-event-fields.html">Error Event Fields</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-filtering.html">Types of Error Log Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-priority-based-filtering.html">Priority-Based Error Log Filtering (log_filter_internal)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rule-based-filtering.html">Rule-Based Error Log Filtering (log_filter_dragnet)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-json.html">Error Logging in JSON Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-syslog.html">Error Logging to the System Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-format.html">Error Log Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-rotation.html">Error Log File Flushing and Renaming</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-log.html">The General Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="binary-log.html">The Binary Log</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-formats.html">Binary Logging Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-setting.html">Setting The Binary Log Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mixed.html">Mixed Binary Logging Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-mysql-database.html">Logging Format for Changes to mysql Database Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-log-transaction-compression.html">Binary Log Transaction Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="slow-query-log.html">The Slow Query Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="log-file-maintenance.html">Server Log Maintenance</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="components.html">MySQL Components</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="component-loading.html">Installing and Uninstalling Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-component-information.html">Obtaining Component Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-log-components.html">Error Log Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="query-attribute-components.html">Query Attribute Components</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="scheduler-component.html">Scheduler Component</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-plugins.html">MySQL Server Plugins</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="plugin-loading.html">Installing and Uninstalling Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-plugin-information.html">Obtaining Server Plugin Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="thread-pool.html">MySQL Enterprise Thread Pool</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-elements.html">Thread Pool Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-installation.html">Thread Pool Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-operation.html">Thread Pool Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-pool-tuning.html">Thread Pool Tuning</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin.html">The Rewriter Query Rewrite Plugin</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-installation.html">Installing or Uninstalling the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="rewriter-query-rewrite-plugin-usage.html">Using the Rewriter Query Rewrite Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rewriter-query-rewrite-plugin-reference.html">Rewriter Query Rewrite Plugin Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter.html">The ddl_rewriter Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-installation.html">Installing or Uninstalling ddl_rewriter</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="ddl-rewriter-options.html">ddl_rewriter Plugin Options</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="version-tokens.html">Version Tokens</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-elements.html">Version Tokens Elements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-installation.html">Installing or Uninstalling Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-usage.html">Using Version Tokens</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="version-tokens-reference.html">Version Tokens Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="clone-plugin.html">The Clone Plugin</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-installation.html">Installing the Clone Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-local.html">Cloning Data Locally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-remote.html">Cloning Remote Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-concurrent-ddl.html">Cloning and Concurrent DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-encrypted-data.html">Cloning Encrypted Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-compressed-data.html">Cloning Compressed Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-replication.html">Cloning for Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-directories.html">Directories and Files Created During a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-failure-handling.html">Remote Cloning Operation Failure Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-monitoring.html">Monitoring Cloning Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-stop.html">Stopping a Cloning Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-option-variable-reference.html">Clone System Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-options-variables.html">Clone System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone-plugin-limitations.html">Clone Plugin Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="daemon-keyring-proxy-plugin.html">The Keyring Proxy Bridge Plugin</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="plugin-services.html">MySQL Plugin Services</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="locking-service.html">The Locking Service</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="keyring-service.html">The Keyring Service</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-loadable-functions.html">MySQL Server Loadable Functions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="function-loading.html">Installing and Uninstalling Loadable Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="obtaining-loadable-function-information.html">Obtaining Information About Loadable Functions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-servers.html">Running Multiple MySQL Instances on One Machine</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-data-directories.html">Setting Up Multiple Data Directories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-servers.html">Running Multiple MySQL Instances on Windows</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-command-line-servers.html">Starting Multiple MySQL Instances at the Windows Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-windows-services.html">Starting Multiple MySQL Instances as Windows Services</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-unix-servers.html">Running Multiple MySQL Instances on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-server-clients.html">Using Client Programs in a Multiple-Server Environment</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-mysql.html">Debugging MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="debugging-server.html">Debugging a MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="compiling-for-debugging.html">Compiling MySQL for Debugging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-trace-files.html">Creating Trace Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="making-windows-dumps.html">Using WER with PDB to create a Windows crashdump</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-gdb-on-mysqld.html">Debugging mysqld under gdb</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-stack-trace.html">Using a Stack Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-log-files.html">Using Server Logs to Find Causes of Errors in mysqld</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reproducible-test-case.html">Making a Test Case If You Experience Table Corruption</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="debugging-client.html">Debugging a MySQL Client</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lock-order-tool.html">The LOCK_ORDER Tool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="dbug-package.html">The DBUG Package</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/rewriter-query-rewrite-plugin-usage.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/rewriter-query-rewrite-plugin-usage.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/rewriter-query-rewrite-plugin-usage.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/rewriter-query-rewrite-plugin-usage.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/rewriter-query-rewrite-plugin-usage.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="server-administration.html">MySQL Server Administration</a> &nbsp;/&nbsp;
+                                                            <a href="server-plugins.html">MySQL Server Plugins</a> &nbsp;/&nbsp;
+                                                            <a href="rewriter-query-rewrite-plugin.html">The Rewriter Query Rewrite Plugin</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Using the Rewriter Query Rewrite Plugin
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="rewriter-query-rewrite-plugin-usage"></a>7.6.4.2 Using the Rewriter Query Rewrite Plugin</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        To enable or disable the plugin, enable or disable the
+        <a class="link" href="rewriter-query-rewrite-plugin-reference.html#sysvar_rewriter_enabled"><code class="literal">rewriter_enabled</code></a> system
+        variable. By default, the <code class="literal">Rewriter</code> plugin is
+        enabled when you install it (see
+        <a class="xref" href="rewriter-query-rewrite-plugin-installation.html" title="7.6.4.1 Installing or Uninstalling the Rewriter Query Rewrite Plugin">Section 7.6.4.1, “Installing or Uninstalling the Rewriter Query Rewrite Plugin”</a>).
+        To set the initial plugin state explicitly, you can set the
+        variable at server startup. For example, to enable the plugin in
+        an option file, use these lines:
+      </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+rewriter_enabled=ON</code></pre><p>
+        It is also possible to enable or disable the plugin at runtime:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET GLOBAL rewriter_enabled = ON;
+SET GLOBAL rewriter_enabled = OFF;</code></pre><p>
+        Assuming that the <code class="literal">Rewriter</code> plugin is enabled,
+        it examines and possibly modifies each rewritable statement
+        received by the server. The plugin determines whether to rewrite
+        statements based on its in-memory cache of rewriting rules,
+        which are loaded from the <code class="literal">rewrite_rules</code> table
+        in the <code class="literal">query_rewrite</code> database.
+      </p><p>
+        These statements are subject to rewriting:
+        <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>,
+        <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>,
+        <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE</code></a>,
+        <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a>, and
+        <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a>.
+      </p><p>
+        Standalone statements and prepared statements are subject to
+        rewriting. Statements occurring within view definitions or
+        stored programs are not subject to rewriting.
+      </p><p>
+        Statements run by users with the
+        <a class="link" href="privileges-provided.html#priv_skip-query-rewrite"><code class="literal">SKIP_QUERY_REWRITE</code></a> privilege are
+        not subject to rewriting, provided that the
+        <a class="link" href="rewriter-query-rewrite-plugin-reference.html#sysvar_rewriter_enabled_for_threads_without_privilege_checks"><code class="literal">rewriter_enabled_for_threads_without_privilege_checks</code></a>
+        system variable is set to <code class="literal">OFF</code> (default
+        <code class="literal">ON</code>). This can be used for control statements
+        and statements that should be replicated unchanged, such as
+        those from the <code class="literal">SOURCE_USER</code> specified by
+        <a class="link" href="change-replication-source-to.html" title="15.4.2.2 CHANGE REPLICATION SOURCE TO Statement"><code class="literal">CHANGE REPLICATION SOURCE TO</code></a>.
+        This is also true for statements executed by MySQL client
+        programs including <a class="link" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files"><span class="command"><strong>mysqlbinlog</strong></span></a>,
+        <a class="link" href="mysqladmin.html" title="6.5.2 mysqladmin — A MySQL Server Administration Program"><span class="command"><strong>mysqladmin</strong></span></a>, and <a class="link" href="mysqldump.html" title="6.5.4 mysqldump — A Database Backup Program"><span class="command"><strong>mysqldump</strong></span></a>;
+        for this reason, you should grant
+        <code class="literal">SKIP_QUERY_REWRITE</code> to the user account or
+        accounts used by these utilities to connect to MySQL.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="rewriter-query-rewrite-plugin-usage.html#rewriter-query-rewrite-plugin-adding-rewrite-rules" title="Adding Rewrite Rules">Adding Rewrite Rules</a></p></li><li class="listitem"><p><a class="xref" href="rewriter-query-rewrite-plugin-usage.html#rewriter-query-rewrite-plugin-how-statement-matching-works" title="How Statement Matching Works">How Statement Matching Works</a></p></li><li class="listitem"><p><a class="xref" href="rewriter-query-rewrite-plugin-usage.html#rewriter-query-rewrite-plugin-rewriting-prepared-statements" title="Rewriting Prepared Statements">Rewriting Prepared Statements</a></p></li><li class="listitem"><p><a class="xref" href="rewriter-query-rewrite-plugin-usage.html#rewriter-query-rewrite-plugin-operational-information" title="Rewriter Plugin Operational Information">Rewriter Plugin Operational Information</a></p></li><li class="listitem"><p><a class="xref" href="rewriter-query-rewrite-plugin-usage.html#rewriter-query-rewrite-plugin-use-of-character-sets" title="Rewriter Plugin Use of Character Sets">Rewriter Plugin Use of Character Sets</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="rewriter-query-rewrite-plugin-adding-rewrite-rules"></a>Adding Rewrite Rules</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          To add rules for the <code class="literal">Rewriter</code> plugin, add
+          rows to the <code class="literal">rewrite_rules</code> table, then
+          invoke the <code class="literal">flush_rewrite_rules()</code> stored
+          procedure to load the rules from the table into the plugin.
+          The following example creates a simple rule to match
+          statements that select a single literal value:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">INSERT INTO query_rewrite.rewrite_rules (pattern, replacement)
+VALUES('SELECT ?', 'SELECT ? + 1');</code></pre><p>
+          The resulting table contents look like this:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT * FROM query_rewrite.rewrite_rules\G
+*************************** 1. row ***************************
+                id: 1
+           pattern: SELECT ?
+  pattern_database: NULL
+       replacement: SELECT ? + 1
+           enabled: YES
+           message: NULL
+    pattern_digest: NULL
+normalized_pattern: NULL</code></pre><p>
+          The rule specifies a pattern template indicating which
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements to match, and
+          a replacement template indicating how to rewrite matching
+          statements. However, adding the rule to the
+          <code class="literal">rewrite_rules</code> table is not sufficient to
+          cause the <code class="literal">Rewriter</code> plugin to use the rule.
+          You must invoke <code class="literal">flush_rewrite_rules()</code> to
+          load the table contents into the plugin in-memory cache:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; CALL query_rewrite.flush_rewrite_rules();</code></pre>
+<div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Tip
+</div>
+<p>
+            If your rewrite rules seem not to be working properly, make
+            sure that you have reloaded the rules table by calling
+            <code class="literal">flush_rewrite_rules()</code>.
+</p>
+</div>
+<p>
+          When the plugin reads each rule from the rules table, it
+          computes a normalized (statement digest) form from the pattern
+          and a digest hash value, and uses them to update the
+          <code class="literal">normalized_pattern</code> and
+          <code class="literal">pattern_digest</code> columns:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT * FROM query_rewrite.rewrite_rules\G
+*************************** 1. row ***************************
+                id: 1
+           pattern: SELECT ?
+  pattern_database: NULL
+       replacement: SELECT ? + 1
+           enabled: YES
+           message: NULL
+    pattern_digest: d1b44b0c19af710b5a679907e284acd2ddc285201794bc69a2389d77baedddae
+normalized_pattern: select ?</code></pre><p>
+          For information about statement digesting, normalized
+          statements, and digest hash values, see
+          <a class="xref" href="performance-schema-statement-digests.html" title="29.10 Performance Schema Statement Digests and Sampling">Section 29.10, “Performance Schema Statement Digests and Sampling”</a>.
+        </p><p>
+          If a rule cannot be loaded due to some error, calling
+          <code class="literal">flush_rewrite_rules()</code> produces an error:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; CALL query_rewrite.flush_rewrite_rules();
+ERROR 1644 (45000): Loading of some rule(s) failed.</code></pre><p>
+          When this occurs, the plugin writes an error message to the
+          <code class="literal">message</code> column of the rule row to
+          communicate the problem. Check the
+          <code class="literal">rewrite_rules</code> table for rows with
+          non-<code class="literal">NULL</code> <code class="literal">message</code> column
+          values to see what problems exist.
+        </p><p>
+          Patterns use the same syntax as prepared statements (see
+          <a class="xref" href="prepare.html" title="15.5.1 PREPARE Statement">Section 15.5.1, “PREPARE Statement”</a>). Within a pattern template,
+          <code class="literal">?</code> characters act as parameter markers that
+          match data values. The <code class="literal">?</code> characters should
+          not be enclosed within quotation marks. Parameter markers can
+          be used only where data values should appear, and they cannot
+          be used for SQL keywords, identifiers, functions, and so on.
+          The plugin parses a statement to identify the literal values
+          (as defined in <a class="xref" href="literals.html" title="11.1 Literal Values">Section 11.1, “Literal Values”</a>), so you can put a
+          parameter marker in place of any literal value.
+        </p><p>
+          Like the pattern, the replacement can contain
+          <code class="literal">?</code> characters. For a statement that matches
+          a pattern template, the plugin rewrites it, replacing
+          <code class="literal">?</code> parameter markers in the replacement
+          using data values matched by the corresponding markers in the
+          pattern. The result is a complete statement string. The plugin
+          asks the server to parse it, and returns the result to the
+          server as the representation of the rewritten statement.
+        </p><p>
+          After adding and loading the rule, check whether rewriting
+          occurs according to whether statements match the rule pattern:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT PI();
++----------+
+| PI()     |
++----------+
+| 3.141593 |
++----------+
+1 row in set (0.01 sec)
+
+mysql&gt; SELECT 10;
++--------+
+| 10 + 1 |
++--------+
+|     11 |
++--------+
+1 row in set, 1 warning (0.00 sec)</code></pre><p>
+          No rewriting occurs for the first
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statement, but does for
+          the second. The second statement illustrates that when the
+          <code class="literal">Rewriter</code> plugin rewrites a statement, it
+          produces a warning message. To view the message, use
+          <a class="link" href="show-warnings.html" title="15.7.7.42 SHOW WARNINGS Statement"><code class="literal">SHOW WARNINGS</code></a>:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW WARNINGS\G
+*************************** 1. row ***************************
+  Level: Note
+   Code: 1105
+Message: Query 'SELECT 10' rewritten to 'SELECT 10 + 1' by a query rewrite plugin</code></pre><p>
+          A statement need not be rewritten to a statement of the same
+          type. The following example loads a rule that rewrites
+          <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a> statements to
+          <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a> statements:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">INSERT INTO query_rewrite.rewrite_rules (pattern, replacement)
+VALUES('DELETE FROM db1.t1 WHERE col = ?',
+       'UPDATE db1.t1 SET col = NULL WHERE col = ?');
+CALL query_rewrite.flush_rewrite_rules();</code></pre><p>
+          To enable or disable an existing rule, modify its
+          <code class="literal">enabled</code> column and reload the table into
+          the plugin. To disable rule 1:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">UPDATE query_rewrite.rewrite_rules SET enabled = 'NO' WHERE id = 1;
+CALL query_rewrite.flush_rewrite_rules();</code></pre><p>
+          This enables you to deactivate a rule without removing it from
+          the table.
+        </p><p>
+          To re-enable rule 1:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">UPDATE query_rewrite.rewrite_rules SET enabled = 'YES' WHERE id = 1;
+CALL query_rewrite.flush_rewrite_rules();</code></pre><p>
+          The <code class="literal">rewrite_rules</code> table contains a
+          <code class="literal">pattern_database</code> column that
+          <code class="literal">Rewriter</code> uses for matching table names that
+          are not qualified with a database name:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Qualified table names in statements match qualified names
+              in the pattern if corresponding database and table names
+              are identical.
+            </p></li><li class="listitem"><p>
+              Unqualified table names in statements match unqualified
+              names in the pattern only if the default database is the
+              same as <code class="literal">pattern_database</code> and the table
+              names are identical.
+</p></li></ul>
+</div>
+<p>
+          Suppose that a table named <code class="literal">appdb.users</code> has
+          a column named <code class="literal">id</code> and that applications are
+          expected to select rows from the table using a query of one of
+          these forms, where the second can be used when
+          <code class="literal">appdb</code> is the default database:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM users WHERE appdb.id = <em class="replaceable">id_value</em>;
+SELECT * FROM users WHERE id = <em class="replaceable">id_value</em>;</code></pre><p>
+          Suppose also that the <code class="literal">id</code> column is renamed
+          to <code class="literal">user_id</code> (perhaps the table must be
+          modified to add another type of ID and it is necessary to
+          indicate more specifically what type of ID the
+          <code class="literal">id</code> column represents).
+        </p><p>
+          The change means that applications must refer to
+          <code class="literal">user_id</code> rather than <code class="literal">id</code>
+          in the <code class="literal">WHERE</code> clause, but old applications
+          that cannot be updated no longer work properly. The
+          <code class="literal">Rewriter</code> plugin can solve this problem by
+          matching and rewriting problematic statements. To match the
+          statement <code class="literal">SELECT * FROM appdb.users WHERE id =
+          <em class="replaceable"><code>value</code></em></code> and rewrite it as
+          <code class="literal">SELECT * FROM appdb.users WHERE user_id =
+          <em class="replaceable"><code>value</code></em></code>, you can insert a
+          row representing a replacement rule into the rewrite rules
+          table. If you also want to match this
+          <code class="literal">SELECT</code> using the unqualified table name, it
+          is also necessary to add an explicit rule. Using
+          <code class="literal">?</code> as a value placeholder, the two
+          <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements needed look
+          like this:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">INSERT INTO query_rewrite.rewrite_rules
+    (pattern, replacement) VALUES(
+    'SELECT * FROM appdb.users WHERE id = ?',
+    'SELECT * FROM appdb.users WHERE user_id = ?'
+    );
+INSERT INTO query_rewrite.rewrite_rules
+    (pattern, replacement, pattern_database) VALUES(
+    'SELECT * FROM users WHERE id = ?',
+    'SELECT * FROM users WHERE user_id = ?',
+    'appdb'
+    );</code></pre><p>
+          After adding the two new rules, execute the following
+          statement to cause them to take effect:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">CALL query_rewrite.flush_rewrite_rules();</code></pre><p>
+          <code class="literal">Rewriter</code> uses the first rule to match
+          statements that use the qualified table name, and the second
+          to match statements that use the unqualified name. The second
+          rule works only when <code class="literal">appdb</code> is the default
+          database.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="rewriter-query-rewrite-plugin-how-statement-matching-works"></a>How Statement Matching Works</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <code class="literal">Rewriter</code> plugin uses statement digests
+          and digest hash values to match incoming statements against
+          rewrite rules in stages. The
+          <code class="literal">max_digest_length</code> system variable
+          determines the size of the buffer used for computing statement
+          digests. Larger values enable computation of digests that
+          distinguish longer statements. Smaller values use less memory
+          but increase the likelihood of longer statements colliding
+          with the same digest value.
+        </p><p>
+          The plugin matches each statement to the rewrite rules as
+          follows:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+              Compute the statement digest hash value and compare it to
+              the rule digest hash values. This is subject to false
+              positives, but serves as a quick rejection test.
+            </p></li><li class="listitem"><p>
+              If the statement digest hash value matches any pattern
+              digest hash values, match the normalized (statement
+              digest) form of the statement to the normalized form of
+              the matching rule patterns.
+            </p></li><li class="listitem"><p>
+              If the normalized statement matches a rule, compare the
+              literal values in the statement and the pattern. A
+              <code class="literal">?</code> character in the pattern matches any
+              literal value in the statement. If the statement prepares
+              a statement, <code class="literal">?</code> in the pattern also
+              matches <code class="literal">?</code> in the statement. Otherwise,
+              corresponding literals must be the same.
+</p></li></ol>
+</div>
+<p>
+          If multiple rules match a statement, it is nondeterministic
+          which one the plugin uses to rewrite the statement.
+        </p><p>
+          If a pattern contains more markers than the replacement, the
+          plugin discards excess data values. If a pattern contains
+          fewer markers than the replacement, it is an error. The plugin
+          notices this when the rules table is loaded, writes an error
+          message to the <code class="literal">message</code> column of the rule
+          row to communicate the problem, and sets the
+          <a class="link" href="rewriter-query-rewrite-plugin-reference.html#statvar_Rewriter_reload_error"><code class="literal">Rewriter_reload_error</code></a> status
+          variable to <code class="literal">ON</code>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="rewriter-query-rewrite-plugin-rewriting-prepared-statements"></a>Rewriting Prepared Statements</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Prepared statements are rewritten at parse time (that is, when
+          they are prepared), not when they are executed later.
+        </p><p>
+          Prepared statements differ from nonprepared statements in that
+          they may contain <code class="literal">?</code> characters as parameter
+          markers. To match a <code class="literal">?</code> in a prepared
+          statement, a <code class="literal">Rewriter</code> pattern must contain
+          <code class="literal">?</code> in the same location. Suppose that a
+          rewrite rule has this pattern:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT ?, 3</code></pre><p>
+          The following table shows several prepared
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements and whether
+          the rule pattern matches them.
+</p>
+<div class="informaltable">
+<table summary="How the Rewriter plugin matches prepared statements against the pattern SELECT ?,3."><col style="width: 50%"><col style="width: 50%"><thead><tr>
+              <th>Prepared Statement</th>
+              <th>Whether Pattern Matches Statement</th>
+            </tr></thead><tbody><tr>
+              <td><code class="literal">PREPARE s AS 'SELECT 3, 3'</code></td>
+              <td>Yes</td>
+            </tr><tr>
+              <td><code class="literal">PREPARE s AS 'SELECT ?, 3'</code></td>
+              <td>Yes</td>
+            </tr><tr>
+              <td><code class="literal">PREPARE s AS 'SELECT 3, ?'</code></td>
+              <td>No</td>
+            </tr><tr>
+              <td><code class="literal">PREPARE s AS 'SELECT ?, ?'</code></td>
+              <td>No</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="rewriter-query-rewrite-plugin-operational-information"></a>Rewriter Plugin Operational Information</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <code class="literal">Rewriter</code> plugin makes information
+          available about its operation by means of several status
+          variables:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW GLOBAL STATUS LIKE 'Rewriter%';
++-----------------------------------+-------+
+| Variable_name                     | Value |
++-----------------------------------+-------+
+| Rewriter_number_loaded_rules      | 1     |
+| Rewriter_number_reloads           | 5     |
+| Rewriter_number_rewritten_queries | 1     |
+| Rewriter_reload_error             | ON    |
++-----------------------------------+-------+</code></pre><p>
+          For descriptions of these variables, see
+          <a class="xref" href="rewriter-query-rewrite-plugin-reference.html#rewriter-query-rewrite-plugin-status-variables" title="7.6.4.3.4 Rewriter Query Rewrite Plugin Status Variables">Section 7.6.4.3.4, “Rewriter Query Rewrite Plugin Status Variables”</a>.
+        </p><p>
+          When you load the rules table by calling the
+          <code class="literal">flush_rewrite_rules()</code> stored procedure, if
+          an error occurs for some rule, the <code class="literal">CALL</code>
+          statement produces an error, and the plugin sets the
+          <code class="literal">Rewriter_reload_error</code> status variable to
+          <code class="literal">ON</code>:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; CALL query_rewrite.flush_rewrite_rules();
+ERROR 1644 (45000): Loading of some rule(s) failed.
+
+mysql&gt; SHOW GLOBAL STATUS LIKE 'Rewriter_reload_error';
++-----------------------+-------+
+| Variable_name         | Value |
++-----------------------+-------+
+| Rewriter_reload_error | ON    |
++-----------------------+-------+</code></pre><p>
+          In this case, check the <code class="literal">rewrite_rules</code> table
+          for rows with non-<code class="literal">NULL</code>
+          <code class="literal">message</code> column values to see what problems
+          exist.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="rewriter-query-rewrite-plugin-use-of-character-sets"></a>Rewriter Plugin Use of Character Sets</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          When the <code class="literal">rewrite_rules</code> table is loaded into
+          the <code class="literal">Rewriter</code> plugin, the plugin interprets
+          statements using the current global value of the
+          <a class="link" href="server-system-variables.html#sysvar_character_set_client"><code class="literal">character_set_client</code></a> system
+          variable. If the global
+          <a class="link" href="server-system-variables.html#sysvar_character_set_client"><code class="literal">character_set_client</code></a> value is
+          changed subsequently, the rules table must be reloaded.
+        </p><p>
+          A client must have a session
+          <a class="link" href="server-system-variables.html#sysvar_character_set_client"><code class="literal">character_set_client</code></a> value
+          identical to what the global value was when the rules table
+          was loaded or rule matching does not work for that client.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="rewriter-query-rewrite-plugin-installation.html"
+        aria-label="Previous" title="Previous: Installing or Uninstalling the Rewriter Query Rewrite Plugin"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="rewriter-query-rewrite-plugin.html" title="Up: The Rewriter Query Rewrite Plugin"> UP</a> &nbsp;
+    <a href="rewriter-query-rewrite-plugin-reference.html" aria-label="Next"
+        title="Next: Rewriter Query Rewrite Plugin Reference">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/rewriter-query-rewrite-plugin-usage.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:59:06 GMT -->
+</html>

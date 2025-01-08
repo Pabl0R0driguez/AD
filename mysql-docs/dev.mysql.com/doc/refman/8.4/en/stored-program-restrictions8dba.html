@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/stored-program-restrictions.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 27.8 Restrictions on Stored Programs</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="stored-programs-logging.html" title="27.7 Stored Program Binary Logging" />
+<link rel="next" href="view-restrictions8dba.html?ff=nopfpls" title="27.9 Restrictions on Views" />
+<link rel="up" href="stored-objects.html" title="27 Stored Objects" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7ygea-f-7dde689ae-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":603,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"19065e4b","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":18006,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134408","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==7gyY8uzGIYCc8zVIBRm8iPPnM7sg2LXGEa+XF1lOCKpZfPnEqAaYxsGA8HIS3VmqzjMGoHqBYh6HdYOaZcJcFPlmRmt6/gYIpNRiLvl6YN25a20T7hAG9I7tGjpQaGLKax5ontzanEmGbMKlS2mxyQATQLWVKUQK7GM+jQ4KyociCfaRwaSyHrxY+NnWxIMmjymNwa2xPy1IPUZScvPY53GkNlBx5D9LBbI3Sbsh3l0funlJZStWNG7UNdX1BxahV4DnB8FKjkwbVQHbEVIkd48JNuoPCIxXNGOWvnEx+skAg+PUDkXjxBUYU4u6DKXIZQXNCh7ue8tIJFjbgqVLlqcFMhffll81nc+PY46wsqOjZcrfOWz7PlCfnwLVaia3LLXDvlkpu8Hb8gD2VQPb57u5K9vjrg5m2Xgu5DJkcVc=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fstored-program-restrictions.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="stored-programs-logging.html"
+        aria-label="Previous" title="Previous: Stored Program Binary Logging"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="stored-objects.html" title="Up: Stored Objects"><span class="icon-chevron-up"></span></a>
+    <a href="view-restrictions.html" aria-label="Next"
+        title="Next: Restrictions on Views"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-programs-defining.html">Defining Stored Programs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-routines.html">Using Stored Routines</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-routines-syntax.html">Stored Routine Syntax</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-routines-privileges.html">Stored Routines and MySQL Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-routines-metadata.html">Stored Routine Metadata</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-routines-last-insert-id.html">Stored Procedures, Functions, Triggers, and LAST_INSERT_ID()</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="triggers.html">Using Triggers</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="trigger-syntax.html">Trigger Syntax and Examples</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="trigger-metadata.html">Trigger Metadata</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="event-scheduler.html">Using the Event Scheduler</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="events-overview.html">Event Scheduler Overview</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="events-configuration.html">Event Scheduler Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="events-syntax.html">Event Syntax</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="events-metadata.html">Event Metadata</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="events-status-info.html">Event Scheduler Status</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="events-privileges.html">The Event Scheduler and MySQL Privileges</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="views.html">Using Views</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="view-syntax.html">View Syntax</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="view-algorithms.html">View Processing Algorithms</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="view-updatability.html">Updatable and Insertable Views</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="view-check-option.html">The View WITH CHECK OPTION Clause</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="view-metadata.html">View Metadata</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-objects-security.html">Stored Object Access Control</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stored-programs-logging.html">Stored Program Binary Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="stored-program-restrictions.html">Restrictions on Stored Programs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="view-restrictions.html">Restrictions on Views</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/stored-program-restrictions.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/stored-program-restrictions.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/stored-program-restrictions.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/stored-program-restrictions.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/stored-program-restrictions.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                                                        <a href="stored-objects.html">Stored Objects</a> &nbsp;/&nbsp;
+                                                                                    Restrictions on Stored Programs
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title"><a name="stored-program-restrictions"></a>27.8 Restrictions on Stored Programs</h2>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105541974016"></a><a class="indexterm" name="idm45105541972528"></a><a class="indexterm" name="idm45105541971040"></a><a class="indexterm" name="idm45105541969552"></a><a class="indexterm" name="idm45105541968064"></a><a class="indexterm" name="idm45105541966576"></a>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routine-sql-restrictions" title="SQL Statements Not Permitted in Stored Routines">SQL Statements Not Permitted in Stored Routines</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-function-restrictions" title="Restrictions for Stored Functions">Restrictions for Stored Functions</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-trigger-restrictions" title="Restrictions for Triggers">Restrictions for Triggers</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routine-name-conflicts" title="Name Conflicts within Stored Routines">Name Conflicts within Stored Routines</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-replication-restrictions" title="Replication Considerations">Replication Considerations</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-debugging-restrictions" title="Debugging Considerations">Debugging Considerations</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-standard-restrictions" title="Unsupported Syntax from the SQL:2003 Standard">Unsupported Syntax from the SQL:2003 Standard</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-concurrency-restrictions" title="Stored Routine Concurrency Considerations">Stored Routine Concurrency Considerations</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-event-restrictions" title="Event Scheduler Restrictions">Event Scheduler Restrictions</a></p></li><li class="listitem"><p><a class="xref" href="stored-program-restrictions.html#stored-routines-ndbcluster" title="Stored routines and triggers in NDB Cluster">Stored routines and triggers in NDB Cluster</a></p></li></ul>
+</div>
+<p>
+      These restrictions apply to the features described in
+      <a class="xref" href="stored-objects.html" title="Chapter 27 Stored Objects">Chapter 27, <i>Stored Objects</i></a>.
+    </p><p>
+      Some of the restrictions noted here apply to all stored routines;
+      that is, both to stored procedures and stored functions. There are
+      also some
+      <a class="link" href="stored-program-restrictions.html#stored-routines-function-restrictions" title="Restrictions for Stored Functions">restrictions
+      specific to stored functions</a> but not to stored procedures.
+    </p><p>
+      The restrictions for stored functions also apply to triggers.
+      There are also some
+      <a class="link" href="stored-program-restrictions.html#stored-routines-trigger-restrictions" title="Restrictions for Triggers">restrictions
+      specific to triggers</a>.
+    </p><p>
+      The restrictions for stored procedures also apply to the
+      <a class="link" href="do.html" title="15.2.3 DO Statement"><code class="literal">DO</code></a> clause of Event Scheduler event
+      definitions. There are also some
+      <a class="link" href="stored-program-restrictions.html#stored-routines-event-restrictions" title="Event Scheduler Restrictions">restrictions
+      specific to events</a>.
+</p>
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h3 class="title"><a name="stored-routine-sql-restrictions"></a>SQL Statements Not Permitted in Stored Routines</h3>
+</div>
+</div>
+</div>
+<p>
+        Stored routines cannot contain arbitrary SQL statements. The
+        following statements are not permitted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            The locking statements <a class="link" href="lock-tables.html" title="15.3.6 LOCK TABLES and UNLOCK TABLES Statements"><code class="literal">LOCK
+            TABLES</code></a> and
+            <a class="link" href="lock-tables.html" title="15.3.6 LOCK TABLES and UNLOCK TABLES Statements"><code class="literal">UNLOCK
+            TABLES</code></a>.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="alter-view.html" title="15.1.11 ALTER VIEW Statement"><code class="literal">ALTER VIEW</code></a>.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="load-data.html" title="15.2.9 LOAD DATA Statement"><code class="literal">LOAD DATA</code></a> and
+            <a class="link" href="load-xml.html" title="15.2.10 LOAD XML Statement"><code class="literal">LOAD XML</code></a>.
+          </p></li><li class="listitem"><p>
+            SQL prepared statements
+            (<a class="link" href="prepare.html" title="15.5.1 PREPARE Statement"><code class="literal">PREPARE</code></a>,
+            <a class="link" href="execute.html" title="15.5.2 EXECUTE Statement"><code class="literal">EXECUTE</code></a>,
+            <a class="link" href="deallocate-prepare.html" title="15.5.3 DEALLOCATE PREPARE Statement"><code class="literal">DEALLOCATE PREPARE</code></a>) can be
+            used in stored procedures, but not stored functions or
+            triggers. Thus, stored functions and triggers cannot use
+            dynamic SQL (where you construct statements as strings and
+            then execute them).
+          </p></li><li class="listitem"><p>
+            Generally, statements not permitted in SQL prepared
+            statements are also not permitted in stored programs. For a
+            list of statements supported as prepared statements, see
+            <a class="xref" href="sql-prepared-statements.html" title="15.5 Prepared Statements">Section 15.5, “Prepared Statements”</a>. Exceptions are
+            <a class="link" href="signal.html" title="15.6.7.5 SIGNAL Statement"><code class="literal">SIGNAL</code></a>,
+            <a class="link" href="resignal.html" title="15.6.7.4 RESIGNAL Statement"><code class="literal">RESIGNAL</code></a>, and
+            <a class="link" href="get-diagnostics.html" title="15.6.7.3 GET DIAGNOSTICS Statement"><code class="literal">GET DIAGNOSTICS</code></a>, which are
+            not permissible as prepared statements but are permitted in
+            stored programs.
+          </p></li><li class="listitem"><p>
+            Because local variables are in scope only during stored
+            program execution, references to them are not permitted in
+            prepared statements created within a stored program.
+            Prepared statement scope is the current session, not the
+            stored program, so the statement could be executed after the
+            program ends, at which point the variables would no longer
+            be in scope. For example, <code class="literal">SELECT ... INTO
+            <em class="replaceable"><code>local_var</code></em></code> cannot be
+            used as a prepared statement. This restriction also applies
+            to stored procedure and function parameters. See
+            <a class="xref" href="prepare.html" title="15.5.1 PREPARE Statement">Section 15.5.1, “PREPARE Statement”</a>.
+          </p></li><li class="listitem"><p>
+            Within all stored programs (stored procedures and functions,
+            triggers, and events), the parser treats
+            <a class="link" href="commit.html" title="15.3.1 START TRANSACTION, COMMIT, and ROLLBACK Statements"><code class="literal">BEGIN
+            [WORK]</code></a> as the beginning of a
+            <a class="link" href="begin-end.html" title="15.6.1 BEGIN ... END Compound Statement"><code class="literal">BEGIN ...
+            END</code></a> block. To begin a transaction in this context,
+            use <a class="link" href="commit.html" title="15.3.1 START TRANSACTION, COMMIT, and ROLLBACK Statements"><code class="literal">START
+            TRANSACTION</code></a> instead.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-function-restrictions"></a>Restrictions for Stored Functions</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following additional statements or operations are not
+        permitted within stored functions. They are permitted within
+        stored procedures, except stored procedures that are invoked
+        from within a stored function or trigger. For example, if you
+        use <a class="link" href="flush.html" title="15.7.8.3 FLUSH Statement"><code class="literal">FLUSH</code></a> in a stored procedure,
+        that stored procedure cannot be called from a stored function or
+        trigger.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Statements that perform explicit or implicit commit or
+            rollback. Support for these statements is not required by
+            the SQL standard, which states that each DBMS vendor may
+            decide whether to permit them.
+          </p></li><li class="listitem"><p>
+            Statements that return a result set. This includes
+            <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements that do not
+            have an <code class="literal">INTO
+            <em class="replaceable"><code>var_list</code></em></code> clause and
+            other statements such as
+            <a class="link" href="show.html" title="15.7.7 SHOW Statements"><code class="literal">SHOW</code></a>,
+            <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a>, and
+            <a class="link" href="check-table.html" title="15.7.3.2 CHECK TABLE Statement"><code class="literal">CHECK TABLE</code></a>. A function can
+            process a result set either with
+            <a class="link" href="select-into.html" title="15.2.13.1 SELECT ... INTO Statement"><code class="literal">SELECT ... INTO
+            <em class="replaceable"><code>var_list</code></em></code></a> or by using a
+            cursor and <a class="link" href="fetch.html" title="15.6.6.3 Cursor FETCH Statement"><code class="literal">FETCH</code></a> statements.
+            See <a class="xref" href="select-into.html" title="15.2.13.1 SELECT ... INTO Statement">Section 15.2.13.1, “SELECT ... INTO Statement”</a>, and
+            <a class="xref" href="cursors.html" title="15.6.6 Cursors">Section 15.6.6, “Cursors”</a>.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="flush.html" title="15.7.8.3 FLUSH Statement"><code class="literal">FLUSH</code></a> statements.
+          </p></li><li class="listitem"><p>
+            Stored functions cannot be used recursively.
+          </p></li><li class="listitem"><p>
+            A stored function or trigger cannot modify a table that is
+            already being used (for reading or writing) by the statement
+            that invoked the function or trigger.
+          </p></li><li class="listitem"><p>
+            If you refer to a temporary table multiple times in a stored
+            function under different aliases, a <code class="literal">Can't reopen
+            table:
+            '<em class="replaceable"><code>tbl_name</code></em><code class="literal"></code>'</code>
+            error occurs, even if the references occur in different
+            statements within the function.
+          </p></li><li class="listitem"><p>
+            <a class="link" href="handler.html" title="15.2.5 HANDLER Statement"><code class="literal">HANDLER ...
+            READ</code></a> statements that invoke stored functions can
+            cause replication errors and are disallowed.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-trigger-restrictions"></a>Restrictions for Triggers</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        For triggers, the following additional restrictions apply:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Triggers are not activated by foreign key actions.
+          </p></li><li class="listitem"><p>
+            When using row-based replication, triggers on the replica
+            are not activated by statements originating on the source.
+            The triggers on the replica are activated when using
+            statement-based replication. For more information, see
+            <a class="xref" href="replication-features-triggers.html" title="19.5.1.36 Replication and Triggers">Section 19.5.1.36, “Replication and Triggers”</a>.
+          </p></li><li class="listitem"><p>
+            The <a class="link" href="return.html" title="15.6.5.7 RETURN Statement"><code class="literal">RETURN</code></a> statement is not
+            permitted in triggers, which cannot return a value. To exit
+            a trigger immediately, use the
+            <a class="link" href="leave.html" title="15.6.5.4 LEAVE Statement"><code class="literal">LEAVE</code></a> statement.
+          </p></li><li class="listitem"><p>
+            Triggers are not permitted on tables in the
+            <code class="literal">mysql</code> database. Nor are they permitted on
+            <code class="literal">INFORMATION_SCHEMA</code> or
+            <code class="literal">performance_schema</code> tables. Those tables
+            are actually views and triggers are not permitted on views.
+          </p></li><li class="listitem"><p>
+            The trigger cache does not detect when metadata of the
+            underlying objects has changed. If a trigger uses a table
+            and the table has changed since the trigger was loaded into
+            the cache, the trigger operates using the outdated metadata.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routine-name-conflicts"></a>Name Conflicts within Stored Routines</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The same identifier might be used for a routine parameter, a
+        local variable, and a table column. Also, the same local
+        variable name can be used in nested blocks. For example:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE PROCEDURE p (i INT)
+BEGIN
+  DECLARE i INT DEFAULT 0;
+  SELECT i FROM t;
+  BEGIN
+    DECLARE i INT DEFAULT 1;
+    SELECT i FROM t;
+  END;
+END;</code></pre><p>
+        In such cases, the identifier is ambiguous and the following
+        precedence rules apply:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            A local variable takes precedence over a routine parameter
+            or table column.
+          </p></li><li class="listitem"><p>
+            A routine parameter takes precedence over a table column.
+          </p></li><li class="listitem"><p>
+            A local variable in an inner block takes precedence over a
+            local variable in an outer block.
+</p></li></ul>
+</div>
+<p>
+        The behavior that variables take precedence over table columns
+        is nonstandard.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-replication-restrictions"></a>Replication Considerations</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        Use of stored routines can cause replication problems. This
+        issue is discussed further in
+        <a class="xref" href="stored-programs-logging.html" title="27.7 Stored Program Binary Logging">Section 27.7, “Stored Program Binary Logging”</a>.
+      </p><p>
+        The
+        <a class="link" href="replication-options-replica.html#option_mysqld_replicate-wild-do-table"><code class="option">--replicate-wild-do-table=<em class="replaceable"><code>db_name.tbl_name</code></em></code></a>
+        option applies to tables, views, and triggers. It does not apply
+        to stored procedures and functions, or events. To filter
+        statements operating on the latter objects, use one or more of
+        the <code class="option">--replicate-*-db</code> options.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-debugging-restrictions"></a>Debugging Considerations</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        There are no stored routine debugging facilities.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-standard-restrictions"></a>Unsupported Syntax from the SQL:2003 Standard</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The MySQL stored routine syntax is based on the SQL:2003
+        standard. The following items from that standard are not
+        currently supported:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <code class="literal">UNDO</code> handlers
+          </p></li><li class="listitem"><p>
+            <code class="literal">FOR</code> loops
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-concurrency-restrictions"></a>Stored Routine Concurrency Considerations</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        To prevent problems of interaction between sessions, when a
+        client issues a statement, the server uses a snapshot of
+        routines and triggers available for execution of the statement.
+        That is, the server calculates a list of procedures, functions,
+        and triggers that may be used during execution of the statement,
+        loads them, and then proceeds to execute the statement. While
+        the statement executes, it does not see changes to routines
+        performed by other sessions.
+      </p><p>
+        For maximum concurrency, stored functions should minimize their
+        side-effects; in particular, updating a table within a stored
+        function can reduce concurrent operations on that table. A
+        stored function acquires table locks before executing, to avoid
+        inconsistency in the binary log due to mismatch of the order in
+        which statements execute and when they appear in the log. When
+        statement-based binary logging is used, statements that invoke a
+        function are recorded rather than the statements executed within
+        the function. Consequently, stored functions that update the
+        same underlying tables do not execute in parallel. In contrast,
+        stored procedures do not acquire table-level locks. All
+        statements executed within stored procedures are written to the
+        binary log, even for statement-based binary logging. See
+        <a class="xref" href="stored-programs-logging.html" title="27.7 Stored Program Binary Logging">Section 27.7, “Stored Program Binary Logging”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-event-restrictions"></a>Event Scheduler Restrictions</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The following limitations are specific to the Event Scheduler:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Event names are handled in case-insensitive fashion. For
+            example, you cannot have two events in the same database
+            with the names <code class="literal">anEvent</code> and
+            <code class="literal">AnEvent</code>.
+          </p></li><li class="listitem"><p>
+            An event may not be created from within a stored program. An
+            event may not be altered, or dropped from within a stored
+            program, if the event name is specified by means of a
+            variable. An event also may not create, alter, or drop
+            stored routines or triggers.
+          </p></li><li class="listitem"><p>
+            DDL statements on events are prohibited while a
+            <a class="link" href="lock-tables.html" title="15.3.6 LOCK TABLES and UNLOCK TABLES Statements"><code class="literal">LOCK TABLES</code></a> statement is in
+            effect.
+          </p></li><li class="listitem"><p>
+            Event timings using the intervals <code class="literal">YEAR</code>,
+            <code class="literal">QUARTER</code>, <code class="literal">MONTH</code>, and
+            <code class="literal">YEAR_MONTH</code> are resolved in months; those
+            using any other interval are resolved in seconds. There is
+            no way to cause events scheduled to occur at the same second
+            to execute in a given order. In addition—due to
+            rounding, the nature of threaded applications, and the fact
+            that a nonzero length of time is required to create events
+            and to signal their execution—events may be delayed by
+            as much as 1 or 2 seconds. However, the time shown in the
+            Information Schema <a class="link" href="information-schema-events-table.html" title="28.3.14 The INFORMATION_SCHEMA EVENTS Table"><code class="literal">EVENTS</code></a>
+            table's <code class="literal">LAST_EXECUTED</code> column is
+            always accurate to within one second of the actual event
+            execution time. (See also Bug #16522.)
+          </p></li><li class="listitem"><p>
+            Each execution of the statements contained in the body of an
+            event takes place in a new connection; thus, these
+            statements have no effect in a given user session on the
+            server's statement counts such as
+            <code class="literal">Com_select</code> and
+            <code class="literal">Com_insert</code> that are displayed by
+            <a class="link" href="show-status.html" title="15.7.7.37 SHOW STATUS Statement"><code class="literal">SHOW STATUS</code></a>. However, such
+            counts <span class="emphasis"><em>are</em></span> updated in the global scope.
+            (Bug #16422)
+          </p></li><li class="listitem"><p>
+            Events do not support times later than the end of the Unix
+            Epoch; this is approximately the beginning of the year 2038.
+            Such dates are specifically not permitted by the Event
+            Scheduler. (Bug #16396)
+          </p></li><li class="listitem"><p>
+            References to stored functions, loadable functions, and
+            tables in the <code class="literal">ON SCHEDULE</code> clauses of
+            <a class="link" href="create-event.html" title="15.1.13 CREATE EVENT Statement"><code class="literal">CREATE EVENT</code></a> and
+            <a class="link" href="alter-event.html" title="15.1.3 ALTER EVENT Statement"><code class="literal">ALTER EVENT</code></a> statements are
+            not supported. These sorts of references are not permitted.
+            (See Bug #22830 for more information.)
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="stored-routines-ndbcluster"></a>Stored routines and triggers in NDB Cluster</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        While stored procedures, stored functions, triggers, and
+        scheduled events are all supported by tables using the
+        <a class="link" href="mysql-cluster.html" title="Chapter 25 MySQL NDB Cluster 8.4"><code class="literal">NDB</code></a> storage engine, you must keep
+        in mind that these do <span class="emphasis"><em>not</em></span> propagate
+        automatically between MySQL Servers acting as Cluster SQL nodes.
+        This is because stored routine and trigger definitions are
+        stored in tables in the <code class="literal">mysql</code> system database
+        using <code class="literal">InnoDB</code> tables, which are not copied
+        between Cluster nodes.
+      </p><p>
+        Any stored routine or trigger that interacts with MySQL Cluster
+        tables must be re-created by running the appropriate
+        <a class="link" href="create-procedure.html" title="15.1.17 CREATE PROCEDURE and CREATE FUNCTION Statements"><code class="literal">CREATE PROCEDURE</code></a>,
+        <a class="link" href="create-function.html" title="15.1.14 CREATE FUNCTION Statement"><code class="literal">CREATE FUNCTION</code></a>, or
+        <a class="link" href="create-trigger.html" title="15.1.22 CREATE TRIGGER Statement"><code class="literal">CREATE TRIGGER</code></a> statements on each
+        MySQL Server that participates in the cluster where you wish to
+        use the stored routine or trigger. Similarly, any changes to
+        existing stored routines or triggers must be carried out
+        explicitly on all Cluster SQL nodes, using the appropriate
+        <code class="literal">ALTER</code> or <code class="literal">DROP</code> statements
+        on each MySQL Server accessing the cluster.
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Warning
+</div>
+<p>
+          Do <span class="emphasis"><em>not</em></span> attempt to work around the issue
+          just described by converting any <code class="literal">mysql</code>
+          database tables to use the <a class="link" href="mysql-cluster.html" title="Chapter 25 MySQL NDB Cluster 8.4"><code class="literal">NDB</code></a>
+          storage engine. <span class="emphasis"><em>Altering the system tables in the
+          <code class="literal">mysql</code> database is not supported</em></span>
+          and is very likely to produce undesirable results.
+</p>
+</div>
+
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="stored-programs-logging.html"
+        aria-label="Previous" title="Previous: Stored Program Binary Logging"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="stored-objects.html" title="Up: Stored Objects"> UP</a> &nbsp;
+    <a href="view-restrictions.html" aria-label="Next"
+        title="Next: Restrictions on Views">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/stored-program-restrictions.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:53 GMT -->
+</html>

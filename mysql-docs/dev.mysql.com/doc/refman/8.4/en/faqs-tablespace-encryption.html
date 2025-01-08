@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/faqs-tablespace-encryption.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:57:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: A.17 MySQL 8.4 FAQ: InnoDB Data-at-Rest Encryption</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="faqs-innodb-change-buffer.html" title="A.16 MySQL 8.4 FAQ: InnoDB Change Buffer" />
+<link rel="next" href="faqs-virtualization8dba.html?ff=nopfpls" title="A.18 MySQL 8.4 FAQ: Virtualization Support" />
+<link rel="up" href="faqs.html" title="A MySQL 8.4 Frequently Asked Questions" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7xbyq-f-738256086-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":210,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18a32774","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5770,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730132081","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==6PtthxAoXxKTC7P5kDi7ZXBu5YiN7vGjWaWt2Ix4IiGX07uHdbbdZRqdry1m1LnGXhpQBrU7oJz/sMDYZBXxy/80AzPfkV70OsgpRbzbLGvBI8kz0pyZ4UdVdDZPFpDL+dDqD2n4HKUpooWzb8Y1f9TdI9qBXinWiVszbSkxQaMqzwT614Evv7NRotujq5j2nZgVA1UfeK29jcMuB12e145tjfa4XpCznqyAIe+WFGI2IHZivR1/wguWUZ3smAO6ahGXXBeCNEIGCMznL3X+TSyQWn9ADC0Av9YOZChtl4xLW7o5W827LohYEKmtDsdTyduzHzD8hRJatcUwbqH4mv2MIvaZpKH3HK4QrQgsWrPWAqq+7A6rAoU4NF5xwO5rOXHR0lCUqRlOjquz5T9kZf4g/8CYFDQGBOxr8Z0DvI0=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Ffaqs-tablespace-encryption.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="faqs-innodb-change-buffer.html"
+        aria-label="Previous" title="Previous: MySQL 8.4 FAQ: InnoDB Change Buffer"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="faqs.html" title="Up: MySQL 8.4 Frequently Asked Questions"><span class="icon-chevron-up"></span></a>
+    <a href="faqs-virtualization.html" aria-label="Next"
+        title="Next: MySQL 8.4 FAQ: Virtualization Support"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-general.html">MySQL 8.4 FAQ: General</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-storage-engines.html">MySQL 8.4 FAQ: Storage Engines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-sql-modes.html">MySQL 8.4 FAQ: Server SQL Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-stored-procs.html">MySQL 8.4 FAQ: Stored Procedures and Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-triggers.html">MySQL 8.4 FAQ: Triggers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-views.html">MySQL 8.4 FAQ: Views</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-information-schema.html">MySQL 8.4 FAQ: INFORMATION_SCHEMA</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-migration.html">MySQL 8.4 FAQ: Migration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-security.html">MySQL 8.4 FAQ: Security</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-mysql-cluster.html">MySQL 8.4 FAQ: NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-cjk.html">MySQL 8.4 FAQ: MySQL Chinese, Japanese, and Korean
+Character Sets</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-connectors-apis.html">MySQL 8.4 FAQ: Connectors &amp; APIs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-c-api.html">MySQL 8.4 FAQ: C API, libmysql</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-replication.html">MySQL 8.4 FAQ: Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-thread-pool.html">MySQL 8.4 FAQ: MySQL Enterprise Thread Pool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-innodb-change-buffer.html">MySQL 8.4 FAQ: InnoDB Change Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="faqs-tablespace-encryption.html">MySQL 8.4 FAQ: InnoDB Data-at-Rest Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="faqs-virtualization.html">MySQL 8.4 FAQ: Virtualization Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/faqs-tablespace-encryption.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/faqs-tablespace-encryption.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/faqs-tablespace-encryption.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/faqs-tablespace-encryption.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/faqs-tablespace-encryption.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                                                        <a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a> &nbsp;/&nbsp;
+                                                                                    MySQL 8.4 FAQ: InnoDB Data-at-Rest Encryption
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title"><a name="faqs-tablespace-encryption"></a>A.17 MySQL 8.4 FAQ: InnoDB Data-at-Rest Encryption</h2>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105515557792"></a>
+<div class="qandaset">
+<a name="idm45105515556336"></a><dl><dt>A.17.1. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-access">
+        Is data decrypted for users who are authorized to see it?
+      </a></dt><dt>A.17.2. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-overhead">
+        What is the overhead associated with InnoDB
+        data-at-rest encryption?
+      </a></dt><dt>A.17.3. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-algorithm">
+        What are the encryption algorithms used with
+        InnoDB data-at-rest encryption?
+      </a></dt><dt>A.17.4. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-other-algorithms">
+        Is it possible to use 3rd party encryption algorithms in place
+        of the one provided by the InnoDB
+        data-at-rest encryption feature?
+      </a></dt><dt>A.17.5. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-indexed-columns">
+        Can indexed columns be encrypted?
+      </a></dt><dt>A.17.6. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-data-types">
+        What data types and data lengths does InnoDB
+        data-at-rest encryption support?
+      </a></dt><dt>A.17.7. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-network">
+        Does data remain encrypted on the network?
+      </a></dt><dt>A.17.8. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-database-memory">
+        Does database memory contain cleartext or encrypted data?
+      </a></dt><dt>A.17.9. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-data-to-encrypt">
+        How do I know which data to encrypt?
+      </a></dt><dt>A.17.10. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-mysql-encryption">
+        How is InnoDB data-at-rest encryption
+        different from encryption functions MySQL already provides?
+      </a></dt><dt>A.17.11. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-transportable-tablespaces">
+        Does the transportable tablespaces feature work with
+        InnoDB data-at-rest encryption?
+      </a></dt><dt>A.17.12. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-compression">
+        Does compression work with InnoDB
+        data-at-rest encryption?
+      </a></dt><dt>A.17.13. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-mysqldump">
+        Can I use mysqldump with encrypted tables?
+      </a></dt><dt>A.17.14. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-key-rotation">
+        How do I change (rotate, re-key) the master encryption key?
+      </a></dt><dt>A.17.15. <a href="faqs-tablespace-encryption.html#faq-tablespace-encryption-data-migration">
+        How do I migrate data from a cleartext InnoDB
+        tablespace to an encrypted InnoDB tablespace?
+      </a></dt></dl><table border="0" style="width: 100%;"><colgroup><col align="left" width="1%"><col></colgroup><tbody><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-access"></a><a name="idm45105515555584"></a><p><b>A.17.1.</b></p></td><td align="left" valign="top"><p>
+        Is data decrypted for users who are authorized to see it?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Yes. <code class="literal">InnoDB</code> data-at-rest encryption is
+        designed to transparently apply encryption within the database
+        without impacting existing applications. Returning data in
+        encrypted format would break most existing applications.
+        <code class="literal">InnoDB</code> data-at-rest encryption provides the
+        benefit of encryption without the overhead associated with
+        traditional database encryption solutions, which would typically
+        require expensive and substantial changes to applications,
+        database triggers, and views.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-overhead"></a><a name="idm45105515551664"></a><p><b>A.17.2.</b></p></td><td align="left" valign="top"><p>
+        What is the overhead associated with <code class="literal">InnoDB</code>
+        data-at-rest encryption?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        There is no additional storage overhead. According to internal
+        benchmarks, performance overhead amounts to a single digit
+        percentage difference.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-algorithm"></a><a name="idm45105515548800"></a><p><b>A.17.3.</b></p></td><td align="left" valign="top"><p>
+        What are the encryption algorithms used with
+        <code class="literal">InnoDB</code> data-at-rest encryption?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        <code class="literal">InnoDB</code> data-at-rest encryption supports the
+        Advanced Encryption Standard (AES256) block-based encryption
+        algorithm. It uses Electronic Codebook (ECB) block encryption
+        mode for tablespace key encryption and Cipher Block Chaining
+        (CBC) block encryption mode for data encryption.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-other-algorithms"></a><a name="idm45105515545008"></a><p><b>A.17.4.</b></p></td><td align="left" valign="top"><p>
+        Is it possible to use 3rd party encryption algorithms in place
+        of the one provided by the <code class="literal">InnoDB</code>
+        data-at-rest encryption feature?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        No, it is not possible to use other encryption algorithms. The
+        provided encryption algorithm is broadly accepted.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-indexed-columns"></a><a name="idm45105515542080"></a><p><b>A.17.5.</b></p></td><td align="left" valign="top"><p>
+        Can indexed columns be encrypted?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        <code class="literal">InnoDB</code> data-at-rest encryption supports all
+        indexes transparently.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-data-types"></a><a name="idm45105515539392"></a><p><b>A.17.6.</b></p></td><td align="left" valign="top"><p>
+        What data types and data lengths does <code class="literal">InnoDB</code>
+        data-at-rest encryption support?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        <code class="literal">InnoDB</code> data-at-rest encryption supports all
+        supported data types. There is no data length limitation.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-network"></a><a name="idm45105515535840"></a><p><b>A.17.7.</b></p></td><td align="left" valign="top"><p>
+        Does data remain encrypted on the network?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Data encrypted by the <code class="literal">InnoDB</code> data-at-rest
+        feature is decrypted when it is read from the tablespace file.
+        Thus, if the data is on the network, it is in cleartext form.
+        However, data on the network can be encrypted using MySQL
+        network encryption, which encrypts data traveling to and from a
+        database using SSL/TLS.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-database-memory"></a><a name="idm45105515532704"></a><p><b>A.17.8.</b></p></td><td align="left" valign="top"><p>
+        Does database memory contain cleartext or encrypted data?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        With <code class="literal">InnoDB</code> data-at-rest encryption,
+        in-memory data is decrypted, which provides complete
+        transparency.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-data-to-encrypt"></a><a name="idm45105515529872"></a><p><b>A.17.9.</b></p></td><td align="left" valign="top"><p>
+        How do I know which data to encrypt?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Compliance with the PCI-DSS standard requires that credit card
+        numbers (Primary Account Number, or 'PAN') be stored in
+        encrypted form. Breach Notification Laws (for example, CA SB
+        1386, CA AB 1950, and similar laws in 43+ more US states)
+        require encryption of first name, last name, driver license
+        number, and other PII data. In early 2008, CA AB 1298 added
+        medical and health insurance information to PII data.
+        Additionally, industry specific privacy and security standards
+        may require encryption of certain assets. For example, assets
+        such as pharmaceutical research results, oil field exploration
+        results, financial contracts, or personal data of law
+        enforcement informants may require encryption. In the health
+        care industry, the privacy of patient data, health records and
+        X-ray images is of the highest importance.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-mysql-encryption"></a><a name="idm45105515526960"></a><p><b>A.17.10.</b></p></td><td align="left" valign="top"><p>
+        How is <code class="literal">InnoDB</code> data-at-rest encryption
+        different from encryption functions MySQL already provides?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        There are symmetric and asymmetric encryption APIs in MySQL that
+        can be used to manually encrypt data within the database.
+        However, the application must manage encryption keys and perform
+        required encryption and decryption operations by calling API
+        functions. <code class="literal">InnoDB</code> data-at-rest encryption
+        requires no application changes, is transparent to end users,
+        and provides automated, built-in key management.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-transportable-tablespaces"></a><a name="idm45105515523056"></a><p><b>A.17.11.</b></p></td><td align="left" valign="top"><p>
+        Does the transportable tablespaces feature work with
+        <code class="literal">InnoDB</code> data-at-rest encryption?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Yes. It is supported for encrypted file-per-table tablespaces.
+        For more information, see
+        <a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-exporting" title="Exporting Encrypted Tablespaces">Exporting Encrypted Tablespaces</a>.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-compression"></a><a name="idm45105515519568"></a><p><b>A.17.12.</b></p></td><td align="left" valign="top"><p>
+        Does compression work with <code class="literal">InnoDB</code>
+        data-at-rest encryption?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Customers using <code class="literal">InnoDB</code> data-at-rest
+        encryption receive the full benefit of compression because
+        compression is applied before data blocks are encrypted.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-mysqldump"></a><a name="idm45105515516000"></a><p><b>A.17.13.</b></p></td><td align="left" valign="top"><p>
+        Can I use <code class="literal">mysqldump</code> with encrypted tables?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Yes. Because these utilities create logical backups, the data
+        dumped from encrypted tables is not encrypted.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-key-rotation"></a><a name="idm45105515513168"></a><p><b>A.17.14.</b></p></td><td align="left" valign="top"><p>
+        How do I change (rotate, re-key) the master encryption key?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        <code class="literal">InnoDB</code> data-at-rest encryption uses a two
+        tier key mechanism. When data-at-rest encryption is used,
+        individual tablespace keys are stored in the header of the
+        underlying tablespace data file. Tablespace keys are encrypted
+        using the master encryption key. The master encryption key is
+        generated when tablespace encryption is enabled, and is stored
+        outside the database. The master encryption key is rotated using
+        the <a class="link" href="alter-instance.html" title="15.1.5 ALTER INSTANCE Statement"><code class="literal">ALTER
+        INSTANCE ROTATE INNODB MASTER KEY</code></a> statement, which
+        generates a new master encryption key, stores the key, and
+        rotates the key into use.
+      </p></td></tr><tr class="question"><td align="left" valign="top"><a name="faq-tablespace-encryption-data-migration"></a><a name="idm45105515508624"></a><p><b>A.17.15.</b></p></td><td align="left" valign="top"><p>
+        How do I migrate data from a cleartext <code class="literal">InnoDB</code>
+        tablespace to an encrypted <code class="literal">InnoDB</code> tablespace?
+      </p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>
+        Transferring data from one tablespace to another is not
+        required. To encrypt data in an <code class="literal">InnoDB</code>
+        file-per-table tablespace, run
+        <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE
+        <em class="replaceable"><code>tbl_name</code></em> ENCRYPTION = 'Y'</code></a>.
+        To encrypt a general tablespace or the <code class="literal">mysql</code>
+        tablespace, run
+        <a class="link" href="alter-tablespace.html" title="15.1.10 ALTER TABLESPACE Statement"><code class="literal">ALTER
+        TABLESPACE <em class="replaceable"><code>tablespace_name</code></em> ENCRYPTION
+        = 'Y'</code></a>. Encryption support for general tablespaces was
+        introduced in MySQL 8.0.13. Encryption support for the
+        <code class="literal">mysql</code> system tablespace is available as of
+        MySQL 8.0.16.
+</p></td></tr></tbody></table>
+</div>
+
+</div>
+
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="faqs-innodb-change-buffer.html"
+        aria-label="Previous" title="Previous: MySQL 8.4 FAQ: InnoDB Change Buffer"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="faqs.html" title="Up: MySQL 8.4 Frequently Asked Questions"> UP</a> &nbsp;
+    <a href="faqs-virtualization.html" aria-label="Next"
+        title="Next: MySQL 8.4 FAQ: Virtualization Support">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/faqs-tablespace-encryption.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:57:04 GMT -->
+</html>

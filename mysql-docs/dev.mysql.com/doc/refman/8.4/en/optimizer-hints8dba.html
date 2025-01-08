@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/optimizer-hints.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 10.9.3 Optimizer Hints</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="switchable-optimizations.html" title="10.9.2 Switchable Optimizations" />
+<link rel="next" href="index-hints8dba.html?ff=nopfpls" title="10.9.4 Index Hints" />
+<link rel="up" href="controlling-optimizer.html" title="10.9 Controlling the Query Optimizer" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7x2sa-f-e9017ab94-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":115,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18e4aec8","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5918,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730133668","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==cJQOh/eSJ/tihbTg8ExrYNJL7XYx44o0xf9Sm79idlIHqpRhLA1N5+hZseM3y5pynwKYPkOoLOZ4P6cI671ZZD/apbjAX0TBaqA0TWYVkc5fq5hflSOYzSA76FWbZQF73sDXFjbhHwvEC6QCiJU6x7oSORaMcHlc4k05kdu5Y3wZFpgbNd7QLec65Tpx2ipCpa8iRsxM7MEBw/nZLsSKevOAR3pipHbaKFHrdcshbMtq6YL87ILzPlxwop1PoGaPlLNht67eAJJ6WAg6C+LIsanO4/vXTUQkzX2MkgfhXNPVQvNU2HUFbr3LP6Um3NiomqnjiVISQtZ4QeyosaUuW7ZWGzddXX+ZHBsjTYn9tDlg0fGubrunaHvIkrzXelvEl9rNGcKS/4baccKHj0MR727NML8d8Hciwzr10dJ1jVU=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Foptimizer-hints.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="switchable-optimizations.html"
+        aria-label="Previous" title="Previous: Switchable Optimizations"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="controlling-optimizer.html" title="Up: Controlling the Query Optimizer"><span class="icon-chevron-up"></span></a>
+    <a href="index-hints.html" aria-label="Next"
+        title="Next: Index Hints"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-overview.html">Optimization Overview</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="statement-optimization.html">Optimizing SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="select-optimization.html">Optimizing SELECT Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="where-optimization.html">WHERE Clause Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="range-optimization.html">Range Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-merge-optimization.html">Index Merge Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="hash-joins.html">Hash Join Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="engine-condition-pushdown-optimization.html">Engine Condition Pushdown Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-condition-pushdown-optimization.html">Index Condition Pushdown Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nested-loop-joins.html">Nested-Loop Join Algorithms</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="nested-join-optimization.html">Nested Join Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="outer-join-optimization.html">Outer Join Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="outer-join-simplification.html">Outer Join Simplification</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mrr-optimization.html">Multi-Range Read Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="bnl-bka-optimization.html">Block Nested-Loop and Batched Key Access Joins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="condition-filtering.html">Condition Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="constant-folding-optimization.html">Constant-Folding Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="is-null-optimization.html">IS NULL Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="order-by-optimization.html">ORDER BY Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="group-by-optimization.html">GROUP BY Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="distinct-optimization.html">DISTINCT Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="limit-optimization.html">LIMIT Query Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="function-optimization.html">Function Call Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="window-function-optimization.html">Window Function Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="row-constructor-optimization.html">Row Constructor Expression Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-scan-avoidance.html">Avoiding Full Table Scans</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="subquery-optimization.html">Optimizing Subqueries, Derived Tables, View References, and Common Table
+        Expressions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="semijoins-antijoins.html">Optimizing IN and EXISTS Subquery Predicates with Semijoin and Antijoin
+          Transformations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="subquery-materialization.html">Optimizing Subqueries with Materialization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="subquery-optimization-with-exists.html">Optimizing Subqueries with the EXISTS Strategy</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="derived-table-optimization.html">Optimizing Derived Tables, View References, and Common Table Expressions
+with Merging or Materialization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="derived-condition-pushdown-optimization.html">Derived Condition Pushdown Optimization</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="information-schema-optimization.html">Optimizing INFORMATION_SCHEMA Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-optimization.html">Optimizing Performance Schema Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-change-optimization.html">Optimizing Data Change Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="insert-optimization.html">Optimizing INSERT Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="update-optimization.html">Optimizing UPDATE Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="delete-optimization.html">Optimizing DELETE Statements</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="permission-optimization.html">Optimizing Database Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="miscellaneous-optimization-tips.html">Other Optimization Tips</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization-indexes.html">Optimization and Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-indexes.html">How MySQL Uses Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="primary-key-optimization.html">Primary Key Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="spatial-index-optimization.html">SPATIAL Index Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="foreign-key-optimization.html">Foreign Key Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="column-indexes.html">Column Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-column-indexes.html">Multiple-Column Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="verifying-index-usage.html">Verifying Index Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-statistics.html">InnoDB and MyISAM Index Statistics Collection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-btree-hash.html">Comparison of B-Tree and Hash Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-extensions.html">Use of Index Extensions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="generated-column-index-optimizations.html">Optimizer Use of Generated Column Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="invisible-indexes.html">Invisible Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="descending-indexes.html">Descending Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="timestamp-lookups.html">Indexed Lookups from TIMESTAMP Columns</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-database-structure.html">Optimizing Database Structure</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="data-size.html">Optimizing Data Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimize-data-types.html">Optimizing MySQL Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-numeric.html">Optimizing for Numeric Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-character.html">Optimizing for Character and String Types</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-blob.html">Optimizing for BLOB Types</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimize-multi-tables.html">Optimizing for Many Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-cache.html">How MySQL Opens and Closes Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="creating-many-tables.html">Disadvantages of Creating Many Tables in the Same Database</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="internal-temporary-tables.html">Internal Temporary Table Use in MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="database-count-limit.html">Limits on Number of Databases and Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-size-limit.html">Limits on Table Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="column-count-limit.html">Limits on Table Column Count and Row Size</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb.html">Optimizing for InnoDB Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-storage-layout.html">Optimizing Storage Layout for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-transaction-management.html">Optimizing InnoDB Transaction Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-ro-txn.html">Optimizing InnoDB Read-Only Transactions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-logging.html">Optimizing InnoDB Redo Logging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-bulk-data-loading.html">Bulk Data Loading for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-queries.html">Optimizing InnoDB Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-ddl-operations.html">Optimizing InnoDB DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-diskio.html">Optimizing InnoDB Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-configuration-variables.html">Optimizing InnoDB Configuration Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-innodb-many-tables.html">Optimizing InnoDB for Systems with Many Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-myisam.html">Optimizing for MyISAM Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-queries-myisam.html">Optimizing MyISAM Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-myisam-bulk-data-loading.html">Bulk Data Loading for MyISAM Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="repair-table-optimization.html">Optimizing REPAIR TABLE Statements</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-memory-tables.html">Optimizing for MEMORY Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="execution-plan-information.html">Understanding the Query Execution Plan</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-explain.html">Optimizing Queries with EXPLAIN</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain-output.html">EXPLAIN Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain-extended.html">Extended EXPLAIN Output Format</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain-for-connection.html">Obtaining Execution Plan Information for a Named Connection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="estimating-performance.html">Estimating Query Performance</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="controlling-optimizer.html">Controlling the Query Optimizer</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="controlling-query-plan-evaluation.html">Controlling Query Plan Evaluation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="switchable-optimizations.html">Switchable Optimizations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="optimizer-hints.html">Optimizer Hints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-hints.html">Index Hints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cost-model.html">The Optimizer Cost Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-statistics.html">Optimizer Statistics</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="buffering-caching.html">Buffering and Caching</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-optimization.html">InnoDB Buffer Pool Optimization</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="myisam-key-cache.html">The MyISAM Key Cache</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="shared-key-cache.html">Shared Key Cache Access</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="multiple-key-caches.html">Multiple Key Caches</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="midpoint-insertion.html">Midpoint Insertion Strategy</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-preloading.html">Index Preloading</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="key-cache-block-size.html">Key Cache Block Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="key-cache-restructuring.html">Restructuring a Key Cache</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="statement-caching.html">Caching of Prepared Statements and Stored Programs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="locking-issues.html">Optimizing Locking Operations</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="internal-locking.html">Internal Locking Methods</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table-locking.html">Table Locking Issues</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="concurrent-inserts.html">Concurrent Inserts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="metadata-locking.html">Metadata Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="external-locking.html">External Locking</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-server.html">Optimizing the MySQL Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="disk-issues.html">Optimizing Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="symbolic-links.html">Using Symbolic Links</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="symbolic-links-to-databases.html">Using Symbolic Links for Databases on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="symbolic-links-to-tables.html">Using Symbolic Links for MyISAM Tables on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-symbolic-links.html">Using Symbolic Links for Databases on Windows</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizing-memory.html">Optimizing Memory Use</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="memory-use.html">How MySQL Uses Memory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-mysql-memory-use.html">Monitoring MySQL Memory Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="large-page-support.html">Enabling Large Page Support</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimize-benchmarking.html">Measuring Performance (Benchmarking)</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="select-benchmarking.html">Measuring the Speed of Expressions and Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="custom-benchmarks.html">Using Your Own Benchmarks</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitoring-performance-schema.html">Measuring Performance with performance_schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="thread-information.html">Examining Server Thread (Process) Information</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="processlist-access.html">Accessing the Process List</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="thread-commands.html">Thread Command Values</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="general-thread-states.html">General Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-thread-states.html">Replication Source Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-io-thread-states.html">Replication I/O (Receiver) Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-sql-thread-states.html">Replication SQL Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-connection-thread-states.html">Replication Connection Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-thread-states.html">NDB Cluster Thread States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="event-scheduler-thread-states.html">Event Scheduler Thread States</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimizer-tracing.html">Tracing the Optimizer</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-tracing-typical-usage.html">Typical Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="system-variables-controlling-tracing.html">System Variables Controlling Tracing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="traceable-statements.html">Traceable Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="tuning-trace-purging.html">Tuning Trace Purging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="tracing-memory-usage.html">Tracing Memory Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="privilege-checking.html">Privilege Checking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="interaction-with-debug-option.html">Interaction with the --debug Option</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-trace-system-variable.html">The optimizer_trace System Variable</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="end-markers-in-json-system-variable.html">The end_markers_in_json System Variable</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-features-to-trace.html">Selecting Optimizer Features to Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="trace-general-structure.html">Trace General Structure</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="tracing-example.html">Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="displaying-traces.html">Displaying Traces in Other Applications</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preventing-use-of-optimizer-trace.html">Preventing the Use of Optimizer Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-trace-testing.html">Testing Optimizer Trace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizer-trace-implementation.html">Optimizer Trace Implementation</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/optimizer-hints.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/optimizer-hints.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/optimizer-hints.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/optimizer-hints.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/optimizer-hints.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="optimization.html">Optimization</a> &nbsp;/&nbsp;
+                                                            <a href="controlling-optimizer.html">Controlling the Query Optimizer</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Optimizer Hints
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="optimizer-hints"></a>10.9.3 Optimizer Hints</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105684906640"></a><a class="indexterm" name="idm45105684905568"></a><p>
+        One means of control over optimizer strategies is to set the
+        <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> system
+        variable (see <a class="xref" href="switchable-optimizations.html" title="10.9.2 Switchable Optimizations">Section 10.9.2, “Switchable Optimizations”</a>).
+        Changes to this variable affect execution of all subsequent
+        queries; to affect one query differently from another, it is
+        necessary to change
+        <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> before each
+        one.
+      </p><p>
+        Another way to control the optimizer is by using optimizer
+        hints, which can be specified within individual statements.
+        Because optimizer hints apply on a per-statement basis, they
+        provide finer control over statement execution plans than can be
+        achieved using
+        <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a>. For example,
+        you can enable an optimization for one table in a statement and
+        disable the optimization for a different table. Hints within a
+        statement take precedence over
+        <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> flags.
+      </p><p>
+        Examples:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ NO_RANGE_OPTIMIZATION(t3 PRIMARY, f2_idx) */ f1
+  FROM t3 WHERE f1 &gt; 30 AND f1 &lt; 33;
+SELECT /*+ BKA(t1) NO_BKA(t2) */ * FROM t1 INNER JOIN t2 WHERE ...;
+SELECT /*+ NO_ICP(t1, t2) */ * FROM t1 INNER JOIN t2 WHERE ...;
+SELECT /*+ SEMIJOIN(FIRSTMATCH, LOOSESCAN) */ * FROM t1 ...;
+EXPLAIN SELECT /*+ NO_ICP(t1) */ * FROM t1 WHERE ...;
+SELECT /*+ MERGE(dt) */ * FROM (SELECT * FROM t1) AS dt;
+INSERT /*+ SET_VAR(foreign_key_checks=OFF) */ INTO t2 VALUES(2);</code></pre><p>
+        Optimizer hints, described here, differ from index hints,
+        described in <a class="xref" href="index-hints.html" title="10.9.4 Index Hints">Section 10.9.4, “Index Hints”</a>. Optimizer and index
+        hints may be used separately or together.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-overview" title="Optimizer Hint Overview">Optimizer Hint Overview</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-syntax" title="Optimizer Hint Syntax">Optimizer Hint Syntax</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints">Join-Order Optimizer Hints</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints">Table-Level Optimizer Hints</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints">Index-Level Optimizer Hints</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints">Subquery Optimizer Hints</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-execution-time" title="Statement Execution Time Optimizer Hints">Statement Execution Time Optimizer Hints</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax">Variable-Setting Hint Syntax</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-resource-group" title="Resource Group Hint Syntax">Resource Group Hint Syntax</a></p></li><li class="listitem"><p><a class="xref" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks">Optimizer Hints for Naming Query Blocks</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-overview"></a>Optimizer Hint Overview</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Optimizer hints apply at different scope levels:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Global: The hint affects the entire statement
+            </p></li><li class="listitem"><p>
+              Query block: The hint affects a particular query block
+              within a statement
+            </p></li><li class="listitem"><p>
+              Table-level: The hint affects a particular table within a
+              query block
+            </p></li><li class="listitem"><p>
+              Index-level: The hint affects a particular index within a
+              table
+</p></li></ul>
+</div>
+<p>
+          The following table summarizes the available optimizer hints,
+          the optimizer strategies they affect, and the scope or scopes
+          at which they apply. More details are given later.
+</p>
+<div class="table">
+<a name="optimizer-hints-table"></a><p class="title"><b>Table 10.2 Optimizer Hints Available</b></p>
+<div class="table-contents">
+<table summary="Optimizer hint names, descriptions, and contexts in which they apply."><col style="width: 30%"><col style="width: 40%"><col style="width: 30%"><thead><tr>
+              <th scope="col">Hint Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Applicable Scopes</th>
+            </tr></thead><tbody><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">BKA</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_BKA</code></a></th>
+              <td>Affects Batched Key Access join processing</td>
+              <td>Query block, table</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">BNL</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_BNL</code></a></th>
+              <td>Affects hash join optimization</td>
+              <td>Query block, table</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">DERIVED_CONDITION_PUSHDOWN</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_DERIVED_CONDITION_PUSHDOWN</code></a></th>
+              <td>Use or ignore the derived condition pushdown optimization for
+                materialized derived tables</td>
+              <td>Query block, table</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">GROUP_INDEX</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_GROUP_INDEX</code></a></th>
+              <td>Use or ignore the specified index or indexes for index scans in
+                <code class="literal">GROUP BY</code> operations</td>
+              <td>Index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">HASH_JOIN</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_HASH_JOIN</code></a></th>
+              <td>Affects Hash Join optimization (No effect in MySQL 8.4)</td>
+              <td>Query block, table</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX</code></a></th>
+              <td>Acts as the combination of <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">JOIN_INDEX</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">GROUP_INDEX</code></a>, and
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">ORDER_INDEX</code></a>, or as the
+                combination of
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_JOIN_INDEX</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_GROUP_INDEX</code></a>, and
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_ORDER_INDEX</code></a></td>
+              <td>Index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX_MERGE</code></a></th>
+              <td>Affects Index Merge optimization</td>
+              <td>Table, index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_FIXED_ORDER</code></a></th>
+              <td>Use table order specified in <code class="literal">FROM</code> clause for join
+                order</td>
+              <td>Query block</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">JOIN_INDEX</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_JOIN_INDEX</code></a></th>
+              <td>Use or ignore the specified index or indexes for any access method</td>
+              <td>Index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_ORDER</code></a></th>
+              <td>Use table order specified in hint for join order</td>
+              <td>Query block</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_PREFIX</code></a></th>
+              <td>Use table order specified in hint for first tables of join order</td>
+              <td>Query block</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_SUFFIX</code></a></th>
+              <td>Use table order specified in hint for last tables of join order</td>
+              <td>Query block</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-execution-time" title="Statement Execution Time Optimizer Hints"><code class="literal">MAX_EXECUTION_TIME</code></a></th>
+              <td>Limits statement execution time</td>
+              <td>Global</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">MERGE</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_MERGE</code></a></th>
+              <td>Affects derived table/view merging into outer query block</td>
+              <td>Table</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">MRR</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_MRR</code></a></th>
+              <td>Affects Multi-Range Read optimization</td>
+              <td>Table, index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_ICP</code></a></th>
+              <td>Affects Index Condition Pushdown optimization</td>
+              <td>Table, index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_RANGE_OPTIMIZATION</code></a></th>
+              <td>Affects range optimization</td>
+              <td>Table, index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">ORDER_INDEX</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_ORDER_INDEX</code></a></th>
+              <td>Use or ignore the specified index or indexes for sorting rows</td>
+              <td>Index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks"><code class="literal">QB_NAME</code></a></th>
+              <td>Assigns name to query block</td>
+              <td>Query block</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-resource-group" title="Resource Group Hint Syntax"><code class="literal">RESOURCE_GROUP</code></a></th>
+              <td>Set resource group during statement execution</td>
+              <td>Global</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SEMIJOIN</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">NO_SEMIJOIN</code></a></th>
+              <td>Affects semijoin and antijoin strategies</td>
+              <td>Query block</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">SKIP_SCAN</code></a>,
+                <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_SKIP_SCAN</code></a></th>
+              <td>Affects Skip Scan optimization</td>
+              <td>Table, index</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a></th>
+              <td>Set variable during statement execution</td>
+              <td>Global</td>
+            </tr><tr>
+              <th scope="row"><a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SUBQUERY</code></a></th>
+              <td>Affects materialization,
+                <code class="literal">IN</code>-to-<code class="literal">EXISTS</code>
+                subquery strategies</td>
+              <td>Query block</td>
+</tr></tbody></table>
+</div>
+
+</div>
+<br class="table-break"><p>
+          Disabling an optimization prevents the optimizer from using
+          it. Enabling an optimization means the optimizer is free to
+          use the strategy if it applies to statement execution, not
+          that the optimizer necessarily uses it.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-syntax"></a>Optimizer Hint Syntax</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          MySQL supports comments in SQL statements as described in
+          <a class="xref" href="comments.html" title="11.7 Comments">Section 11.7, “Comments”</a>. Optimizer hints must be specified
+          within <code class="literal">/*+ ... */</code> comments. That is,
+          optimizer hints use a variant of <code class="literal">/* ... */</code>
+          C-style comment syntax, with a <code class="literal">+</code> character
+          following the <code class="literal">/*</code> comment opening sequence.
+          Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">/*+ BKA(t1) */
+/*+ BNL(t1, t2) */
+/*+ NO_RANGE_OPTIMIZATION(t4 PRIMARY) */
+/*+ QB_NAME(qb2) */</code></pre><p>
+          Whitespace is permitted after the <code class="literal">+</code>
+          character.
+        </p><p>
+          The parser recognizes optimizer hint comments after the
+          initial keyword of <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>,
+          <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a>,
+          <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>,
+          <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE</code></a>, and
+          <a class="link" href="delete.html" title="15.2.2 DELETE Statement"><code class="literal">DELETE</code></a> statements. Hints are
+          permitted in these contexts:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              At the beginning of query and data change statements:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ ... */ ...
+INSERT /*+ ... */ ...
+REPLACE /*+ ... */ ...
+UPDATE /*+ ... */ ...
+DELETE /*+ ... */ ...</code></pre></li><li class="listitem"><p>
+              At the beginning of query blocks:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">(SELECT /*+ ... */ ... )
+(SELECT ... ) UNION (SELECT /*+ ... */ ... )
+(SELECT /*+ ... */ ... ) UNION (SELECT /*+ ... */ ... )
+UPDATE ... WHERE x IN (SELECT /*+ ... */ ...)
+INSERT ... SELECT /*+ ... */ ...</code></pre></li><li class="listitem"><p>
+              In hintable statements prefaced by
+              <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a>. For example:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">EXPLAIN SELECT /*+ ... */ ...
+EXPLAIN UPDATE ... WHERE x IN (SELECT /*+ ... */ ...)</code></pre><p>
+              The implication is that you can use
+              <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a> to see how
+              optimizer hints affect execution plans. Use
+              <a class="link" href="show-warnings.html" title="15.7.7.42 SHOW WARNINGS Statement"><code class="literal">SHOW WARNINGS</code></a> immediately
+              after <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a> to see how
+              hints are used. The extended <code class="literal">EXPLAIN</code>
+              output displayed by a following <a class="link" href="show-warnings.html" title="15.7.7.42 SHOW WARNINGS Statement"><code class="literal">SHOW
+              WARNINGS</code></a> indicates which hints were used.
+              Ignored hints are not displayed.
+</p></li></ul>
+</div>
+<p>
+          A hint comment may contain multiple hints, but a query block
+          cannot contain multiple hint comments. This is valid:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ BNL(t1) BKA(t2) */ ...</code></pre><p>
+          But this is invalid:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ BNL(t1) */ /* BKA(t2) */ ...</code></pre><p>
+          When a hint comment contains multiple hints, the possibility
+          of duplicates and conflicts exists. The following general
+          guidelines apply. For specific hint types, additional rules
+          may apply, as indicated in the hint descriptions.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Duplicate hints: For a hint such as <code class="literal">/*+ MRR(idx1)
+              MRR(idx1) */</code>, MySQL uses the first hint and
+              issues a warning about the duplicate hint.
+            </p></li><li class="listitem"><p>
+              Conflicting hints: For a hint such as <code class="literal">/*+
+              MRR(idx1) NO_MRR(idx1) */</code>, MySQL uses the first
+              hint and issues a warning about the second conflicting
+              hint.
+</p></li></ul>
+</div>
+<p>
+          Query block names are identifiers and follow the usual rules
+          about what names are valid and how to quote them (see
+          <a class="xref" href="identifiers.html" title="11.2 Schema Object Names">Section 11.2, “Schema Object Names”</a>).
+        </p><p>
+          Hint names, query block names, and strategy names are not
+          case-sensitive. References to table and index names follow the
+          usual identifier case-sensitivity rules (see
+          <a class="xref" href="identifier-case-sensitivity.html" title="11.2.3 Identifier Case Sensitivity">Section 11.2.3, “Identifier Case Sensitivity”</a>).
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-join-order"></a>Join-Order Optimizer Hints</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Join-order hints affect the order in which the optimizer joins
+          tables.
+        </p><p>
+          Syntax of the
+          <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_FIXED_ORDER</code></a> hint:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">hint_name</em>([@<em class="replaceable">query_block_name</em>])</code></pre><p>
+          Syntax of other join-order hints:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql"><em class="replaceable">hint_name</em>([@<em class="replaceable">query_block_name</em>] <em class="replaceable">tbl_name</em> [, <em class="replaceable">tbl_name</em>] ...)
+<em class="replaceable">hint_name</em>(<em class="replaceable">tbl_name</em>[@<em class="replaceable">query_block_name</em>] [, <em class="replaceable">tbl_name</em>[@<em class="replaceable">query_block_name</em>]] ...)</code></pre><p>
+          The syntax refers to these terms:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <em class="replaceable"><code>hint_name</code></em>: These hint names are
+              permitted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_FIXED_ORDER</code></a>:
+                  Force the optimizer to join tables using the order in
+                  which they appear in the <code class="literal">FROM</code>
+                  clause. This is the same as specifying <code class="literal">SELECT
+                  STRAIGHT_JOIN</code>.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_ORDER</code></a>: Instruct
+                  the optimizer to join tables using the specified table
+                  order. The hint applies to the named tables. The
+                  optimizer may place tables that are not named anywhere
+                  in the join order, including between specified tables.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_PREFIX</code></a>:
+                  Instruct the optimizer to join tables using the
+                  specified table order for the first tables of the join
+                  execution plan. The hint applies to the named tables.
+                  The optimizer places all other tables after the named
+                  tables.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_SUFFIX</code></a>:
+                  Instruct the optimizer to join tables using the
+                  specified table order for the last tables of the join
+                  execution plan. The hint applies to the named tables.
+                  The optimizer places all other tables before the named
+                  tables.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+              <em class="replaceable"><code>tbl_name</code></em>: The name of a table
+              used in the statement. A hint that names tables applies to
+              all tables that it names. The
+              <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_FIXED_ORDER</code></a> hint
+              names no tables and applies to all tables in the
+              <code class="literal">FROM</code> clause of the query block in which
+              it occurs.
+            </p><p>
+              If a table has an alias, hints must refer to the alias,
+              not the table name.
+            </p><p>
+              Table names in hints cannot be qualified with schema
+              names.
+            </p></li><li class="listitem"><p>
+              <em class="replaceable"><code>query_block_name</code></em>: The query
+              block to which the hint applies. If the hint includes no
+              leading
+              <code class="literal">@<em class="replaceable"><code>query_block_name</code></em></code>,
+              the hint applies to the query block in which it occurs.
+              For
+              <code class="literal"><em class="replaceable"><code>tbl_name</code></em>@<em class="replaceable"><code>query_block_name</code></em></code>
+              syntax, the hint applies to the named table in the named
+              query block. To assign a name to a query block, see
+              <a class="xref" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks">Optimizer Hints for Naming Query Blocks</a>.
+</p></li></ul>
+</div>
+<p>
+          Example:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT
+/*+ JOIN_PREFIX(t2, t5@subq2, t4@subq1)
+    JOIN_ORDER(t4@subq1, t3)
+    JOIN_SUFFIX(t1) */
+COUNT(*) FROM t1 JOIN t2 JOIN t3
+           WHERE t1.f1 IN (SELECT /*+ QB_NAME(subq1) */ f1 FROM t4)
+             AND t2.f1 IN (SELECT /*+ QB_NAME(subq2) */ f1 FROM t5);</code></pre><p>
+          Hints control the behavior of semijoin tables that are merged
+          to the outer query block. If subqueries
+          <code class="literal">subq1</code> and <code class="literal">subq2</code> are
+          converted to semijoins, tables <code class="literal">t4@subq1</code> and
+          <code class="literal">t5@subq2</code> are merged to the outer query
+          block. In this case, the hint specified in the outer query
+          block controls the behavior of <code class="literal">t4@subq1</code>,
+          <code class="literal">t5@subq2</code> tables.
+        </p><p>
+          The optimizer resolves join-order hints according to these
+          principles:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Multiple hint instances
+            </p><p>
+              Only one <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_PREFIX</code></a> and
+              <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_SUFFIX</code></a> hint of each
+              type are applied. Any later hints of the same type are
+              ignored with a warning.
+              <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_ORDER</code></a> can be
+              specified several times.
+            </p><p>
+              Examples:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ JOIN_PREFIX(t1) JOIN_PREFIX(t2) */</code></pre><p>
+              The second <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_PREFIX</code></a>
+              hint is ignored with a warning.
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ JOIN_PREFIX(t1) JOIN_SUFFIX(t2) */</code></pre><p>
+              Both hints are applicable. No warning occurs.
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ JOIN_ORDER(t1, t2) JOIN_ORDER(t2, t3) */</code></pre><p>
+              Both hints are applicable. No warning occurs.
+            </p></li><li class="listitem"><p>
+              Conflicting hints
+            </p><p>
+              In some cases hints can conflict, such as when
+              <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_ORDER</code></a> and
+              <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_PREFIX</code></a> have table
+              orders that are impossible to apply at the same time:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ JOIN_ORDER(t1, t2) JOIN_PREFIX(t2, t1) */ ... FROM t1, t2;</code></pre><p>
+              In this case, the first specified hint is applied and
+              subsequent conflicting hints are ignored with no warning.
+              A valid hint that is impossible to apply is silently
+              ignored with no warning.
+            </p></li><li class="listitem"><p>
+              Ignored hints
+            </p><p>
+              A hint is ignored if a table specified in the hint has a
+              circular dependency.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ JOIN_ORDER(t1, t2) JOIN_PREFIX(t2, t1) */</code></pre><p>
+              The <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_ORDER</code></a> hint sets
+              table <code class="literal">t2</code> dependent on
+              <code class="literal">t1</code>. The
+              <a class="link" href="optimizer-hints.html#optimizer-hints-join-order" title="Join-Order Optimizer Hints"><code class="literal">JOIN_PREFIX</code></a> hint is
+              ignored because table <code class="literal">t1</code> cannot be
+              dependent on <code class="literal">t2</code>. Ignored hints are not
+              displayed in extended
+              <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a> output.
+            </p></li><li class="listitem"><p>
+              Interaction with <a class="link" href="explain-output.html#jointype_const"><code class="literal">const</code></a>
+              tables
+            </p><p>
+              The MySQL optimizer places <code class="literal">const</code> tables
+              first in the join order, and the position of a
+              <code class="literal">const</code> table cannot be affected by
+              hints. References to <code class="literal">const</code> tables in
+              join-order hints are ignored, although the hint is still
+              applicable. For example, these are equivalent:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">JOIN_ORDER(t1, <em class="replaceable">const_tbl</em>, t2)
+JOIN_ORDER(t1, t2)</code></pre><p>
+              Accepted hints shown in extended
+              <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a> output include
+              <code class="literal">const</code> tables as they were specified.
+            </p></li><li class="listitem"><p>
+              Interaction with types of join operations
+            </p><p>
+              MySQL supports several type of joins:
+              <code class="literal">LEFT</code>, <code class="literal">RIGHT</code>,
+              <code class="literal">INNER</code>, <code class="literal">CROSS</code>,
+              <code class="literal">STRAIGHT_JOIN</code>. A hint that conflicts
+              with the specified type of join is ignored with no
+              warning.
+            </p><p>
+              Example:
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ JOIN_PREFIX(t1, t2) */FROM t2 LEFT JOIN t1;</code></pre><p>
+              Here a conflict occurs between the requested join order in
+              the hint and the order required by the <code class="literal">LEFT
+              JOIN</code>. The hint is ignored with no warning.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-table-level"></a>Table-Level Optimizer Hints</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Table-level hints affect:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Use of the Block Nested-Loop (BNL) and Batched Key Access
+              (BKA) join-processing algorithms (see
+              <a class="xref" href="bnl-bka-optimization.html" title="10.2.1.12 Block Nested-Loop and Batched Key Access Joins">Section 10.2.1.12, “Block Nested-Loop and Batched Key Access Joins”</a>).
+            </p></li><li class="listitem"><p>
+              Whether derived tables, view references, or common table
+              expressions should be merged into the outer query block,
+              or materialized using an internal temporary table.
+            </p></li><li class="listitem"><p>
+              Use of the derived table condition pushdown optimization.
+              See
+              <a class="xref" href="derived-condition-pushdown-optimization.html" title="10.2.2.5 Derived Condition Pushdown Optimization">Section 10.2.2.5, “Derived Condition Pushdown Optimization”</a>.
+</p></li></ul>
+</div>
+<p>
+          These hint types apply to specific tables, or all tables in a
+          query block.
+        </p><p>
+          Syntax of table-level hints:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql"><em class="replaceable">hint_name</em>([@<em class="replaceable">query_block_name</em>] [<em class="replaceable">tbl_name</em> [, <em class="replaceable">tbl_name</em>] ...])
+<em class="replaceable">hint_name</em>([<em class="replaceable">tbl_name</em>@<em class="replaceable">query_block_name</em> [, <em class="replaceable">tbl_name</em>@<em class="replaceable">query_block_name</em>] ...])</code></pre><p>
+          The syntax refers to these terms:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <em class="replaceable"><code>hint_name</code></em>: These hint names are
+              permitted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">BKA</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_BKA</code></a>: Enable or
+                  disable batched key access for the specified tables.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">BNL</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_BNL</code></a>: Enable and
+                  disable the hash join optimization.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">DERIVED_CONDITION_PUSHDOWN</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_DERIVED_CONDITION_PUSHDOWN</code></a>:
+                  Enable or disable use of derived table condition
+                  pushdown for the specified tables. For more
+                  information, see
+                  <a class="xref" href="derived-condition-pushdown-optimization.html" title="10.2.2.5 Derived Condition Pushdown Optimization">Section 10.2.2.5, “Derived Condition Pushdown Optimization”</a>.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">HASH_JOIN</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_HASH_JOIN</code></a>: These
+                  hints have no effect in MySQL 8.4; use
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">BNL</code></a> or
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_BNL</code></a> instead.
+                </p></li><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">MERGE</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_MERGE</code></a>: Enable
+                  merging for the specified tables, view references or
+                  common table expressions; or disable merging and use
+                  materialization instead.
+</p><a class="indexterm" name="idm45105684583376"></a><a class="indexterm" name="idm45105684581888"></a><a class="indexterm" name="idm45105684580400"></a></li></ul>
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+                To use a block nested loop or batched key access hint to
+                enable join buffering for any inner table of an outer
+                join, join buffering must be enabled for all inner
+                tables of the outer join.
+</p>
+</div>
+</li><li class="listitem"><p>
+              <em class="replaceable"><code>tbl_name</code></em>: The name of a table
+              used in the statement. The hint applies to all tables that
+              it names. If the hint names no tables, it applies to all
+              tables of the query block in which it occurs.
+            </p><p>
+              If a table has an alias, hints must refer to the alias,
+              not the table name.
+            </p><p>
+              Table names in hints cannot be qualified with schema
+              names.
+            </p></li><li class="listitem"><p>
+              <em class="replaceable"><code>query_block_name</code></em>: The query
+              block to which the hint applies. If the hint includes no
+              leading
+              <code class="literal">@<em class="replaceable"><code>query_block_name</code></em></code>,
+              the hint applies to the query block in which it occurs.
+              For
+              <code class="literal"><em class="replaceable"><code>tbl_name</code></em>@<em class="replaceable"><code>query_block_name</code></em></code>
+              syntax, the hint applies to the named table in the named
+              query block. To assign a name to a query block, see
+              <a class="xref" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks">Optimizer Hints for Naming Query Blocks</a>.
+</p></li></ul>
+</div>
+<p>
+          Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ NO_BKA(t1, t2) */ t1.* FROM t1 INNER JOIN t2 INNER JOIN t3;
+SELECT /*+ NO_BNL() BKA(t1) */ t1.* FROM t1 INNER JOIN t2 INNER JOIN t3;
+SELECT /*+ NO_MERGE(dt) */ * FROM (SELECT * FROM t1) AS dt;</code></pre><p>
+          A table-level hint applies to tables that receive records from
+          previous tables, not sender tables. Consider this statement:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ BNL(t2) */ FROM t1, t2;</code></pre><p>
+          If the optimizer chooses to process <code class="literal">t1</code>
+          first, it applies a Block Nested-Loop join to
+          <code class="literal">t2</code> by buffering the rows from
+          <code class="literal">t1</code> before starting to read from
+          <code class="literal">t2</code>. If the optimizer instead chooses to
+          process <code class="literal">t2</code> first, the hint has no effect
+          because <code class="literal">t2</code> is a sender table.
+        </p><p>
+          For the <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">MERGE</code></a> and
+          <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">NO_MERGE</code></a> hints, these
+          precedence rules apply:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              A hint takes precedence over any optimizer heuristic that
+              is not a technical constraint. (If providing a hint as a
+              suggestion has no effect, the optimizer has a reason for
+              ignoring it.)
+            </p></li><li class="listitem"><p>
+              A hint takes precedence over the
+              <a class="link" href="switchable-optimizations.html#optflag_derived-merge"><code class="literal">derived_merge</code></a> flag of
+              the <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a>
+              system variable.
+            </p></li><li class="listitem"><p>
+              For view references, an
+              <code class="literal">ALGORITHM={MERGE|TEMPTABLE}</code> clause in
+              the view definition takes precedence over a hint specified
+              in the query referencing the view.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-index-level"></a>Index-Level Optimizer Hints</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Index-level hints affect which index-processing strategies the
+          optimizer uses for particular tables or indexes. These hint
+          types affect use of Index Condition Pushdown (ICP),
+          Multi-Range Read (MRR), Index Merge, and range optimizations
+          (see <a class="xref" href="select-optimization.html" title="10.2.1 Optimizing SELECT Statements">Section 10.2.1, “Optimizing SELECT Statements”</a>).
+        </p><p>
+          Syntax of index-level hints:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql"><em class="replaceable">hint_name</em>([@<em class="replaceable">query_block_name</em>] <em class="replaceable">tbl_name</em> [<em class="replaceable">index_name</em> [, <em class="replaceable">index_name</em>] ...])
+<em class="replaceable">hint_name</em>(<em class="replaceable">tbl_name</em>@<em class="replaceable">query_block_name</em> [<em class="replaceable">index_name</em> [, <em class="replaceable">index_name</em>] ...])</code></pre><p>
+          The syntax refers to these terms:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <em class="replaceable"><code>hint_name</code></em>: These hint names are
+              permitted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684542320"></a>
+
+                  <a class="indexterm" name="idm45105684541248"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">GROUP_INDEX</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_GROUP_INDEX</code></a>:
+                  Enable or disable the specified index or indexes for
+                  index scans for <code class="literal">GROUP BY</code>
+                  operations. Equivalent to the index hints
+                  <code class="literal">FORCE INDEX FOR GROUP BY</code>,
+                  <code class="literal">IGNORE INDEX FOR GROUP BY</code>.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684534528"></a>
+
+                  <a class="indexterm" name="idm45105684533456"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX</code></a>: Acts as
+                  the combination of
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">JOIN_INDEX</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">GROUP_INDEX</code></a>, and
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">ORDER_INDEX</code></a>, forcing
+                  the server to use the specified index or indexes for
+                  any and all scopes, or as the combination of
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_JOIN_INDEX</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_GROUP_INDEX</code></a>, and
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_ORDER_INDEX</code></a>,
+                  which causes the server to ignore the specified index
+                  or indexes for any and all scopes. Equivalent to
+                  <code class="literal">FORCE INDEX</code>, <code class="literal">IGNORE
+                  INDEX</code>.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684519712"></a>
+
+                  <a class="indexterm" name="idm45105684518640"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX_MERGE</code></a>:
+                  Enable or disable the Index Merge access method for
+                  the specified table or indexes. For information about
+                  this access method, see
+                  <a class="xref" href="index-merge-optimization.html" title="10.2.1.3 Index Merge Optimization">Section 10.2.1.3, “Index Merge Optimization”</a>. These
+                  hints apply to all three Index Merge algorithms.
+                </p><p>
+                  The <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a> hint
+                  forces the optimizer to use Index Merge for the
+                  specified table using the specified set of indexes. If
+                  no index is specified, the optimizer considers all
+                  possible index combinations and selects the least
+                  expensive one. The hint may be ignored if the index
+                  combination is inapplicable to the given statement.
+                </p><p>
+                  The <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX_MERGE</code></a>
+                  hint disables Index Merge combinations that involve
+                  any of the specified indexes. If the hint specifies no
+                  indexes, Index Merge is not permitted for the table.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684509264"></a>
+
+                  <a class="indexterm" name="idm45105684508192"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">JOIN_INDEX</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_JOIN_INDEX</code></a>:
+                  Forces MySQL to use or ignore the specified index or
+                  indexes for any access method, such as
+                  <code class="literal">ref</code>, <code class="literal">range</code>,
+                  <a class="link" href="switchable-optimizations.html#optflag_index-merge"><code class="literal">index_merge</code></a>, and so
+                  on. Equivalent to <code class="literal">FORCE INDEX FOR
+                  JOIN</code>, <code class="literal">IGNORE INDEX FOR
+                  JOIN</code>.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684499664"></a>
+
+                  <a class="indexterm" name="idm45105684498624"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">MRR</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_MRR</code></a>: Enable or
+                  disable MRR for the specified table or indexes. MRR
+                  hints apply only to <code class="literal">InnoDB</code> and
+                  <code class="literal">MyISAM</code> tables. For information
+                  about this access method, see
+                  <a class="xref" href="mrr-optimization.html" title="10.2.1.11 Multi-Range Read Optimization">Section 10.2.1.11, “Multi-Range Read Optimization”</a>.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684491984"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_ICP</code></a>: Disable ICP
+                  for the specified table or indexes. By default, ICP is
+                  a candidate optimization strategy, so there is no hint
+                  for enabling it. For information about this access
+                  method, see
+                  <a class="xref" href="index-condition-pushdown-optimization.html" title="10.2.1.6 Index Condition Pushdown Optimization">Section 10.2.1.6, “Index Condition Pushdown Optimization”</a>.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684487872"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_RANGE_OPTIMIZATION</code></a>:
+                  Disable index range access for the specified table or
+                  indexes. This hint also disables Index Merge and Loose
+                  Index Scan for the table or indexes. By default, range
+                  access is a candidate optimization strategy, so there
+                  is no hint for enabling it.
+                </p><p>
+                  This hint may be useful when the number of ranges may
+                  be high and range optimization would require many
+                  resources.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684483840"></a>
+
+                  <a class="indexterm" name="idm45105684482768"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">ORDER_INDEX</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_ORDER_INDEX</code></a>:
+                  Cause MySQL to use or to ignore the specified index or
+                  indexes for sorting rows. Equivalent to <code class="literal">FORCE
+                  INDEX FOR ORDER BY</code>, <code class="literal">IGNORE INDEX
+                  FOR ORDER BY</code>.
+                </p></li><li class="listitem"><p>
+                  <a class="indexterm" name="idm45105684476816"></a>
+
+                  <a class="indexterm" name="idm45105684475744"></a>
+
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">SKIP_SCAN</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_SKIP_SCAN</code></a>: Enable
+                  or disable the Skip Scan access method for the
+                  specified table or indexes. For information about this
+                  access method, see
+                  <a class="xref" href="range-optimization.html#range-access-skip-scan" title="Skip Scan Range Access Method">Skip Scan Range Access Method</a>.
+                </p><p>
+                  The <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">SKIP_SCAN</code></a> hint
+                  forces the optimizer to use Skip Scan for the
+                  specified table using the specified set of indexes. If
+                  no index is specified, the optimizer considers all
+                  possible indexes and selects the least expensive one.
+                  The hint may be ignored if the index is inapplicable
+                  to the given statement.
+                </p><p>
+                  The <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_SKIP_SCAN</code></a>
+                  hint disables Skip Scan for the specified indexes. If
+                  the hint specifies no indexes, Skip Scan is not
+                  permitted for the table.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+              <em class="replaceable"><code>tbl_name</code></em>: The table to which
+              the hint applies.
+            </p></li><li class="listitem"><p>
+              <em class="replaceable"><code>index_name</code></em>: The name of an
+              index in the named table. The hint applies to all indexes
+              that it names. If the hint names no indexes, it applies to
+              all indexes in the table.
+            </p><p>
+              To refer to a primary key, use the name
+              <code class="literal">PRIMARY</code>. To see the index names for a
+              table, use <a class="link" href="show-index.html" title="15.7.7.23 SHOW INDEX Statement"><code class="literal">SHOW INDEX</code></a>.
+            </p></li><li class="listitem"><p>
+              <em class="replaceable"><code>query_block_name</code></em>: The query
+              block to which the hint applies. If the hint includes no
+              leading
+              <code class="literal">@<em class="replaceable"><code>query_block_name</code></em></code>,
+              the hint applies to the query block in which it occurs.
+              For
+              <code class="literal"><em class="replaceable"><code>tbl_name</code></em>@<em class="replaceable"><code>query_block_name</code></em></code>
+              syntax, the hint applies to the named table in the named
+              query block. To assign a name to a query block, see
+              <a class="xref" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks">Optimizer Hints for Naming Query Blocks</a>.
+</p></li></ul>
+</div>
+<p>
+          Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ INDEX_MERGE(t1 f3, PRIMARY) */ f2 FROM t1
+  WHERE f1 = 'o' AND f2 = f3 AND f3 &lt;= 4;
+SELECT /*+ MRR(t1) */ * FROM t1 WHERE f2 &lt;= 3 AND 3 &lt;= f3;
+SELECT /*+ NO_RANGE_OPTIMIZATION(t3 PRIMARY, f2_idx) */ f1
+  FROM t3 WHERE f1 &gt; 30 AND f1 &lt; 33;
+INSERT INTO t3(f1, f2, f3)
+  (SELECT /*+ NO_ICP(t2) */ t2.f1, t2.f2, t2.f3 FROM t1,t2
+   WHERE t1.f1=t2.f1 AND t2.f2 BETWEEN t1.f1
+   AND t1.f2 AND t2.f2 + 1 &gt;= t1.f1 + 1);
+SELECT /*+ SKIP_SCAN(t1 PRIMARY) */ f1, f2
+  FROM t1 WHERE f2 &gt; 40;</code></pre><p>
+          The following examples use the Index Merge hints, but other
+          index-level hints follow the same principles regarding hint
+          ignoring and precedence of optimizer hints in relation to the
+          <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> system
+          variable or index hints.
+        </p><p>
+          Assume that table <code class="literal">t1</code> has columns
+          <code class="literal">a</code>, <code class="literal">b</code>,
+          <code class="literal">c</code>, and <code class="literal">d</code>; and that
+          indexes named <code class="literal">i_a</code>, <code class="literal">i_b</code>,
+          and <code class="literal">i_c</code> exist on <code class="literal">a</code>,
+          <code class="literal">b</code>, and <code class="literal">c</code>, respectively:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ INDEX_MERGE(t1 i_a, i_b, i_c)*/ * FROM t1
+  WHERE a = 1 AND b = 2 AND c = 3 AND d = 4;</code></pre><p>
+          Index Merge is used for <code class="literal">(i_a, i_b, i_c)</code> in
+          this case.
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ INDEX_MERGE(t1 i_a, i_b, i_c)*/ * FROM t1
+  WHERE b = 1 AND c = 2 AND d = 3;</code></pre><p>
+          Index Merge is used for <code class="literal">(i_b, i_c)</code> in this
+          case.
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ INDEX_MERGE(t1 i_a, i_b) NO_INDEX_MERGE(t1 i_b) */</code></pre><p>
+          <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX_MERGE</code></a> is ignored
+          because there is a preceding hint for the same table.
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ NO_INDEX_MERGE(t1 i_a, i_b) INDEX_MERGE(t1 i_b) */</code></pre><p>
+          <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a> is ignored
+          because there is a preceding hint for the same table.
+        </p><p>
+          For the <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a> and
+          <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX_MERGE</code></a> optimizer
+          hints, these precedence rules apply:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              If an optimizer hint is specified and is applicable, it
+              takes precedence over the Index Merge-related flags of the
+              <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> system
+              variable.
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET optimizer_switch='index_merge_intersection=off';
+SELECT /*+ INDEX_MERGE(t1 i_b, i_c) */ * FROM t1
+WHERE b = 1 AND c = 2 AND d = 3;</code></pre><p>
+              The hint takes precedence over
+              <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a>. Index
+              Merge is used for <code class="literal">(i_b, i_c)</code> in this
+              case.
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET optimizer_switch='index_merge_intersection=on';
+SELECT /*+ INDEX_MERGE(t1 i_b) */ * FROM t1
+WHERE b = 1 AND c = 2 AND d = 3;</code></pre><p>
+              The hint specifies only one index, so it is inapplicable,
+              and the <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a>
+              flag (<code class="literal">on</code>) applies. Index Merge is used
+              if the optimizer assesses it to be cost efficient.
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET optimizer_switch='index_merge_intersection=off';
+SELECT /*+ INDEX_MERGE(t1 i_b) */ * FROM t1
+WHERE b = 1 AND c = 2 AND d = 3;</code></pre><p>
+              The hint specifies only one index, so it is inapplicable,
+              and the <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a>
+              flag (<code class="literal">off</code>) applies. Index Merge is not
+              used.
+            </p></li><li class="listitem"><p>
+              The index-level optimizer hints
+              <code class="literal">GROUP_INDEX</code>, <code class="literal">INDEX</code>,
+              <code class="literal">JOIN_INDEX</code>, and
+              <code class="literal">ORDER_INDEX</code> all take precedence over
+              the equivalent <code class="literal">FORCE INDEX</code> hints; that
+              is, they cause the <code class="literal">FORCE INDEX</code> hints to
+              be ignored. Likewise, the
+              <code class="literal">NO_GROUP_INDEX</code>,
+              <code class="literal">NO_INDEX</code>,
+              <code class="literal">NO_JOIN_INDEX</code>, and
+              <code class="literal">NO_ORDER_INDEX</code> hints all take
+              precedence over any <code class="literal">IGNORE INDEX</code>
+              equivalents, also causing them to be ignored.
+            </p><p>
+              The index-level optimizer hints
+              <code class="literal">GROUP_INDEX</code>,
+              <code class="literal">NO_GROUP_INDEX</code>,
+              <code class="literal">INDEX</code>,<code class="literal">NO_INDEX</code>,
+              <code class="literal">JOIN_INDEX</code>,<code class="literal">NO_JOIN_INDEX</code>,
+              <code class="literal">ORDER_INDEX</code>, and
+              <code class="literal">NO_ORDER_INDEX</code> hints all take
+              precedence over all other optimizer hints, including other
+              index-level optimizer hints. Any other optimizer hints are
+              applied only to the indexes permitted by these.
+            </p><p>
+              The <code class="literal">GROUP_INDEX</code>,
+              <code class="literal">INDEX</code>, <code class="literal">JOIN_INDEX</code>,
+              and <code class="literal">ORDER_INDEX</code> hints are all
+              equivalent to <code class="literal">FORCE INDEX</code> and not to
+              <code class="literal">USE INDEX</code>. This is because using one or
+              more of these hints means that a table scan is used only
+              if there is no way to use one of the named indexes to find
+              rows in the table. To cause MySQL to use the same index or
+              set of indexes as with a given instance of <code class="literal">USE
+              INDEX</code>, you can use <code class="literal">NO_INDEX</code>,
+              <code class="literal">NO_JOIN_INDEX</code>,
+              <code class="literal">NO_GROUP_INDEX</code>,
+              <code class="literal">NO_ORDER_INDEX</code>, or some combination of
+              these.
+            </p><p>
+              To replicate the effect that <code class="literal">USE INDEX</code>
+              has in the query <code class="literal">SELECT a,c FROM t1 USE INDEX FOR
+              ORDER BY (i_a) ORDER BY a</code>, you can use the
+              <code class="literal">NO_ORDER_INDEX</code> optimizer hint to cover
+              all indexes on the table except the one that is desired
+              like this:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ NO_ORDER_INDEX(t1 i_b,i_c) */ a,c
+    FROM t1
+    ORDER BY a;</code></pre><p>
+              Attempting to combine <code class="literal">NO_ORDER_INDEX</code>
+              for the table as a whole with <code class="literal">USE INDEX FOR ORDER
+              BY</code> does not work to do this, because
+              <code class="literal">NO_ORDER_BY</code> causes <code class="literal">USE
+              INDEX</code> to be ignored, as shown here:
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; EXPLAIN SELECT /*+ NO_ORDER_INDEX(t1) */ a,c FROM t1
+    -&gt;     USE INDEX FOR ORDER BY (i_a) ORDER BY a\G
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: t1
+   partitions: NULL
+         type: ALL
+possible_keys: NULL
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: 256
+     filtered: 100.00
+        Extra: Using filesort</code></pre></li><li class="listitem"><p>
+              The <code class="literal">USE INDEX</code>, <code class="literal">FORCE
+              INDEX</code>, and <code class="literal">IGNORE INDEX</code> index
+              hints have higher priority than the
+              <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a> and
+              <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_INDEX_MERGE</code></a> optimizer
+              hints.
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ INDEX_MERGE(t1 i_a, i_b, i_c) */ ... IGNORE INDEX i_a</code></pre><p>
+              <code class="literal">IGNORE INDEX</code> takes precedence over
+              <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">INDEX_MERGE</code></a>, so index
+              <code class="literal">i_a</code> is excluded from the possible
+              ranges for Index Merge.
+            </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">/*+ NO_INDEX_MERGE(t1 i_a, i_b) */ ... FORCE INDEX i_a, i_b</code></pre><p>
+              Index Merge is disallowed for <code class="literal">i_a, i_b</code>
+              because of <code class="literal">FORCE INDEX</code>, but the
+              optimizer is forced to use either <code class="literal">i_a</code>
+              or <code class="literal">i_b</code> for
+              <a class="link" href="explain-output.html#jointype_range"><code class="literal">range</code></a> or
+              <a class="link" href="explain-output.html#jointype_ref"><code class="literal">ref</code></a> access. There are
+              no conflicts; both hints are applicable.
+            </p></li><li class="listitem"><p>
+              If an <code class="literal">IGNORE INDEX</code> hint names multiple
+              indexes, those indexes are unavailable for Index Merge.
+            </p></li><li class="listitem"><p>
+              The <code class="literal">FORCE INDEX</code> and <code class="literal">USE
+              INDEX</code> hints make only the named indexes to be
+              available for Index Merge.
+            </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ INDEX_MERGE(t1 i_a, i_b, i_c) */ a FROM t1
+FORCE INDEX (i_a, i_b) WHERE c = 'h' AND a = 2 AND b = 'b';</code></pre><p>
+              The Index Merge intersection access algorithm is used for
+              <code class="literal">(i_a, i_b)</code>. The same is true if
+              <code class="literal">FORCE INDEX</code> is changed to <code class="literal">USE
+              INDEX</code>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-subquery"></a>Subquery Optimizer Hints</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Subquery hints affect whether to use semijoin transformations
+          and which semijoin strategies to permit, and, when semijoins
+          are not used, whether to use subquery materialization or
+          <code class="literal">IN</code>-to-<code class="literal">EXISTS</code>
+          transformations. For more information about these
+          optimizations, see <a class="xref" href="subquery-optimization.html" title="10.2.2 Optimizing Subqueries, Derived Tables, View References, and Common Table Expressions">Section 10.2.2, “Optimizing Subqueries, Derived Tables, View References, and Common Table
+        Expressions”</a>.
+        </p><p>
+          Syntax of hints that affect semijoin strategies:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">hint_name</em>([@<em class="replaceable">query_block_name</em>] [<em class="replaceable">strategy</em> [, <em class="replaceable">strategy</em>] ...])</code></pre><p>
+          The syntax refers to these terms:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <em class="replaceable"><code>hint_name</code></em>: These hint names are
+              permitted:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SEMIJOIN</code></a>,
+                  <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">NO_SEMIJOIN</code></a>: Enable
+                  or disable the named semijoin strategies.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+              <em class="replaceable"><code>strategy</code></em>: A semijoin strategy
+              to be enabled or disabled. These strategy names are
+              permitted: <code class="literal">DUPSWEEDOUT</code>,
+              <code class="literal">FIRSTMATCH</code>,
+              <code class="literal">LOOSESCAN</code>,
+              <code class="literal">MATERIALIZATION</code>.
+            </p><p>
+              For <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SEMIJOIN</code></a> hints, if
+              no strategies are named, semijoin is used if possible
+              based on the strategies enabled according to the
+              <a class="link" href="server-system-variables.html#sysvar_optimizer_switch"><code class="literal">optimizer_switch</code></a> system
+              variable. If strategies are named but inapplicable for the
+              statement, <code class="literal">DUPSWEEDOUT</code> is used.
+            </p><p>
+              For <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">NO_SEMIJOIN</code></a> hints,
+              if no strategies are named, semijoin is not used. If
+              strategies are named that rule out all applicable
+              strategies for the statement,
+              <code class="literal">DUPSWEEDOUT</code> is used.
+</p></li></ul>
+</div>
+<p>
+          If one subquery is nested within another and both are merged
+          into a semijoin of an outer query, any specification of
+          semijoin strategies for the innermost query are ignored.
+          <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SEMIJOIN</code></a> and
+          <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">NO_SEMIJOIN</code></a> hints can still
+          be used to enable or disable semijoin transformations for such
+          nested subqueries.
+        </p><p>
+          If <code class="literal">DUPSWEEDOUT</code> is disabled, on occasion the
+          optimizer may generate a query plan that is far from optimal.
+          This occurs due to heuristic pruning during greedy search,
+          which can be avoided by setting
+          <a class="link" href="server-system-variables.html#sysvar_optimizer_prune_level"><code class="literal">optimizer_prune_level=0</code></a>.
+        </p><p>
+          Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ NO_SEMIJOIN(@subq1 FIRSTMATCH, LOOSESCAN) */ * FROM t2
+  WHERE t2.a IN (SELECT /*+ QB_NAME(subq1) */ a FROM t3);
+SELECT /*+ SEMIJOIN(@subq1 MATERIALIZATION, DUPSWEEDOUT) */ * FROM t2
+  WHERE t2.a IN (SELECT /*+ QB_NAME(subq1) */ a FROM t3);</code></pre><p>
+          Syntax of hints that affect whether to use subquery
+          materialization or
+          <code class="literal">IN</code>-to-<code class="literal">EXISTS</code>
+          transformations:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SUBQUERY([@<em class="replaceable">query_block_name</em>] <em class="replaceable">strategy</em>)</code></pre><p>
+          The hint name is always
+          <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SUBQUERY</code></a>.
+        </p><p>
+          For <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SUBQUERY</code></a> hints, these
+          <em class="replaceable"><code>strategy</code></em> values are permitted:
+          <code class="literal">INTOEXISTS</code>,
+          <code class="literal">MATERIALIZATION</code>.
+        </p><p>
+          Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT id, a IN (SELECT /*+ SUBQUERY(MATERIALIZATION) */ a FROM t1) FROM t2;
+SELECT * FROM t2 WHERE t2.a IN (SELECT /*+ SUBQUERY(INTOEXISTS) */ a FROM t1);</code></pre><p>
+          For semijoin and <a class="link" href="optimizer-hints.html#optimizer-hints-subquery" title="Subquery Optimizer Hints"><code class="literal">SUBQUERY</code></a>
+          hints, a leading
+          <code class="literal">@<em class="replaceable"><code>query_block_name</code></em></code>
+          specifies the query block to which the hint applies. If the
+          hint includes no leading
+          <code class="literal">@<em class="replaceable"><code>query_block_name</code></em></code>,
+          the hint applies to the query block in which it occurs. To
+          assign a name to a query block, see
+          <a class="xref" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks">Optimizer Hints for Naming Query Blocks</a>.
+        </p><p>
+          If a hint comment contains multiple subquery hints, the first
+          is used. If there are other following hints of that type, they
+          produce a warning. Following hints of other types are silently
+          ignored.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-execution-time"></a>Statement Execution Time Optimizer Hints</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <a class="link" href="optimizer-hints.html#optimizer-hints-execution-time" title="Statement Execution Time Optimizer Hints"><code class="literal">MAX_EXECUTION_TIME</code></a> hint
+          is permitted only for <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+          statements. It places a limit <em class="replaceable"><code>N</code></em> (a
+          timeout value in milliseconds) on how long a statement is
+          permitted to execute before the server terminates it:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">MAX_EXECUTION_TIME(<em class="replaceable">N</em>)</code></pre><p>
+          Example with a timeout of 1 second (1000 milliseconds):
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ MAX_EXECUTION_TIME(1000) */ * FROM t1 INNER JOIN t2 WHERE ...</code></pre><p>
+          The
+          <a class="link" href="optimizer-hints.html#optimizer-hints-execution-time" title="Statement Execution Time Optimizer Hints"><code class="literal">MAX_EXECUTION_TIME(<em class="replaceable"><code>N</code></em>)</code></a>
+          hint sets a statement execution timeout of
+          <em class="replaceable"><code>N</code></em> milliseconds. If this option is
+          absent or <em class="replaceable"><code>N</code></em> is 0, the statement
+          timeout established by the
+          <a class="link" href="server-system-variables.html#sysvar_max_execution_time"><code class="literal">max_execution_time</code></a> system
+          variable applies.
+        </p><p>
+          The <a class="link" href="optimizer-hints.html#optimizer-hints-execution-time" title="Statement Execution Time Optimizer Hints"><code class="literal">MAX_EXECUTION_TIME</code></a> hint
+          is applicable as follows:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              For statements with multiple <code class="literal">SELECT</code>
+              keywords, such as unions or statements with subqueries,
+              <a class="link" href="optimizer-hints.html#optimizer-hints-execution-time" title="Statement Execution Time Optimizer Hints"><code class="literal">MAX_EXECUTION_TIME</code></a>
+              applies to the entire statement and must appear after the
+              first <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>.
+            </p></li><li class="listitem"><p>
+              It applies to read-only
+              <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements.
+              Statements that are not read only are those that invoke a
+              stored function that modifies data as a side effect.
+            </p></li><li class="listitem"><p>
+              It does not apply to <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+              statements in stored programs and is ignored.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-set-var"></a>Variable-Setting Hint Syntax</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105684290928"></a><a class="indexterm" name="idm45105684289888"></a><a class="indexterm" name="idm45105684288400"></a><a class="indexterm" name="idm45105684286912"></a><p>
+          The <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> hint sets the
+          session value of a system variable temporarily (for the
+          duration of a single statement). Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ SET_VAR(sort_buffer_size = 16M) */ name FROM people ORDER BY name;
+INSERT /*+ SET_VAR(foreign_key_checks=OFF) */ INTO t2 VALUES(2);
+SELECT /*+ SET_VAR(optimizer_switch = 'mrr_cost_based=off') */ 1;</code></pre><p>
+          Syntax of the <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> hint:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET_VAR(<em class="replaceable">var_name</em> = <em class="replaceable">value</em>)</code></pre><p>
+          <em class="replaceable"><code>var_name</code></em> names a system variable
+          that has a session value (although not all such variables can
+          be named, as explained later).
+          <em class="replaceable"><code>value</code></em> is the value to assign to the
+          variable; the value must be a scalar.
+        </p><p>
+          <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> makes a temporary
+          variable change, as demonstrated by these statements:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT @@unique_checks;
++-----------------+
+| @@unique_checks |
++-----------------+
+|               1 |
++-----------------+
+mysql&gt; SELECT /*+ SET_VAR(unique_checks=OFF) */ @@unique_checks;
++-----------------+
+| @@unique_checks |
++-----------------+
+|               0 |
++-----------------+
+mysql&gt; SELECT @@unique_checks;
++-----------------+
+| @@unique_checks |
++-----------------+
+|               1 |
++-----------------+</code></pre><p>
+          With <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a>, there is no
+          need to save and restore the variable value. This enables you
+          to replace multiple statements by a single statement. Consider
+          this sequence of statements:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET @saved_val = @@SESSION.<em class="replaceable">var_name</em>;
+SET @@SESSION.<em class="replaceable">var_name</em> = <em class="replaceable">value</em>;
+SELECT ...
+SET @@SESSION.<em class="replaceable">var_name</em> = @saved_val;</code></pre><p>
+          The sequence can be replaced by this single statement:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT /*+ SET_VAR(<em class="replaceable">var_name</em> = <em class="replaceable">value</em>) ...</code></pre><p>
+          Standalone
+          <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET</code></a>
+          statements permit any of these syntaxes for naming session
+          variables:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET SESSION <em class="replaceable">var_name</em> = <em class="replaceable">value</em>;
+SET @@SESSION.<em class="replaceable">var_name</em> = <em class="replaceable">value</em>;
+SET @@.<em class="replaceable">var_name</em> = <em class="replaceable">value</em>;</code></pre><p>
+          Because the <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> hint
+          applies only to session variables, session scope is implicit,
+          and <code class="literal">SESSION</code>, <code class="literal">@@SESSION.</code>,
+          and <code class="literal">@@</code> are neither needed nor permitted.
+          Including explicit session-indicator syntax results in the
+          <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> hint being ignored
+          with a warning.
+        </p><p>
+          Not all session variables are permitted for use with
+          <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a>. Individual system
+          variable descriptions indicate whether each variable is
+          hintable; see <a class="xref" href="server-system-variables.html" title="7.1.8 Server System Variables">Section 7.1.8, “Server System Variables”</a>. You
+          can also check a system variable at runtime by attempting to
+          use it with <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a>. If the
+          variable is not hintable, a warning occurs:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT /*+ SET_VAR(collation_server = 'utf8mb4') */ 1;
++---+
+| 1 |
++---+
+| 1 |
++---+
+1 row in set, 1 warning (0.00 sec)
+
+mysql&gt; SHOW WARNINGS\G
+*************************** 1. row ***************************
+  Level: Warning
+   Code: 4537
+Message: Variable 'collation_server' cannot be set using SET_VAR hint.</code></pre><p>
+          <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> syntax permits
+          setting only a single variable, but multiple hints can be
+          given to set multiple variables:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ SET_VAR(optimizer_switch = 'mrr_cost_based=off')
+           SET_VAR(max_heap_table_size = 1G) */ 1;</code></pre><p>
+          If several hints with the same variable name appear in the
+          same statement, the first one is applied and the others are
+          ignored with a warning:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ SET_VAR(max_heap_table_size = 1G)
+           SET_VAR(max_heap_table_size = 3G) */ 1;</code></pre><p>
+          In this case, the second hint is ignored with a warning that
+          it is conflicting.
+        </p><p>
+          A <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> hint is ignored
+          with a warning if no system variable has the specified name or
+          the variable value is incorrect:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ SET_VAR(max_size = 1G) */ 1;
+SELECT /*+ SET_VAR(optimizer_switch = 'mrr_cost_based=yes') */ 1;</code></pre><p>
+          For the first statement, there is no
+          <code class="literal">max_size</code> variable. For the second
+          statement, <a class="link" href="switchable-optimizations.html#optflag_mrr-cost-based"><code class="literal">mrr_cost_based</code></a>
+          takes values of <code class="literal">on</code> or
+          <code class="literal">off</code>, so attempting to set it to
+          <code class="literal">yes</code> is incorrect. In each case, the hint is
+          ignored with a warning.
+        </p><p>
+          The <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a> hint is
+          permitted only at the statement level. If used in a subquery,
+          the hint is ignored with a warning.
+        </p><p>
+          Replicas ignore <a class="link" href="optimizer-hints.html#optimizer-hints-set-var" title="Variable-Setting Hint Syntax"><code class="literal">SET_VAR</code></a>
+          hints in replicated statements to avoid the potential for
+          security issues.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-resource-group"></a>Resource Group Hint Syntax</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          The <a class="link" href="optimizer-hints.html#optimizer-hints-resource-group" title="Resource Group Hint Syntax"><code class="literal">RESOURCE_GROUP</code></a> optimizer
+          hint is used for resource group management (see
+          <a class="xref" href="resource-groups.html" title="7.1.16 Resource Groups">Section 7.1.16, “Resource Groups”</a>). This hint assigns the
+          thread that executes a statement to the named resource group
+          temporarily (for the duration of the statement). It requires
+          the <a class="link" href="privileges-provided.html#priv_resource-group-admin"><code class="literal">RESOURCE_GROUP_ADMIN</code></a> or
+          <a class="link" href="privileges-provided.html#priv_resource-group-user"><code class="literal">RESOURCE_GROUP_USER</code></a> privilege.
+        </p><p>
+          Examples:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ RESOURCE_GROUP(USR_default) */ name FROM people ORDER BY name;
+INSERT /*+ RESOURCE_GROUP(Batch) */ INTO t2 VALUES(2);</code></pre><p>
+          Syntax of the <a class="link" href="optimizer-hints.html#optimizer-hints-resource-group" title="Resource Group Hint Syntax"><code class="literal">RESOURCE_GROUP</code></a>
+          hint:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">RESOURCE_GROUP(<em class="replaceable">group_name</em>)</code></pre><p>
+          <em class="replaceable"><code>group_name</code></em> indicates the resource
+          group to which the thread should be assigned for the duration
+          of statement execution. If the group is nonexistent, a warning
+          occurs and the hint is ignored.
+        </p><p>
+          The <a class="link" href="optimizer-hints.html#optimizer-hints-resource-group" title="Resource Group Hint Syntax"><code class="literal">RESOURCE_GROUP</code></a> hint must
+          appear after the initial statement keyword
+          (<code class="literal">SELECT</code>, <code class="literal">INSERT</code>,
+          <code class="literal">REPLACE</code>, <code class="literal">UPDATE</code>, or
+          <code class="literal">DELETE</code>).
+        </p><p>
+          An alternative to
+          <a class="link" href="optimizer-hints.html#optimizer-hints-resource-group" title="Resource Group Hint Syntax"><code class="literal">RESOURCE_GROUP</code></a> is the
+          <a class="link" href="set-resource-group.html" title="15.7.2.4 SET RESOURCE GROUP Statement"><code class="literal">SET RESOURCE GROUP</code></a> statement,
+          which nontemporarily assigns threads to a resource group. See
+          <a class="xref" href="set-resource-group.html" title="15.7.2.4 SET RESOURCE GROUP Statement">Section 15.7.2.4, “SET RESOURCE GROUP Statement”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="optimizer-hints-query-block-naming"></a>Optimizer Hints for Naming Query Blocks</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+          Table-level, index-level, and subquery optimizer hints permit
+          specific query blocks to be named as part of their argument
+          syntax. To create these names, use the
+          <a class="link" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks"><code class="literal">QB_NAME</code></a> hint, which assigns
+          a name to the query block in which it occurs:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">QB_NAME(<em class="replaceable">name</em>)</code></pre><p>
+          <a class="link" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks"><code class="literal">QB_NAME</code></a> hints can be used to
+          make explicit in a clear way which query blocks other hints
+          apply to. They also permit all non-query block name hints to
+          be specified within a single hint comment for easier
+          understanding of complex statements. Consider the following
+          statement:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT ...
+  FROM (SELECT ...
+  FROM (SELECT ... FROM ...)) ...</code></pre><p>
+          <a class="link" href="optimizer-hints.html#optimizer-hints-query-block-naming" title="Optimizer Hints for Naming Query Blocks"><code class="literal">QB_NAME</code></a> hints assign names
+          to query blocks in the statement:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ QB_NAME(qb1) */ ...
+  FROM (SELECT /*+ QB_NAME(qb2) */ ...
+  FROM (SELECT /*+ QB_NAME(qb3) */ ... FROM ...)) ...</code></pre><p>
+          Then other hints can use those names to refer to the
+          appropriate query blocks:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ QB_NAME(qb1) MRR(@qb1 t1) BKA(@qb2) NO_MRR(@qb3t1 idx1, id2) */ ...
+  FROM (SELECT /*+ QB_NAME(qb2) */ ...
+  FROM (SELECT /*+ QB_NAME(qb3) */ ... FROM ...)) ...</code></pre><p>
+          The resulting effect is as follows:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">MRR(@qb1 t1)</code></a> applies to
+              table <code class="literal">t1</code> in query block
+              <code class="literal">qb1</code>.
+            </p></li><li class="listitem"><p>
+              <a class="link" href="optimizer-hints.html#optimizer-hints-table-level" title="Table-Level Optimizer Hints"><code class="literal">BKA(@qb2)</code></a> applies to
+              query block <code class="literal">qb2</code>.
+            </p></li><li class="listitem"><p>
+              <a class="link" href="optimizer-hints.html#optimizer-hints-index-level" title="Index-Level Optimizer Hints"><code class="literal">NO_MRR(@qb3 t1 idx1,
+              id2)</code></a> applies to indexes <code class="literal">idx1</code>
+              and <code class="literal">idx2</code> in table <code class="literal">t1</code>
+              in query block <code class="literal">qb3</code>.
+</p></li></ul>
+</div>
+<p>
+          Query block names are identifiers and follow the usual rules
+          about what names are valid and how to quote them (see
+          <a class="xref" href="identifiers.html" title="11.2 Schema Object Names">Section 11.2, “Schema Object Names”</a>). For example, a query block
+          name that contains spaces must be quoted, which can be done
+          using backticks:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ BKA(@`my hint name`) */ ...
+  FROM (SELECT /*+ QB_NAME(`my hint name`) */ ...) ...</code></pre><p>
+          If the <a class="link" href="sql-mode.html#sqlmode_ansi_quotes"><code class="literal">ANSI_QUOTES</code></a> SQL mode
+          is enabled, it is also possible to quote query block names
+          within double quotation marks:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT /*+ BKA(@"my hint name") */ ...
+  FROM (SELECT /*+ QB_NAME("my hint name") */ ...) ...</code></pre>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="switchable-optimizations.html"
+        aria-label="Previous" title="Previous: Switchable Optimizations"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="controlling-optimizer.html" title="Up: Controlling the Query Optimizer"> UP</a> &nbsp;
+    <a href="index-hints.html" aria-label="Next"
+        title="Next: Index Hints">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/optimizer-hints.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:46 GMT -->
+</html>

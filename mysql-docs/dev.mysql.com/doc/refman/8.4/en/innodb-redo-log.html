@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:47:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 17.6.5 Redo Log</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="innodb-doublewrite-buffer.html" title="17.6.4 Doublewrite Buffer" />
+<link rel="next" href="innodb-undo-logs8dba.html?ff=nopfpls" title="17.6.6 Undo Logs" />
+<link rel="up" href="innodb-on-disk-structures.html" title="17.6 InnoDB On-Disk Structures" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7wzfa-f-001f34465-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":169,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1887819d","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":5804,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730131530","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==3vkS4zFuYdR2iLwbyATS3UBkIhUUqSLZSWqiaAMHDoMVBc9xO6kQcvP1oGnQwJo/LZcMGTUyYOhclpTceoxr6vH2jE64K7cjoL0f1nyFZy8/w7yhb4pT9DoljjVk61Slb5oSbxjUlMv7rycKW7mqwsfXCuzKNzuqM0j0wyOgn0+/dKgmwNjBvaeE/Gg+ujIdQZ1lpFTWn6J2EivvslAjPIuq0mVfLGRhPb+3X+XKV02JLE3Vw2z/4rZ3TfA06688yiiGVWxS7IBIE+eA6uDreWjrsrtuO2qlnfli3MCtTArSDVbEkAjeMtGkVTSfYGrjSnEdsLUYoZx3LTJmlqalrTd6P8ZXHW143kPRnn0Az1h549Ojn1PoGSkRDPqZKlKL9rFmmkSCNnUl5u3QCwagOaAQZ4/Z6vVy22g2DyQ0sCg=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Finnodb-redo-log.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="innodb-doublewrite-buffer.html"
+        aria-label="Previous" title="Previous: Doublewrite Buffer"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="innodb-on-disk-structures.html" title="Up: InnoDB On-Disk Structures"><span class="icon-chevron-up"></span></a>
+    <a href="innodb-undo-logs.html" aria-label="Next"
+        title="Next: Undo Logs"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-introduction.html">Introduction to InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benefits.html">Benefits of Using InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-best-practices.html">Best Practices for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-check-availability.html">Verifying that InnoDB is the Default Storage Engine</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benchmarking.html">Testing and Benchmarking with InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-acid.html">InnoDB and the ACID Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multi-versioning.html">InnoDB Multi-Versioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-architecture.html">InnoDB Architecture</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-in-memory-structures.html">InnoDB In-Memory Structures</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool.html">Buffer Pool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-change-buffer.html">Change Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-adaptive-hash.html">Adaptive Hash Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log-buffer.html">Log Buffer</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-on-disk-structures.html">InnoDB On-Disk Structures</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tables.html">Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-innodb-tables.html">Creating InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-create-table-external.html">Creating Tables Externally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-table-import.html">Importing InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-migration.html">Moving or Copying InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="converting-tables-to-innodb.html">Converting Tables from MyISAM to InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-auto-increment-handling.html">AUTO_INCREMENT Handling in InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-index-types.html">Clustered and Secondary Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-physical-structure.html">The Physical Structure of an InnoDB Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sorted-index-builds.html">Sorted Index Builds</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-fulltext-index.html">InnoDB Full-Text Indexes</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace.html">Tablespaces</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-system-tablespace.html">The System Tablespace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-per-table-tablespaces.html">File-Per-Table Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="general-tablespaces.html">General Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-tablespaces.html">Undo Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-temporary-tablespace.html">Temporary Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-moving-data-files-offline.html">Moving Tablespace Files While the Server is Offline</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disabling-tablespace-path-validation.html">Disabling Tablespace Path Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-optimize-tablespace-page-allocation.html">Optimizing Tablespace Space Allocation on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace-autoextend-size.html">Tablespace AUTOEXTEND_SIZE Configuration</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-doublewrite-buffer.html">Doublewrite Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="innodb-redo-log.html">Redo Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-logs.html">Undo Logs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-transaction-model.html">InnoDB Locking and Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking.html">InnoDB Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-model.html">InnoDB Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-isolation-levels.html">Transaction Isolation Levels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-autocommit-commit-rollback.html">autocommit, Commit, and Rollback</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-consistent-read.html">Consistent Nonlocking Reads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-reads.html">Locking Reads</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locks-set.html">Locks Set by Different SQL Statements in InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-next-key-locking.html">Phantom Rows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks.html">Deadlocks in InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-example.html">An InnoDB Deadlock Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-detection.html">Deadlock Detection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks-handling.html">How to Minimize and Handle Deadlocks</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-scheduling.html">Transaction Scheduling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-configuration.html">InnoDB Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-init-startup-configuration.html">InnoDB Startup Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-read-only-instance.html">Configuring InnoDB for Read-Only Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-buffer-pool.html">InnoDB Buffer Pool Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-resize.html">Configuring InnoDB Buffer Pool Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multiple-buffer-pools.html">Configuring Multiple Buffer Pool Instances</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-midpoint_insertion.html">Making the Buffer Pool Scan Resistant</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-read_ahead.html">Configuring InnoDB Buffer Pool Prefetching (Read-Ahead)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-flushing.html">Configuring Buffer Pool Flushing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-preload-buffer-pool.html">Saving and Restoring the Buffer Pool State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-in-core-file.html">Excluding or Including Buffer Pool Pages from Core Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-thread_concurrency.html">Configuring Thread Concurrency for InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-multiple_io_threads.html">Configuring the Number of Background InnoDB I/O Threads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-linux-native-aio.html">Using Asynchronous I/O on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-configuring-io-capacity.html">Configuring InnoDB I/O Capacity</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-spin_lock_polling.html">Configuring Spin Lock Polling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-purge-configuration.html">Purge Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-optimizer-statistics.html">Configuring Optimizer Statistics for InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-persistent-stats.html">Configuring Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-statistics-estimation.html">Configuring Non-Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-analyze-table-complexity.html">Estimating ANALYZE TABLE Complexity for InnoDB Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-page-merge-threshold.html">Configuring the Merge Threshold for Index Pages</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-dedicated-server.html">Enabling Automatic InnoDB Configuration for a Dedicated MySQL Server</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-compression.html">InnoDB Table and Page Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-table-compression.html">InnoDB Table Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-background.html">Overview of Table Compression</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-usage.html">Creating Compressed Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning.html">Tuning Compression for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning-monitoring.html">Monitoring InnoDB Table Compression at Runtime</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-internals.html">How Compression Works for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-compression-oltp.html">Compression for OLTP Workloads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-syntax-warnings.html">SQL Compression Syntax Warnings and Errors</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-page-compression.html">InnoDB Page Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-row-format.html">InnoDB Row Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-management.html">InnoDB Disk I/O and File Space Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-io.html">InnoDB Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-space.html">File Space Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-checkpoints.html">InnoDB Checkpoints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-defragmenting.html">Defragmenting a Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-truncate-table-reclaim-space.html">Reclaiming Disk Space with TRUNCATE TABLE</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl.html">InnoDB and Online DDL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-operations.html">Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-performance.html">Online DDL Performance and Concurrency</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-space-requirements.html">Online DDL Space Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-memory-management.html">Online DDL Memory Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-parallel-thread-configuration.html">Configuring Parallel Threads for Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-single-multi.html">Simplifying DDL Statements with Online DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-failure-conditions.html">Online DDL Failure Conditions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-limitations.html">Online DDL Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-data-encryption.html">InnoDB Data-at-Rest Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-parameters.html">InnoDB Startup Options and System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema.html">InnoDB INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-compression-tables.html">InnoDB INFORMATION_SCHEMA Tables about Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmp.html">INNODB_CMP and INNODB_CMP_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmpmem.html">INNODB_CMPMEM and INNODB_CMPMEM_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples-compression-sect.html">Using the Compression Information Schema Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-transactions.html">InnoDB INFORMATION_SCHEMA Transaction and Locking Information</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples.html">Using InnoDB Transaction and Locking Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-understanding-innodb-locking.html">InnoDB Lock and Lock-Wait Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-internal-data.html">Persistence and Consistency of InnoDB Transaction and Locking
+Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-system-tables.html">InnoDB INFORMATION_SCHEMA Schema Object Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-fulltext_index-tables.html">InnoDB INFORMATION_SCHEMA FULLTEXT Index Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-buffer-pool-tables.html">InnoDB INFORMATION_SCHEMA Buffer Pool Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-metrics-table.html">InnoDB INFORMATION_SCHEMA Metrics Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-temp-table-info.html">InnoDB INFORMATION_SCHEMA Temporary Table Info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-files-table.html">Retrieving InnoDB Tablespace Metadata from INFORMATION_SCHEMA.FILES</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-schema.html">InnoDB Integration with MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-alter-table-performance-schema.html">Monitoring ALTER TABLE Progress for InnoDB Tables Using Performance
+      Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-innodb-mutex-waits-performance-schema.html">Monitoring InnoDB Mutex Waits Using Performance Schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-monitors.html">InnoDB Monitors</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-monitor-types.html">InnoDB Monitor Types</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-enabling-monitors.html">Enabling InnoDB Monitors</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-standard-monitor.html">InnoDB Standard Monitor and Lock Monitor Output</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-backup-recovery.html">InnoDB Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-backup.html">InnoDB Backup</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-recovery.html">InnoDB Recovery</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-and-mysql-replication.html">InnoDB and MySQL Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting.html">InnoDB Troubleshooting</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-creating-innodb.html">Troubleshooting InnoDB I/O Problems</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-recovery.html">Troubleshooting Recovery Failures</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="forcing-innodb-recovery.html">Forcing InnoDB Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-datadict.html">Troubleshooting InnoDB Data Dictionary Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-error-handling.html">InnoDB Error Handling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-limits.html">InnoDB Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-restrictions-limitations.html">InnoDB Restrictions and Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/innodb-redo-log.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/innodb-redo-log.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/innodb-redo-log.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/innodb-redo-log.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/innodb-redo-log.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="innodb-storage-engine.html">The InnoDB Storage Engine</a> &nbsp;/&nbsp;
+                                                            <a href="innodb-on-disk-structures.html">InnoDB On-Disk Structures</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Redo Log
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="innodb-redo-log"></a>17.6.5 Redo Log</h3>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105625652608"></a><a class="indexterm" name="idm45105625651120"></a><p>
+      The redo log is a disk-based data structure used during crash
+      recovery to correct data written by incomplete transactions.
+      During normal operations, the redo log encodes requests to change
+      table data that result from SQL statements or low-level API calls.
+      Modifications that did not finish updating data files before an
+      unexpected shutdown are replayed automatically during
+      initialization and before connections are accepted. For
+      information about the role of the redo log in crash recovery, see
+      <a class="xref" href="innodb-recovery.html" title="17.18.2 InnoDB Recovery">Section 17.18.2, “InnoDB Recovery”</a>.
+    </p><p>
+      The redo log is physically represented on disk by redo log files.
+      Data that is written to redo log files is encoded in terms of
+      records affected, and this data is collectively referred to as
+      redo. The passage of data through redo log files is represented by
+      an ever-increasing <a class="link" href="glossary.html#glos_lsn" title="LSN">LSN</a> value. Redo
+      log data is appended as data modifications occur, and the oldest
+      data is truncated as the checkpoint progresses.
+    </p><p>
+      Information and procedures related to redo logs are described
+      under the following topics in the section:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="innodb-redo-log.html#innodb-modifying-redo-log-capacity" title="Configuring Redo Log Capacity">Configuring Redo Log Capacity</a></p></li><li class="listitem"><p><a class="xref" href="innodb-redo-log.html#innodb-redo-log-capacity-automatic-configuration" title="Automatic Redo Log Capacity Configuration">Automatic Redo Log Capacity Configuration</a></p></li><li class="listitem"><p><a class="xref" href="innodb-redo-log.html#innodb-redo-log-archiving" title="Redo Log Archiving">Redo Log Archiving</a></p></li><li class="listitem"><p><a class="xref" href="innodb-redo-log.html#innodb-disable-redo-logging" title="Disabling Redo Logging">Disabling Redo Logging</a></p></li><li class="listitem"><p><a class="xref" href="innodb-redo-log.html#innodb-redo-log-related-topics" title="Related Topics">Related Topics</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h4 class="title"><a name="innodb-modifying-redo-log-capacity"></a>Configuring Redo Log Capacity</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105625639456"></a><a class="indexterm" name="idm45105625637968"></a><p>
+        The <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_capacity"><code class="literal">innodb_redo_log_capacity</code></a>
+        system variable controls the amount of disk space occupied by
+        redo log files. You can set this variable in an option file at
+        startup or at runtime using a
+        <a class="link" href="set-variable.html" title="15.7.6.1 SET Syntax for Variable Assignment"><code class="literal">SET
+        GLOBAL</code></a> statement; for example, the following statement
+        sets the redo log capacity to 8GB:
+      </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SET GLOBAL innodb_redo_log_capacity = 8589934592;</code></pre><p>
+        When set at runtime, the configuration change occurs immediately
+        but it may take some time for the new limit to be fully
+        implemented. If the redo log files occupy less space than the
+        specified value, dirty pages are flushed from the buffer pool to
+        tablespace data files less aggressively, eventually increasing
+        the disk space occupied by the redo log files. If the redo log
+        files occupy more space than the specified value, dirty pages
+        are flushed more aggressively, eventually decreasing the disk
+        space occupied by redo log files.
+      </p><p>
+        If <code class="literal">innodb_redo_log_capacity</code> is not defined,
+        and if neither <code class="literal">innodb_log_file_size</code> or
+        <code class="literal">innodb_log_files_in_group</code> are defined, then
+        the default <code class="literal">innodb_redo_log_capacity</code> value is
+        used.
+      </p><p>
+        If <code class="literal">innodb_redo_log_capacity</code> is not defined,
+        and if <code class="literal">innodb_log_file_size</code> and/or
+        <code class="literal">innodb_log_files_in_group</code> is defined, then
+        the InnoDB redo log capacity is calculated as
+        <span class="emphasis"><em>(innodb_log_files_in_group *
+        innodb_log_file_size)</em></span>. This calculation does not
+        modify the unused <code class="literal">innodb_redo_log_capacity</code>
+        setting's value.
+      </p><p>
+        The
+        <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_capacity_resized"><code class="literal">Innodb_redo_log_capacity_resized</code></a>
+        server status variable indicates the total redo log capacity for
+        all redo log files.
+      </p><p>
+        Redo log files reside in the <code class="filename">#innodb_redo</code>
+        directory in the data directory unless a different directory was
+        specified by the
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_log_group_home_dir"><code class="literal">innodb_log_group_home_dir</code></a>
+        variable. If
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_log_group_home_dir"><code class="literal">innodb_log_group_home_dir</code></a> was
+        defined, the redo log files reside in the
+        <code class="filename">#innodb_redo</code> directory in that directory.
+        There are two types of redo log files, ordinary and spare.
+        Ordinary redo log files are those being used. Spare redo log
+        files are those waiting to be used. <code class="literal">InnoDB</code>
+        tries to maintain 32 redo log files in total, with each file
+        equal in size to 1/32 *
+        <code class="literal">innodb_redo_log_capacity</code>; however, file sizes
+        may differ for a time after modifying the
+        <code class="literal">innodb_redo_log_capacity</code> setting.
+      </p><p>
+        Redo log files use an
+        <code class="filename">#ib_redo<em class="replaceable"><code>N</code></em></code> naming
+        convention, where <em class="replaceable"><code>N</code></em> is the redo log
+        file number. Spare redo log files are denoted by a
+        <code class="filename">_tmp</code> suffix. The following example shows
+        the redo log files in an <code class="filename">#innodb_redo</code>
+        directory, where there are 21 active redo log files and 11 spare
+        redo log files, numbered sequentially.
+      </p><pre class="programlisting copytoclipboard language-simple"><code class="language-simple">'#ib_redo582'  '#ib_redo590'  '#ib_redo598'      '#ib_redo606_tmp'
+'#ib_redo583'  '#ib_redo591'  '#ib_redo599'      '#ib_redo607_tmp'
+'#ib_redo584'  '#ib_redo592'  '#ib_redo600'      '#ib_redo608_tmp'
+'#ib_redo585'  '#ib_redo593'  '#ib_redo601'      '#ib_redo609_tmp'
+'#ib_redo586'  '#ib_redo594'  '#ib_redo602'      '#ib_redo610_tmp'
+'#ib_redo587'  '#ib_redo595'  '#ib_redo603_tmp'  '#ib_redo611_tmp'
+'#ib_redo588'  '#ib_redo596'  '#ib_redo604_tmp'  '#ib_redo612_tmp'
+'#ib_redo589'  '#ib_redo597'  '#ib_redo605_tmp'  '#ib_redo613_tmp'</code></pre><p>
+        Each ordinary redo log file is associated with a particular
+        range of LSN values; for example, the following query shows the
+        <code class="literal">START_LSN</code> and <code class="literal">END_LSN</code>
+        values for the active redo log files listed in the previous
+        example:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT FILE_NAME, START_LSN, END_LSN FROM performance_schema.innodb_redo_log_files;
++----------------------------+--------------+--------------+
+| FILE_NAME                  | START_LSN    | END_LSN      |
++----------------------------+--------------+--------------+
+| ./#innodb_redo/#ib_redo582 | 117654982144 | 117658256896 |
+| ./#innodb_redo/#ib_redo583 | 117658256896 | 117661531648 |
+| ./#innodb_redo/#ib_redo584 | 117661531648 | 117664806400 |
+| ./#innodb_redo/#ib_redo585 | 117664806400 | 117668081152 |
+| ./#innodb_redo/#ib_redo586 | 117668081152 | 117671355904 |
+| ./#innodb_redo/#ib_redo587 | 117671355904 | 117674630656 |
+| ./#innodb_redo/#ib_redo588 | 117674630656 | 117677905408 |
+| ./#innodb_redo/#ib_redo589 | 117677905408 | 117681180160 |
+| ./#innodb_redo/#ib_redo590 | 117681180160 | 117684454912 |
+| ./#innodb_redo/#ib_redo591 | 117684454912 | 117687729664 |
+| ./#innodb_redo/#ib_redo592 | 117687729664 | 117691004416 |
+| ./#innodb_redo/#ib_redo593 | 117691004416 | 117694279168 |
+| ./#innodb_redo/#ib_redo594 | 117694279168 | 117697553920 |
+| ./#innodb_redo/#ib_redo595 | 117697553920 | 117700828672 |
+| ./#innodb_redo/#ib_redo596 | 117700828672 | 117704103424 |
+| ./#innodb_redo/#ib_redo597 | 117704103424 | 117707378176 |
+| ./#innodb_redo/#ib_redo598 | 117707378176 | 117710652928 |
+| ./#innodb_redo/#ib_redo599 | 117710652928 | 117713927680 |
+| ./#innodb_redo/#ib_redo600 | 117713927680 | 117717202432 |
+| ./#innodb_redo/#ib_redo601 | 117717202432 | 117720477184 |
+| ./#innodb_redo/#ib_redo602 | 117720477184 | 117723751936 |
++----------------------------+--------------+--------------+</code></pre><p>
+        When doing a checkpoint, <code class="literal">InnoDB</code> stores the
+        checkpoint LSN in the header of the file which contains this
+        LSN. During recovery, all redo log files are checked and
+        recovery starts at the latest checkpoint LSN.
+      </p><p>
+        Several status variables are provided for monitoring the redo
+        log and redo log capacity resize operations; for example, you
+        can query
+        <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_resize_status"><code class="literal">Innodb_redo_log_resize_status</code></a>
+        to view the status of a resize operation:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW STATUS LIKE 'Innodb_redo_log_resize_status';
++-------------------------------+-------+
+| Variable_name                 | Value |
++-------------------------------+-------+
+| Innodb_redo_log_resize_status | OK    |
++-------------------------------+-------+</code></pre><p>
+        The
+        <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_capacity_resized"><code class="literal">Innodb_redo_log_capacity_resized</code></a>
+        status variable shows the current redo log capacity limit:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW STATUS LIKE 'Innodb_redo_log_capacity_resized';
+ +----------------------------------+-----------+
+| Variable_name                    | Value     |
++----------------------------------+-----------+
+| Innodb_redo_log_capacity_resized | 104857600 |
++----------------------------------+-----------+</code></pre><p>
+        Other applicable status variables include:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_checkpoint_lsn"><code class="literal">Innodb_redo_log_checkpoint_lsn</code></a>
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_current_lsn"><code class="literal">Innodb_redo_log_current_lsn</code></a>
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_flushed_to_disk_lsn"><code class="literal">Innodb_redo_log_flushed_to_disk_lsn</code></a>
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_logical_size"><code class="literal">Innodb_redo_log_logical_size</code></a>
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_physical_size"><code class="literal">Innodb_redo_log_physical_size</code></a>
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_read_only"><code class="literal">Innodb_redo_log_read_only</code></a>
+          </p></li><li class="listitem"><p>
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_uuid"><code class="literal">Innodb_redo_log_uuid</code></a>
+</p></li></ul>
+</div>
+<p>
+        Refer to the status variable descriptions for more information.
+      </p><p>
+        You can view information about active redo log files by querying
+        the <a class="link" href="performance-schema-innodb-redo-log-files-table.html" title="29.12.22.4 The innodb_redo_log_files Table"><code class="literal">innodb_redo_log_files</code></a>
+        Performance Schema table. The following query retrieves data
+        from all of the table's columns:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT FILE_ID, START_LSN, END_LSN, SIZE_IN_BYTES, IS_FULL, CONSUMER_LEVEL 
+FROM performance_schema.innodb_redo_log_files;</code></pre>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="innodb-redo-log-capacity-automatic-configuration"></a>Automatic Redo Log Capacity Configuration</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        When the server is started with
+        <a class="link" href="innodb-parameters.html#option_mysqld_innodb-dedicated-server"><code class="option">--innodb-dedicated-server</code></a>,
+        <code class="literal">InnoDB</code> automatically calculates and sets the
+        values for certain <code class="literal">InnoDB</code> parameters,
+        including redo log capacity. Automated configuration is intended
+        for MySQL instances that reside on a server dedicated to MySQL,
+        where the MySQL server can use all available system resources.
+        For more information, see
+        <a class="xref" href="innodb-dedicated-server.html" title="17.8.12 Enabling Automatic InnoDB Configuration for a Dedicated MySQL Server">Section 17.8.12, “Enabling Automatic InnoDB Configuration for a Dedicated MySQL Server”</a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="innodb-redo-log-archiving"></a>Redo Log Archiving</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105625571312"></a><p>
+        Backup utilities that copy redo log records may sometimes fail
+        to keep pace with redo log generation while a backup operation
+        is in progress, resulting in lost redo log records due to those
+        records being overwritten. This issue most often occurs when
+        there is significant MySQL server activity during the backup
+        operation, and the redo log file storage media operates at a
+        faster speed than the backup storage media. The redo log
+        archiving feature addresses this issue by sequentially writing
+        redo log records to an archive file in addition to the redo log
+        files. Backup utilities can copy redo log records from the
+        archive file as necessary, thereby avoiding the potential loss
+        of data.
+      </p><p>
+        If redo log archiving is configured on the server,
+        <a class="ulink" href="https://dev.mysql.com/doc/mysql-enterprise-backup/en/" target="_top">MySQL Enterprise Backup</a>,
+        available with <a class="ulink" href="https://www.mysql.com/products/enterprise/"  target="_blank">MySQL Enterprise Edition</a>,
+        uses the redo log archiving feature when backing up a MySQL
+        server.
+      </p><p>
+        Enabling redo log archiving on the server requires setting a
+        value for the
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_archive_dirs"><code class="literal">innodb_redo_log_archive_dirs</code></a>
+        system variable. The value is specified as a semicolon-separated
+        list of labeled redo log archive directories. The
+        <code class="literal"><em class="replaceable"><code>label</code></em>:<em class="replaceable"><code>directory</code></em></code>
+        pair is separated by a colon (<code class="literal">:</code>). For
+        example:
+      </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; SET GLOBAL innodb_redo_log_archive_dirs='<em class="replaceable">label1</em>:<em class="replaceable">directory_path1</em>[;<em class="replaceable">label2</em>:<em class="replaceable">directory_path2</em>;…]';</code></pre><p>
+        The <em class="replaceable"><code>label</code></em> is an arbitrary identifier
+        for the archive directory. It can be any string of characters,
+        with the exception of colons (:), which are not permitted. An
+        empty label is also permitted, but the colon (:) is still
+        required in this case. A
+        <em class="replaceable"><code>directory_path</code></em> must be specified. The
+        directory selected for the redo log archive file must exist when
+        redo log archiving is activated, or an error is returned. The
+        path can contain colons (':'), but semicolons (;) are not
+        permitted.
+      </p><p>
+        The
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_archive_dirs"><code class="literal">innodb_redo_log_archive_dirs</code></a>
+        variable must be configured before redo log archiving can be
+        activated. The default value is <code class="literal">NULL</code>, which
+        does not permit activating redo log archiving.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Notes
+</div>
+<p>
+          The archive directories that you specify must satisfy the
+          following requirements. (The requirements are enforced when
+          redo log archiving is activated.):
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              Directories must exist. Directories are not created by the
+              redo log archive process. Otherwise, the following error
+              is returned:
+            </p><p>
+              <span class="errortext">ERROR 3844 (HY000): Redo log archive directory
+              '<em class="replaceable"><code>directory_path1</code></em>' does not
+              exist or is not a directory </span>
+            </p></li><li class="listitem"><p>
+              Directories must not be world-accessible. This is to
+              prevent the redo log data from being exposed to
+              unauthorized users on the system. Otherwise, the following
+              error is returned:
+            </p><p>
+              <span class="errortext">ERROR 3846 (HY000): Redo log archive directory
+              '<em class="replaceable"><code>directory_path1</code></em>' is accessible
+              to all OS users</span>
+            </p></li><li class="listitem"><p>
+              Directories cannot be those defined by
+              <a class="link" href="server-system-variables.html#sysvar_datadir"><code class="literal">datadir</code></a>,
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_data_home_dir"><code class="literal">innodb_data_home_dir</code></a>,
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_directories"><code class="literal">innodb_directories</code></a>,
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_log_group_home_dir"><code class="literal">innodb_log_group_home_dir</code></a>,
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_temp_tablespaces_dir"><code class="literal">innodb_temp_tablespaces_dir</code></a>,
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_tmpdir"><code class="literal">innodb_tmpdir</code></a>
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_undo_directory"><code class="literal">innodb_undo_directory</code></a>, or
+              <a class="link" href="server-system-variables.html#sysvar_secure_file_priv"><code class="literal">secure_file_priv</code></a>, nor can
+              they be parent directories or subdirectories of those
+              directories. Otherwise, an error similar to the following
+              is returned:
+            </p><p>
+              <span class="errortext">ERROR 3845 (HY000): Redo log archive directory
+              '<em class="replaceable"><code>directory_path1</code></em>' is in, under,
+              or over server directory 'datadir' -
+              '<em class="replaceable"><code>/path/to/data_directory</code></em>'</span>
+</p></li></ul>
+</div>
+
+</div>
+<p>
+        When a backup utility that supports redo log archiving initiates
+        a backup, the backup utility activates redo log archiving by
+        invoking the <code class="literal">innodb_redo_log_archive_start()</code>
+        function.
+      </p><p>
+        If you are not using a backup utility that supports redo log
+        archiving, redo log archiving can also be activated manually, as
+        shown:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT innodb_redo_log_archive_start('<em class="replaceable">label</em>', '<em class="replaceable">subdir</em>');
++------------------------------------------+
+| innodb_redo_log_archive_start('<em class="replaceable">label</em>') |
++------------------------------------------+
+| 0                                        |
++------------------------------------------+</code></pre><p>
+        Or:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; DO innodb_redo_log_archive_start('<em class="replaceable">label</em>', '<em class="replaceable">subdir</em>');
+Query OK, 0 rows affected (0.09 sec)</code></pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          The MySQL session that activates redo log archiving (using
+          <code class="literal">innodb_redo_log_archive_start()</code>) must
+          remain open for the duration of the archiving. The same
+          session must deactivate redo log archiving (using
+          <code class="literal">innodb_redo_log_archive_stop()</code>). If the
+          session is terminated before the redo log archiving is
+          explicitly deactivated, the server deactivates redo log
+          archiving implicitly and removes the redo log archive file.
+</p>
+</div>
+<p>
+        where <em class="replaceable"><code>label</code></em> is a label defined by
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_redo_log_archive_dirs"><code class="literal">innodb_redo_log_archive_dirs</code></a>;
+        <code class="literal">subdir</code> is an optional argument for specifying
+        a subdirectory of the directory identified by
+        <em class="replaceable"><code>label</code></em> for saving the archive file; it
+        must be a simple directory name (no slash (/), backslash (\), or
+        colon (:) is permitted). <code class="literal">subdir</code> can be empty,
+        null, or it can be left out.
+      </p><p>
+        Only users with the
+        <a class="link" href="privileges-provided.html#priv_innodb-redo-log-archive"><code class="literal">INNODB_REDO_LOG_ARCHIVE</code></a> privilege
+        can activate redo log archiving by invoking
+        <code class="literal">innodb_redo_log_archive_start()</code>, or
+        deactivate it using
+        <code class="literal">innodb_redo_log_archive_stop()</code>. The MySQL
+        user running the backup utility or the MySQL user activating and
+        deactivating redo log archiving manually must have this
+        privilege.
+      </p><p>
+        The redo log archive file path is
+        <code class="filename"><em class="replaceable"><code>directory_identified_by_label</code></em>/[<em class="replaceable"><code>subdir</code></em>/]archive.<em class="replaceable"><code>serverUUID</code></em>.000001.log</code>,
+        where
+        <code class="filename"><em class="replaceable"><code>directory_identified_by_label</code></em></code>
+        is the archive directory identified by the
+        <code class="literal"><em class="replaceable"><code>label</code></em></code> argument for
+        <code class="literal">innodb_redo_log_archive_start()</code>.
+        <code class="filename"><em class="replaceable"><code>subdir</code></em></code> is the
+        optional argument used for
+        <code class="literal">innodb_redo_log_archive_start()</code>.
+      </p><p>
+        For example, the full path and name for a redo log archive file
+        appears similar to the following:
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">/<em class="replaceable">directory_path</em>/<em class="replaceable">subdirectory</em>/archive.e71a47dc-61f8-11e9-a3cb-080027154b4d.000001.log</code></pre><p>
+        After the backup utility finishes copying
+        <code class="literal">InnoDB</code> data files, it deactivates redo log
+        archiving by calling the
+        <code class="literal">innodb_redo_log_archive_stop()</code> function.
+      </p><p>
+        If you are not using a backup utility that supports redo log
+        archiving, redo log archiving can also be deactivated manually,
+        as shown:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT innodb_redo_log_archive_stop();
++--------------------------------+
+| innodb_redo_log_archive_stop() |
++--------------------------------+
+| 0                              |
++--------------------------------+</code></pre><p>
+        Or:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; DO innodb_redo_log_archive_stop();
+Query OK, 0 rows affected (0.01 sec)</code></pre><p>
+        After the stop function completes successfully, the backup
+        utility looks for the relevant section of redo log data from the
+        archive file and copies it into the backup.
+      </p><p>
+        After the backup utility finishes copying the redo log data and
+        no longer needs the redo log archive file, it deletes the
+        archive file.
+      </p><p>
+        Removal of the archive file is the responsibility of the backup
+        utility in normal situations. However, if the redo log archiving
+        operation quits unexpectedly before
+        <code class="literal">innodb_redo_log_archive_stop()</code> is called, the
+        MySQL server removes the file.
+</p>
+<h5><a name="idm45105625500304"></a>Performance Considerations</h5>
+<p>
+        Activating redo log archiving typically has a minor performance
+        cost due to the additional write activity.
+      </p><p>
+        On Unix and Unix-like operating systems, the performance impact
+        is typically minor, assuming there is not a sustained high rate
+        of updates. On Windows, the performance impact is typically a
+        bit higher, assuming the same.
+      </p><p>
+        If there is a sustained high rate of updates and the redo log
+        archive file is on the same storage media as the redo log files,
+        the performance impact may be more significant due to compounded
+        write activity.
+      </p><p>
+        If there is a sustained high rate of updates and the redo log
+        archive file is on slower storage media than the redo log files,
+        performance is impacted arbitrarily.
+      </p><p>
+        Writing to the redo log archive file does not impede normal
+        transactional logging except in the case that the redo log
+        archive file storage media operates at a much slower rate than
+        the redo log file storage media, and there is a large backlog of
+        persisted redo log blocks waiting to be written to the redo log
+        archive file. In this case, the transactional logging rate is
+        reduced to a level that can be managed by the slower storage
+        media where the redo log archive file resides.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="innodb-disable-redo-logging"></a>Disabling Redo Logging</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        You can disable redo logging using the
+        <a class="link" href="alter-instance.html" title="15.1.5 ALTER INSTANCE Statement"><code class="literal">ALTER INSTANCE
+        DISABLE INNODB REDO_LOG</code></a> statement. This functionality
+        is intended for loading data into a new MySQL instance.
+        Disabling redo logging speeds up data loading by avoiding redo
+        log writes and doublewrite buffering.
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Warning
+</div>
+<p>
+          This feature is intended only for loading data into a new
+          MySQL instance. <span class="emphasis"><em>Do not disable redo logging on a
+          production system.</em></span> It is permitted to shutdown and
+          restart the server while redo logging is disabled, but an
+          unexpected server stoppage while redo logging is disabled can
+          cause data loss and instance corruption.
+        </p><p>
+          Attempting to restart the server after an unexpected server
+          stoppage while redo logging is disabled is refused with the
+          following error:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">[ERROR] [MY-013598] [InnoDB] Server was killed when Innodb Redo 
+logging was disabled. Data files could be corrupt. You can try 
+to restart the database with innodb_force_recovery=6</code></pre><p>
+          In this case, initialize a new MySQL instance and start the
+          data loading procedure again.
+</p>
+</div>
+<p>
+        The <a class="link" href="privileges-provided.html#priv_innodb-redo-log-enable"><code class="literal">INNODB_REDO_LOG_ENABLE</code></a>
+        privilege is required to enable and disable redo logging.
+      </p><p>
+        The <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_enabled"><code class="literal">Innodb_redo_log_enabled</code></a>
+        status variable permits monitoring redo logging status.
+      </p><p>
+        Cloning operations and redo log archiving are not permitted
+        while redo logging is disabled and vice versa.
+      </p><p>
+        An <a class="link" href="alter-instance.html" title="15.1.5 ALTER INSTANCE Statement"><code class="literal">ALTER
+        INSTANCE [ENABLE|DISABLE] INNODB REDO_LOG</code></a> operation
+        requires an exclusive backup metadata lock, which prevents other
+        <a class="link" href="alter-instance.html" title="15.1.5 ALTER INSTANCE Statement"><code class="literal">ALTER INSTANCE</code></a> operations from
+        executing concurrently. Other <a class="link" href="alter-instance.html" title="15.1.5 ALTER INSTANCE Statement"><code class="literal">ALTER
+        INSTANCE</code></a> operations must wait for the lock to be
+        released before executing.
+      </p><p>
+        The following procedure demonstrates how to disable redo logging
+        when loading data into a new MySQL instance.
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+            On the new MySQL instance, grant the
+            <a class="link" href="privileges-provided.html#priv_innodb-redo-log-enable"><code class="literal">INNODB_REDO_LOG_ENABLE</code></a>
+            privilege to the user account responsible for disabling redo
+            logging.
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; GRANT INNODB_REDO_LOG_ENABLE ON *.* to 'data_load_admin';</code></pre></li><li class="listitem"><p>
+            As the <code class="literal">data_load_admin</code> user, disable redo
+            logging:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER INSTANCE DISABLE INNODB REDO_LOG;</code></pre></li><li class="listitem"><p>
+            Check the
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_enabled"><code class="literal">Innodb_redo_log_enabled</code></a>
+            status variable to ensure that redo logging is disabled.
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW GLOBAL STATUS LIKE 'Innodb_redo_log_enabled';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Innodb_redo_log_enabled | OFF   |
++-------------------------+-------+</code></pre></li><li class="listitem"><p>
+            Run the data load operation.
+          </p></li><li class="listitem"><p>
+            As the <code class="literal">data_load_admin</code> user, enable redo
+            logging after the data load operation finishes:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; ALTER INSTANCE ENABLE INNODB REDO_LOG;</code></pre></li><li class="listitem"><p>
+            Check the
+            <a class="link" href="server-status-variables.html#statvar_Innodb_redo_log_enabled"><code class="literal">Innodb_redo_log_enabled</code></a>
+            status variable to ensure that redo logging is enabled.
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SHOW GLOBAL STATUS LIKE 'Innodb_redo_log_enabled';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Innodb_redo_log_enabled | ON    |
++-------------------------+-------+</code></pre></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="innodb-redo-log-related-topics"></a>Related Topics</h4>
+
+</div>
+
+</div>
+
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="xref" href="innodb-init-startup-configuration.html#innodb-startup-log-file-configuration" title="Redo Log Configuration">Redo Log Configuration</a>
+          </p></li><li class="listitem"><p>
+            <a class="xref" href="optimizing-innodb-logging.html" title="10.5.4 Optimizing InnoDB Redo Logging">Section 10.5.4, “Optimizing InnoDB Redo Logging”</a>
+          </p></li><li class="listitem"><p>
+            <a class="xref" href="innodb-data-encryption.html#innodb-data-encryption-redo-log" title="Redo Log Encryption">Redo Log Encryption</a>
+</p></li></ul>
+</div>
+
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="innodb-doublewrite-buffer.html"
+        aria-label="Previous" title="Previous: Doublewrite Buffer"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="innodb-on-disk-structures.html" title="Up: InnoDB On-Disk Structures"> UP</a> &nbsp;
+    <a href="innodb-undo-logs.html" aria-label="Next"
+        title="Next: Undo Logs">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:47:27 GMT -->
+</html>

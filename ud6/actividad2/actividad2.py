@@ -7,7 +7,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("/home/usuario/AD/ud6/actividad2/databasemanager.log"),
+        logging.FileHandler("databasemanager.log"),
         logging.StreamHandler(),  # Logs también en consola
     ],
 )

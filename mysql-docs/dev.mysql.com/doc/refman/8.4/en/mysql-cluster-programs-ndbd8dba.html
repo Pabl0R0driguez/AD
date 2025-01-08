@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/mysql-cluster-programs-ndbd.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 25.5.1 ndbd — The NDB Cluster Data Node Daemon</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="mysql-cluster-programs.html" title="25.5 NDB Cluster Programs" />
+<link rel="next" href="mysql-cluster-programs-ndbinfo-select-all8dba.html?ff=nopfpls" title="25.5.2 ndbinfo_select_all &mdash; Select From ndbinfo Tables" />
+<link rel="up" href="mysql-cluster-programs.html" title="25.5 NDB Cluster Programs" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7yeha-f-6a40cf77c-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":198,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1900a589","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":11705,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730134286","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==DfEgu8mZmn5dYdA4CLEuH5EgM9GO9kK8hcILyUUimbEODaD9nRZjJ3DfO01+93ZWaV+3tTgjWV/Gppt2Du5lPuFwLt+4FOpY5uLsFdfb3BqP4tGPO/yo3uP8Y/YwoYBfu3QCnZ+Yp0pbXEZGTU7Caj/hrIQZi3b7uqTWfgtQ4LtXAL1kTQofJIdzjXCv1UNeu3TaXdbWv7NfnaXpl9LOF3LlMMOwkZ8HIMyOjfXJfUk99oFLyDBQkPFNXeT2cBbzAT3y3vZDUi4nHs+r3h2ZU7dFz9WHJCX78cdmCQDvF+MQXj2iH0vEVZdNQZ7AZCUqjdbrPLeuz8wbBMyAhGhiwEPA6cAPTtEZX3QLnkHK/9VAq1Gc2TwToRWjoF3PtSvgGOuHuJGseg7/t4ztKvJr6svftPHGTW0MlDsuh9BzHHM=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fmysql-cluster-programs-ndbd.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="mysql-cluster-programs.html"
+        aria-label="Previous" title="Previous: NDB Cluster Programs"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="mysql-cluster-programs.html" title="Up: NDB Cluster Programs"><span class="icon-chevron-up"></span></a>
+    <a href="mysql-cluster-programs-ndbinfo-select-all.html" aria-label="Next"
+        title="Next: ndbinfo_select_all — Select From ndbinfo Tables"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-general-info.html">General Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-overview.html">NDB Cluster Overview</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-basics.html">NDB Cluster Core Concepts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-nodes-groups.html">NDB Cluster Nodes, Node Groups, Fragment Replicas, and Partitions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-overview-requirements.html">NDB Cluster Hardware, Software, and Networking Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-what-is-new.html">What is New in MySQL NDB Cluster 8.4</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-added-deprecated-removed.html">Options, Variables, and Parameters Added, Deprecated or Removed in NDB
+    8.4</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-compared.html">MySQL Server Using InnoDB Compared with NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndb-innodb-engines.html">Differences Between the NDB and InnoDB Storage Engines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndb-innodb-workloads.html">NDB and InnoDB Workloads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndb-innodb-usage.html">NDB and InnoDB Feature Usage Summary</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations.html">Known Limitations of NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-syntax.html">Noncompliance with SQL Syntax in NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-limits.html">Limits and Differences of NDB Cluster from Standard MySQL Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-transactions.html">Limits Relating to Transaction Handling in NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-error-handling.html">NDB Cluster Error Handling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-database-objects.html">Limits Associated with Database Objects in NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-unsupported.html">Unsupported or Missing Features in NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-performance.html">Limitations Relating to Performance in NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-exclusive-to-cluster.html">Issues Exclusive to NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-disk-data.html">Limitations Relating to NDB Cluster Disk Data Storage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-multiple-nodes.html">Limitations Relating to Multiple NDB Cluster Nodes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-limitations-resolved.html">Previous NDB Cluster Issues Resolved in NDB Cluster 8.4</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-installation.html">NDB Cluster Installation</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-linux.html">Installation of NDB Cluster on Linux</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-linux-binary.html">Installing an NDB Cluster Binary Release on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-linux-rpm.html">Installing NDB Cluster from RPM</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-debian.html">Installing NDB Cluster Using .deb Files</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-linux-source.html">Building NDB Cluster from Source on Linux</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-windows.html">Installing NDB Cluster on Windows</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-windows-binary.html">Installing NDB Cluster on Windows from a Binary Release</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-windows-source.html">Compiling and Installing NDB Cluster from Source on Windows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-windows-initial-start.html">Initial Startup of NDB Cluster on Windows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-windows-service.html">Installing NDB Cluster Processes as Windows Services</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-configuration.html">Initial Configuration of NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-first-start.html">Initial Startup of NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-example-data.html">NDB Cluster Example with Tables and Data</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-install-shutdown-restart.html">Safe Shutdown and Restart of NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-upgrade-downgrade.html">Upgrading and Downgrading NDB Cluster</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-configuration.html">Configuration of NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-quick.html">Quick Test Setup of NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-configuration-overview.html">Overview of NDB Cluster Configuration Parameters, Options, and Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-params-ndbd.html">NDB Cluster Data Node Configuration Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-params-mgmd.html">NDB Cluster Management Node Configuration Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-params-api.html">NDB Cluster SQL Node and API Node Configuration Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-params-other.html">Other NDB Cluster Configuration Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-option-tables.html">NDB Cluster mysqld Option and Variable Reference</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-config-file.html">NDB Cluster Configuration Files</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-config-example.html">NDB Cluster Configuration: Basic Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-config-starting.html">Recommended Starting Configuration for NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-connection-strings.html">NDB Cluster Connection Strings</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-computer-definition.html">Defining Computers in an NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-mgm-definition.html">Defining an NDB Cluster Management Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbd-definition.html">Defining NDB Cluster Data Nodes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-api-definition.html">Defining SQL and Other API Nodes in an NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-system-definition.html">Defining the System</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-options-variables.html">MySQL Server Options and Variables for NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tcp-definition.html">NDB Cluster TCP/IP Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tcp-definition-direct.html">NDB Cluster TCP/IP Connections Using Direct Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-shm-definition.html">NDB Cluster Shared-Memory Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-data-node-memory-management.html">Data Node Memory Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-config-send-buffers.html">Configuring NDB Cluster Send Buffer Parameters</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-interconnects.html">Using High-Speed Interconnects with NDB Cluster</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs.html">NDB Cluster Programs</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="mysql-cluster-programs-ndbd.html">ndbd — The NDB Cluster Data Node Daemon</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndbinfo-select-all.html">ndbinfo_select_all — Select From ndbinfo Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndbmtd.html">ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-mgmd.html">ndb_mgmd — The NDB Cluster Management Server Daemon</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-mgm.html">ndb_mgm — The NDB Cluster Management Client</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-blob-tool.html">ndb_blob_tool — Check and Repair BLOB and TEXT columns of NDB Cluster
+        Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-config.html">ndb_config — Extract NDB Cluster Configuration Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-delete-all.html">ndb_delete_all — Delete All Rows from an NDB Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-desc.html">ndb_desc — Describe NDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-drop-index.html">ndb_drop_index — Drop Index from an NDB Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-drop-table.html">ndb_drop_table — Drop an NDB Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-error-reporter.html">ndb_error_reporter — NDB Error-Reporting Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-import.html">ndb_import — Import CSV Data Into NDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-index-stat.html">ndb_index_stat — NDB Index Statistics Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-move-data.html">ndb_move_data — NDB Data Copy Utility</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-perror.html">ndb_perror — Obtain NDB Error Message Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-print-backup-file.html">ndb_print_backup_file — Print NDB Backup File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-print-file.html">ndb_print_file — Print NDB Disk Data File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-print-frag-file.html">ndb_print_frag_file — Print NDB Fragment List File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-print-schema-file.html">ndb_print_schema_file — Print NDB Schema File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-print-sys-file.html">ndb_print_sys_file — Print NDB System File Contents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-redo-log-reader.html">ndb_redo_log_reader — Check and Print Content of Cluster Redo Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-restore.html">ndb_restore — Restore an NDB Cluster Backup</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-secretsfile-reader.html">ndb_secretsfile_reader — Obtain Key Information from an Encrypted NDB
+        Data File</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-select-all.html">ndb_select_all — Print Rows from an NDB Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-select-count.html">ndb_select_count — Print Row Counts for NDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-show-tables.html">ndb_show_tables — Display List of NDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-sign-keys.html">ndb_sign_keys — Create, Sign, and Manage TLS Keys and Certificates for NDB
+        Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-size-pl.html">ndb_size.pl — NDBCLUSTER Size Requirement Estimator</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-top.html">ndb_top — View CPU usage information for NDB threads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndb-waiter.html">ndb_waiter — Wait for NDB Cluster to Reach a Given Status</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-programs-ndbxfrm.html">ndbxfrm — Compress, Decompress, Encrypt, and Decrypt
+        Files Created by NDB Cluster</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-management.html">Management of NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-mgm-client-commands.html">Commands in the NDB Cluster Management Client</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-logs-ndb-messages.html">NDB Cluster Log Messages</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-logs-cluster-log.html">NDB Cluster: Messages in the Cluster Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-log-startup-messages.html">NDB Cluster Log Startup Messages</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-logs-event-buffer.html">Event Buffer Reporting in the Cluster Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndb-transporter-errors.html">NDB Cluster: NDB Transporter Errors</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-event-reports.html">Event Reports Generated in NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-logging-management-commands.html">NDB Cluster Logging Management Commands</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-log-events.html">NDB Cluster Log Events</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-log-statistics.html">Using CLUSTERLOG STATISTICS in the NDB Cluster Management Client</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-start-phases.html">Summary of NDB Cluster Start Phases</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-rolling-restart.html">Performing a Rolling Restart of an NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-single-user-mode.html">NDB Cluster Single User Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-online-add-node.html">Adding NDB Cluster Data Nodes Online</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-online-add-node-remarks.html">Adding NDB Cluster Data Nodes Online: General Issues</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-online-add-node-basics.html">Adding NDB Cluster Data Nodes Online: Basic procedure</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-online-add-node-example.html">Adding NDB Cluster Data Nodes Online: Detailed Example</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-backup.html">Online Backup of NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-backup-concepts.html">NDB Cluster Backup Concepts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-backup-using-management-client.html">Using The NDB Cluster Management Client to Create a Backup</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-backup-configuration.html">Configuration for NDB Cluster Backups</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-backup-troubleshooting.html">NDB Cluster Backup Troubleshooting</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-backup-parallel-data-nodes.html">Taking an NDB Backup with Parallel Data Nodes</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-importing-data.html">Importing Data Into MySQL Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-mysqld.html">MySQL Server Usage for NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-disk-data.html">NDB Cluster Disk Data Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-disk-data-objects.html">NDB Cluster Disk Data Objects</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-disk-data-storage-requirements.html">NDB Cluster Disk Data Storage Requirements</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-online-operations.html">Online Operations with ALTER TABLE in NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-privilege-synchronization.html">Privilege Synchronization and NDB_STORED_USER</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tde.html">File System Encryption for NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tde-setup.html">NDB File System Encryption Setup and Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tde-implementation.html">NDB File System Encryption Implementation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tde-limitations.html">NDB File System Encryption Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tls.html">TLS Link Encryption for NDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tls-overview.html">Overview of TLS for NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tls-keys.html">Creating a CA and Keys</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-tls-using.html">Using TLS Connections</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndb-api-statistics.html">NDB API Statistics Counters and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo.html">ndbinfo: The NDB Cluster Information Database</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-arbitrator-validity-detail.html">The ndbinfo arbitrator_validity_detail Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-arbitrator-validity-summary.html">The ndbinfo arbitrator_validity_summary Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-backup-id.html">The ndbinfo backup_id Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-blobs.html">The ndbinfo blobs Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-blocks.html">The ndbinfo blocks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-certificates.html">The ndbinfo certificates Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cluster-locks.html">The ndbinfo cluster_locks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cluster-operations.html">The ndbinfo cluster_operations Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cluster-transactions.html">The ndbinfo cluster_transactions Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-config-nodes.html">The ndbinfo config_nodes Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-config-params.html">The ndbinfo config_params Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-config-values.html">The ndbinfo config_values Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-counters.html">The ndbinfo counters Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpudata.html">The ndbinfo cpudata Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpudata-1sec.html">The ndbinfo cpudata_1sec Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpudata-20sec.html">The ndbinfo cpudata_20sec Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpudata-50ms.html">The ndbinfo cpudata_50ms Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpuinfo.html">The ndbinfo cpuinfo Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpustat.html">The ndbinfo cpustat Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpustat-50ms.html">The ndbinfo cpustat_50ms Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpustat-1sec.html">The ndbinfo cpustat_1sec Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-cpustat-20sec.html">The ndbinfo cpustat_20sec Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-dictionary-columns.html">The ndbinfo dictionary_columns Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-dictionary-tables.html">The ndbinfo dictionary_tables Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-dict-obj-info.html">The ndbinfo dict_obj_info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-dict-obj-tree.html">The ndbinfo dict_obj_tree Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-dict-obj-types.html">The ndbinfo dict_obj_types Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-disk-write-speed-base.html">The ndbinfo disk_write_speed_base Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-disk-write-speed-aggregate.html">The ndbinfo disk_write_speed_aggregate Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-disk-write-speed-aggregate-node.html">The ndbinfo disk_write_speed_aggregate_node Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-diskpagebuffer.html">The ndbinfo diskpagebuffer Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-diskstat.html">The ndbinfo diskstat Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-diskstats-1sec.html">The ndbinfo diskstats_1sec Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-error-messages.html">The ndbinfo error_messages Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-events.html">The ndbinfo events Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-files.html">The ndbinfo files Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-foreign-keys.html">The ndbinfo foreign_keys Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-hash-maps.html">The ndbinfo hash_maps Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-hwinfo.html">The ndbinfo hwinfo Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-index-columns.html">The ndbinfo index_columns Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-index-stats.html">The ndbinfo index_stats Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-locks-per-fragment.html">The ndbinfo locks_per_fragment Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-logbuffers.html">The ndbinfo logbuffers Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-logspaces.html">The ndbinfo logspaces Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-membership.html">The ndbinfo membership Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-memoryusage.html">The ndbinfo memoryusage Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-memory-per-fragment.html">The ndbinfo memory_per_fragment Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-nodes.html">The ndbinfo nodes Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-operations-per-fragment.html">The ndbinfo operations_per_fragment Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-pgman-time-track-stats.html">The ndbinfo pgman_time_track_stats Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-processes.html">The ndbinfo processes Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-resources.html">The ndbinfo resources Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-restart-info.html">The ndbinfo restart_info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-server-locks.html">The ndbinfo server_locks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-server-operations.html">The ndbinfo server_operations Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-server-transactions.html">The ndbinfo server_transactions Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-table-distribution-status.html">The ndbinfo table_distribution_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-table-fragments.html">The ndbinfo table_fragments Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-table-info.html">The ndbinfo table_info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-table-replicas.html">The ndbinfo table_replicas Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-tc-time-track-stats.html">The ndbinfo tc_time_track_stats Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-threadblocks.html">The ndbinfo threadblocks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-threads.html">The ndbinfo threads Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-threadstat.html">The ndbinfo threadstat Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-transporter-details.html">The ndbinfo transporter_details Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ndbinfo-transporters.html">The ndbinfo transporters Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-information-schema-tables.html">INFORMATION_SCHEMA Tables for NDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-ps-tables.html">NDB Cluster and the Performance Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-sql-statements.html">Quick Reference: NDB Cluster SQL Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-security.html">NDB Cluster Security Issues</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-security-networking-issues.html">NDB Cluster Security and Networking Issues</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-security-mysql-privileges.html">NDB Cluster and MySQL Privileges</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-security-mysql-security-procedures.html">NDB Cluster and MySQL Security Procedures</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication.html">NDB Cluster Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-abbreviations.html">NDB Cluster Replication: Abbreviations and Symbols</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-general.html">General Requirements for NDB Cluster Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-issues.html">Known Issues in NDB Cluster Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-schema.html">NDB Cluster Replication Schema and Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-preparation.html">Preparing the NDB Cluster for Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-starting.html">Starting NDB Cluster Replication (Single Replication Channel)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-two-channels.html">Using Two Replication Channels for NDB Cluster Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-failover.html">Implementing Failover with NDB Cluster Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-backups.html">NDB Cluster Backups With NDB Cluster Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-auto-sync.html">NDB Cluster Replication: Automating Synchronization of the Replica to
+the Source Binary Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-pitr.html">Point-In-Time Recovery Using NDB Cluster Replication</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-multi-source.html">NDB Cluster Replication: Bidirectional and Circular Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-mta.html">NDB Cluster Replication Using the Multithreaded Applier</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-replication-conflict-resolution.html">NDB Cluster Replication Conflict Resolution</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster-news.html">NDB Cluster Release Notes</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/mysql-cluster-programs-ndbd.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/mysql-cluster-programs-ndbd.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/mysql-cluster-programs-ndbd.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/mysql-cluster-programs-ndbd.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/mysql-cluster-programs-ndbd.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a> &nbsp;/&nbsp;
+                                                            <a href="mysql-cluster-programs.html">NDB Cluster Programs</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        ndbd — The NDB Cluster Data Node Daemon
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="mysql-cluster-programs-ndbd"></a>25.5.1 ndbd — The NDB Cluster Data Node Daemon</h3>
+</div>
+</div>
+</div>
+<a class="indexterm" name="idm45105569123648"></a><a class="indexterm" name="idm45105569122704"></a><a class="indexterm" name="idm45105569121344"></a><a class="indexterm" name="idm45105569119984"></a><a class="indexterm" name="idm45105569119072"></a><p>
+        The <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> binary provides the single-threaded
+        version of the process that is used to handle all the data in
+        tables employing the <code class="literal">NDBCLUSTER</code> storage
+        engine. This data node process enables a data node to accomplish
+        distributed transaction handling, node recovery, checkpointing
+        to disk, online backup, and related tasks. In NDB 8.4.1 and
+        later, when started, <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> logs a warning
+        similar to that shown here:
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">2024-05-28 13:32:16 [ndbd] WARNING  -- Running ndbd with a single thread of
+signal execution.  For multi-threaded signal execution run the ndbmtd binary.</code></pre><p>
+        <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a> is the multi-threaded version of this
+        binary.
+      </p><p>
+        In an NDB Cluster, a set of <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> processes
+        cooperate in handling data. These processes can execute on the
+        same computer (host) or on different computers. The
+        correspondences between data nodes and Cluster hosts is
+        completely configurable.
+      </p><a class="indexterm" name="idm45105569108720"></a><a class="indexterm" name="idm45105569107232"></a><a class="indexterm" name="idm45105569105744"></a><a class="indexterm" name="idm45105569104288"></a><p>
+        Options that can be used with <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> are shown
+        in the following table. Additional descriptions follow the
+        table.
+</p><p></p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          All of these options also apply to the multithreaded version
+          of this program (<a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a>) and you may
+          substitute <span class="quote">“<span class="quote"><a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a></span>”</span> for
+          <span class="quote">“<span class="quote"><a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a></span>”</span> wherever the latter
+          occurs in this section.
+</p>
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a name="option_ndbd_bind-address"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_bind-address"><code class="option">--bind-address</code></a>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for bind-address"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--bind-address=name</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Causes <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> to bind to a specific network
+            interface (host name or IP address). This option has no
+            default value.
+          </p></li><li class="listitem"><p><a name="option_ndbd_character-sets-dir"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_character-sets-dir"><code class="option">--character-sets-dir</code></a>
+</p><a class="indexterm" name="idm45105569079152"></a><a class="indexterm" name="idm45105569077696"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for character-sets-dir"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--character-sets-dir=path</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Directory containing character sets.
+          </p></li><li class="listitem"><p><a name="option_ndbd_connect-delay"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-delay"><code class="option">--connect-delay=<em class="replaceable"><code>#</code></em></code></a>
+</p><a class="indexterm" name="idm45105569067648"></a><a class="indexterm" name="idm45105569066160"></a><a class="indexterm" name="idm45105569064672"></a><a class="indexterm" name="idm45105569063184"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for connect-delay"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--connect-delay=#</code></td>
+</tr><tr><th>Deprecated</th>
+<td>Yes</td>
+</tr><tr><th>Type</th>
+<td>Numeric</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">5</code></td>
+</tr><tr><th>Minimum Value</th>
+<td><code class="literal">0</code></td>
+</tr><tr><th>Maximum Value</th>
+<td><code class="literal">3600</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Determines the time to wait between attempts to contact a
+            management server when starting (the number of attempts is
+            controlled by the
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-retries"><code class="option">--connect-retries</code></a> option). The
+            default is 5 seconds.
+          </p><p>
+            This option is deprecated, and is subject to removal in a
+            future release of NDB Cluster. Use
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-retry-delay"><code class="option">--connect-retry-delay</code></a> instead.
+          </p></li><li class="listitem"><p><a name="option_ndbd_connect-retries"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-retries"><code class="option">--connect-retries=<em class="replaceable"><code>#</code></em></code></a>
+</p><a class="indexterm" name="idm45105569038944"></a><a class="indexterm" name="idm45105569037456"></a><a class="indexterm" name="idm45105569035968"></a><a class="indexterm" name="idm45105569034480"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for connect-retries"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--connect-retries=#</code></td>
+</tr><tr><th>Type</th>
+<td>Numeric</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">12</code></td>
+</tr><tr><th>Minimum Value</th>
+<td><code class="literal">-1</code></td>
+</tr><tr><th>Maximum Value</th>
+<td><code class="literal">65535</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Set the number of times to retry a connection before giving
+            up; 0 means 1 attempt only (and no retries). The default is
+            12 attempts. The time to wait between attempts is controlled
+            by the <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-retry-delay"><code class="option">--connect-retry-delay</code></a>
+            option.
+          </p><p>
+            It is also possible to set this option to -1, in which case,
+            the data node process continues indefinitely to try to
+            connect.
+          </p></li><li class="listitem"><p><a name="option_ndbd_connect-retry-delay"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-retry-delay"><code class="option">--connect-retry-delay=<em class="replaceable"><code>#</code></em></code></a>
+</p><a class="indexterm" name="idm45105569013536"></a><a class="indexterm" name="idm45105569012080"></a><a class="indexterm" name="idm45105569010576"></a><a class="indexterm" name="idm45105569009072"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for connect-retry-delay"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--connect-retry-delay=#</code></td>
+</tr><tr><th>Type</th>
+<td>Numeric</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">5</code></td>
+</tr><tr><th>Minimum Value</th>
+<td><code class="literal">0</code></td>
+</tr><tr><th>Maximum Value</th>
+<td><code class="literal">4294967295</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Determines the time to wait between attempts to contact a
+            management server when starting (the time between attempts
+            is controlled by the
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-retries"><code class="option">--connect-retries</code></a> option). The
+            default is 5 seconds.
+          </p><p>
+            This option takes the place of the
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-delay"><code class="option">--connect-delay</code></a> option, which
+            is now deprecated and subject to removal in a future release
+            of NDB Cluster.
+          </p><p>
+            The short form <code class="option">-r</code> for this option is also
+            deprecated, and thus subject to removal. Use the long form
+            instead.
+          </p></li><li class="listitem"><p><a name="option_ndbd_connect-string"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_connect-string"><code class="option">--connect-string</code></a>
+</p><a class="indexterm" name="idm45105568986272"></a><a class="indexterm" name="idm45105568984784"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for connect-string"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--connect-string=connection_string</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Same as <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-connectstring"><code class="option">--ndb-connectstring</code></a>.
+          </p></li><li class="listitem"><p><a name="option_ndbd_core-file"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_core-file"><code class="option">--core-file</code></a>
+</p><a class="indexterm" name="idm45105568969552"></a><a class="indexterm" name="idm45105568968064"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for core-file"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--core-file</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Write core file on error; used in debugging.
+          </p></li><li class="listitem"><p><a name="option_ndbd_daemon"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_daemon"><code class="option">--daemon</code></a>, <code class="option">-d</code>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for daemon"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--daemon</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Instructs <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> or
+            <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a> to execute as a daemon process.
+            This is the default behavior.
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nodaemon"><code class="option">--nodaemon</code></a> can be used to
+            prevent the process from running as a daemon.
+          </p><p>
+            This option has no effect when running
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> or <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a> on
+            Windows platforms.
+          </p></li><li class="listitem"><p><a name="option_ndbd_defaults-extra-file"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_defaults-extra-file"><code class="option">--defaults-extra-file</code></a>
+</p><a class="indexterm" name="idm45105568942944"></a><a class="indexterm" name="idm45105568941488"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for defaults-extra-file"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--defaults-extra-file=path</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Read given file after global files are read.
+          </p></li><li class="listitem"><p><a name="option_ndbd_defaults-file"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_defaults-file"><code class="option">--defaults-file</code></a>
+</p><a class="indexterm" name="idm45105568927200"></a><a class="indexterm" name="idm45105568925712"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for defaults-file"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--defaults-file=path</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Read default options from given file only.
+          </p></li><li class="listitem"><p><a name="option_ndbd_defaults-group-suffix"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_defaults-group-suffix"><code class="option">--defaults-group-suffix</code></a>
+</p><a class="indexterm" name="idm45105568911440"></a><a class="indexterm" name="idm45105568909984"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for defaults-group-suffix"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--defaults-group-suffix=string</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Also read groups with concat(group, suffix).
+          </p></li><li class="listitem"><p><a name="option_ndbd_filesystem-password"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_filesystem-password"><code class="option">--filesystem-password</code></a>
+</p><a class="indexterm" name="idm45105568895808"></a><a class="indexterm" name="idm45105568894352"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for filesystem-password"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--filesystem-password=password</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Pass the filesystem encryption and decryption password to
+            the data node process using <code class="literal">stdin</code>,
+            <code class="literal">tty</code>, or the <code class="filename">my.cnf</code>
+            file.
+          </p><p>
+            Requires <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-encryptedfilesystem"><code class="literal">EncryptedFileSystem =
+            1</code></a>.
+          </p><p>
+            For more information, see
+            <a class="xref" href="mysql-cluster-tde.html" title="25.6.14 File System Encryption for NDB Cluster">Section 25.6.14, “File System Encryption for NDB Cluster”</a>.
+          </p></li><li class="listitem"><p><a name="option_ndbd_filesystem-password-from-stdin"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_filesystem-password-from-stdin"><code class="option">--filesystem-password-from-stdin</code></a>
+</p><a class="indexterm" name="idm45105568879520"></a><a class="indexterm" name="idm45105568878016"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for filesystem-password-from-stdin"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--filesystem-password-from-stdin={TRUE|FALSE}</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Pass the filesystem encryption and decryption password to
+            the data node process from <code class="literal">stdin</code> (only).
+          </p><p>
+            Requires <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-encryptedfilesystem"><code class="literal">EncryptedFileSystem =
+            1</code></a>.
+          </p><p>
+            For more information, see
+            <a class="xref" href="mysql-cluster-tde.html" title="25.6.14 File System Encryption for NDB Cluster">Section 25.6.14, “File System Encryption for NDB Cluster”</a>.
+          </p></li><li class="listitem"><p><a name="option_ndbd_foreground"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_foreground"><code class="option">--foreground</code></a>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for foreground"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--foreground</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Causes <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> or <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a>
+            to execute as a foreground process, primarily for debugging
+            purposes. This option implies the
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nodaemon"><code class="option">--nodaemon</code></a> option.
+          </p><p>
+            This option has no effect when running
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> or <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a> on
+            Windows platforms.
+          </p></li><li class="listitem"><p><a name="option_ndbd_help"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_help"><code class="option">--help</code></a>
+</p><a class="indexterm" name="idm45105568850048"></a><a class="indexterm" name="idm45105568848560"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for help"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--help</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Display help text and exit.
+          </p></li><li class="listitem"><p><a name="option_ndbd_initial"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_initial"><code class="option">--initial</code></a>
+</p><a class="indexterm" name="idm45105568839056"></a><a class="indexterm" name="idm45105568837568"></a><a class="indexterm" name="idm45105568836080"></a><a class="indexterm" name="idm45105568834592"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for initial"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--initial</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Instructs <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> to perform an initial
+            start. An initial start erases any files created for
+            recovery purposes by earlier instances of
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a>. It also re-creates recovery log
+            files. On some operating systems, this process can take a
+            substantial amount of time.
+          </p><p>
+            The option also causes the removal of all data files
+            associated with Disk Data tablespaces and undo log files
+            associated with log file groups that existed previously on
+            this data node (see
+            <a class="xref" href="mysql-cluster-disk-data.html" title="25.6.11 NDB Cluster Disk Data Tables">Section 25.6.11, “NDB Cluster Disk Data Tables”</a>).
+          </p><p>
+            An <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_initial"><code class="option">--initial</code></a> start is to be
+            used <span class="emphasis"><em>only</em></span> when starting the
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process under very special
+            circumstances; this is because this option causes all files
+            to be removed from the NDB Cluster file system and all redo
+            log files to be re-created. These circumstances are listed
+            here:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                When performing a software upgrade which has changed the
+                contents of any files.
+              </p></li><li class="listitem"><p>
+                When restarting the node with a new version of
+                <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a>.
+              </p></li><li class="listitem"><p>
+                As a measure of last resort when for some reason the
+                node restart or system restart repeatedly fails. In this
+                case, be aware that this node can no longer be used to
+                restore data due to the destruction of the data files.
+</p></li></ul>
+</div>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Warning
+</div>
+<p>
+              
+
+              To avoid the possibility of eventual data loss, it is
+              recommended that you <span class="emphasis"><em>not</em></span> use the
+              <code class="option">--initial</code> option together with
+              <code class="literal">StopOnError = 0</code>. Instead, set
+              <code class="literal">StopOnError</code> to 0 in
+              <code class="filename">config.ini</code> only after the cluster has
+              been started, then restart the data nodes
+              normally—that is, without the
+              <code class="option">--initial</code> option. See the description of
+              the <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-stoponerror"><code class="literal">StopOnError</code></a>
+              parameter for a detailed explanation of this issue. (Bug
+              #24945638)
+</p>
+</div>
+<p>
+            Use of this option prevents the
+            <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-startpartialtimeout"><code class="literal">StartPartialTimeout</code></a>
+            and
+            <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-startpartitionedtimeout"><code class="literal">StartPartitionedTimeout</code></a>
+            configuration parameters from having any effect.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+              This option does <span class="emphasis"><em>not</em></span> affect backup
+              files that have already been created by the affected node.
+            </p><p>
+              This option also has no effect on recovery of data by a
+              data node that is just starting (or restarting) from data
+              nodes that are already running (unless they also were
+              started with <code class="option">--initial</code>, as part of an
+              initial restart). This recovery of data occurs
+              automatically, and requires no user intervention in an NDB
+              Cluster that is running normally.
+</p>
+</div>
+<p>
+            It is permissible to use this option when starting the
+            cluster for the very first time (that is, before any data
+            node files have been created); however, it is
+            <span class="emphasis"><em>not</em></span> necessary to do so.
+          </p></li><li class="listitem"><p><a name="option_ndbd_initial-start"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_initial-start"><code class="option">--initial-start</code></a>
+</p><a class="indexterm" name="idm45105568799168"></a><a class="indexterm" name="idm45105568797680"></a><a class="indexterm" name="idm45105568796192"></a><a class="indexterm" name="idm45105568794704"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for initial-start"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--initial-start</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            This option is used when performing a partial initial start
+            of the cluster. Each node should be started with this
+            option, as well as
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nowait-nodes"><code class="option">--nowait-nodes</code></a>.
+          </p><p>
+            Suppose that you have a 4-node cluster whose data nodes have
+            the IDs 2, 3, 4, and 5, and you wish to perform a partial
+            initial start using only nodes 2, 4, and 5—that is,
+            omitting node 3:
+          </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">$&gt; ndbd --ndb-nodeid=2 --nowait-nodes=3 --initial-start
+$&gt; ndbd --ndb-nodeid=4 --nowait-nodes=3 --initial-start
+$&gt; ndbd --ndb-nodeid=5 --nowait-nodes=3 --initial-start</code></pre><p>
+            When using this option, you must also specify the node ID
+            for the data node being started with the
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-nodeid"><code class="option">--ndb-nodeid</code></a> option.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+              Do not confuse this option with the
+              <a class="link" href="mysql-cluster-programs-ndb-mgmd.html#option_ndb_mgmd_nowait-nodes"><code class="option">--nowait-nodes</code></a> option for
+              <a class="link" href="mysql-cluster-programs-ndb-mgmd.html" title="25.5.4 ndb_mgmd — The NDB Cluster Management Server Daemon"><span class="command"><strong>ndb_mgmd</strong></span></a>, which can be used to enable a
+              cluster configured with multiple management servers to be
+              started without all management servers being online.
+</p>
+</div>
+</li><li class="listitem"><p><a name="option_ndbd_install"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_install"><code class="option">--install[=<em class="replaceable"><code>name</code></em>]</code></a>
+</p><a class="indexterm" name="idm45105568774544"></a><a class="indexterm" name="idm45105568773056"></a><a class="indexterm" name="idm45105568771568"></a><a class="indexterm" name="idm45105568770080"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for install"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--install[=name]</code></td>
+</tr><tr><th>Platform Specific</th>
+<td>Windows</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ndbd</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Causes <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> to be installed as a Windows
+            service. Optionally, you can specify a name for the service;
+            if not set, the service name defaults to
+            <code class="literal">ndbd</code>. Although it is preferable to
+            specify other <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> program options in a
+            <code class="filename">my.ini</code> or <code class="filename">my.cnf</code>
+            configuration file, it is possible to use together with
+            <code class="option">--install</code>. However, in such cases, the
+            <code class="option">--install</code> option must be specified first,
+            before any other options are given, for the Windows service
+            installation to succeed.
+          </p><p>
+            It is generally not advisable to use this option together
+            with the <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_initial"><code class="option">--initial</code></a> option,
+            since this causes the data node file system to be wiped and
+            rebuilt every time the service is stopped and started.
+            Extreme care should also be taken if you intend to use any
+            of the other <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> options that affect the
+            starting of data nodes—including
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_initial-start"><code class="option">--initial-start</code></a>,
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nostart"><code class="option">--nostart</code></a>, and
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nowait-nodes"><code class="option">--nowait-nodes</code></a>—together
+            with <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_install"><code class="option">--install</code></a>, and you should
+            make absolutely certain you fully understand and allow for
+            any possible consequences of doing so.
+          </p><p>
+            The <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_install"><code class="option">--install</code></a> option has no
+            effect on non-Windows platforms.
+          </p></li><li class="listitem"><p><a name="option_ndbd_logbuffer-size"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_logbuffer-size"><code class="option">--logbuffer-size=<em class="replaceable"><code>#</code></em></code></a>
+</p><a class="indexterm" name="idm45105568738848"></a><a class="indexterm" name="idm45105568737360"></a><a class="indexterm" name="idm45105568735872"></a><a class="indexterm" name="idm45105568734384"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for logbuffer-size"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--logbuffer-size=#</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">32768</code></td>
+</tr><tr><th>Minimum Value</th>
+<td><code class="literal">2048</code></td>
+</tr><tr><th>Maximum Value</th>
+<td><code class="literal">4294967295</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Sets the size of the data node log buffer. When debugging
+            with high amounts of extra logging, it is possible for the
+            log buffer to run out of space if there are too many log
+            messages, in which case some log messages can be lost. This
+            should not occur during normal operations.
+          </p></li><li class="listitem"><p><a name="option_ndbd_login-path"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_login-path"><code class="option">--login-path</code></a>
+</p><a class="indexterm" name="idm45105568715040"></a><a class="indexterm" name="idm45105568713552"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for login-path"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--login-path=path</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Read given path from login file.
+          </p></li><li class="listitem"><p><a name="option_ndbd_no-login-paths"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_no-login-paths"><code class="option">--no-login-paths</code></a>
+</p><a class="indexterm" name="idm45105568699280"></a><a class="indexterm" name="idm45105568697792"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for no-login-paths"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--no-login-paths</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Skips reading options from the login path file.
+          </p></li><li class="listitem"><p><a name="option_ndbd_ndb-connectstring"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-connectstring"><code class="option">--ndb-connectstring</code></a>
+</p><a class="indexterm" name="idm45105568688192"></a><a class="indexterm" name="idm45105568686736"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for ndb-connectstring"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--ndb-connectstring=connection_string</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Set connection string for connecting to
+            <a class="link" href="mysql-cluster-programs-ndb-mgmd.html" title="25.5.4 ndb_mgmd — The NDB Cluster Management Server Daemon"><span class="command"><strong>ndb_mgmd</strong></span></a>. Syntax:
+            <code class="literal">[nodeid=<em class="replaceable"><code>id</code></em>;][host=]<em class="replaceable"><code>hostname</code></em>[:<em class="replaceable"><code>port</code></em>]</code>.
+            Overrides entries in <code class="literal">NDB_CONNECTSTRING</code>
+            and <code class="filename">my.cnf</code>.
+          </p></li><li class="listitem"><p><a name="option_ndbd_ndb-mgmd-host"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-mgmd-host"><code class="option">--ndb-mgmd-host</code></a>
+</p><a class="indexterm" name="idm45105568667632"></a><a class="indexterm" name="idm45105568666144"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for ndb-mgmd-host"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--ndb-mgmd-host=connection_string</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Same as <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-connectstring"><code class="option">--ndb-connectstring</code></a>.
+          </p></li><li class="listitem"><p><a name="option_ndbd_ndb-mgm-tls"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-mgm-tls"><code class="option">--ndb-mgm-tls</code></a>
+</p><a class="indexterm" name="idm45105568651088"></a><a class="indexterm" name="idm45105568649600"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for ndb-mgm-tls"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--ndb-mgm-tls=level</code></td>
+</tr><tr><th>Type</th>
+<td>Enumeration</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">relaxed</code></td>
+</tr><tr><th>Valid Values</th>
+<td><p class="valid-value"><code class="literal">relaxed</code></p><p class="valid-value"><code class="literal">strict</code></p></td>
+</tr></tbody></table>
+</div>
+<p>
+            Sets the level of TLS support required to connect to the
+            management server; one of <code class="literal">relaxed</code> or
+            <code class="literal">strict</code>. <code class="literal">relaxed</code> (the
+            default) means that a TLS connection is attempted, but
+            success is not required; <code class="literal">strict</code> means
+            that TLS is required to connect.
+          </p></li><li class="listitem"><p><a name="option_ndbd_ndb-nodeid"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-nodeid"><code class="option">--ndb-nodeid</code></a>
+</p><a class="indexterm" name="idm45105568628720"></a><a class="indexterm" name="idm45105568627232"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for ndb-nodeid"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--ndb-nodeid=#</code></td>
+</tr><tr><th>Type</th>
+<td>Integer</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">[none]</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Set node ID for this node, overriding any ID set by
+            --ndb-connectstring.
+          </p></li><li class="listitem"><p><a name="option_ndbd_ndb-optimized-node-selection"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-optimized-node-selection"><code class="option">--ndb-optimized-node-selection</code></a>
+</p><a class="indexterm" name="idm45105568612832"></a><a class="indexterm" name="idm45105568611328"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for ndb-optimized-node-selection"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--ndb-optimized-node-selection</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Enable optimizations for selection of nodes for
+            transactions. Enabled by default; use
+            <code class="option">--skip-ndb-optimized-node-selection</code> to
+            disable.
+          </p></li><li class="listitem"><p><a name="option_ndbd_ndb-tls-search-path"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_ndb-tls-search-path"><code class="option">--ndb-tls-search-path</code></a>
+</p><a class="indexterm" name="idm45105568601040"></a><a class="indexterm" name="idm45105568599584"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for ndb-tls-search-path"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--ndb-tls-search-path=list</code></td>
+</tr><tr><th>Type</th>
+<td>Path name</td>
+</tr><tr><th>Default Value (Unix)</th>
+<td><code class="literal">$HOME/ndb-tls</code></td>
+</tr><tr><th>Default Value (Windows)</th>
+<td><code class="literal">$HOMEDIR/ndb-tls</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Specify a list of directories to search for a CA file. On
+            Unix platforms, the directory names are separated by colons
+            (<code class="literal">:</code>); on Windows systems, the semicolon
+            character (<code class="literal">;</code>) is used as the separator. A
+            directory reference may be relative or absolute; it may
+            contain one or more environment variables, each denoted by a
+            prefixed dollar sign (<code class="literal">$</code>), and expanded
+            prior to use.
+          </p><p>
+            Searching begins with the leftmost named directory and
+            proceeds from left to right until a file is found. An empty
+            string denotes an empty search path, which causes all
+            searches to fail. A string consisting of a single dot
+            (<code class="literal">.</code>) indicates that the search path
+            limited to the current working directory.
+          </p><p>
+            If no search path is supplied, the compiled-in default value
+            is used. This value depends on the platform used: On
+            Windows, this is <code class="literal">\ndb-tls</code>; on other
+            platforms (including Linux), it is
+            <code class="literal">$HOME/ndb-tls</code>. This can be overridden by
+            compiling NDB Cluster using
+            <a class="link" href="source-configuration-options.html#option_cmake_with_ndb_tls_search_path"><code class="option">-DWITH_NDB_TLS_SEARCH_PATH</code></a>.
+          </p></li><li class="listitem"><p><a name="option_ndbd_nodaemon"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nodaemon"><code class="option">--nodaemon</code></a>
+</p>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for nodaemon"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--nodaemon</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Prevents <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> or
+            <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a> from executing as a daemon
+            process. This option overrides the
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_daemon"><code class="option">--daemon</code></a> option. This is useful
+            for redirecting output to the screen when debugging the
+            binary.
+          </p><p>
+            The default behavior for <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> and
+            <a class="link" href="mysql-cluster-programs-ndbmtd.html" title="25.5.3 ndbmtd — The NDB Cluster Data Node Daemon (Multi-Threaded)"><span class="command"><strong>ndbmtd</strong></span></a> on Windows is to run in the
+            foreground, making this option unnecessary on Windows
+            platforms, where it has no effect.
+          </p></li><li class="listitem"><p><a name="option_ndbd_no-defaults"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_no-defaults"><code class="option">--no-defaults</code></a>
+</p><a class="indexterm" name="idm45105568561120"></a><a class="indexterm" name="idm45105568559632"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for no-defaults"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--no-defaults</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Do not read default options from any option file other than
+            login file.
+          </p></li><li class="listitem"><p><a name="option_ndbd_nostart"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nostart"><code class="option">--nostart</code></a>, <code class="option">-n</code>
+</p><a class="indexterm" name="idm45105568549600"></a><a class="indexterm" name="idm45105568548112"></a><a class="indexterm" name="idm45105568546624"></a><a class="indexterm" name="idm45105568545136"></a><a class="indexterm" name="idm45105568543648"></a><a class="indexterm" name="idm45105568542160"></a><a class="indexterm" name="idm45105568540672"></a><a class="indexterm" name="idm45105568539184"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for nostart"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--nostart</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Instructs <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> not to start
+            automatically. When this option is used,
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> connects to the management server,
+            obtains configuration data from it, and initializes
+            communication objects. However, it does not actually start
+            the execution engine until specifically requested to do so
+            by the management server. This can be accomplished by
+            issuing the proper <a class="link" href="mysql-cluster-mgm-client-commands.html#ndbclient-start"><code class="literal">START</code></a>
+            command in the management client (see
+            <a class="xref" href="mysql-cluster-mgm-client-commands.html" title="25.6.1 Commands in the NDB Cluster Management Client">Section 25.6.1, “Commands in the NDB Cluster Management Client”</a>).
+          </p></li><li class="listitem"><p><a name="option_ndbd_nowait-nodes"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_nowait-nodes"><code class="option">--nowait-nodes=<em class="replaceable"><code>node_id_1</code></em>[,
+            <em class="replaceable"><code>node_id_2</code></em>[, ...]]</code></a>
+</p><a class="indexterm" name="idm45105568523744"></a><a class="indexterm" name="idm45105568522256"></a><a class="indexterm" name="idm45105568520768"></a><a class="indexterm" name="idm45105568519280"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for nowait-nodes"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--nowait-nodes=list</code></td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal"></code></td>
+</tr></tbody></table>
+</div>
+<p>
+            This option takes a list of data nodes for which the cluster
+            does not wait, prior to starting.
+          </p><p>
+            This can be used to start the cluster in a partitioned
+            state. For example, to start the cluster with only half of
+            the data nodes (nodes 2, 3, 4, and 5) running in a 4-node
+            cluster, you can start each <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process
+            with <code class="option">--nowait-nodes=3,5</code>. In this case, the
+            cluster starts as soon as nodes 2 and 4 connect, and does
+            <span class="emphasis"><em>not</em></span> wait
+            <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-startpartitionedtimeout"><code class="literal">StartPartitionedTimeout</code></a>
+            milliseconds for nodes 3 and 5 to connect as it would
+            otherwise.
+          </p><p>
+            If you wanted to start up the same cluster as in the
+            previous example without one <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> (say,
+            for example, that the host machine for node 3 has suffered a
+            hardware failure) then start nodes 2, 4, and 5 with
+            <code class="option">--nowait-nodes=3</code>. Then the cluster starts
+            as soon as nodes 2, 4, and 5 connect, and does not wait for
+            node 3 to start.
+          </p></li><li class="listitem"><p><a name="option_ndbd_print-defaults"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_print-defaults"><code class="option">--print-defaults</code></a>
+</p><a class="indexterm" name="idm45105568498384"></a><a class="indexterm" name="idm45105568496896"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for print-defaults"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--print-defaults</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Print program argument list and exit.
+          </p></li><li class="listitem"><p><a name="option_ndbd_remove"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_remove"><code class="option">--remove[=<em class="replaceable"><code>name</code></em>]</code></a>
+</p><a class="indexterm" name="idm45105568486928"></a><a class="indexterm" name="idm45105568485440"></a><a class="indexterm" name="idm45105568483952"></a><a class="indexterm" name="idm45105568482464"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for remove"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--remove[=name]</code></td>
+</tr><tr><th>Platform Specific</th>
+<td>Windows</td>
+</tr><tr><th>Type</th>
+<td>String</td>
+</tr><tr><th>Default Value</th>
+<td><code class="literal">ndbd</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Causes an <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process that was
+            previously installed as a Windows service to be removed.
+            Optionally, you can specify a name for the service to be
+            uninstalled; if not set, the service name defaults to
+            <code class="literal">ndbd</code>.
+          </p><p>
+            The <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_remove"><code class="option">--remove</code></a> option has no
+            effect on non-Windows platforms.
+          </p></li><li class="listitem"><p><a name="option_ndbd_usage"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_usage"><code class="option">--usage</code></a>
+</p><a class="indexterm" name="idm45105568462704"></a><a class="indexterm" name="idm45105568461216"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for usage"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--usage</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Display help text and exit; same as --help.
+          </p></li><li class="listitem"><p><a name="option_ndbd_verbose"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_verbose"><code class="option">--verbose</code></a>, <code class="option">-v</code>
+          </p><a class="indexterm" name="idm45105568451200"></a><a class="indexterm" name="idm45105568449712"></a><a class="indexterm" name="idm45105568448224"></a><a class="indexterm" name="idm45105568446736"></a><p>
+            Causes extra debug output to be written to the node log.
+          </p><p>
+            You can also use <a class="link" href="mysql-cluster-mgm-client-commands.html#ndbclient-nodelog-debug"><code class="literal">NODELOG DEBUG
+            ON</code></a> and <a class="link" href="mysql-cluster-mgm-client-commands.html#ndbclient-nodelog-debug"><code class="literal">NODELOG DEBUG
+            OFF</code></a> to enable and disable this extra logging while
+            the data node is running.
+          </p></li><li class="listitem"><p><a name="option_ndbd_version"></a>
+            <a class="link" href="mysql-cluster-programs-ndbd.html#option_ndbd_version"><code class="option">--version</code></a>
+</p><a class="indexterm" name="idm45105568439440"></a><a class="indexterm" name="idm45105568437952"></a>
+<div class="informaltable">
+<table frame="box" rules="all" summary="Properties for version"><col style="width: 30%"><col style="width: 70%"><tbody><tr><th>Command-Line Format</th>
+<td><code class="literal">--version</code></td>
+</tr></tbody></table>
+</div>
+<p>
+            Display version information and exit.
+</p></li></ul>
+</div>
+<a class="indexterm" name="idm45105568430240"></a><a class="indexterm" name="idm45105568428752"></a><p>
+        <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> generates a set of log files which are
+        placed in the directory specified by
+        <a class="link" href="mysql-cluster-ndbd-definition.html#ndbparam-ndbd-datadir"><code class="literal">DataDir</code></a> in the
+        <code class="filename">config.ini</code> configuration file.
+      </p><p>
+        These log files are listed below.
+        <em class="replaceable"><code>node_id</code></em> is and represents the node's
+        unique identifier. For example,
+        <code class="filename">ndb_2_error.log</code> is the error log generated
+        by the data node whose node ID is <code class="literal">2</code>.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="indexterm" name="idm45105568420800"></a>
+
+            <a class="indexterm" name="idm45105568419312"></a>
+
+            <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>_error.log</code>
+            is a file containing records of all crashes which the
+            referenced <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process has encountered.
+            Each record in this file contains a brief error string and a
+            reference to a trace file for this crash. A typical entry in
+            this file might appear as shown here:
+          </p><pre class="programlisting copytoclipboard language-simple"><code class="language-simple">Date/Time: Saturday 30 July 2004 - 00:20:01
+Type of error: error
+Message: Internal program error (failed ndbrequire)
+Fault ID: 2341
+Problem data: DbtupFixAlloc.cpp
+Object of reference: DBTUP (Line: 173)
+ProgramName: NDB Kernel
+ProcessID: 14909
+TraceFile: ndb_2_trace.log.2
+***EOM***</code></pre><p>
+            Listings of possible <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> exit codes and
+            messages generated when a data node process shuts down
+            prematurely can be found in
+            <a class="ulink" href="https://dev.mysql.com/doc/ndb-internals/en/ndb-node-error-messages.html" target="_top">Data Node Error Messages</a>.
+</p>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+              <span class="emphasis"><em>The last entry in the error log file is not
+              necessarily the newest one</em></span> (nor is it likely to
+              be). Entries in the error log are <span class="emphasis"><em>not</em></span>
+              listed in chronological order; rather, they correspond to
+              the order of the trace files as determined in the
+              <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>_trace.log.next</code>
+              file (see below). Error log entries are thus overwritten
+              in a cyclical and not sequential fashion.
+</p>
+</div>
+</li><li class="listitem"><p>
+            <a class="indexterm" name="idm45105568407728"></a>
+
+            <a class="indexterm" name="idm45105568406240"></a>
+
+            <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>_trace.log.<em class="replaceable"><code>trace_id</code></em></code>
+            is a trace file describing exactly what happened just before
+            the error occurred. This information is useful for analysis
+            by the NDB Cluster development team.
+          </p><p>
+            It is possible to configure the number of these trace files
+            that are created before old files are overwritten.
+            <em class="replaceable"><code>trace_id</code></em> is a number which is
+            incremented for each successive trace file.
+          </p></li><li class="listitem"><p>
+            <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>_trace.log.next</code>
+            is the file that keeps track of the next trace file number
+            to be assigned.
+          </p></li><li class="listitem"><p>
+            <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>_out.log</code>
+            is a file containing any data output by the
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process. This file is created only
+            if <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> is started as a daemon, which is
+            the default behavior.
+          </p></li><li class="listitem"><p>
+            <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>.pid</code>
+            is a file containing the process ID of the
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process when started as a daemon. It
+            also functions as a lock file to avoid the starting of nodes
+            with the same identifier.
+          </p></li><li class="listitem"><p>
+            <code class="filename">ndb_<em class="replaceable"><code>node_id</code></em>_signal.log</code>
+            is a file used only in debug versions of
+            <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a>, where it is possible to trace all
+            incoming, outgoing, and internal messages with their data in
+            the <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process.
+</p></li></ul>
+</div>
+<p>
+        It is recommended not to use a directory mounted through NFS
+        because in some environments this can cause problems whereby the
+        lock on the <code class="filename">.pid</code> file remains in effect
+        even after the process has terminated.
+      </p><p>
+        To start <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a>, it may also be necessary to
+        specify the host name of the management server and the port on
+        which it is listening. Optionally, one may also specify the node
+        ID that the process is to use.
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">$&gt; ndbd --connect-string="nodeid=2;host=ndb_mgmd.mysql.com:1186"</code></pre><p>
+        See <a class="xref" href="mysql-cluster-connection-strings.html" title="25.4.3.3 NDB Cluster Connection Strings">Section 25.4.3.3, “NDB Cluster Connection Strings”</a>, for
+        additional information about this issue. For more information
+        about data node configuration parameters, see
+        <a class="xref" href="mysql-cluster-ndbd-definition.html" title="25.4.3.6 Defining NDB Cluster Data Nodes">Section 25.4.3.6, “Defining NDB Cluster Data Nodes”</a>.
+      </p><p>
+        When <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> starts, it actually initiates two
+        processes. The first of these is called the <span class="quote">“<span class="quote">angel
+        process</span>”</span>; its only job is to discover when the execution
+        process has been completed, and then to restart the
+        <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process if it is configured to do so.
+        Thus, if you attempt to kill <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> using the
+        Unix <a class="link" href="kill.html" title="15.7.8.4 KILL Statement"><span class="command"><strong>kill</strong></span></a> command, it is necessary to kill
+        both processes, beginning with the angel process. The preferred
+        method of terminating an <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process is to
+        use the management client and stop the process from there.
+      </p><p>
+        The execution process uses one thread for reading, writing, and
+        scanning data, as well as all other activities. This thread is
+        implemented asynchronously so that it can easily handle
+        thousands of concurrent actions. In addition, a watch-dog thread
+        supervises the execution thread to make sure that it does not
+        hang in an endless loop. A pool of threads handles file I/O,
+        with each thread able to handle one open file. Threads can also
+        be used for transporter connections by the transporters in the
+        <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process. In a multi-processor system
+        performing a large number of operations (including updates), the
+        <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> process can consume up to 2 CPUs if
+        permitted to do so.
+      </p><p>
+        For a machine with many CPUs it is possible to use several
+        <a class="link" href="mysql-cluster-programs-ndbd.html" title="25.5.1 ndbd — The NDB Cluster Data Node Daemon"><span class="command"><strong>ndbd</strong></span></a> processes which belong to different node
+        groups; however, such a configuration is still considered
+        experimental and is not supported for MySQL 8.4 in
+        a production setting. See
+        <a class="xref" href="mysql-cluster-limitations.html" title="25.2.7 Known Limitations of NDB Cluster">Section 25.2.7, “Known Limitations of NDB Cluster”</a>.
+</p>
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="mysql-cluster-programs.html"
+        aria-label="Previous" title="Previous: NDB Cluster Programs"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="mysql-cluster-programs.html" title="Up: NDB Cluster Programs"> UP</a> &nbsp;
+    <a href="mysql-cluster-programs-ndbinfo-select-all.html" aria-label="Next"
+        title="Next: ndbinfo_select_all — Select From ndbinfo Tables">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/mysql-cluster-programs-ndbd.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:14:52 GMT -->
+</html>

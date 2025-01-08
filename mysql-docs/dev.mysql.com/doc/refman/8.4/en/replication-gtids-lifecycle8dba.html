@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/replication-gtids-lifecycle.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:15:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 19.1.3.2 GTID Life Cycle</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="replication-gtids-concepts.html" title="19.1.3.1 GTID Format and Storage" />
+<link rel="next" href="replication-gtids-auto-positioning8dba.html?ff=nopfpls" title="19.1.3.3 GTID Auto-Positioning" />
+<link rel="up" href="replication-gtids.html" title="19.1.3 Replication with Global Transaction Identifiers" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7yrsq-f-4c82d1d36-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":244,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1928c343","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":11666,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730135141","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==HXH6juHedO5mIUpqIqASqKamHlId56fIzKwARi8Pd+8l2YfzwTFfLuCKudC6PMlC0E4PAPW9d/fuzoGjfTGGYGznpobbD0B+pExNWw05FE2ptsJXTuJlBrs8KWeeqg3Go139GGOimXncYMgRH10DV1yrxMvPaKVYvQ2WA466wCPYvJpjnD0jdW180e6fvbc6tF/z2s0OaxX8MiS3qIMhF0pH38ieHbYXqQZ+NCYlhmgEZCEGkOcwEmMVLOBeLVtjDJxW60a1fSoxrqY9+WprAdTFQEhkjq1uK43Za+0XG3fR1dncHp/5CrMQUeXIi0CCF+nITHwCCZUEdk+VMsjLYm3YQH41jmCmBFokfgCivCksVTDtPEGplUj7tvZStulD61WKH5aJgLAygyOvRGjX+sJAeUM/WhBKz2iu0/SVvG8=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Freplication-gtids-lifecycle.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="replication-gtids-concepts.html"
+        aria-label="Previous" title="Previous: GTID Format and Storage"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="replication-gtids.html" title="Up: Replication with Global Transaction Identifiers"><span class="icon-chevron-up"></span></a>
+    <a href="replication-gtids-auto-positioning.html" aria-label="Next"
+        title="Next: GTID Auto-Positioning"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-configuration.html">Configuring Replication</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binlog-replication-configuration-overview.html">Binary Log File Position Based Replication Configuration Overview</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-howto.html">Setting Up Binary Log File Position Based Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-howto-masterbaseconfig.html">Setting the Replication Source Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-howto-slavebaseconfig.html">Setting the Replica Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-howto-repuser.html">Creating a User for Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-howto-masterstatus.html">Obtaining the Replication Source Binary Log Coordinates</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-snapshot-method.html">Choosing a Method for Data Snapshots</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-setup-replicas.html">Setting Up Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-howto-slaveinit.html">Setting the Source Configuration on the Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-howto-additionalslaves.html">Adding Replicas to a Replication Environment</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-gtids.html">Replication with Global Transaction Identifiers</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-concepts.html">GTID Format and Storage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="replication-gtids-lifecycle.html">GTID Life Cycle</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-auto-positioning.html">GTID Auto-Positioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-howto.html">Setting Up Replication Using GTIDs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-failover.html">Using GTIDs for Failover and Scaleout</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-assign-anon.html">Replication From a Source Without GTIDs to a Replica With GTIDs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-restrictions.html">Restrictions on Replication with GTIDs</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-gtids-functions.html">Stored Function Examples to Manipulate GTIDs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-mode-change-online.html">Changing GTID Mode on Online Servers</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-mode-change-online-concepts.html">Replication Mode Concepts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-mode-change-online-enable-gtids.html">Enabling GTID Transactions Online</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-mode-change-online-disable-gtids.html">Disabling GTID Transactions Online</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-mode-change-online-verify-transactions.html">Verifying Replication of Anonymous Transactions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source.html">MySQL Multi-Source Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-configuration.html">Configuring Multi-Source Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-provision-replica.html">Provisioning a Multi-Source Replica for GTID-Based Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-adding-gtid-master.html">Adding GTID-Based Sources to a Multi-Source Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-adding-binlog-master.html">Adding Binary Log Based Replication Sources to a Multi-Source Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-start-replica.html">Starting Multi-Source Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-stop-replica.html">Stopping Multi-Source Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-reset-replica.html">Resetting Multi-Source Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-multi-source-monitoring.html">Monitoring Multi-Source Replication</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-options.html">Replication and Binary Logging Options and Variables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-options-reference.html">Replication and Binary Logging Option and Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-options-source.html">Replication Source Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-options-replica.html">Replica Server Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-options-binary-log.html">Binary Logging Options and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-options-gtids.html">Global Transaction ID System Variables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-administration.html">Common Replication Administration Tasks</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-administration-status.html">Checking Replication Status</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-administration-pausing.html">Pausing Replication on the Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-administration-skip.html">Skipping Transactions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-implementation.html">Replication Implementation</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-formats.html">Replication Formats</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-sbr-rbr.html">Advantages and Disadvantages of Statement-Based and Row-Based
+Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-rbr-usage.html">Usage of Row-Based Logging and Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-rbr-safe-unsafe.html">Determination of Safe and Unsafe Statements in Binary Logging</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-channels.html">Replication Channels</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="channels-commands-single-channel.html">Commands for Operations on a Single Channel</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="channels-with-prev-replication.html">Compatibility with Previous Replication Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="channels-startup-options.html">Startup Options and Replication Channels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="channels-naming-conventions.html">Replication Channel Naming Conventions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-threads.html">Replication Threads</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-threads-monitor-main.html">Monitoring Replication Main Threads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-threads-monitor-worker.html">Monitoring Replication Applier Worker Threads</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replica-logs.html">Relay Log and Replication Metadata Repositories</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-logs-relaylog.html">The Relay Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replica-logs-status.html">Replication Metadata Repositories</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-rules.html">How Servers Evaluate Replication Filtering Rules</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-rules-db-options.html">Evaluation of Database-Level Replication and Binary Logging Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-rules-table-options.html">Evaluation of Table-Level Replication Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-rules-examples.html">Interactions Between Replication Filtering Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-rules-channel-based-filters.html">Replication Channel Based Filters</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-security.html">Replication Security</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-encrypted-connections.html">Setting Up Replication to Use Encrypted Connections</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-binlog-encryption.html">Encrypting Binary Log Files and Relay Log Files</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-binlog-encryption-scope.html">Scope of Binary Log Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-binlog-encryption-encryption-keys.html">Binary Log Encryption Keys</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-binlog-encryption-key-rotation.html">Binary Log Master Key Rotation</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-privilege-checks.html">Replication Privilege Checks</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-privilege-checks-account.html">Privileges For The Replication PRIVILEGE_CHECKS_USER Account</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-privilege-checks-gr.html">Privilege Checks For Group Replication Channels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-privilege-checks-recover.html">Recovering From Failed Replication Privilege Checks</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-solutions.html">Replication Solutions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-backups.html">Using Replication for Backups</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-backups-mysqldump.html">Backing Up a Replica Using mysqldump</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-backups-rawdata.html">Backing Up Raw Data from a Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-backups-read-only.html">Backing Up a Source or Replica by Making It Read Only</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-unexpected-replica-halt.html">Handling an Unexpected Halt of a Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-rbr-monitoring.html">Monitoring Row-based Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-diffengines.html">Using Replication with Different Source and Replica Storage Engines</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-scaleout.html">Using Replication for Scale-Out</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-partitioning.html">Replicating Different Databases to Different Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-performance.html">Improving Replication Performance</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-solutions-switch.html">Switching Sources During Failover</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-asynchronous-connection-failover.html">Switching Sources and Replicas with Asynchronous Connection Failover</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-asynchronous-connection-failover-source.html">Asynchronous Connection Failover for Sources</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-asynchronous-connection-failover-replica.html">Asynchronous Connection Failover for Replicas</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-semisync.html">Semisynchronous Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-semisync-installation.html">Installing Semisynchronous Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-semisync-interface.html">Configuring Semisynchronous Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-semisync-monitoring.html">Semisynchronous Replication Monitoring</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-delayed.html">Delayed Replication</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-notes.html">Replication Notes and Tips</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-features.html">Replication Features and Issues</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-auto-increment.html">Replication and AUTO_INCREMENT</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-blackhole.html">Replication and BLACKHOLE Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-charset.html">Replication and Character Sets</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-checksum-table.html">Replication and CHECKSUM TABLE</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-create-alter-drop-server.html">Replication of CREATE SERVER, ALTER SERVER, and DROP SERVER</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-create-if-not-exists.html">Replication of CREATE ... IF NOT EXISTS Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-create-select.html">Replication of CREATE TABLE ... SELECT Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-current-user.html">Replication of CURRENT_USER()</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-differing-tables.html">Replication with Differing Table Definitions on Source and Replica</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-directory.html">Replication and DIRECTORY Table Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-drop-if-exists.html">Replication of DROP ... IF EXISTS Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-floatvalues.html">Replication and Floating-Point Values</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-flush.html">Replication and FLUSH</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-functions.html">Replication and System Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-fractional-seconds.html">Replication and Fractional Seconds Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-invoked.html">Replication of Invoked Features</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-json.html">Replication of JSON Documents</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-limit.html">Replication and LIMIT</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-load-data.html">Replication and LOAD DATA</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-max-allowed-packet.html">Replication and max_allowed_packet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-memory.html">Replication and MEMORY Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-mysqldb.html">Replication of the mysql System Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-optimizer.html">Replication and the Query Optimizer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-partitioning.html">Replication and Partitioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-repair-table.html">Replication and REPAIR TABLE</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-reserved-words.html">Replication and Reserved Words</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-row-searches.html">Replication and Row Searches</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-shutdowns.html">Replication and Source or Replica Shutdowns</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-errors.html">Replica Errors During Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-sql-mode.html">Replication and Server SQL Mode</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-temptables.html">Replication and Temporary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-timeout.html">Replication Retries and Timeouts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-timezone.html">Replication and Time Zones</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-transaction-inconsistencies.html">Replication and Transaction Inconsistencies</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-transactions.html">Replication and Transactions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-triggers.html">Replication and Triggers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-truncate.html">Replication and TRUNCATE TABLE</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-user-names.html">Replication and User Name Length</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-variables.html">Replication and Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-features-views.html">Replication and Views</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-compatibility.html">Replication Compatibility Between MySQL Versions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-upgrade.html">Upgrading or Downgrading a Replication Topology</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-problems.html">Troubleshooting Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication-bugs.html">How to Report Replication Bugs or Problems</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/replication-gtids-lifecycle.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/replication-gtids-lifecycle.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/replication-gtids-lifecycle.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-lifecycle.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/replication-gtids-lifecycle.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="replication.html">Replication</a> &nbsp;/&nbsp;
+                                                            <a href="replication-configuration.html">Configuring Replication</a> &nbsp;/&nbsp;
+                                                            <a href="replication-gtids.html">Replication with Global Transaction Identifiers</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        GTID Life Cycle
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="replication-gtids-lifecycle"></a>19.1.3.2 GTID Life Cycle</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105606961600"></a><p>
+      The life cycle of a GTID consists of the following steps:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+          A transaction is executed and committed on the source. This
+          client transaction is assigned a GTID composed of the source's
+          UUID and the smallest nonzero transaction sequence number not
+          yet used on this server. The GTID is written to the source's
+          binary log (immediately preceding the transaction itself in
+          the log). If a client transaction is not written to the binary
+          log (for example, because the transaction was filtered out, or
+          the transaction was read-only), it is not assigned a GTID.
+        </p></li><li class="listitem"><p>
+          If a GTID was assigned for the transaction, the GTID is
+          persisted atomically at commit time by writing it to the
+          binary log at the beginning of the transaction (as a
+          <code class="literal">Gtid_log_event</code>). Whenever the binary log is
+          rotated or the server is shut down, the server writes GTIDs
+          for all transactions that were written into the previous
+          binary log file into the
+          <code class="literal">mysql.gtid_executed</code> table.
+        </p></li><li class="listitem"><p>
+          If a GTID was assigned for the transaction, the GTID is
+          externalized non-atomically (very shortly after the
+          transaction is committed) by adding it to the set of GTIDs in
+          the <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system
+          variable (<code class="literal">@@GLOBAL.gtid_executed</code>). This
+          GTID set contains a representation of the set of all committed
+          GTID transactions, and it is used in replication as a token
+          that represents the server state. With binary logging enabled
+          (as required for the source), the set of GTIDs in the
+          <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system variable
+          is a complete record of the transactions applied, but the
+          <code class="literal">mysql.gtid_executed</code> table is not, because
+          the most recent history is still in the current binary log
+          file.
+        </p></li><li class="listitem"><p>
+          After the binary log data is transmitted to the replica and
+          stored in the replica's relay log (using established
+          mechanisms for this process, see
+          <a class="xref" href="replication-implementation.html" title="19.2 Replication Implementation">Section 19.2, “Replication Implementation”</a>, for details),
+          the replica reads the GTID and sets the value of its
+          <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> system variable as
+          this GTID. This tells the replica that the next transaction
+          must be logged using this GTID. It is important to note that
+          the replica sets <code class="literal">gtid_next</code> in a session
+          context.
+        </p></li><li class="listitem"><p>
+          The replica verifies that no thread has yet taken ownership of
+          the GTID in <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> in
+          order to process the transaction. By reading and checking the
+          replicated transaction's GTID first, before processing the
+          transaction itself, the replica guarantees not only that no
+          previous transaction having this GTID has been applied on the
+          replica, but also that no other session has already read this
+          GTID but has not yet committed the associated transaction. So
+          if multiple clients attempt to apply the same transaction
+          concurrently, the server resolves this by letting only one of
+          them execute. The <a class="link" href="replication-options-gtids.html#sysvar_gtid_owned"><code class="literal">gtid_owned</code></a>
+          system variable (<code class="literal">@@GLOBAL.gtid_owned</code>) for
+          the replica shows each GTID that is currently in use and the
+          ID of the thread that owns it. If the GTID has already been
+          used, no error is raised, and the auto-skip function is used
+          to ignore the transaction.
+        </p></li><li class="listitem"><p>
+          If the GTID has not been used, the replica applies the
+          replicated transaction. Because
+          <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> is set to the GTID
+          already assigned by the source, the replica does not attempt
+          to generate a new GTID for this transaction, but instead uses
+          the GTID stored in <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a>.
+        </p></li><li class="listitem"><p>
+          If binary logging is enabled on the replica, the GTID is
+          persisted atomically at commit time by writing it to the
+          binary log at the beginning of the transaction (as a
+          <code class="literal">Gtid_log_event</code>). Whenever the binary log is
+          rotated or the server is shut down, the server writes GTIDs
+          for all transactions that were written into the previous
+          binary log file into the
+          <code class="literal">mysql.gtid_executed</code> table.
+        </p></li><li class="listitem"><p>
+          If binary logging is disabled on the replica, the GTID is
+          persisted atomically by writing it directly into the
+          <code class="literal">mysql.gtid_executed</code> table. MySQL appends a
+          statement to the transaction to insert the GTID into the
+          table. This operation is atomic for DDL statements as well as
+          for DML statements. In this situation, the
+          <code class="literal">mysql.gtid_executed</code> table is a complete
+          record of the transactions applied on the replica.
+        </p></li><li class="listitem"><p>
+          Very shortly after the replicated transaction is committed on
+          the replica, the GTID is externalized non-atomically by adding
+          it to the set of GTIDs in the
+          <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system variable
+          (<code class="literal">@@GLOBAL.gtid_executed</code>) for the replica.
+          As for the source, this GTID set contains a representation of
+          the set of all committed GTID transactions. If binary logging
+          is disabled on the replica, the
+          <code class="literal">mysql.gtid_executed</code> table is also a
+          complete record of the transactions applied on the replica. If
+          binary logging is enabled on the replica, meaning that some
+          GTIDs are only recorded in the binary log, the set of GTIDs in
+          the <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system
+          variable is the only complete record.
+</p></li></ol>
+</div>
+<p>
+      Client transactions that are completely filtered out on the source
+      are not assigned a GTID, therefore they are not added to the set
+      of transactions in the
+      <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system variable, or
+      added to the <code class="literal">mysql.gtid_executed</code> table.
+      However, the GTIDs of replicated transactions that are completely
+      filtered out on the replica are persisted. If binary logging is
+      enabled on the replica, the filtered-out transaction is written to
+      the binary log as a <code class="literal">Gtid_log_event</code> followed by
+      an empty transaction containing only <code class="literal">BEGIN</code> and
+      <code class="literal">COMMIT</code> statements. If binary logging is
+      disabled, the GTID of the filtered-out transaction is written to
+      the <code class="literal">mysql.gtid_executed</code> table. Preserving the
+      GTIDs for filtered-out transactions ensures that the
+      <code class="literal">mysql.gtid_executed</code> table and the set of GTIDs
+      in the <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system
+      variable can be compressed. It also ensures that the filtered-out
+      transactions are not retrieved again if the replica reconnects to
+      the source, as explained in
+      <a class="xref" href="replication-gtids-auto-positioning.html" title="19.1.3.3 GTID Auto-Positioning">Section 19.1.3.3, “GTID Auto-Positioning”</a>.
+    </p><p>
+      On a multithreaded replica (with
+      <a class="link" href="replication-options-replica.html#sysvar_replica_parallel_workers"><code class="literal">replica_parallel_workers &gt; 0</code></a>),
+      transactions can be applied in parallel, so replicated
+      transactions can commit out of order (unless
+      <a class="link" href="replication-options-replica.html#sysvar_replica_preserve_commit_order"><code class="literal">replica_preserve_commit_order =
+      1</code></a>). When that happens, the set of GTIDs in the
+      <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system variable
+      contains multiple GTID ranges with gaps between them. (On a source
+      or a single-threaded replica, there are monotonically increasing
+      GTIDs without gaps between the numbers.) Gaps on multithreaded
+      replicas only occur among the most recently applied transactions,
+      and are filled in as replication progresses. When replication
+      threads are stopped cleanly using the <a class="link" href="stop-replica.html" title="15.4.2.5 STOP REPLICA Statement"><code class="literal">STOP
+      REPLICA</code></a> statement, ongoing transactions are applied so
+      that the gaps are filled in. In the event of a shutdown such as a
+      server failure or the use of the
+      <a class="link" href="kill.html" title="15.7.8.4 KILL Statement"><code class="literal">KILL</code></a> statement to stop replication
+      threads, the gaps might remain.
+</p>
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="replication-gtids-assign"></a>What changes are assigned a GTID?</h5>
+</div>
+</div>
+</div>
+<p>
+        The typical scenario is that the server generates a new GTID for
+        a committed transaction. However, GTIDs can also be assigned to
+        other changes besides transactions, and in some cases a single
+        transaction can be assigned multiple GTIDs.
+      </p><p>
+        Every database change (DDL or DML) that is written to the binary
+        log is assigned a GTID. This includes changes that are
+        autocommitted, and changes that are committed using
+        <code class="literal">BEGIN</code> and <code class="literal">COMMIT</code> or
+        <code class="literal">START TRANSACTION</code> statements. A GTID is also
+        assigned to the creation, alteration, or deletion of a database,
+        and of a non-table database object such as a procedure,
+        function, trigger, event, view, user, role, or grant.
+      </p><p>
+        Non-transactional updates as well as transactional updates are
+        assigned GTIDs. In addition, for a non-transactional update, if
+        a disk write failure occurs while attempting to write to the
+        binary log cache and a gap is therefore created in the binary
+        log, the resulting incident log event is assigned a GTID.
+      </p><p>
+        When a table is automatically dropped by a generated statement
+        in the binary log, a GTID is assigned to the statement.
+        Temporary tables are dropped automatically when a replica begins
+        to apply events from a source that has just been started, and
+        when statement-based replication is in use
+        (<a class="link" href="replication-options-binary-log.html#sysvar_binlog_format"><code class="literal">binlog_format=STATEMENT</code></a>) and a
+        user session that has open temporary tables disconnects. Tables
+        that use the <a class="link" href="memory-storage-engine.html" title="18.3 The MEMORY Storage Engine"><code class="literal">MEMORY</code></a> storage engine
+        are deleted automatically the first time they are accessed after
+        the server is started, because rows might have been lost during
+        the shutdown.
+      </p><p>
+        When a transaction is not written to the binary log on the
+        server of origin, the server does not assign a GTID to it. This
+        includes transactions that are rolled back and transactions that
+        are executed while binary logging is disabled on the server of
+        origin, either globally (with <code class="literal">--skip-log-bin</code>
+        specified in the server's configuration) or for the session
+        (<code class="literal">SET @@SESSION.sql_log_bin = 0</code>). This also
+        includes no-op transactions when row-based replication is in use
+        (<a class="link" href="replication-options-binary-log.html#sysvar_binlog_format"><code class="literal">binlog_format=ROW</code></a>).
+      </p><p>
+        XA transactions are assigned separate GTIDs for the <code class="literal">XA
+        PREPARE</code> phase of the transaction and the <code class="literal">XA
+        COMMIT</code> or <code class="literal">XA ROLLBACK</code> phase of the
+        transaction. XA transactions are persistently prepared so that
+        users can commit them or roll them back in the case of a failure
+        (which in a replication topology might include a failover to
+        another server). The two parts of the transaction are therefore
+        replicated separately, so they must have their own GTIDs, even
+        though a non-XA transaction that is rolled back would not have a
+        GTID.
+      </p><p>
+        In the following special cases, a single statement can generate
+        multiple transactions, and therefore be assigned multiple GTIDs:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            A stored procedure is invoked that commits multiple
+            transactions. One GTID is generated for each transaction
+            that the procedure commits.
+          </p></li><li class="listitem"><p>
+            A multi-table <a class="link" href="drop-table.html" title="15.1.32 DROP TABLE Statement"><code class="literal">DROP TABLE</code></a>
+            statement drops tables of different types. Multiple GTIDs
+            can be generated if any of the tables use storage engines
+            that do not support atomic DDL, or if any of the tables are
+            temporary tables.
+          </p></li><li class="listitem"><p>
+            A
+            <a class="link" href="create-table-select.html" title="15.1.20.4 CREATE TABLE ... SELECT Statement"><code class="literal">CREATE
+            TABLE ... SELECT</code></a> statement is issued when
+            row-based replication is in use
+            (<a class="link" href="replication-options-binary-log.html#sysvar_binlog_format"><code class="literal">binlog_format=ROW</code></a>). One
+            GTID is generated for the <a class="link" href="create-table.html" title="15.1.20 CREATE TABLE Statement"><code class="literal">CREATE
+            TABLE</code></a> action and one GTID is generated for the
+            row-insert actions.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="replication-gtids-gtid-next"></a>The gtid_next System Variable</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        By default, for new transactions committed in user sessions, the
+        server automatically generates and assigns a new GTID. When the
+        transaction is applied on a replica, the GTID from the server of
+        origin is preserved. You can change this behavior by setting the
+        session value of the <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a>
+        system variable:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            When <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> is set to
+            <code class="literal">AUTOMATIC</code> (the default) and a transaction
+            is committed and written to the binary log, the server
+            automatically generates and assigns a new GTID. If a
+            transaction is rolled back or not written to the binary log
+            for another reason, the server does not generate and assign
+            a GTID.
+          </p></li><li class="listitem"><p>
+            If you set <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> to
+            <code class="literal">AUTOMATIC:<em class="replaceable"><code>TAG</code></em></code>,
+            a new GTID including the specified tag is assigned to each
+            new transaction.
+          </p></li><li class="listitem"><p>
+            If you set <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> to a
+            valid GTID (consisting of a UUID, an optional tag, and a
+            transaction sequence number, separated by a colon), the
+            server assigns that GTID to your transaction. This GTID is
+            assigned and added to
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> even when the
+            transaction is not written to the binary log, or when the
+            transaction is empty.
+</p></li></ul>
+</div>
+<p>
+        Note that after you set
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_next"><code class="literal">gtid_next</code></a> to a specific GTID
+        (in either
+        <code class="literal"><em class="replaceable"><code>UUID</code></em>:<em class="replaceable"><code>NUMBER</code></em></code>
+        or
+        <code class="literal"><em class="replaceable"><code>UUID</code></em>:<em class="replaceable"><code>TAG</code></em>:<em class="replaceable"><code>NUMBER</code></em></code>
+        format), and the transaction has been committed or rolled back,
+        an explicit <code class="literal">SET @@SESSION.gtid_next</code> statement
+        must be issued before any other statement. You can use this to
+        set the GTID value back to <code class="literal">AUTOMATIC</code> if you
+        do not want to assign any more GTIDs explicitly.
+      </p><p>
+        When replication applier threads apply replicated transactions,
+        they use this technique, setting
+        <code class="literal">@@SESSION.gtid_next</code> explicitly to the GTID of
+        the replicated transaction as assigned on the server of origin.
+        This means the GTID from the server of origin is retained,
+        rather than a new GTID being generated and assigned by the
+        replica. It also means the GTID is added to
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> on the replica
+        even when binary logging or replica update logging is disabled
+        on the replica, or when the transaction is a no-op or is
+        filtered out on the replica.
+      </p><p>
+        It is possible for a client to simulate a replicated transaction
+        by setting <code class="literal">@@SESSION.gtid_next</code> to a specific
+        GTID before executing the transaction. This technique is used by
+        <a class="link" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files"><span class="command"><strong>mysqlbinlog</strong></span></a> to generate a dump of the binary
+        log that the client can replay to preserve GTIDs. A simulated
+        replicated transaction committed through a client is completely
+        equivalent to a replicated transaction committed through a
+        replication applier thread, and they cannot be distinguished
+        after the fact.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="replication-gtids-gtid-purged"></a>The <code class="literal">gtid_purged</code> System Variable</h5>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105606858144"></a><a class="indexterm" name="idm45105606856656"></a><p>
+        The set of GTIDs in the
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> system variable
+        (<code class="literal">@@GLOBAL.gtid_purged</code>) contains the GTIDs of
+        all the transactions that have been committed on the server, but
+        that do not exist in any binary log file on the server.
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> is a subset of
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a>. The following
+        categories of GTIDs are in
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a>:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            GTIDs of replicated transactions that were committed with
+            binary logging disabled on the replica.
+          </p></li><li class="listitem"><p>
+            GTIDs of transactions that were written to a binary log file
+            that has now been purged.
+          </p></li><li class="listitem"><p>
+            GTIDs that were added explicitly to the set by the statement
+            <code class="literal">SET @@GLOBAL.gtid_purged</code>.
+</p></li></ul>
+</div>
+<p>
+        You can change the value of
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> in order to record
+        on the server that the transactions in a certain GTID set have
+        been applied, although they do not exist in any binary log on
+        the server. When you add GTIDs to
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a>, they are also
+        added to <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a>. An
+        example use case for this action is when you are restoring a
+        backup of one or more databases on a server, but you do not have
+        the relevant binary logs containing the transactions on the
+        server. You can also choose whether to replace the whole GTID
+        set in <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> with a
+        specified GTID set, or to add a specified GTID set to the GTIDs
+        already in <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a>. For
+        details of how to do this, see the description for
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a>.
+      </p><p>
+        The sets of GTIDs in the
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> and
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> system variables
+        are initialized when the server starts. Every binary log file
+        begins with the event
+        <code class="literal">Previous_gtids_log_event</code>, which contains the
+        set of GTIDs in all previous binary log files (composed from the
+        GTIDs in the preceding file's
+        <code class="literal">Previous_gtids_log_event</code>, and the GTIDs of
+        every <code class="literal">Gtid_log_event</code> in the preceding file
+        itself). The contents of
+        <code class="literal">Previous_gtids_log_event</code> in the oldest and
+        most recent binary log files are used to compute the
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> and
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> sets at server
+        startup:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> is computed
+            as the union of the GTIDs in
+            <code class="literal">Previous_gtids_log_event</code> in the most
+            recent binary log file, the GTIDs of transactions in that
+            binary log file, and the GTIDs stored in the
+            <code class="literal">mysql.gtid_executed</code> table. This GTID set
+            contains all the GTIDs that have been used (or added
+            explicitly to <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a>)
+            on the server, whether or not they are currently in a binary
+            log file on the server. It does not include the GTIDs for
+            transactions that are currently being processed on the
+            server (<code class="literal">@@GLOBAL.gtid_owned</code>).
+          </p></li><li class="listitem"><p>
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> is computed by
+            first adding the GTIDs in
+            <code class="literal">Previous_gtids_log_event</code> in the most
+            recent binary log file and the GTIDs of transactions in that
+            binary log file. This step gives the set of GTIDs that are
+            currently, or were once, recorded in a binary log on the
+            server (<code class="literal">gtids_in_binlog</code>). Next, the GTIDs
+            in <code class="literal">Previous_gtids_log_event</code> in the oldest
+            binary log file are subtracted from
+            <code class="literal">gtids_in_binlog</code>. This step gives the set
+            of GTIDs that are currently recorded in a binary log on the
+            server (<code class="literal">gtids_in_binlog_not_purged</code>).
+            Finally, <code class="literal">gtids_in_binlog_not_purged</code> is
+            subtracted from
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a>. The result
+            is the set of GTIDs that have been used on the server, but
+            are not currently recorded in a binary log file on the
+            server, and this result is used to initialize
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a>.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="replication-gtids-execution-history"></a>Resetting the GTID Execution History</h5>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        If you need to reset the GTID execution history on a server, use
+        the <a class="link" href="reset-binary-logs-and-gtids.html" title="15.4.1.2 RESET BINARY LOGS AND GTIDS Statement"><code class="literal">RESET BINARY LOGS AND GTIDS</code></a>
+        statement. You might need to do this after carrying out test
+        queries to verify a replication setup on new GTID-enabled
+        servers, or when you want to join a new server to a replication
+        group but it contains some unwanted local transactions that are
+        not accepted by Group Replication.
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Warning
+</div>
+<p>
+          Use <a class="link" href="reset-binary-logs-and-gtids.html" title="15.4.1.2 RESET BINARY LOGS AND GTIDS Statement"><code class="literal">RESET BINARY LOGS AND GTIDS</code></a>
+          with caution to avoid losing any wanted GTID execution history
+          and binary log files.
+</p>
+</div>
+<p>
+        Before issuing <a class="link" href="reset-binary-logs-and-gtids.html" title="15.4.1.2 RESET BINARY LOGS AND GTIDS Statement"><code class="literal">RESET BINARY LOGS AND
+        GTIDS</code></a>, ensure that you have backups of the server's
+        binary log files and binary log index file, if any, and obtain
+        and save the GTID set held in the global value of the
+        <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system variable
+        (for example, by issuing a <code class="literal">SELECT
+        @@GLOBAL.gtid_executed</code> statement and saving the
+        results). If you are removing unwanted transactions from that
+        GTID set, use <a class="link" href="mysqlbinlog.html" title="6.6.9 mysqlbinlog — Utility for Processing Binary Log Files"><span class="command"><strong>mysqlbinlog</strong></span></a> to examine the
+        contents of the transactions to ensure that they have no value,
+        contain no data that must be saved or replicated, and did not
+        result in data changes on the server.
+      </p><p>
+        When you issue <a class="link" href="reset-binary-logs-and-gtids.html" title="15.4.1.2 RESET BINARY LOGS AND GTIDS Statement"><code class="literal">RESET BINARY LOGS AND
+        GTIDS</code></a>, the following reset operations are carried out:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            The value of the
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_purged"><code class="literal">gtid_purged</code></a> system variable
+            is set to an empty string (<code class="literal">''</code>).
+          </p></li><li class="listitem"><p>
+            The global value (but not the session value) of the
+            <a class="link" href="replication-options-gtids.html#sysvar_gtid_executed"><code class="literal">gtid_executed</code></a> system
+            variable is set to an empty string.
+          </p></li><li class="listitem"><p>
+            The <code class="literal">mysql.gtid_executed</code> table is cleared
+            (see
+            <a class="xref" href="replication-gtids-concepts.html#replication-gtids-gtid-executed-table" title="mysql.gtid_executed Table">mysql.gtid_executed Table</a>).
+          </p></li><li class="listitem"><p>
+            If the server has binary logging enabled, the existing
+            binary log files are deleted and the binary log index file
+            is cleared.
+</p></li></ul>
+</div>
+<p>
+        Note that <a class="link" href="reset-binary-logs-and-gtids.html" title="15.4.1.2 RESET BINARY LOGS AND GTIDS Statement"><code class="literal">RESET BINARY LOGS AND
+        GTIDS</code></a> is the method to reset the GTID execution
+        history even if the server is a replica where binary logging is
+        disabled. <a class="link" href="reset-replica.html" title="15.4.2.3 RESET REPLICA Statement"><code class="literal">RESET REPLICA</code></a> has no
+        effect on the GTID execution history.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="replication-gtids-concepts.html"
+        aria-label="Previous" title="Previous: GTID Format and Storage"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="replication-gtids.html" title="Up: Replication with Global Transaction Identifiers"> UP</a> &nbsp;
+    <a href="replication-gtids-auto-positioning.html" aria-label="Next"
+        title="Next: GTID Auto-Positioning">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/replication-gtids-lifecycle.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:15:02 GMT -->
+</html>

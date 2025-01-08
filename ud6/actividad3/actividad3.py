@@ -124,12 +124,11 @@ class DatabaseManagerORM:
         logging.info(f"Herramienta eliminada: {herramienta.nombre}")
 
 
-# Ejemplo de uso del código
 if __name__ == "__main__":
-    # Crear una instancia del gestor
+    # Creamos una instancia del gestor
     manager = DatabaseManagerORM()
 
-    # Conectar y crear tablas
+    # Conectamos y crea tablas
     manager.conectar()
 
     # Gestión de Proveedores
@@ -139,10 +138,8 @@ if __name__ == "__main__":
     proveedor_b = manager.crear_proveedor("Proveedor B", "Contacto 987-654-321")
     manager.confirmar_transaccion()
 
-    # Actualizar el contacto de Proveedor A (con tu DNI)
-    print("Cambio del dato por mi DNI 12345678A al proveedor A")
     manager.iniciar_transaccion()
-    manager.actualizar_proveedor(proveedor_a, "30216383H")  # Aquí pones tu DNI
+    manager.actualizar_proveedor(proveedor_a, "30216383H")
     manager.confirmar_transaccion()
 
     # Eliminar el proveedor B
@@ -155,10 +152,10 @@ if __name__ == "__main__":
     print("Gestión de Herramientas:")
     manager.iniciar_transaccion()
     herramienta_martillo = manager.crear_herramienta(
-        "Martillo", "Manual", "Marca X", "Uso general", "Acero", proveedor_a
+        "Martillo", "Manual", "Marca A", "Uso general", "Acero", proveedor_a
     )
     herramienta_taladro = manager.crear_herramienta(
-        "Taladro", "Eléctrico", "Marca Y", "Perforación", "Metal", proveedor_a
+        "Taladro", "Eléctrico", "Marca B", "Perforación", "Metal", proveedor_a
     )
     manager.confirmar_transaccion()
 

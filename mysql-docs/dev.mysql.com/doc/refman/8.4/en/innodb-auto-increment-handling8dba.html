@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-auto-increment-handling.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:15:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 17.6.1.6 AUTO_INCREMENT Handling in InnoDB</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="converting-tables-to-innodb.html" title="17.6.1.5 Converting Tables from MyISAM to InnoDB" />
+<link rel="next" href="innodb-indexes8dba.html?ff=nopfpls" title="17.6.2 Indexes" />
+<link rel="up" href="innodb-tables.html" title="17.6.1 Tables" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7yquq-f-bc06f42f2-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":46,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1925e662","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":11666,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730135081","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==LE6APNvEGvxs7M/u8dwsid/upuaLe4kTzu70CE1I+wZR36CTrlvW/fOlE44CGX+ljaHBZm8pbpcWullmF/LOEN3sZFppupR9b87sQ1dSMBtWAZKvjEm5bwjEG0F2vCenltltTO047nBpKv2BDLY4f3Dg3sUbU9tXPlSA6ju0jEZoA/6Rbahztdaw2FsFlPAonQf0mQfC4FUFqyVkfmgcIrMCToS0mMuthN6Ibhreb43Ak2P0lxQ6F1K6gQkpW8fojTAg/2Ra51ZWzMB9F8S2XqmC4zUVAt9AcJ3B5dHdurwDbSNnxPOXCsF/KNxu/y6OvDF/lld6jQW0qbQocxex3mgeKlVTQTs17hWSwQfg8QDp2ZWZzk45SAF+osAqrqiEwjT1dnoMg6USNR9OYqh7uUU4P4M9HnWzyjb9Mj7a390=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Finnodb-auto-increment-handling.html%3Fff%3Dnopfpls">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="converting-tables-to-innodb.html"
+        aria-label="Previous" title="Previous: Converting Tables from MyISAM to InnoDB"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="innodb-tables.html" title="Up: Tables"><span class="icon-chevron-up"></span></a>
+    <a href="innodb-indexes.html" aria-label="Next"
+        title="Next: Indexes"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-introduction.html">Introduction to InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benefits.html">Benefits of Using InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-best-practices.html">Best Practices for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-check-availability.html">Verifying that InnoDB is the Default Storage Engine</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-benchmarking.html">Testing and Benchmarking with InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-acid.html">InnoDB and the ACID Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multi-versioning.html">InnoDB Multi-Versioning</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-architecture.html">InnoDB Architecture</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-in-memory-structures.html">InnoDB In-Memory Structures</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool.html">Buffer Pool</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-change-buffer.html">Change Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-adaptive-hash.html">Adaptive Hash Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log-buffer.html">Log Buffer</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-on-disk-structures.html">InnoDB On-Disk Structures</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tables.html">Tables</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-innodb-tables.html">Creating InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-create-table-external.html">Creating Tables Externally</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-table-import.html">Importing InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-migration.html">Moving or Copying InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="converting-tables-to-innodb.html">Converting Tables from MyISAM to InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="innodb-auto-increment-handling.html">AUTO_INCREMENT Handling in InnoDB</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-index-types.html">Clustered and Secondary Indexes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-physical-structure.html">The Physical Structure of an InnoDB Index</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="sorted-index-builds.html">Sorted Index Builds</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-fulltext-index.html">InnoDB Full-Text Indexes</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace.html">Tablespaces</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-system-tablespace.html">The System Tablespace</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-per-table-tablespaces.html">File-Per-Table Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="general-tablespaces.html">General Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-tablespaces.html">Undo Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-temporary-tablespace.html">Temporary Tablespaces</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-moving-data-files-offline.html">Moving Tablespace Files While the Server is Offline</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disabling-tablespace-path-validation.html">Disabling Tablespace Path Validation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-optimize-tablespace-page-allocation.html">Optimizing Tablespace Space Allocation on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-tablespace-autoextend-size.html">Tablespace AUTOEXTEND_SIZE Configuration</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-doublewrite-buffer.html">Doublewrite Buffer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-redo-log.html">Redo Log</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-undo-logs.html">Undo Logs</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-transaction-model.html">InnoDB Locking and Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking.html">InnoDB Locking</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-model.html">InnoDB Transaction Model</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-isolation-levels.html">Transaction Isolation Levels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-autocommit-commit-rollback.html">autocommit, Commit, and Rollback</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-consistent-read.html">Consistent Nonlocking Reads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locking-reads.html">Locking Reads</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-locks-set.html">Locks Set by Different SQL Statements in InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-next-key-locking.html">Phantom Rows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks.html">Deadlocks in InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-example.html">An InnoDB Deadlock Example</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlock-detection.html">Deadlock Detection</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-deadlocks-handling.html">How to Minimize and Handle Deadlocks</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-transaction-scheduling.html">Transaction Scheduling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-configuration.html">InnoDB Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-init-startup-configuration.html">InnoDB Startup Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-read-only-instance.html">Configuring InnoDB for Read-Only Operation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-buffer-pool.html">InnoDB Buffer Pool Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-resize.html">Configuring InnoDB Buffer Pool Size</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-multiple-buffer-pools.html">Configuring Multiple Buffer Pool Instances</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-midpoint_insertion.html">Making the Buffer Pool Scan Resistant</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-read_ahead.html">Configuring InnoDB Buffer Pool Prefetching (Read-Ahead)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-flushing.html">Configuring Buffer Pool Flushing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-preload-buffer-pool.html">Saving and Restoring the Buffer Pool State</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-buffer-pool-in-core-file.html">Excluding or Including Buffer Pool Pages from Core Files</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-thread_concurrency.html">Configuring Thread Concurrency for InnoDB</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-multiple_io_threads.html">Configuring the Number of Background InnoDB I/O Threads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-linux-native-aio.html">Using Asynchronous I/O on Linux</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-configuring-io-capacity.html">Configuring InnoDB I/O Capacity</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-spin_lock_polling.html">Configuring Spin Lock Polling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-purge-configuration.html">Purge Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-optimizer-statistics.html">Configuring Optimizer Statistics for InnoDB</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-persistent-stats.html">Configuring Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-statistics-estimation.html">Configuring Non-Persistent Optimizer Statistics Parameters</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-analyze-table-complexity.html">Estimating ANALYZE TABLE Complexity for InnoDB Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="index-page-merge-threshold.html">Configuring the Merge Threshold for Index Pages</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-dedicated-server.html">Enabling Automatic InnoDB Configuration for a Dedicated MySQL Server</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-compression.html">InnoDB Table and Page Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-table-compression.html">InnoDB Table Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-background.html">Overview of Table Compression</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-usage.html">Creating Compressed Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning.html">Tuning Compression for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-tuning-monitoring.html">Monitoring InnoDB Table Compression at Runtime</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-internals.html">How Compression Works for InnoDB Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-compression-oltp.html">Compression for OLTP Workloads</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-compression-syntax-warnings.html">SQL Compression Syntax Warnings and Errors</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-page-compression.html">InnoDB Page Compression</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-row-format.html">InnoDB Row Formats</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-management.html">InnoDB Disk I/O and File Space Management</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-disk-io.html">InnoDB Disk I/O</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-space.html">File Space Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-checkpoints.html">InnoDB Checkpoints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-file-defragmenting.html">Defragmenting a Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-truncate-table-reclaim-space.html">Reclaiming Disk Space with TRUNCATE TABLE</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl.html">InnoDB and Online DDL</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-operations.html">Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-performance.html">Online DDL Performance and Concurrency</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-space-requirements.html">Online DDL Space Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-memory-management.html">Online DDL Memory Management</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="online-ddl-parallel-thread-configuration.html">Configuring Parallel Threads for Online DDL Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-single-multi.html">Simplifying DDL Statements with Online DDL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-failure-conditions.html">Online DDL Failure Conditions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-online-ddl-limitations.html">Online DDL Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-data-encryption.html">InnoDB Data-at-Rest Encryption</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-parameters.html">InnoDB Startup Options and System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema.html">InnoDB INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-compression-tables.html">InnoDB INFORMATION_SCHEMA Tables about Compression</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmp.html">INNODB_CMP and INNODB_CMP_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-innodb_cmpmem.html">INNODB_CMPMEM and INNODB_CMPMEM_RESET</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples-compression-sect.html">Using the Compression Information Schema Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-transactions.html">InnoDB INFORMATION_SCHEMA Transaction and Locking Information</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-examples.html">Using InnoDB Transaction and Locking Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-understanding-innodb-locking.html">InnoDB Lock and Lock-Wait Information</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-internal-data.html">Persistence and Consistency of InnoDB Transaction and Locking
+Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-system-tables.html">InnoDB INFORMATION_SCHEMA Schema Object Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-fulltext_index-tables.html">InnoDB INFORMATION_SCHEMA FULLTEXT Index Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-buffer-pool-tables.html">InnoDB INFORMATION_SCHEMA Buffer Pool Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-metrics-table.html">InnoDB INFORMATION_SCHEMA Metrics Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-temp-table-info.html">InnoDB INFORMATION_SCHEMA Temporary Table Info Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-information-schema-files-table.html">Retrieving InnoDB Tablespace Metadata from INFORMATION_SCHEMA.FILES</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-performance-schema.html">InnoDB Integration with MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-alter-table-performance-schema.html">Monitoring ALTER TABLE Progress for InnoDB Tables Using Performance
+      Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitor-innodb-mutex-waits-performance-schema.html">Monitoring InnoDB Mutex Waits Using Performance Schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-monitors.html">InnoDB Monitors</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-monitor-types.html">InnoDB Monitor Types</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-enabling-monitors.html">Enabling InnoDB Monitors</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-standard-monitor.html">InnoDB Standard Monitor and Lock Monitor Output</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-backup-recovery.html">InnoDB Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-backup.html">InnoDB Backup</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-recovery.html">InnoDB Recovery</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-and-mysql-replication.html">InnoDB and MySQL Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting.html">InnoDB Troubleshooting</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="error-creating-innodb.html">Troubleshooting InnoDB I/O Problems</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-recovery.html">Troubleshooting Recovery Failures</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="forcing-innodb-recovery.html">Forcing InnoDB Recovery</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-troubleshooting-datadict.html">Troubleshooting InnoDB Data Dictionary Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-error-handling.html">InnoDB Error Handling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-limits.html">InnoDB Limits</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-restrictions-limitations.html">InnoDB Restrictions and Limitations</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/innodb-auto-increment-handling.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/innodb-auto-increment-handling.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/innodb-auto-increment-handling.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/innodb-auto-increment-handling.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/innodb-auto-increment-handling.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="innodb-storage-engine.html">The InnoDB Storage Engine</a> &nbsp;/&nbsp;
+                                                            <a href="innodb-on-disk-structures.html">InnoDB On-Disk Structures</a> &nbsp;/&nbsp;
+                                                            <a href="innodb-tables.html">Tables</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        AUTO_INCREMENT Handling in InnoDB
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title"><a name="innodb-auto-increment-handling"></a>17.6.1.6 AUTO_INCREMENT Handling in InnoDB</h4>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105627110640"></a><a class="indexterm" name="idm45105627109568"></a><p>
+      <code class="literal">InnoDB</code> provides a configurable locking
+      mechanism that can significantly improve scalability and
+      performance of SQL statements that add rows to tables with
+      <code class="literal">AUTO_INCREMENT</code> columns. To use the
+      <code class="literal">AUTO_INCREMENT</code> mechanism with an
+      <code class="literal">InnoDB</code> table, an
+      <code class="literal">AUTO_INCREMENT</code> column must be defined as the
+      first or only column of some index such that it is possible to
+      perform the equivalent of an indexed <code class="literal">SELECT
+      MAX(<em class="replaceable"><code>ai_col</code></em>)</code> lookup on the
+      table to obtain the maximum column value. The index is not
+      required to be a <code class="literal">PRIMARY KEY</code> or
+      <code class="literal">UNIQUE</code>, but to avoid duplicate values in the
+      <code class="literal">AUTO_INCREMENT</code> column, those index types are
+      recommended.
+    </p><p>
+      This section describes the <code class="literal">AUTO_INCREMENT</code> lock
+      modes, usage implications of different
+      <code class="literal">AUTO_INCREMENT</code> lock mode settings, and how
+      <code class="literal">InnoDB</code> initializes the
+      <code class="literal">AUTO_INCREMENT</code> counter.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="innodb-auto-increment-handling.html#innodb-auto-increment-lock-modes" title="InnoDB AUTO_INCREMENT Lock Modes">InnoDB AUTO_INCREMENT Lock Modes</a></p></li><li class="listitem"><p><a class="xref" href="innodb-auto-increment-handling.html#innodb-auto-increment-lock-mode-usage-implications" title="InnoDB AUTO_INCREMENT Lock Mode Usage Implications">InnoDB AUTO_INCREMENT Lock Mode Usage Implications</a></p></li><li class="listitem"><p><a class="xref" href="innodb-auto-increment-handling.html#innodb-auto-increment-initialization" title="InnoDB AUTO_INCREMENT Counter Initialization">InnoDB AUTO_INCREMENT Counter Initialization</a></p></li><li class="listitem"><p><a class="xref" href="innodb-auto-increment-handling.html#innodb-auto-increment-notes" title="Notes">Notes</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h5 class="title"><a name="innodb-auto-increment-lock-modes"></a>InnoDB AUTO_INCREMENT Lock Modes</h5>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105627091424"></a><p>
+        This section describes the <code class="literal">AUTO_INCREMENT</code>
+        lock modes used to generate auto-increment values, and how each
+        lock mode affects replication. The auto-increment lock mode is
+        configured at startup using the
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+        variable.
+      </p><p>
+        The following terms are used in describing
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+        settings:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statements
+          </p><p>
+            All statements that generate new rows in a table, including
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>,
+            <a class="link" href="insert-select.html" title="15.2.7.1 INSERT ... SELECT Statement"><code class="literal">INSERT ...
+            SELECT</code></a>, <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE</code></a>,
+            <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE ...
+            SELECT</code></a>, and <a class="link" href="load-data.html" title="15.2.9 LOAD DATA Statement"><code class="literal">LOAD
+            DATA</code></a>. Includes <span class="quote">“<span class="quote">simple-inserts</span>”</span>,
+            <span class="quote">“<span class="quote">bulk-inserts</span>”</span>, and <span class="quote">“<span class="quote">mixed-mode</span>”</span>
+            inserts.
+          </p></li><li class="listitem"><p>
+            <span class="quote">“<span class="quote">Simple inserts</span>”</span>
+          </p><p>
+            Statements for which the number of rows to be inserted can
+            be determined in advance (when the statement is initially
+            processed). This includes single-row and multiple-row
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> and
+            <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE</code></a> statements that do
+            not have a nested subquery, but not
+            <a class="link" href="insert-on-duplicate.html" title="15.2.7.2 INSERT ... ON DUPLICATE KEY UPDATE Statement"><code class="literal">INSERT
+            ... ON DUPLICATE KEY UPDATE</code></a>.
+          </p></li><li class="listitem"><p>
+            <span class="quote">“<span class="quote">Bulk inserts</span>”</span>
+          </p><p>
+            Statements for which the number of rows to be inserted (and
+            the number of required auto-increment values) is not known
+            in advance. This includes
+            <a class="link" href="insert-select.html" title="15.2.7.1 INSERT ... SELECT Statement"><code class="literal">INSERT ...
+            SELECT</code></a>,
+            <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE ...
+            SELECT</code></a>, and <a class="link" href="load-data.html" title="15.2.9 LOAD DATA Statement"><code class="literal">LOAD
+            DATA</code></a> statements, but not plain
+            <code class="literal">INSERT</code>. <code class="literal">InnoDB</code> assigns
+            new values for the <code class="literal">AUTO_INCREMENT</code> column
+            one at a time as each row is processed.
+          </p></li><li class="listitem"><p>
+            <span class="quote">“<span class="quote">Mixed-mode inserts</span>”</span>
+          </p><p>
+            These are <span class="quote">“<span class="quote">simple insert</span>”</span> statements that
+            specify the auto-increment value for some (but not all) of
+            the new rows. An example follows, where
+            <code class="literal">c1</code> is an
+            <code class="literal">AUTO_INCREMENT</code> column of table
+            <code class="literal">t1</code>:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">INSERT INTO t1 (c1,c2) VALUES (1,'a'), (NULL,'b'), (5,'c'), (NULL,'d');</code></pre><p>
+            Another type of <span class="quote">“<span class="quote">mixed-mode insert</span>”</span> is
+            <a class="link" href="insert-on-duplicate.html" title="15.2.7.2 INSERT ... ON DUPLICATE KEY UPDATE Statement"><code class="literal">INSERT
+            ... ON DUPLICATE KEY UPDATE</code></a>, which in the worst
+            case is in effect an <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>
+            followed by a <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a>, where
+            the allocated value for the
+            <code class="literal">AUTO_INCREMENT</code> column may or may not be
+            used during the update phase.
+</p></li></ul>
+</div>
+<p>
+        There are three possible settings for the
+        <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+        variable. The settings are 0, 1, or 2, for
+        <span class="quote">“<span class="quote">traditional</span>”</span>, <span class="quote">“<span class="quote">consecutive</span>”</span>, or
+        <span class="quote">“<span class="quote">interleaved</span>”</span> lock mode, respectively. Interleaved
+        lock mode
+        (<a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode=2</code></a>) is
+        the default.
+      </p><p>
+        The default setting of interleaved lock mode in MySQL
+        8.4 reflects the change from statement-based
+        replication to row based replication as the default replication
+        type. Statement-based replication requires the consecutive
+        auto-increment lock mode to ensure that auto-increment values
+        are assigned in a predictable and repeatable order for a given
+        sequence of SQL statements, whereas row-based replication is not
+        sensitive to the execution order of SQL statements.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a name="innodb-auto-increment-lock-mode-traditional"></a>
+            <code class="literal">innodb_autoinc_lock_mode = 0</code>
+            (<span class="quote">“<span class="quote">traditional</span>”</span> lock mode)
+          </p><p>
+            The traditional lock mode provides the same behavior that
+            existed before the
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            variable was introduced. The traditional lock mode option is
+            provided for backward compatibility, performance testing,
+            and working around issues with “mixed-mode inserts”, due
+            to possible differences in semantics.
+          </p><p>
+            In this lock mode, all <span class="quote">“<span class="quote">INSERT-like</span>”</span> statements
+            obtain a special table-level <code class="literal">AUTO-INC</code>
+            lock for inserts into tables with
+            <code class="literal">AUTO_INCREMENT</code> columns. This lock is
+            normally held to the end of the statement (not to the end of
+            the transaction) to ensure that auto-increment values are
+            assigned in a predictable and repeatable order for a given
+            sequence of <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>
+            statements, and to ensure that auto-increment values
+            assigned by any given statement are consecutive.
+          </p><p>
+            In the case of statement-based replication, this means that
+            when an SQL statement is replicated on a replica server, the
+            same values are used for the auto-increment column as on the
+            source server. The result of execution of multiple
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements is
+            deterministic, and the replica reproduces the same data as
+            on the source. If auto-increment values generated by
+            multiple <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements
+            were interleaved, the result of two concurrent
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements would be
+            nondeterministic, and could not reliably be propagated to a
+            replica server using statement-based replication.
+          </p><p>
+            To make this clear, consider an example that uses this
+            table:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE TABLE t1 (
+  c1 INT(11) NOT NULL AUTO_INCREMENT,
+  c2 VARCHAR(10) DEFAULT NULL,
+  PRIMARY KEY (c1)
+) ENGINE=InnoDB;</code></pre><p>
+            Suppose that there are two transactions running, each
+            inserting rows into a table with an
+            <code class="literal">AUTO_INCREMENT</code> column. One transaction is
+            using an
+            <a class="link" href="insert-select.html" title="15.2.7.1 INSERT ... SELECT Statement"><code class="literal">INSERT ...
+            SELECT</code></a> statement that inserts 1000 rows, and
+            another is using a simple
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statement that inserts
+            one row:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">Tx1: INSERT INTO t1 (c2) SELECT 1000 rows from another table ...
+Tx2: INSERT INTO t1 (c2) VALUES ('xxx');</code></pre><p>
+            <code class="literal">InnoDB</code> cannot tell in advance how many
+            rows are retrieved from the
+            <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> in the
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statement in Tx1, and
+            it assigns the auto-increment values one at a time as the
+            statement proceeds. With a table-level lock, held to the end
+            of the statement, only one
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statement referring to
+            table <code class="literal">t1</code> can execute at a time, and the
+            generation of auto-increment numbers by different statements
+            is not interleaved. The auto-increment values generated by
+            the Tx1
+            <a class="link" href="insert-select.html" title="15.2.7.1 INSERT ... SELECT Statement"><code class="literal">INSERT ...
+            SELECT</code></a> statement are consecutive, and the (single)
+            auto-increment value used by the
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statement in Tx2 is
+            either smaller or larger than all those used for Tx1,
+            depending on which statement executes first.
+          </p><p>
+            As long as the SQL statements execute in the same order when
+            replayed from the binary log (when using statement-based
+            replication, or in recovery scenarios), the results are the
+            same as they were when Tx1 and Tx2 first ran. Thus,
+            table-level locks held until the end of a statement make
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements using
+            auto-increment safe for use with statement-based
+            replication. However, those table-level locks limit
+            concurrency and scalability when multiple transactions are
+            executing insert statements at the same time.
+          </p><p>
+            In the preceding example, if there were no table-level lock,
+            the value of the auto-increment column used for the
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> in Tx2 depends on
+            precisely when the statement executes. If the
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> of Tx2 executes while
+            the <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> of Tx1 is running
+            (rather than before it starts or after it completes), the
+            specific auto-increment values assigned by the two
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements are
+            nondeterministic, and may vary from run to run.
+          </p><p>
+            Under the
+            <a class="link" href="innodb-auto-increment-handling.html#innodb-auto-increment-lock-mode-consecutive">consecutive</a>
+            lock mode, <code class="literal">InnoDB</code> can avoid using
+            table-level <code class="literal">AUTO-INC</code> locks for
+            <span class="quote">“<span class="quote">simple insert</span>”</span> statements where the number of
+            rows is known in advance, and still preserve deterministic
+            execution and safety for statement-based replication.
+          </p><p>
+            If you are not using the binary log to replay SQL statements
+            as part of recovery or replication, the
+            <a class="link" href="innodb-auto-increment-handling.html#innodb-auto-increment-lock-mode-interleaved">interleaved</a>
+            lock mode can be used to eliminate all use of table-level
+            <code class="literal">AUTO-INC</code> locks for even greater
+            concurrency and performance, at the cost of permitting gaps
+            in auto-increment numbers assigned by a statement and
+            potentially having the numbers assigned by concurrently
+            executing statements interleaved.
+          </p></li><li class="listitem"><p><a name="innodb-auto-increment-lock-mode-consecutive"></a>
+            <code class="literal">innodb_autoinc_lock_mode = 1</code>
+            (<span class="quote">“<span class="quote">consecutive</span>”</span> lock mode)
+          </p><p>
+            In this mode, <span class="quote">“<span class="quote">bulk inserts</span>”</span> use the special
+            <code class="literal">AUTO-INC</code> table-level lock and hold it
+            until the end of the statement. This applies to all
+            <a class="link" href="insert-select.html" title="15.2.7.1 INSERT ... SELECT Statement"><code class="literal">INSERT ...
+            SELECT</code></a>,
+            <a class="link" href="replace.html" title="15.2.12 REPLACE Statement"><code class="literal">REPLACE ...
+            SELECT</code></a>, and <a class="link" href="load-data.html" title="15.2.9 LOAD DATA Statement"><code class="literal">LOAD
+            DATA</code></a> statements. Only one statement holding the
+            <code class="literal">AUTO-INC</code> lock can execute at a time. If
+            the source table of the bulk insert operation is different
+            from the target table, the <code class="literal">AUTO-INC</code> lock
+            on the target table is taken after a shared lock is taken on
+            the first row selected from the source table. If the source
+            and target of the bulk insert operation are the same table,
+            the <code class="literal">AUTO-INC</code> lock is taken after shared
+            locks are taken on all selected rows.
+          </p><p>
+            <span class="quote">“<span class="quote">Simple inserts</span>”</span> (for which the number of rows
+            to be inserted is known in advance) avoid table-level
+            <code class="literal">AUTO-INC</code> locks by obtaining the required
+            number of auto-increment values under the control of a mutex
+            (a light-weight lock) that is only held for the duration of
+            the allocation process, <span class="emphasis"><em>not</em></span> until the
+            statement completes. No table-level
+            <code class="literal">AUTO-INC</code> lock is used unless an
+            <code class="literal">AUTO-INC</code> lock is held by another
+            transaction. If another transaction holds an
+            <code class="literal">AUTO-INC</code> lock, a <span class="quote">“<span class="quote">simple
+            insert</span>”</span> waits for the <code class="literal">AUTO-INC</code>
+            lock, as if it were a <span class="quote">“<span class="quote">bulk insert</span>”</span>.
+          </p><p>
+            This lock mode ensures that, in the presence of
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements where the
+            number of rows is not known in advance (and where
+            auto-increment numbers are assigned as the statement
+            progresses), all auto-increment values assigned by any
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statement are consecutive, and operations are safe for
+            statement-based replication.
+          </p><p>
+            Simply put, this lock mode significantly improves
+            scalability while being safe for use with statement-based
+            replication. Further, as with <span class="quote">“<span class="quote">traditional</span>”</span>
+            lock mode, auto-increment numbers assigned by any given
+            statement are <span class="emphasis"><em>consecutive</em></span>. There is
+            <span class="emphasis"><em>no change</em></span> in semantics compared to
+            <span class="quote">“<span class="quote">traditional</span>”</span> mode for any statement that uses
+            auto-increment, with one important exception.
+          </p><p>
+            The exception is for <span class="quote">“<span class="quote">mixed-mode inserts</span>”</span>,
+            where the user provides explicit values for an
+            <code class="literal">AUTO_INCREMENT</code> column for some, but not
+            all, rows in a multiple-row <span class="quote">“<span class="quote">simple insert</span>”</span>.
+            For such inserts, <code class="literal">InnoDB</code> allocates more
+            auto-increment values than the number of rows to be
+            inserted. However, all values automatically assigned are
+            consecutively generated (and thus higher than) the
+            auto-increment value generated by the most recently executed
+            previous statement. <span class="quote">“<span class="quote">Excess</span>”</span> numbers are lost.
+          </p></li><li class="listitem"><p><a name="innodb-auto-increment-lock-mode-interleaved"></a>
+            <code class="literal">innodb_autoinc_lock_mode = 2</code>
+            (<span class="quote">“<span class="quote">interleaved</span>”</span> lock mode)
+          </p><p>
+            In this lock mode, no
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statements use the table-level <code class="literal">AUTO-INC</code>
+            lock, and multiple statements can execute at the same time.
+            This is the fastest and most scalable lock mode, but it is
+            <span class="emphasis"><em>not safe</em></span> when using statement-based
+            replication or recovery scenarios when SQL statements are
+            replayed from the binary log.
+          </p><p>
+            In this lock mode, auto-increment values are guaranteed to
+            be unique and monotonically increasing across all
+            concurrently executing
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statements. However, because multiple statements can be
+            generating numbers at the same time (that is, allocation of
+            numbers is <span class="emphasis"><em>interleaved</em></span> across
+            statements), the values generated for the rows inserted by
+            any given statement may not be consecutive.
+          </p><p>
+            If the only statements executing are <span class="quote">“<span class="quote">simple
+            inserts</span>”</span> where the number of rows to be inserted is
+            known ahead of time, there are no gaps in the numbers
+            generated for a single statement, except for
+            <span class="quote">“<span class="quote">mixed-mode inserts</span>”</span>. However, when <span class="quote">“<span class="quote">bulk
+            inserts</span>”</span> are executed, there may be gaps in the
+            auto-increment values assigned by any given statement.
+</p></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="innodb-auto-increment-lock-mode-usage-implications"></a>InnoDB AUTO_INCREMENT Lock Mode Usage Implications</h5>
+
+</div>
+
+</div>
+
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Using auto-increment with replication
+          </p><p>
+            If you are using statement-based replication, set
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a> to
+            0 or 1 and use the same value on the source and its
+            replicas. Auto-increment values are not ensured to be the
+            same on the replicas as on the source if you use
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a> =
+            2 (<span class="quote">“<span class="quote">interleaved</span>”</span>) or configurations where the
+            source and replicas do not use the same lock mode.
+          </p><p>
+            If you are using row-based or mixed-format replication, all
+            of the auto-increment lock modes are safe, since row-based
+            replication is not sensitive to the order of execution of
+            the SQL statements (and the mixed format uses row-based
+            replication for any statements that are unsafe for
+            statement-based replication).
+          </p></li><li class="listitem"><p>
+            <span class="quote">“<span class="quote">Lost</span>”</span> auto-increment values and sequence gaps
+          </p><p>
+            In all lock modes (0, 1, and 2), if a transaction that
+            generated auto-increment values rolls back, those
+            auto-increment values are <span class="quote">“<span class="quote">lost</span>”</span>. Once a value
+            is generated for an auto-increment column, it cannot be
+            rolled back, whether or not the
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statement is completed, and whether or not the containing
+            transaction is rolled back. Such lost values are not reused.
+            Thus, there may be gaps in the values stored in an
+            <code class="literal">AUTO_INCREMENT</code> column of a table.
+          </p></li><li class="listitem"><p>
+            Specifying NULL or 0 for the
+            <code class="literal">AUTO_INCREMENT</code> column
+          </p><p>
+            In all lock modes (0, 1, and 2), if a user specifies NULL or
+            0 for the <code class="literal">AUTO_INCREMENT</code> column in an
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>,
+            <code class="literal">InnoDB</code> treats the row as if the value was
+            not specified and generates a new value for it.
+          </p></li><li class="listitem"><p>
+            Assigning a negative value to the
+            <code class="literal">AUTO_INCREMENT</code> column
+          </p><p>
+            In all lock modes (0, 1, and 2), the behavior of the
+            auto-increment mechanism is undefined if you assign a
+            negative value to the <code class="literal">AUTO_INCREMENT</code>
+            column.
+          </p></li><li class="listitem"><p>
+            If the <code class="literal">AUTO_INCREMENT</code> value becomes
+            larger than the maximum integer for the specified integer
+            type
+          </p><p>
+            In all lock modes (0, 1, and 2), the behavior of the
+            auto-increment mechanism is undefined if the value becomes
+            larger than the maximum integer that can be stored in the
+            specified integer type.
+          </p></li><li class="listitem"><p>
+            Gaps in auto-increment values for <span class="quote">“<span class="quote">bulk
+            inserts</span>”</span>
+          </p><p>
+            With
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            set to 0 (<span class="quote">“<span class="quote">traditional</span>”</span>) or 1
+            (<span class="quote">“<span class="quote">consecutive</span>”</span>), the auto-increment values
+            generated by any given statement are consecutive, without
+            gaps, because the table-level <code class="literal">AUTO-INC</code>
+            lock is held until the end of the statement, and only one
+            such statement can execute at a time.
+          </p><p>
+            With
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            set to 2 (<span class="quote">“<span class="quote">interleaved</span>”</span>), there may be gaps in
+            the auto-increment values generated by <span class="quote">“<span class="quote">bulk
+            inserts,</span>”</span> but only if there are concurrently
+            executing
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statements.
+          </p><p>
+            For lock modes 1 or 2, gaps may occur between successive
+            statements because for bulk inserts the exact number of
+            auto-increment values required by each statement may not be
+            known and overestimation is possible.
+          </p></li><li class="listitem"><p>
+            Auto-increment values assigned by <span class="quote">“<span class="quote">mixed-mode
+            inserts</span>”</span>
+          </p><p>
+            Consider a <span class="quote">“<span class="quote">mixed-mode insert,</span>”</span> where a
+            <span class="quote">“<span class="quote">simple insert</span>”</span> specifies the auto-increment
+            value for some (but not all) resulting rows. Such a
+            statement behaves differently in lock modes 0, 1, and 2. For
+            example, assume <code class="literal">c1</code> is an
+            <code class="literal">AUTO_INCREMENT</code> column of table
+            <code class="literal">t1</code>, and that the most recent
+            automatically generated sequence number is 100.
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; CREATE TABLE t1 (
+    -&gt; c1 INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    -&gt; c2 CHAR(1)
+    -&gt; ) ENGINE = INNODB;</code></pre><p>
+            Now, consider the following <span class="quote">“<span class="quote">mixed-mode insert</span>”</span>
+            statement:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; INSERT INTO t1 (c1,c2) VALUES (1,'a'), (NULL,'b'), (5,'c'), (NULL,'d');</code></pre><p>
+            With
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            set to 0 (<span class="quote">“<span class="quote">traditional</span>”</span>), the four new rows
+            are:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT c1, c2 FROM t1 ORDER BY c2;
++-----+------+
+| c1  | c2   |
++-----+------+
+|   1 | a    |
+| 101 | b    |
+|   5 | c    |
+| 102 | d    |
++-----+------+</code></pre><p>
+            The next available auto-increment value is 103 because the
+            auto-increment values are allocated one at a time, not all
+            at once at the beginning of statement execution. This result
+            is true whether or not there are concurrently executing
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statements (of any type).
+          </p><p>
+            With
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            set to 1 (<span class="quote">“<span class="quote">consecutive</span>”</span>), the four new rows are
+            also:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT c1, c2 FROM t1 ORDER BY c2;
++-----+------+
+| c1  | c2   |
++-----+------+
+|   1 | a    |
+| 101 | b    |
+|   5 | c    |
+| 102 | d    |
++-----+------+</code></pre><p>
+            However, in this case, the next available auto-increment
+            value is 105, not 103 because four auto-increment values are
+            allocated at the time the statement is processed, but only
+            two are used. This result is true whether or not there are
+            concurrently executing
+            <span class="quote">“<span class="quote"><a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a>-like</span>”</span>
+            statements (of any type).
+          </p><p>
+            With
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            set to 2 (<span class="quote">“<span class="quote">interleaved</span>”</span>), the four new rows
+            are:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT c1, c2 FROM t1 ORDER BY c2;
++-----+------+
+| c1  | c2   |
++-----+------+
+|   1 | a    |
+|   <em class="replaceable">x</em> | b    |
+|   5 | c    |
+|   <em class="replaceable">y</em> | d    |
++-----+------+</code></pre><p>
+            The values of <em class="replaceable"><code>x</code></em> and
+            <em class="replaceable"><code>y</code></em> are unique and larger than any
+            previously generated rows. However, the specific values of
+            <em class="replaceable"><code>x</code></em> and
+            <em class="replaceable"><code>y</code></em> depend on the number of
+            auto-increment values generated by concurrently executing
+            statements.
+          </p><p>
+            Finally, consider the following statement, issued when the
+            most-recently generated sequence number is 100:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">mysql&gt; INSERT INTO t1 (c1,c2) VALUES (1,'a'), (NULL,'b'), (101,'c'), (NULL,'d');</code></pre><p>
+            With any
+            <a class="link" href="innodb-parameters.html#sysvar_innodb_autoinc_lock_mode"><code class="literal">innodb_autoinc_lock_mode</code></a>
+            setting, this statement generates a duplicate-key error
+            23000 (<code class="literal">Can't write; duplicate key in
+            table</code>) because 101 is allocated for the row
+            <code class="literal">(NULL, 'b')</code> and insertion of the row
+            <code class="literal">(101, 'c')</code> fails.
+          </p></li><li class="listitem"><p>
+            Modifying <code class="literal">AUTO_INCREMENT</code> column values in
+            the middle of a sequence of
+            <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> statements
+          </p><p>
+            If you modify an <code class="literal">AUTO_INCREMENT</code> column
+            value to a value larger than the current maximum
+            auto-increment value, the new value is persisted, and
+            subsequent <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> operations
+            allocate auto-increment values starting from the new, larger
+            value. This behavior is demonstrated in the following
+            example:
+          </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; CREATE TABLE t1 (
+    -&gt; c1 INT NOT NULL AUTO_INCREMENT,
+    -&gt; PRIMARY KEY (c1)
+    -&gt;  ) ENGINE = InnoDB;
+
+mysql&gt; INSERT INTO t1 VALUES(0), (0), (3);
+
+mysql&gt; SELECT c1 FROM t1;
++----+
+| c1 |
++----+
+|  1 |
+|  2 |
+|  3 |
++----+
+
+mysql&gt; UPDATE t1 SET c1 = 4 WHERE c1 = 1;
+
+mysql&gt; SELECT c1 FROM t1;
++----+
+| c1 |
++----+
+|  2 |
+|  3 |
+|  4 |
++----+
+
+mysql&gt; INSERT INTO t1 VALUES(0);
+
+mysql&gt; SELECT c1 FROM t1;
++----+
+| c1 |
++----+
+|  2 |
+|  3 |
+|  4 |
+|  5 |
++----+</code></pre></li></ul>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="innodb-auto-increment-initialization"></a>InnoDB AUTO_INCREMENT Counter Initialization</h5>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105626881024"></a><p>
+        This section describes how <code class="literal">InnoDB</code> initializes
+        <code class="literal">AUTO_INCREMENT</code> counters.
+      </p><p>
+        If you specify an <code class="literal">AUTO_INCREMENT</code> column for
+        an <code class="literal">InnoDB</code> table, the in-memory table object
+        contains a special counter called the auto-increment counter
+        that is used when assigning new values for the column.
+      </p><p>
+        The current maximum auto-increment counter value is written to
+        the redo log each time it changes and saved to the data
+        dictionary on each checkpoint; this makes the current maximum
+        auto-increment counter value persistent across server restarts.
+      </p><p>
+        On a server restart following a normal shutdown,
+        <code class="literal">InnoDB</code> initializes the in-memory
+        auto-increment counter using the current maximum auto-increment
+        value stored in the data dictionary.
+      </p><p>
+        On a server restart during crash recovery,
+        <code class="literal">InnoDB</code> initializes the in-memory
+        auto-increment counter using the current maximum auto-increment
+        value stored in the data dictionary and scans the redo log for
+        auto-increment counter values written since the last checkpoint.
+        If a redo-logged value is greater than the in-memory counter
+        value, the redo-logged value is applied. However, in the case of
+        an unexpected server exit, reuse of a previously allocated
+        auto-increment value cannot be guaranteed. Each time the current
+        maximum auto-increment value is changed due to an
+        <a class="link" href="insert.html" title="15.2.7 INSERT Statement"><code class="literal">INSERT</code></a> or
+        <a class="link" href="update.html" title="15.2.17 UPDATE Statement"><code class="literal">UPDATE</code></a> operation, the new value
+        is written to the redo log, but if the unexpected exit occurs
+        before the redo log is flushed to disk, the previously allocated
+        value could be reused when the auto-increment counter is
+        initialized after the server is restarted.
+      </p><p>
+        The only circumstance in which <code class="literal">InnoDB</code> uses
+        the equivalent of a <code class="literal">SELECT MAX(ai_col) FROM
+        <em class="replaceable"><code>table_name</code></em> FOR UPDATE</code>
+        statement to initialize an auto-increment counter is when
+        <a class="link" href="innodb-table-import.html" title="17.6.1.3 Importing InnoDB Tables">importing a table</a>
+        without a <code class="filename">.cfg</code> metadata file. Otherwise,
+        the current maximum auto-increment counter value is read from
+        the <code class="filename">.cfg</code> metadata file if present. Aside
+        from counter value initialization, the equivalent of a
+        <code class="literal">SELECT MAX(ai_col) FROM
+        <em class="replaceable"><code>table_name</code></em></code> statement is
+        used to determine the current maximum auto-increment counter
+        value of the table when attempting to set the counter value to
+        one that is smaller than or equal to the persisted counter value
+        using an <code class="literal">ALTER TABLE ... AUTO_INCREMENT =
+        <em class="replaceable"><code>N</code></em></code> statement. For example,
+        you might try to set the counter value to a lesser value after
+        deleting some records. In this case, the table must be searched
+        to ensure that the new counter value is not less than or equal
+        to the actual current maximum counter value.
+      </p><p>
+        A server restart does not cancel the effect of the
+        <code class="literal">AUTO_INCREMENT = N</code> table option. If you
+        initialize the auto-increment counter to a specific value, or if
+        you alter the auto-increment counter value to a larger value,
+        the new value is persisted across server restarts.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          <a class="link" href="alter-table.html" title="15.1.9 ALTER TABLE Statement"><code class="literal">ALTER TABLE ...
+          AUTO_INCREMENT = N</code></a> can only change the
+          auto-increment counter value to a value larger than the
+          current maximum.
+</p>
+</div>
+<p>
+        The current maximum auto-increment value is persisted,
+        preventing the reuse of previously allocated values.
+      </p><p>
+        If a <a class="link" href="show-table-status.html" title="15.7.7.38 SHOW TABLE STATUS Statement"><code class="literal">SHOW TABLE STATUS</code></a> statement
+        examines a table before the auto-increment counter is
+        initialized, <code class="literal">InnoDB</code> opens the table and
+        initializes the counter value using the current maximum
+        auto-increment value that is stored in the data dictionary. The
+        value is then stored in memory for use by later inserts or
+        updates. Initialization of the counter value uses a normal
+        exclusive-locking read on the table which lasts to the end of
+        the transaction. <code class="literal">InnoDB</code> follows the same
+        procedure when initializing the auto-increment counter for a
+        newly created table that has a user-specified auto-increment
+        value greater than 0.
+      </p><p>
+        After the auto-increment counter is initialized, if you do not
+        explicitly specify an auto-increment value when inserting a row,
+        <code class="literal">InnoDB</code> implicitly increments the counter and
+        assigns the new value to the column. If you insert a row that
+        explicitly specifies an auto-increment column value, and the
+        value is greater than the current maximum counter value, the
+        counter is set to the specified value.
+      </p><p>
+        <code class="literal">InnoDB</code> uses the in-memory auto-increment
+        counter as long as the server runs. When the server is stopped
+        and restarted, <code class="literal">InnoDB</code> reinitializes the
+        auto-increment counter, as described earlier.
+      </p><p>
+        The <a class="link" href="replication-options-source.html#sysvar_auto_increment_offset"><code class="literal">auto_increment_offset</code></a>
+        variable determines the starting point for the
+        <code class="literal">AUTO_INCREMENT</code> column value. The default
+        setting is 1.
+      </p><p>
+        The <a class="link" href="replication-options-source.html#sysvar_auto_increment_increment"><code class="literal">auto_increment_increment</code></a>
+        variable controls the interval between successive column values.
+        The default setting is 1.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h5 class="title"><a name="innodb-auto-increment-notes"></a>Notes</h5>
+
+</div>
+
+</div>
+
+</div>
+<a class="indexterm" name="idm45105626845232"></a><a class="indexterm" name="idm45105626844160"></a><p>
+        When an <code class="literal">AUTO_INCREMENT</code> integer column runs
+        out of values, a subsequent <code class="literal">INSERT</code> operation
+        returns a duplicate-key error. This is general MySQL behavior.
+</p>
+</div>
+
+</div>
+
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="converting-tables-to-innodb.html"
+        aria-label="Previous" title="Previous: Converting Tables from MyISAM to InnoDB"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="innodb-tables.html" title="Up: Tables"> UP</a> &nbsp;
+    <a href="innodb-indexes.html" aria-label="Next"
+        title="Next: Indexes">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/innodb-auto-increment-handling.html?ff=nopfpls by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 17:15:01 GMT -->
+</html>

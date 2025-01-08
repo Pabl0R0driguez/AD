@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/data-directory-initialization.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:36:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.4 Reference Manual :: 2.9.1 Initializing the Data Directory</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20241001.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20241001.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20241001.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.4 Reference Manual" />
+<link rel="prev" href="postinstallation.html" title="2.9 Postinstallation Setup and Testing" />
+<link rel="next" href="starting-server8dba.html?ff=nopfpls" title="2.9.2 Starting the Server" />
+<link rel="up" href="postinstallation.html" title="2.9 Postinstallation Setup and Testing" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&amp;c=teconsent&amp;js=bb&amp;noticeType=bb&amp;text=true&amp;cdn=1&amp;pcookie&amp;gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20241017.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kzvaeoix35pxazy7woza-f-19a93f03e-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":152,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"18625fff","ak.r":46154,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"86.106.2.0","ak.cport":11653,"ak.gh":"96.16.85.8","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1730130866","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==DTJ5ZHw6YVLWzez4uFy1EEZrIpfsyAem/N6dOTl/vqPLIDgCTXJORp5Q+hAnBun02eBYBburwcChdG/79sggQFELaTR2+Gdz/AD5EYje1qQ7yATWUnlqH1ZPJKb5h3U0W4yPjPixE90v7dJVfOZQTVvqbQajgN86h6/qmllCH6TvM+BGsYyHHGC69ZxpkYl6IBHMccabPqMZeGLvpGvLrtQolDxc13+ItxJXYyRqi18HKoX6EvKCrzejG2P6gf5rxkE6LBAZu0ZgPjTPG9wVYifH4MpeVzvmPzOVsNVAKVQskrShTR92dJCnhCiXJ3taKK0FdryaralMCR0tAEmp6fLPUymz36T45TFFEHk3PAruhdKGUpbvn2LLuU6/5sBaJggEP4RRe0JZaUhhCxh2CLCyIJkjs5QrdUBCRl2moUI=","ak.pv":"15","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.html","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak-2.html","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.4%2Fen%2Fdata-directory-initialization.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="https://dev.mysql.com/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="https://dev.mysql.com/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="https://dev.mysql.com/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="https://dev.mysql.com/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="https://dev.mysql.com/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="https://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="https://dev.mysql.com/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="https://dev.mysql.com/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="#" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="postinstallation.html"
+        aria-label="Previous" title="Previous: Postinstallation Setup and Testing"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="postinstallation.html" title="Up: Postinstallation Setup and Testing"><span class="icon-chevron-up"></span></a>
+    <a href="starting-server.html" aria-label="Next"
+        title="Next: Starting the Server"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="https://dev.mysql.com/doc/search/">
+            <input type="hidden" name="d" id="d" value="371" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="https://dev.mysql.com/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.4 Reference Manual</div>
+            <nav class="doctoc" id="doc-371">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="general-installation-issues.html">General Installation Guidance</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="platform-support.html">Supported Platforms</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="which-version.html">Which MySQL Version and Distribution to Install</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="getting-mysql.html">How to Get MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="verifying-package-integrity.html">Verifying Package Integrity Using MD5 Checksums or GnuPG</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="verifying-md5-checksum.html">Verifying the MD5 Checksum</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="checking-gpg-signature.html">Signature Checking Using GnuPG</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="checking-gpg-signature-windows.html">Signature Checking Using Gpg4win for Windows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="checking-rpm-signature.html">Signature Checking Using RPM</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="gpg-key-archived-packages.html">GPG Public Build Key for Archived Packages</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="installation-layouts.html">Installation Layouts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="compiler-characteristics.html">Compiler-Specific Build Characteristics</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binary-installation.html">Installing MySQL on Unix/Linux Using Generic Binaries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="windows-installation.html">Installing MySQL on Microsoft Windows</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-choosing-package.html">Choosing an Installation Package</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-configurator.html">Configuration: Using MySQL Configurator</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-configurator-workflow-server.html">MySQL Server Configuration with MySQL Configurator</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="windows-install-archive.html">Configuration: Manually</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-extract-archive.html">Extracting the Install Archive</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-create-option-file.html">Creating an Option File</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-select-server.html">Selecting a MySQL Server Type</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-initialize-data-directory.html">Initializing the Data Directory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-server-first-start.html">Starting the Server for the First Time</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-start-command-line.html">Starting MySQL from the Windows Command Line</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-installation-windows-path.html">Customizing the PATH for MySQL Tools</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-start-service.html">Starting MySQL as a Windows Service</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-testing.html">Testing The MySQL Installation</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-troubleshooting.html">Troubleshooting a Microsoft Windows MySQL Server Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-postinstallation.html">Windows Postinstallation Procedures</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="windows-restrictions.html">Windows Platform Restrictions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="macos-installation.html">Installing MySQL on macOS</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="macos-installation-notes.html">General Notes on Installing MySQL on macOS</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="macos-installation-pkg.html">Installing MySQL on macOS Using Native Packages</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="macos-installation-launchd.html">Installing and Using the MySQL Launch Daemon</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="macos-installation-prefpane.html">Installing and Using the MySQL Preference Pane</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="linux-installation.html">Installing MySQL on Linux</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-yum-repo.html">Installing MySQL on Linux Using the MySQL Yum Repository</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-apt-repo.html">Installing MySQL on Linux Using the MySQL APT Repository</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-sles-repo.html">Using the MySQL SLES Repository</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-rpm.html">Installing MySQL on Linux Using RPM Packages from Oracle</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-debian.html">Installing MySQL on Linux Using Debian Packages from Oracle</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="linux-installation-docker.html">Deploying MySQL on Linux with Docker Containers</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="docker-mysql-getting-started.html">Basic Steps for MySQL Server Deployment with Docker</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="docker-mysql-more-topics.html">More Topics on Deploying MySQL Server with Docker</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="deploy-mysql-nonlinux-docker.html">Deploying MySQL on Windows and Other Non-Linux Platforms with Docker</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-native.html">Installing MySQL on Linux from the Native Software Repositories</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="linux-installation-juju.html">Installing MySQL on Linux with Juju</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="using-systemd.html">Managing MySQL Server with systemd</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="uln-installation.html">Installing MySQL Using Unbreakable Linux Network (ULN)</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="solaris-installation.html">Installing MySQL on Solaris</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="solaris-installation-pkg.html">Installing MySQL on Solaris Using a Solaris PKG</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="source-installation.html">Installing MySQL from Source</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-installation-methods.html">Source Installation Methods</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-installation-prerequisites.html">Source Installation Prerequisites</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-installation-layout.html">MySQL Layout for Source Installation</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="installing-source-distribution.html">Installing MySQL Using a Standard Source Distribution</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="installing-development-tree.html">Installing MySQL Using a Development Source Tree</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-ssl-library-configuration.html">Configuring SSL Library Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-configuration-options.html">MySQL Source-Configuration Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="compilation-problems.html">Dealing with Problems Compiling MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-configuration-third-party.html">MySQL Configuration and Third-Party Tools</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="source-installation-doxygen.html">Generating MySQL Doxygen Documentation Content</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="postinstallation.html">Postinstallation Setup and Testing</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="data-directory-initialization.html">Initializing the Data Directory</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="starting-server.html">Starting the Server</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="starting-server-troubleshooting.html">Troubleshooting Problems Starting the MySQL Server</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="testing-server.html">Testing the Server</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="default-privileges.html">Securing the Initial MySQL Account</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="automatic-start.html">Starting and Stopping MySQL Automatically</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="perl-support.html">Perl Installation Notes</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="perl-installation.html">Installing Perl on Unix</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="activestate-perl.html">Installing ActiveState Perl on Windows</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="perl-support-problems.html">Problems Using the Perl DBI/DBD Interface</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.4</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="telemetry.html">Telemetry</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.4 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href="#"><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="#" id="docs-version-nav-toggle">version 8.4
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="https://dev.mysql.com/doc/refman/9.1/en/data-directory-initialization.html">
+                        9.1
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/9.0/en/data-directory-initialization.html">
+                        9.0
+                                            </a><br />
+                                                                                                                <a                         href="https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization.html">
+                        8.0
+                                            </a><br />
+                                                                            <a                         href="https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="https://dev.mysql.com/doc/refman/8.0/ja/data-directory-initialization.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="#" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="index.html">MySQL 8.4 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="#" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="installing.html">Installing MySQL</a> &nbsp;/&nbsp;
+                                                            <a href="postinstallation.html">Postinstallation Setup and Testing</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        Initializing the Data Directory
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="data-directory-initialization"></a>2.9.1 Initializing the Data Directory</h3>
+</div>
+</div>
+</div>
+<p>
+      After MySQL is installed, the data directory must be initialized,
+      including the tables in the <code class="literal">mysql</code> system
+      schema:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          For some MySQL installation methods, data directory
+          initialization is automatic, as described in
+          <a class="xref" href="postinstallation.html" title="2.9 Postinstallation Setup and Testing">Section 2.9, “Postinstallation Setup and Testing”</a>.
+        </p></li><li class="listitem"><p>
+          For other installation methods, you must initialize the data
+          directory manually. These include installation from generic
+          binary and source distributions on Unix and Unix-like systems,
+          and installation from a ZIP Archive package on Windows.
+</p></li></ul>
+</div>
+<p>
+      This section describes how to initialize the data directory
+      manually for MySQL installation methods for which data directory
+      initialization is not automatic. For some suggested commands that
+      enable testing whether the server is accessible and working
+      properly, see <a class="xref" href="testing-server.html" title="2.9.3 Testing the Server">Section 2.9.3, “Testing the Server”</a>.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+        The default authentication plugin is
+        <code class="literal">caching_sha2_password</code>, and the
+        <code class="literal">'root'@'localhost'</code> administrative account
+        uses <code class="literal">caching_sha2_password</code> by default.
+      </p><p>
+        <a class="link" href="native-pluggable-authentication.html" title="8.4.1.1 Native Pluggable Authentication">mysql_native_password</a>
+        (the default authentication plugin prior to MySQL 8.0) is still
+        supported but disabled by default as of MySQL 8.4.0 and removed
+        as of MySQL 9.0.0.
+</p>
+</div>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="data-directory-initialization.html#data-directory-initialization-overview" title="Data Directory Initialization Overview">Data Directory Initialization Overview</a></p></li><li class="listitem"><p><a class="xref" href="data-directory-initialization.html#data-directory-initialization-procedure" title="Data Directory Initialization Procedure">Data Directory Initialization Procedure</a></p></li><li class="listitem"><p><a class="xref" href="data-directory-initialization.html#data-directory-initialization-server-actions" title="Server Actions During Data Directory Initialization">Server Actions During Data Directory Initialization</a></p></li><li class="listitem"><p><a class="xref" href="data-directory-initialization.html#data-directory-initialization-password-assignment" title="Post-Initialization root Password Assignment">Post-Initialization root Password Assignment</a></p></li></ul>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="data-directory-initialization-overview"></a>Data Directory Initialization Overview</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        In the examples shown here, the server is intended to run under
+        the user ID of the <code class="literal">mysql</code> login account.
+        Either create the account if it does not exist (see
+        <a class="xref" href="binary-installation.html#binary-installation-createsysuser" title="Create a mysql User and Group">Create a mysql User and Group</a>), or
+        substitute the name of a different existing login account that
+        you plan to use for running the server.
+</p><a class="indexterm" name="idm45105787757392"></a><a class="indexterm" name="idm45105787755904"></a><a class="indexterm" name="idm45105787754416"></a>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+            Change location to the top-level directory of your MySQL
+            installation, which is typically
+            <code class="filename">/usr/local/mysql</code> (adjust the path name
+            for your system as necessary):
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">cd /usr/local/mysql</code></pre><p>
+            Within this directory you can find several files and
+            subdirectories, including the <code class="filename">bin</code>
+            subdirectory that contains the server, as well as client and
+            utility programs.
+          </p></li><li class="listitem"><p>
+            The <a class="link" href="server-system-variables.html#sysvar_secure_file_priv"><code class="literal">secure_file_priv</code></a> system
+            variable limits import and export operations to a specific
+            directory. Create a directory whose location can be
+            specified as the value of that variable:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mkdir mysql-files</code></pre><p>
+            Grant directory user and group ownership to the
+            <code class="literal">mysql</code> user and <code class="literal">mysql</code>
+            group, and set the directory permissions appropriately:
+          </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">chown mysql:mysql mysql-files
+chmod 750 mysql-files</code></pre></li><li class="listitem"><p>
+            Use the server to initialize the data directory, including
+            the <code class="literal">mysql</code> schema containing the initial
+            MySQL grant tables that determine how users are permitted to
+            connect to the server. For example:
+          </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">bin/mysqld --initialize --user=mysql</code></pre><p>
+            For important information about the command, especially
+            regarding command options you might use, see
+            <a class="xref" href="data-directory-initialization.html#data-directory-initialization-procedure" title="Data Directory Initialization Procedure">Data Directory Initialization Procedure</a>.
+            For details about how the server performs initialization,
+            see
+            <a class="xref" href="data-directory-initialization.html#data-directory-initialization-server-actions" title="Server Actions During Data Directory Initialization">Server Actions During Data Directory Initialization</a>.
+          </p><p>
+            Typically, data directory initialization need be done only
+            after you first install MySQL. (For upgrades to an existing
+            installation, perform the upgrade procedure instead; see
+            <a class="xref" href="upgrading.html" title="Chapter 3 Upgrading MySQL">Chapter 3, <i>Upgrading MySQL</i></a>.) However, the command that
+            initializes the data directory does not overwrite any
+            existing <code class="literal">mysql</code> schema tables, so it is
+            safe to run in any circumstances.
+          </p></li><li class="listitem"><p>
+            In the absence of any option files, the server starts with
+            its default settings. (See
+            <a class="xref" href="server-configuration-defaults.html" title="7.1.2 Server Configuration Defaults">Section 7.1.2, “Server Configuration Defaults”</a>.) To
+            explicitly specify options that the MySQL server should use
+            at startup, put them in an option file such as
+            <code class="filename">/etc/my.cnf</code> or
+            <code class="filename">/etc/mysql/my.cnf</code>. (See
+            <a class="xref" href="option-files.html" title="6.2.2.2 Using Option Files">Section 6.2.2.2, “Using Option Files”</a>.) For example, you can use an
+            option file to set the
+            <a class="link" href="server-system-variables.html#sysvar_secure_file_priv"><code class="literal">secure_file_priv</code></a> system
+            variable.
+          </p></li><li class="listitem"><p>
+            To arrange for MySQL to start without manual intervention at
+            system boot time, see <a class="xref" href="automatic-start.html" title="2.9.5 Starting and Stopping MySQL Automatically">Section 2.9.5, “Starting and Stopping MySQL Automatically”</a>.
+          </p></li><li class="listitem"><p>
+            Data directory initialization creates time zone tables in
+            the <code class="literal">mysql</code> schema but does not populate
+            them. To do so, use the instructions in
+            <a class="xref" href="time-zone-support.html" title="7.1.15 MySQL Server Time Zone Support">Section 7.1.15, “MySQL Server Time Zone Support”</a>.
+</p></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="data-directory-initialization-procedure"></a>Data Directory Initialization Procedure</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        Change location to the top-level directory of your MySQL
+        installation, which is typically
+        <code class="filename">/usr/local/mysql</code> (adjust the path name for
+        your system as necessary):
+      </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">cd /usr/local/mysql</code></pre><p>
+        To initialize the data directory, invoke
+        <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> with the
+        <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> or
+        <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a> option,
+        depending on whether you want the server to generate a random
+        initial password for the <code class="literal">'root'@'localhost'</code>
+        account, or to create that account with no password:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Use <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> for
+            <span class="quote">“<span class="quote">secure by default</span>”</span> installation (that is,
+            including generation of a random initial
+            <code class="literal">root</code> password). In this case, the
+            password is marked as expired and you must choose a new one.
+          </p></li><li class="listitem"><p>
+            With <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a>,
+            no <code class="literal">root</code> password is generated. This is
+            insecure; it is assumed that you intend to assign a password
+            to the account in a timely fashion before putting the server
+            into production use.
+</p></li></ul>
+</div>
+<p>
+        For instructions on assigning a new
+        <code class="literal">'root'@'localhost'</code> password, see
+        <a class="xref" href="data-directory-initialization.html#data-directory-initialization-password-assignment" title="Post-Initialization root Password Assignment">Post-Initialization root Password Assignment</a>.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          The server writes any messages (including any initial
+          password) to its standard error output. This may be redirected
+          to the error log, so look there if you do not see the messages
+          on your screen. For information about the error log, including
+          where it is located, see <a class="xref" href="error-log.html" title="7.4.2 The Error Log">Section 7.4.2, “The Error Log”</a>.
+        </p><p>
+          On Windows, use the <a class="link" href="server-options.html#option_mysqld_console"><code class="option">--console</code></a>
+          option to direct messages to the console.
+</p>
+</div>
+<p>
+        On Unix and Unix-like systems, it is important for the database
+        directories and files to be owned by the
+        <code class="literal">mysql</code> login account so that the server has
+        read and write access to them when you run it later. To ensure
+        this, start <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> from the system
+        <code class="literal">root</code> account and include the
+        <a class="link" href="server-options.html#option_mysqld_user"><code class="option">--user</code></a> option as shown here:
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">bin/mysqld --initialize --user=mysql
+bin/mysqld --initialize-insecure --user=mysql</code></pre><p>
+        Alternatively, execute <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> while logged in
+        as <code class="literal">mysql</code>, in which case you can omit the
+        <a class="link" href="server-options.html#option_mysqld_user"><code class="option">--user</code></a> option from the command.
+      </p><p>
+        On Windows, use one of these commands:
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">bin\mysqld --initialize --console
+bin\mysqld --initialize-insecure --console</code></pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          Data directory initialization might fail if required system
+          libraries are missing. For example, you might see an error
+          like this:
+        </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">bin/mysqld: error while loading shared libraries:
+libnuma.so.1: cannot open shared object file:
+No such file or directory</code></pre><p>
+          If this happens, you must install the missing libraries
+          manually or with your system's package manager. Then
+          retry the data directory initialization command.
+</p>
+</div>
+<p>
+        It might be necessary to specify other options such as
+        <a class="link" href="server-system-variables.html#sysvar_basedir"><code class="option">--basedir</code></a> or
+        <a class="link" href="server-system-variables.html#sysvar_datadir"><code class="option">--datadir</code></a> if
+        <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> cannot identify the correct locations
+        for the installation directory or data directory. For example
+        (enter the command on a single line):
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">bin/mysqld --initialize --user=mysql
+  --basedir=/opt/mysql/mysql
+  --datadir=/opt/mysql/mysql/data</code></pre><p>
+        Alternatively, put the relevant option settings in an option
+        file and pass the name of that file to
+        <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a>. For Unix and Unix-like systems,
+        suppose that the option file name is
+        <code class="filename">/opt/mysql/mysql/etc/my.cnf</code>. Put these
+        lines in the file:
+      </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+basedir=/opt/mysql/mysql
+datadir=/opt/mysql/mysql/data</code></pre><p>
+        Then invoke <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> as follows (enter the
+        command on a single line, with the
+        <a class="link" href="option-file-options.html#option_general_defaults-file"><code class="option">--defaults-file</code></a> option first):
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">bin/mysqld --defaults-file=/opt/mysql/mysql/etc/my.cnf
+  --initialize --user=mysql</code></pre><p>
+        On Windows, suppose that <code class="filename">C:\my.ini</code> contains
+        these lines:
+      </p><pre class="programlisting copytoclipboard language-ini"><code class="language-ini">[mysqld]
+basedir=C:\\Program Files\\MySQL\\MySQL Server 8.4
+datadir=D:\\MySQLdata</code></pre><p>
+        Then invoke <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> as follows (again, you
+        should enter the command on a single line, with the
+        <a class="link" href="option-file-options.html#option_general_defaults-file"><code class="option">--defaults-file</code></a> option first):
+      </p><pre class="programlisting copytoclipboard language-terminal"><code class="language-terminal">bin\mysqld --defaults-file=C:\my.ini
+   --initialize --console</code></pre>
+<div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Important
+</div>
+<p>
+          When initializing the data directory, you should not specify
+          any options other than those used for setting directory
+          locations such as <a class="link" href="server-system-variables.html#sysvar_basedir"><code class="option">--basedir</code></a> or
+          <a class="link" href="server-system-variables.html#sysvar_datadir"><code class="option">--datadir</code></a>, and the
+          <a class="link" href="server-options.html#option_mysqld_user"><code class="option">--user</code></a> option if needed.
+          Options to be employed by the MySQL server during normal use
+          can be set when restarting it following initialization. See
+          the description of the
+          <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> option for further
+          information.
+</p>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="data-directory-initialization-server-actions"></a>Server Actions During Data Directory Initialization</h4>
+
+</div>
+
+</div>
+
+</div>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">
+Note
+</div>
+<p>
+          The data directory initialization sequence performed by the
+          server does not substitute for the actions performed by
+          <a class="link" href="mysql-secure-installation.html" title="6.4.2 mysql_secure_installation — Improve MySQL Installation Security"><span class="command"><strong>mysql_secure_installation</strong></span></a>.
+</p>
+</div>
+<p>
+        When invoked with the
+        <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> or
+        <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a> option,
+        <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> performs the following actions during
+        the data directory initialization sequence:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+            The server checks for the existence of the data directory as
+            follows:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                If no data directory exists, the server creates it.
+              </p></li><li class="listitem"><p>
+                If the data directory exists but is not empty (that is,
+                it contains files or subdirectories), the server exits
+                after producing an error message:
+              </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none">[ERROR] --initialize specified but the data directory exists. Aborting.</code></pre><p>
+                In this case, remove or rename the data directory and
+                try again.
+              </p><p>
+                An existing data directory is permitted to be nonempty
+                if every entry has a name that begins with a period
+                (<code class="literal">.</code>).
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+            Within the data directory, the server creates the
+            <code class="literal">mysql</code> system schema and its tables,
+            including the data dictionary tables, grant tables, time
+            zone tables, and server-side help tables. See
+            <a class="xref" href="system-schema.html" title="7.3 The mysql System Schema">Section 7.3, “The mysql System Schema”</a>.
+          </p></li><li class="listitem"><p>
+            The server initializes the
+            <a class="link" href="glossary.html#glos_system_tablespace" title="system tablespace">system
+            tablespace</a> and related data structures needed to
+            manage <a class="link" href="innodb-storage-engine.html" title="Chapter 17 The InnoDB Storage Engine"><code class="literal">InnoDB</code></a> tables.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+              After <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a> sets up the
+              <code class="literal">InnoDB</code>
+              <a class="link" href="glossary.html#glos_system_tablespace" title="system tablespace">system
+              tablespace</a>, certain changes to tablespace
+              characteristics require setting up a whole new
+              <a class="link" href="glossary.html#glos_instance" title="instance">instance</a>. Qualifying
+              changes include the file name of the first file in the
+              system tablespace and the number of undo logs. If you do
+              not want to use the default values, make sure that the
+              settings for the
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_data_file_path"><code class="literal">innodb_data_file_path</code></a> and
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_log_file_size"><code class="literal">innodb_log_file_size</code></a>
+              configuration parameters are in place in the MySQL
+              <a class="link" href="glossary.html#glos_configuration_file" title="configuration file">configuration
+              file</a> <span class="emphasis"><em>before</em></span> running
+              <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a>. Also make sure to specify as
+              necessary other parameters that affect the creation and
+              location of <code class="literal">InnoDB</code> files, such as
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_data_home_dir"><code class="literal">innodb_data_home_dir</code></a> and
+              <a class="link" href="innodb-parameters.html#sysvar_innodb_log_group_home_dir"><code class="literal">innodb_log_group_home_dir</code></a>.
+            </p><p>
+              If those options are in your configuration file but that
+              file is not in a location that MySQL reads by default,
+              specify the file location using the
+              <a class="link" href="server-options.html#option_mysqld_defaults-extra-file"><code class="option">--defaults-extra-file</code></a>
+              option when you run <a class="link" href="mysqld.html" title="6.3.1 mysqld — The MySQL Server"><span class="command"><strong>mysqld</strong></span></a>.
+</p>
+</div>
+</li><li class="listitem"><p>
+            The server creates a <code class="literal">'root'@'localhost'</code>
+            superuser account and other reserved accounts (see
+            <a class="xref" href="reserved-accounts.html" title="8.2.9 Reserved Accounts">Section 8.2.9, “Reserved Accounts”</a>). Some reserved accounts
+            are locked and cannot be used by clients, but
+            <code class="literal">'root'@'localhost'</code> is intended for
+            administrative use and you should assign it a password.
+          </p><p>
+            Server actions with respect to a password for the
+            <code class="literal">'root'@'localhost'</code> account depend on how
+            you invoke it:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                With <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> but not
+                <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a>,
+                the server generates a random password, marks it as
+                expired, and writes a message displaying the password:
+              </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">[Warning] A temporary password is generated for root@localhost:
+iTag*AfrH5ej</code></pre></li><li class="listitem"><p>
+                With
+                <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a>,
+                (either with or without
+                <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> because
+                <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a>
+                implies <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a>),
+                the server does not generate a password or mark it
+                expired, and writes a warning message:
+              </p><pre class="programlisting copytoclipboard language-none"><code class="language-none">[Warning] root@localhost is created with an empty password ! Please
+consider switching off the --initialize-insecure option.</code></pre></li></ul>
+</div>
+<p>
+            For instructions on assigning a new
+            <code class="literal">'root'@'localhost'</code> password, see
+            <a class="xref" href="data-directory-initialization.html#data-directory-initialization-password-assignment" title="Post-Initialization root Password Assignment">Post-Initialization root Password Assignment</a>.
+          </p></li><li class="listitem"><p>
+            The server populates the server-side help tables used for
+            the <a class="link" href="help.html" title="15.8.3 HELP Statement"><code class="literal">HELP</code></a> statement (see
+            <a class="xref" href="help.html" title="15.8.3 HELP Statement">Section 15.8.3, “HELP Statement”</a>). The server does not populate the
+            time zone tables. To do so manually, see
+            <a class="xref" href="time-zone-support.html" title="7.1.15 MySQL Server Time Zone Support">Section 7.1.15, “MySQL Server Time Zone Support”</a>.
+          </p></li><li class="listitem"><p>
+            If the <a class="link" href="server-system-variables.html#sysvar_init_file"><code class="literal">init_file</code></a> system
+            variable was given to name a file of SQL statements, the
+            server executes the statements in the file. This option
+            enables you to perform custom bootstrapping sequences.
+          </p><p>
+            When the server operates in bootstrap mode, some
+            functionality is unavailable that limits the statements
+            permitted in the file. These include statements that relate
+            to account management (such as <a class="link" href="create-user.html" title="15.7.1.3 CREATE USER Statement"><code class="literal">CREATE
+            USER</code></a> or <a class="link" href="grant.html" title="15.7.1.6 GRANT Statement"><code class="literal">GRANT</code></a>),
+            replication, and global transaction identifiers.
+          </p></li><li class="listitem"><p>
+            The server exits.
+</p></li></ol>
+</div>
+
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h4 class="title"><a name="data-directory-initialization-password-assignment"></a>Post-Initialization root Password Assignment</h4>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        After you initialize the data directory by starting the server
+        with <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a> or
+        <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a>, start the
+        server normally (that is, without either of those options) and
+        assign the <code class="literal">'root'@'localhost'</code> account a new
+        password:
+</p>
+<div class="orderedlist">
+<ol class="orderedlist" type="1"><li class="listitem"><p>
+            Start the server. For instructions, see
+            <a class="xref" href="starting-server.html" title="2.9.2 Starting the Server">Section 2.9.2, “Starting the Server”</a>.
+          </p></li><li class="listitem"><p>
+            Connect to the server:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                If you used <a class="link" href="server-options.html#option_mysqld_initialize"><code class="option">--initialize</code></a>
+                but not
+                <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a> to
+                initialize the data directory, connect to the server as
+                <code class="literal">root</code>:
+              </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysql -u root -p</code></pre><p>
+                Then, at the password prompt, enter the random password
+                that the server generated during the initialization
+                sequence:
+              </p><pre class="programlisting copytoclipboard language-none one-line"><code class="language-none">Enter password: <em class="replaceable">(enter the random root password here)</em></code></pre><p>
+                Look in the server error log if you do not know this
+                password.
+              </p></li><li class="listitem"><p>
+                If you used
+                <a class="link" href="server-options.html#option_mysqld_initialize-insecure"><code class="option">--initialize-insecure</code></a> to
+                initialize the data directory, connect to the server as
+                <code class="literal">root</code> without a password:
+              </p><pre class="programlisting copytoclipboard language-terminal one-line"><code class="language-terminal">mysql -u root --skip-password</code></pre></li></ul>
+</div>
+</li><li class="listitem"><p>
+            After connecting, use an <a class="link" href="alter-user.html" title="15.7.1.1 ALTER USER Statement"><code class="literal">ALTER
+            USER</code></a> statement to assign a new
+            <code class="literal">root</code> password:
+          </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">ALTER USER 'root'@'localhost' IDENTIFIED BY '<em class="replaceable">root-password'</em>;</code></pre></li></ol>
+</div>
+<p>
+        See also <a class="xref" href="default-privileges.html" title="2.9.4 Securing the Initial MySQL Account">Section 2.9.4, “Securing the Initial MySQL Account”</a>.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+          Attempts to connect to the host <code class="literal">127.0.0.1</code>
+          normally resolve to the <code class="literal">localhost</code> account.
+          However, this fails if the server is run with
+          <a class="link" href="server-system-variables.html#sysvar_skip_name_resolve"><code class="literal">skip_name_resolve</code></a> enabled. If
+          you plan to do that, make sure that an account exists that can
+          accept a connection. For example, to be able to connect as
+          <code class="literal">root</code> using
+          <code class="option">--host=127.0.0.1</code> or
+          <code class="option">--host=::1</code>, create these accounts:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">CREATE USER 'root'@'127.0.0.1' IDENTIFIED BY '<em class="replaceable">root-password</em>';
+CREATE USER 'root'@'::1' IDENTIFIED BY '<em class="replaceable">root-password</em>';</code></pre><p>
+          It is possible to put those statements in a file to be
+          executed using the <a class="link" href="server-system-variables.html#sysvar_init_file"><code class="literal">init_file</code></a>
+          system variable, as discussed in
+          <a class="xref" href="data-directory-initialization.html#data-directory-initialization-server-actions" title="Server Actions During Data Directory Initialization">Server Actions During Data Directory Initialization</a>.
+</p>
+</div>
+
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="postinstallation.html"
+        aria-label="Previous" title="Previous: Postinstallation Setup and Testing"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="postinstallation.html" title="Up: Postinstallation Setup and Testing"> UP</a> &nbsp;
+    <a href="starting-server.html" aria-label="Next"
+        title="Next: Starting the Server">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href="#"><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="https://dev.mysql.com/doc/relnotes/mysql/8.4/en/">MySQL 8.4 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href="#"><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.4-en.pdf">PDF (US Ltr)</a>
+            - 40.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.a4.pdf">PDF (A4)</a>
+            - 40.1Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 258.6Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.4-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 365.7Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.gz">Info (Gzip)</a>
+            - 4.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.4.info.zip">Info (Zip)</a>
+            - 4.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="#" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2024 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="http://c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+
+<!-- Mirrored from dev.mysql.com/doc/refman/8.4/en/data-directory-initialization.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Oct 2024 16:36:14 GMT -->
+</html>
