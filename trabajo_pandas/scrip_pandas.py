@@ -108,7 +108,7 @@ df_rellenado = df.fillna("Nulo rellenado")
 print("6 primeras filas, después de rellenar valores nulos")
 print(df_rellenado.head(6))
 
-# Ejercicio
+# Ejercicio 8
 # Agrupamos por consumo de alimentos entre comidas
 alimentos_entre_comidas = df.groupby("CAEC").size()
 print("\nAgrupacion por consumo de alimentos entre comidas")
