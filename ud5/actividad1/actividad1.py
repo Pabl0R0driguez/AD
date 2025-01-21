@@ -16,7 +16,7 @@ try:
     
     # Seleccionar la base de datos
     db = client[base_datos]
-    
+        
     # Intentar acceder a la base de datos para verificar la conexión
     colecciones = db.list_collection_names()
     print("Conexión exitosa. Colecciones en la base de datos:")
