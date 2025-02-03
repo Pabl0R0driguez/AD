@@ -98,7 +98,7 @@ class DatabaseManager:
 # Ejemplo de uso del componente DatabaseManager
 if __name__ == "__main__":
     # Conectar con la base de datos 2dam
-    db_manager = DatabaseManager("localhost", "usuario", "usuario", "1dam")
+    db_manager = DatabaseManager("localhost", "usuario", "tu_contraseña", "2DAM")
     db_manager.conectar()
 
     # Operaciones CRUD en la tabla motocicletas

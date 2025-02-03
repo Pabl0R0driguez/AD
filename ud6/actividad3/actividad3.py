@@ -10,9 +10,9 @@ logging.basicConfig(
 
 # Configuración de la base de datos MySQL
 db = MySQLDatabase(
-    "1dam",  # Nombre de la base de datos
+    "2DAM",  # Nombre de la base de datos
     user="usuario",  # Usuario de MySQL
-    password="usuario",  # Contraseña de MySQL
+    password="tu_contraseña",  # Contraseña de MySQL
     host="localhost",  # Host
     port=3306,  # Puerto por defecto de MySQL
 )
@@ -46,9 +46,13 @@ class DatabaseManagerORM:
 
     def conectar(self):
         """Conecta la base de datos y crea las tablas."""
-        self.db.connect()
-        self.db.create_tables([Proveedor, Herramienta])
-        logging.info("Conexión establecida y tablas creadas.")
+        try:
+            self.db.connect()
+            self.db.create_tables([Proveedor, Herramienta])
+            logging.info("Conexión establecida y tablas creadas.")
+        except Exception as e:
+            logging.error(f"Error al conectar o crear tablas: {e}")
+
 
     def desconectar(self):
         """Cierra la conexión a la base de datos."""
