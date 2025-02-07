@@ -75,16 +75,17 @@ class DatabaseManagerMotocicletas:
         except PyMongoError as e:
             logging.error(f"Error al actualizar el documento: {e}")
 
-    def eliminar_documento(self, filtro):
-        """Eliminar un documento de la colección"""
+    # Eliminar producto
+    def eliminar_producto(self, filtro):
+        """Eliminar un producto de la colección"""
         try:
             result = self.collection.delete_one(filtro)
             if result.deleted_count > 0:
-                logging.info(f"Documento eliminado: {filtro}")
+                logging.info(f"Producto eliminado: {filtro}")
             else:
-                logging.warning(f"No se encontró documento para eliminar: {filtro}")
+                logging.warning(f"No se encontró producto para eliminar: {filtro}")
         except PyMongoError as e:
-            logging.error(f"Error al eliminar el documento: {e}")
+            logging.error(f"Error al eliminar el producto: {e}")
 
     def iniciar_transaccion(self):
         """Iniciar una transacción"""
@@ -140,7 +141,7 @@ if __name__ == "__main__":
                 "marca": "Yamaha",
                 "cilindrada": "689cc",
                 "precio": 8500,
-                "año": 2022,    
+                "año": 2022,
             }
         )
         db_manager.confirmar_transaccion()
